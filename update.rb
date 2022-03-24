@@ -18,7 +18,9 @@ def update_git_releases(product, url)
   Dir.chdir pwd
 end
 
-Dir.glob("#{WEBSITE_DIR}products/*.md").each do |product_file|
+pp ARGV
+
+Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   data = YAML.load_file product_file, permitted_classes: [Date]
   data['auto'].each_entry do |ecosystem, url|
     product = File.basename product_file, ".md"

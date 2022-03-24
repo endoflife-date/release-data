@@ -27,10 +27,13 @@ jobs:
         submodules: false
         # TODO: Remove once https://github.com/endoflife-date/endoflife.date/pull/957 is merged
         ref: auto-data
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
     - name: Update Release data
       run: |
-        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci}
-        ruby update.rb website ~/.cache releases
+        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci} && \
+        ruby update.rb ./website ~/.cache releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
       with:
