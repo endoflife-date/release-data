@@ -1,0 +1,36 @@
+name: Update Data
+on:
+  push:
+  schedule:
+    # “At minute 17 past hour 6 and 18.”
+    # https://crontab.guru/#17_6,18_*_*_*
+    - cron: '17 6,18 * * *'
+jobs:
+  update:
+    name: Update data
+    runs-on: ubuntu-latest
+    steps:
+    - name: Cache Repositories
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache
+        key: cache
+    - uses: actions/checkout@v3
+      name: Clone self repository
+      with:
+        ref: ${{ github.head_ref }}
+    - uses: actions/checkout@v3
+      name: Clone website
+      with:
+        repository: endoflife-date/endoflife.date
+        path: website
+        submodules: false
+    - name: Update Release data
+      run: |
+        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci}
+        ruby update.rb website ~/.cache releases
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      name: Commit and update new releases
+      with:
+        commit_message: Update Releases
+        commit_author: actions-user <65916846+actions-user@users.noreply.github.com>
