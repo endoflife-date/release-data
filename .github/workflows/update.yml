@@ -25,6 +25,8 @@ jobs:
         repository: endoflife-date/endoflife.date
         path: website
         submodules: false
+        # TODO: Remove once https://github.com/endoflife-date/endoflife.date/pull/957 is merged
+        ref: auto-data
     - name: Update Release data
       run: |
         mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci}
