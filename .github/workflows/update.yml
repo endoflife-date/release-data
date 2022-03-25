@@ -1,6 +1,5 @@
 name: Update Data
 on:
-  push:
   schedule:
     # “At minute 17 past hour 6 and 18.”
     # https://crontab.guru/#17_6,18_*_*_*
