@@ -31,6 +31,8 @@ jobs:
     - name: Update Release data
       run: |
         mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci} && \
+        git config --global init.defaultBranch main
+        git config --global extensions.partialClone true
         ruby update.rb ./website ~/.cache releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases

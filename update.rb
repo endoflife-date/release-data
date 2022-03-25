@@ -13,12 +13,9 @@ def update_git_releases(product, url)
     `git init --bare #{repo_dir}`
   end
   Dir.chdir repo_dir
-  `git config extensions.partialClone true`
-  `git fetch --auto-gc --auto-maintenance --prune --prune-tags --quiet --tags --filter=blob:none "#{url}"`
+  `git fetch --auto-gc --auto-maintenance --quiet --tags --filter=blob:none "#{url}"`
   Dir.chdir pwd
 end
-
-pp ARGV
 
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   data = YAML.load_file product_file, permitted_classes: [Date]
