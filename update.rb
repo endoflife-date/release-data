@@ -25,7 +25,11 @@ def update_git_releases(repo_dir, output_file)
     if tag.target.is_a? Rugged::Tag::Annotation
       data[tag.name] = tag.target.tagger[:time].strftime('%F')
     else
-      data[tag.name] = tag.target.time.strftime('%F')
+      begin
+        data[tag.name] = tag.target.time.strftime('%F')
+      rescue
+        puts "[WARN] No timestamp for #{tag.name}"
+      end
     end
   end
   File.open(output_file, 'w') do |file|
