@@ -25,8 +25,6 @@ jobs:
         repository: endoflife-date/endoflife.date
         path: website
         submodules: false
-        # TODO: Remove once https://github.com/endoflife-date/endoflife.date/pull/957 is merged
-        ref: auto-data
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1

@@ -14,7 +14,7 @@ def update_git_releases(product, url)
   end
   Dir.chdir repo_dir
   `git config extensions.partialClone true`
-  `git fetch --auto-gc --auto-maintenance --progress --prune --prune-tags --quiet --tags --filter=blob:none "#{url}"`
+  `git fetch --auto-gc --auto-maintenance --prune --prune-tags --quiet --tags --filter=blob:none "#{url}"`
   Dir.chdir pwd
 end
 
