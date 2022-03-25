@@ -22,7 +22,11 @@ def update_git_releases(repo_dir, output_file)
   data = {}
   repo = Rugged::Repository.bare repo_dir
   repo.tags.each do |tag|
-    data[tag.name] = tag.target.time.strftime('%F')
+    if tag.target.is_a? Rugged::Tag::Annotation
+      data[tag.name] = tag.target.tagger[:time].strftime('%F')
+    else
+      data[tag.name] = tag.target.time.strftime('%F')
+    end
   end
   File.open(output_file, 'w') do |file|
     file.write(JSON.pretty_generate data)
