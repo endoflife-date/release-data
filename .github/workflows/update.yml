@@ -10,11 +10,18 @@ jobs:
     name: Update data
     runs-on: ubuntu-latest
     steps:
+    - name: Get current week
+      uses: josStorer/get-current-time@v2
+      id: current-time
+      with:
+        # 2022-01 to 2022-52 for eg
+        format: YYYY-ww
     - name: Cache Repositories
       uses: actions/cache@v3
       with:
         path: ~/.cache
-        key: cache
+        # The cache is reset on the first build of every week this way.
+        key: "${{ steps.current-time.outputs.formattedTime }}"
     - uses: actions/checkout@v3
       name: Clone self repository
       with:
@@ -25,10 +32,16 @@ jobs:
         repository: endoflife-date/endoflife.date
         path: website
         submodules: false
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+        bundler-cache: true
     - name: Update Release data
       run: |
-        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci}
-        ruby update.rb website ~/.cache releases
+        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci} && \
+        git config --global init.defaultBranch main
+        git config --global extensions.partialClone true
+        bundle exec ruby update.rb ./website ~/.cache releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
       with:

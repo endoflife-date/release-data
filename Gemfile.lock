@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rugged (1.4.2)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  rugged (~> 1.4)
+
+BUNDLED WITH
+   2.3.5
