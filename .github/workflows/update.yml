@@ -1,5 +1,6 @@
 name: Update Data
 on:
+  push:
   schedule:
     # “At minute 17 past hour 6 and 18.”
     # https://crontab.guru/#17_6,18_*_*_*
@@ -31,6 +32,7 @@ jobs:
         repository: endoflife-date/endoflife.date
         path: website
         submodules: false
+        ref: add-tag-regexes
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
