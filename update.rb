@@ -77,7 +77,7 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   next if OPTIONAL_PRODUCT && (OPTIONAL_PRODUCT != product)
 
   if data['auto']['git']
-    # fetch_git_releases(get_cache_dir('git', product), data['auto']['git'])
+    fetch_git_releases(get_cache_dir('git', product), data['auto']['git'])
     update_git_releases(get_cache_dir('git', product), get_output_file('git', product), data['auto'])
   end
 end
