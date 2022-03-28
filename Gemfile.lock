@@ -1,12 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    liquid (5.3.0)
     rugged (1.4.2)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  liquid (~> 5.3)
   rugged (~> 1.4)
 
 BUNDLED WITH

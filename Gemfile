@@ -2,6 +2,5 @@
 
 source "https://rubygems.org"
 
-# gem "rails"
-
 gem "rugged", "~> 1.4"
+gem "liquid", "~> 5.3"
