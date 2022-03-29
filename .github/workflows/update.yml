@@ -1,9 +1,10 @@
 name: Update Data
 on:
   schedule:
-    # “At minute 17 past hour 6 and 18.”
+    # Run 4 times a day (every 6 hours)
+    # At minute 17 past hour 0, 6, 12, and 18
     # https://crontab.guru/#17_6,18_*_*_*
-    - cron: '17 6,18 * * *'
+    - cron: '17 0,6,12,18 * * *'
 jobs:
   update:
     name: Update data
