@@ -31,7 +31,6 @@ jobs:
         repository: endoflife-date/endoflife.date
         path: website
         submodules: false
-        ref: add-tag-regexes
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
