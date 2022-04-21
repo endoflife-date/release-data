@@ -46,4 +46,4 @@ jobs:
       name: Commit and update new releases
       with:
         commit_message: Update Releases
-        commit_author: actions-user <65916846+actions-user@users.noreply.github.com>
+        commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
