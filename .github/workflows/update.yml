@@ -42,8 +42,9 @@ jobs:
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
         bundle exec ruby update.rb ./website ~/.cache releases
+      id: update_releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
       with:
-        commit_message: Update Releases
+        commit_message: ${{ fromJSON(steps.update_releases.outputs.commit_message)}}
         commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'

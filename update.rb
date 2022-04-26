@@ -1,4 +1,5 @@
 require 'yaml'
+require 'set'
 require 'date'
 require 'json'
 require 'rugged'
@@ -68,6 +69,26 @@ def get_output_file(ecosystem, product)
   "#{OUTPUT_DIR}/#{ecosystem}/#{product}.json"
 end
 
+def generate_commit_message
+  products = Set.new
+  ret = nil
+  msg = ""
+  r = Rugged::Repository.new '.'
+  r.status() do |f, s|
+    p = Pathname.new(f).dirname
+    if p.to_s === 'releases/git'
+      ret = true
+      product =  File.basename(f, '.json')
+      products << product
+      old_version_list = JSON.parse(r.blob_at(r.head.target.oid, f).content).keys.to_set
+      new_version_list = JSON.parse(File.read(f)).keys.to_set
+      new_versions = (new_version_list - old_version_list)
+      msg += "#{product}: #{new_versions.join(', ')}"
+    end
+  end
+  ret ? "Updates: #{products.join(', ')}\n\n#{msg}": false
+end
+
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   data = YAML.safe_load_file product_file, permitted_classes: [Date]
   next unless data['auto']
@@ -81,3 +102,10 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
     update_git_releases(get_cache_dir('git', product), get_output_file('git', product), data['auto'])
   end
 end
+
+def github_actions_step_output(msg)
+  puts "::set-output name=commit_message::#{JSON.dump(msg)}"
+end
+
+msg = generate_commit_message
+github_actions_step_output(msg) if msg
