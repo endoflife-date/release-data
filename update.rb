@@ -86,7 +86,7 @@ def generate_commit_message
       msg += "#{product}: #{new_versions.join(', ')}\n"
     end
   end
-  ret ? "🤖: #{products.join(', ')}\n\n#{msg}": false
+  ret ? "🤖: #{products.join(', ')}\n\n#{msg}": ""
 end
 
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
@@ -107,5 +107,4 @@ def github_actions_step_output(msg)
   puts "::set-output name=commit_message::#{JSON.dump(msg)}"
 end
 
-msg = generate_commit_message
-github_actions_step_output(msg) if msg
+github_actions_step_output(generate_commit_message)
