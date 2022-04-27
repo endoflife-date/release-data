@@ -83,10 +83,10 @@ def generate_commit_message
       old_version_list = JSON.parse(r.blob_at(r.head.target.oid, f).content).keys.to_set
       new_version_list = JSON.parse(File.read(f)).keys.to_set
       new_versions = (new_version_list - old_version_list)
-      msg += "#{product}: #{new_versions.join(', ')}"
+      msg += "#{product}: #{new_versions.join(', ')}\n"
     end
   end
-  ret ? "Updates: #{products.join(', ')}\n\n#{msg}": false
+  ret ? "🤖: #{products.join(', ')}\n\n#{msg}": false
 end
 
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
