@@ -42,6 +42,8 @@ jobs:
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
         bundle exec ruby update.rb ./website ~/.cache releases
+        pip install -r requirements.txt
+        python src/unrealircd.py
       id: update_releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
