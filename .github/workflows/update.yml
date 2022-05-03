@@ -1,5 +1,6 @@
 name: Update Data
 on:
+  push:
   schedule:
     # Run 4 times a day (every 6 hours)
     # At minute 17 past hour 0, 6, 12, and 18
@@ -38,7 +39,7 @@ jobs:
         bundler-cache: true
     - name: Update Release data
       run: |
-        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci} && \
+        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci,custom} && \
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
         pip install -r requirements.txt
