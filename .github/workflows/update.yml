@@ -41,9 +41,9 @@ jobs:
         mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci} && \
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
-        bundle exec ruby update.rb ./website ~/.cache releases
         pip install -r requirements.txt
         python src/unrealircd.py
+        bundle exec ruby update.rb ./website ~/.cache releases
       id: update_releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
