@@ -18,7 +18,6 @@ DEFAULT_TAG_TEMPLATE = '{{major}}.{{minor}}{% if patch %}.{{patch}}{%endif%}'
 
 def fetch_git_releases(repo_dir, url)
   pwd = Dir.pwd
-  puts "Fetching #{url}"
   `git init --bare #{repo_dir}` unless Dir.exist? repo_dir
   Dir.chdir repo_dir
   `git fetch --quiet --tags --filter=blob:none "#{url}"`
@@ -46,14 +45,23 @@ def update_git_releases(repo_dir, output_file, auto_config)
 
     tag_proper_name = render_tag(tag.name, auto_config)
 
-    if tag.target.is_a? Rugged::Tag::Annotation
-      data[tag_proper_name] = tag.target.tagger[:time].strftime('%F')
+    # If the tag has an annotation, we get accurate time information
+    # from the tag annotation "tagger"
+    begin
+    if tag.annotated?
+      # We pick the data from the "tagger" which includes offset information
+      t = tag.annotation.tagger[:time]
+      data[tag_proper_name] = t.strftime('%F')
+      puts "#{tag_proper_name}: #{t.strftime('%F %X %z')}"
     else
-      begin
-        data[tag_proper_name] = tag.target.time.strftime('%F')
-      rescue StandardError
-        puts "[WARN] No timestamp for #{tag.name}"
-      end
+      # In other cases, we de-reference the tag to get the commit
+      # and use the date of the commit itself
+      t = tag.target.committer[:time]
+      data[tag_proper_name] = t.strftime('%F')
+      puts "#{tag_proper_name}: #{t.strftime('%F %X %z')}"
+    end
+    rescue StandardError
+      puts "::warning No timestamp for #{tag.name}, ignoring"
     end
   end
   File.open(output_file, 'w') do |file|
@@ -98,8 +106,10 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   next if OPTIONAL_PRODUCT && (OPTIONAL_PRODUCT != product)
 
   if data['auto']['git']
+    puts "::group::#{product}"
     fetch_git_releases(get_cache_dir('git', product), data['auto']['git'])
     update_git_releases(get_cache_dir('git', product), get_output_file('git', product), data['auto'])
+    puts "::endgroup::"
   end
 end
 

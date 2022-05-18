@@ -1,14 +1,26 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    io-console (0.5.11)
+    irb (1.4.1)
+      reline (>= 0.3.0)
     liquid (5.3.0)
+    psych (4.0.4)
+      stringio
+    rdoc (6.4.0)
+      psych (>= 4.0.0)
+    reline (0.3.1)
+      io-console (~> 0.5)
     rugged (1.4.2)
+    stringio (3.0.2)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  irb (~> 1.4)
   liquid (~> 5.3)
+  rdoc (~> 6.4)
   rugged (~> 1.4)
 
 BUNDLED WITH
