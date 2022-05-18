@@ -1,5 +1,6 @@
 name: Update Data
 on:
+  workflow_dispatch:
   push:
   schedule:
     # Run 4 times a day (every 6 hours)
