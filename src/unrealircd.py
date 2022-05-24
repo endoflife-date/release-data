@@ -20,5 +20,5 @@ with urllib.request.urlopen(URL) as response:
           list[maybe_version] = maybe_date
 
 
-with open('releases/custom/unrealircd.json', 'w') as f:
+with open('releases/unrealircd.json', 'w') as f:
   f.write(json.dumps(list, indent=2))
