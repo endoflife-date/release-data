@@ -16,7 +16,7 @@ for i in range(17, 27):
       if m:
         year,month,date,version = m.groups()
         abs_date = "%s-%s-%s" % (year, month, date)
-        list[abs_date] = version
+        list[version] = abs_date
 
 with open('releases/haproxy.json', 'w') as f:
   f.write(json.dumps(list, indent=2))
