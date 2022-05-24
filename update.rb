@@ -4,6 +4,7 @@ require 'date'
 require 'json'
 require 'rugged'
 require 'liquid'
+require 'digest'
 
 WEBSITE_DIR = ARGV[0]
 CACHE_DIR = ARGV[1]
@@ -16,11 +17,11 @@ OPTIONAL_PRODUCT = ARGV[3]
 DEFAULT_VERSION_REGEX = '^v?(?<major>[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.?(?<patch>0|[1-9]\d*)?$'
 DEFAULT_TAG_TEMPLATE = '{{major}}.{{minor}}{% if patch %}.{{patch}}{%endif%}'
 
-def fetch_git_releases(repo_dir, url)
+def fetch_git_releases(repo_dir, config)
   pwd = Dir.pwd
   `git init --bare #{repo_dir}` unless Dir.exist? repo_dir
   Dir.chdir repo_dir
-  `git fetch --quiet --tags --filter=blob:none "#{url}"`
+  `git fetch --quiet --tags --filter=blob:none "#{config['git']}"`
   Dir.chdir pwd
 end
 
@@ -37,7 +38,7 @@ def render_tag(tag, config)
   Liquid::Template.parse(template).render(data)
 end
 
-def update_git_releases(repo_dir, output_file, auto_config)
+def get_releases_from_git(repo_dir, auto_config)
   data = {}
   repo = Rugged::Repository.bare repo_dir
   repo.tags.each do |tag|
@@ -64,13 +65,12 @@ def update_git_releases(repo_dir, output_file, auto_config)
       puts "::warning No timestamp for #{tag.name}, ignoring"
     end
   end
-  File.open(output_file, 'w') do |file|
-    file.write(JSON.pretty_generate(data))
-  end
+  return data
 end
 
-def get_cache_dir(ecosystem, product)
-  "#{CACHE_DIR}/#{ecosystem}/#{product}"
+def get_cache_dir(ecosystem, product, config)
+  h = Digest::SHA1.hexdigest config['git']
+  "#{CACHE_DIR}/#{ecosystem}/#{product}_#{h}"
 end
 
 def get_output_file(ecosystem, product)
@@ -97,18 +97,43 @@ def generate_commit_message
   ret ? "🤖: #{products.join(', ')}\n\n#{msg}": ""
 end
 
+def get_releases(product, config, i)
+  type = get_update_type(config)
+  if type == 'git'
+    dir = get_cache_dir('git', product, config)
+    fetch_git_releases(dir, config)
+    return get_releases_from_git(dir, config)
+  else
+    puts "Not implemented: #{type}"
+  end
+end
+
+def get_update_type(config)
+  for i in ['git', 'oci', 'npm']
+    return i if config[i]
+  end
+end
+
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
   data = YAML.safe_load_file product_file, permitted_classes: [Date]
   next unless data['auto']
 
   product = File.basename product_file, '.md'
 
+  # Only process one product
   next if OPTIONAL_PRODUCT && (OPTIONAL_PRODUCT != product)
 
-  if data['auto']['git']
+  if data['auto']
+    release_data = {}
+
     puts "::group::#{product}"
-    fetch_git_releases(get_cache_dir('git', product), data['auto']['git'])
-    update_git_releases(get_cache_dir('git', product), get_output_file('git', product), data['auto'])
+    data['auto'].each_with_index do |config, i|
+      release_data.merge! get_releases(product, config, i)
+    end
+
+    File.open(get_output_file('git', product), 'w') do |file|
+      file.write(JSON.pretty_generate(release_data))
+    end
     puts "::endgroup::"
   end
 end
