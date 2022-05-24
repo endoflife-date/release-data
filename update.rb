@@ -73,8 +73,8 @@ def get_cache_dir(ecosystem, product, config)
   "#{CACHE_DIR}/#{ecosystem}/#{product}_#{h}"
 end
 
-def get_output_file(ecosystem, product)
-  "#{OUTPUT_DIR}/#{ecosystem}/#{product}.json"
+def get_output_file(product)
+  "#{OUTPUT_DIR}/#{product}.json"
 end
 
 def generate_commit_message
@@ -132,7 +132,7 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
       release_data.merge! get_releases(product, config, i)
     end
 
-    File.open(get_output_file('git', product), 'w') do |file|
+    File.open(get_output_file(product), 'w') do |file|
       file.write(JSON.pretty_generate(release_data))
     end
     puts "::endgroup::"
