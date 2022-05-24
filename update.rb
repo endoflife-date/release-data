@@ -84,7 +84,7 @@ def generate_commit_message
   r = Rugged::Repository.new '.'
   r.status() do |f, s|
     p = Pathname.new(f).dirname
-    if p.to_s === 'releases/git' || p.to_s === 'releases/custom'
+    if p.to_s === 'releases'
       ret = true
       product =  File.basename(f, '.json')
       products << product

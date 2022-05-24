@@ -40,7 +40,6 @@ jobs:
         bundler-cache: true
     - name: Update Release data
       run: |
-        mkdir -p ~/.cache/{npm,git,oci} releases/{npm,git,oci,custom} && \
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
         pip install -r requirements.txt
