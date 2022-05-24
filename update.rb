@@ -78,23 +78,27 @@ def get_output_file(product)
 end
 
 def generate_commit_message
-  products = Set.new
-  ret = nil
-  msg = ""
-  r = Rugged::Repository.new '.'
-  r.status() do |f, s|
-    p = Pathname.new(f).dirname
-    if p.to_s === 'releases'
-      ret = true
-      product =  File.basename(f, '.json')
-      products << product
-      old_version_list = JSON.parse(r.blob_at(r.head.target.oid, f).content).keys.to_set
-      new_version_list = JSON.parse(File.read(f)).keys.to_set
-      new_versions = (new_version_list - old_version_list)
-      msg += "#{product}: #{new_versions.join(', ')}\n"
+  begin
+    products = Set.new
+    ret = nil
+    msg = ""
+    r = Rugged::Repository.new '.'
+    r.status() do |f, s|
+      p = Pathname.new(f).dirname
+      if p.to_s === 'releases'
+        ret = true
+        product =  File.basename(f, '.json')
+        products << product
+        old_version_list = JSON.parse(r.blob_at(r.head.target.oid, f).content).keys.to_set
+        new_version_list = JSON.parse(File.read(f)).keys.to_set
+        new_versions = (new_version_list - old_version_list)
+        msg += "#{product}: #{new_versions.join(', ')}\n"
+      end
     end
+    ret ? "🤖: #{products.join(', ')}\n\n#{msg}": ""
+  rescue StandardError => e
+    "🤖: Automatic Update"
   end
-  ret ? "🤖: #{products.join(', ')}\n\n#{msg}": ""
 end
 
 def get_releases(product, config, i)
