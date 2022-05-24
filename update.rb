@@ -105,6 +105,7 @@ def get_releases(product, config, i)
     return get_releases_from_git(dir, config)
   else
     puts "Not implemented: #{type}"
+    return {}
   end
 end
 
