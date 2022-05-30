@@ -9,7 +9,6 @@ list = {}
 
 for i in range(17, 27):
   url = "https://www.haproxy.org/download/%s/src/CHANGELOG" % (i/10)
-  print(url)
   with urllib.request.urlopen(url) as response:
     for line in response:
       m = re.match(REGEX, line.decode('utf-8'))
