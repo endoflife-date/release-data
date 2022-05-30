@@ -127,6 +127,9 @@ def get_releases(product, config, i)
     return get_releases_from_git(dir, config)
   elsif type == 'dockerhub'
     return get_releases_from_dockerhub(config)
+  elsif type == 'custom'
+    puts "Custom script, skipping"
+    return {}
   else
     puts "Not implemented: #{type}"
     return {}
@@ -134,7 +137,7 @@ def get_releases(product, config, i)
 end
 
 def get_update_type(config)
-  for i in ['git', 'oci', 'npm', 'dockerhub']
+  for i in ['git', 'oci', 'npm', 'dockerhub', 'custom']
     return i if config[i]
   end
 end
@@ -155,10 +158,10 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
     data['auto'].each_with_index do |config, i|
       release_data.merge! get_releases(product, config, i)
     end
-
+     
     File.open(get_output_file(product), 'w') do |file|
       file.write(JSON.pretty_generate(release_data))
-    end
+    end unless release_data.empty?
     puts "::endgroup::"
   end
 end
