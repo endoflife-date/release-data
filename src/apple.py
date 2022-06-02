@@ -45,6 +45,11 @@ CONFIG = {
 release_lists = {k: {} for k in CONFIG.keys()}
 print("::group::apple")
 
+def parse_date(input):
+  d,m,y = input.strip().split(" ")
+  m=m[0:3].lower()
+  return datetime.datetime.strptime("%s %s %s" % (d,m,y), "%d %b %Y")
+
 for url in URLS:
   with urllib.request.urlopen(url, data=None, timeout=5) as response:
     soup = BeautifulSoup(response, features="html5lib")
@@ -57,23 +62,24 @@ for url in URLS:
           matches = re.findall(regex, version_text, re.MULTILINE)
           if matches:
             for version in matches:
+              abs_date = None
               try:
-                abs_date = datetime.datetime.strptime(td_list[2].get_text(), "%d %b %Y")
+                abs_date = parse_date(td_list[2].get_text())
                 print_date = abs_date.strftime("%Y-%m-%d")
-              except:
+                # Only update the date if we are adding first time
+                # or if the date is lower
+                if version not in release_lists[key]:
+                  release_lists[key][version] = abs_date
+                  print("%s-%s: %s" % (key, version, print_date))
+                elif release_lists[key][version] < abs_date:
+                  print("%s-%s: %s [IGNORED]" % (key, version, print_date))
+                elif release_lists[key][version] > abs_date:
+                  # This is a lower date, so we mark it with a bang
+                  print("%s-%s: %s [UPDATED]" % (key, version, print_date))
+                  release_lists[key][version] = abs_date
+              except ValueError as e:
+                print("%s-%s Failed to parse Date (%s)" % (key, version, td_list[2].get_text()))
                 next
-              # Only update the date
-              if version not in release_lists[key]:
-                release_lists[key][version] = abs_date
-                print("%s-%s: %s" % (key, version, print_date))
-              elif release_lists[key][version] < abs_date:
-                print("%s-%s: %s [IGNORED]" % (key, version, print_date))
-              elif release_lists[key][version] > abs_date:
-                # This is a lower date, so we mark it with a bang
-                print("%s-%s: %s [UPDATED]" % (key, version, print_date))
-                release_lists[key][version] = abs_date
-              else:
-                pass
 
 
 for k in CONFIG.keys():
