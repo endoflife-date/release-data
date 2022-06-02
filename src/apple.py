@@ -58,17 +58,27 @@ for url in URLS:
           if matches:
             for version in matches:
               try:
-                abs_date = datetime.datetime.strptime(td_list[2].get_text(), "%d %b %Y").strftime("%Y-%m-%d")
+                abs_date = datetime.datetime.strptime(td_list[2].get_text(), "%d %b %Y")
+                print_date = abs_date.strftime("%Y-%m-%d")
               except:
                 next
-              if version in release_lists[key] and release_lists[key][version] != abs_date:
-                print("%s: %s already released on %s (not using %s)" % (key, version, release_lists[key][version], abs_date))
-              else:
+              # Only update the date
+              if version not in release_lists[key]:
                 release_lists[key][version] = abs_date
-                print([key, version, abs_date])
+                print("%s-%s: %s" % (key, version, print_date))
+              elif release_lists[key][version] < abs_date:
+                print("%s-%s: %s [IGNORED]" % (key, version, print_date))
+              elif release_lists[key][version] > abs_date:
+                # This is a lower date, so we mark it with a bang
+                print("%s-%s: %s [UPDATED]" % (key, version, print_date))
+                release_lists[key][version] = abs_date
+              else:
+                pass
+
 
 for k in CONFIG.keys():
   with open("releases/%s.json" % k, 'w') as f:
-    f.write(json.dumps(release_lists[k], indent=2))
+    data = {v: d.strftime("%Y-%m-%d") for v,d in release_lists[k].items()}
+    f.write(json.dumps(data, indent=2))
 
 print("::endgroup::")
