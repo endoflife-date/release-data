@@ -39,15 +39,15 @@ jobs:
       with:
         ruby-version: 3.1
         bundler-cache: true
-    - name: Update Release data
+    - name: Setup Release Script
       run: |
         git config --global init.defaultBranch main
         git config --global extensions.partialClone true
-
         pip install -r requirements.txt
-        for i in src/*.py; do python $i;done
-
-        bundle exec ruby update.rb ./website ~/.cache releases
+    - name: Custom Updates
+      run: for i in src/*.py; do python $i;done
+    - name: Git and DockerHub Updates
+      run: bundle exec ruby update.rb ./website ~/.cache releases
       id: update_releases
     - uses: stefanzweifel/git-auto-commit-action@v4
       name: Commit and update new releases
