@@ -17,7 +17,7 @@ OPTIONAL_PRODUCT = ARGV[3]
 # This is more lenient from semver, but disallows MAJOR=0 as well
 # It also allows MAJOR.MINOR, which is quite common
 DEFAULT_VERSION_REGEX = '^v?(?<major>[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.?(?<patch>0|[1-9]\d*)?$'
-DEFAULT_TAG_TEMPLATE = '{{major}}.{{minor}}{% if patch %}.{{patch}}{%endif%}'
+DEFAULT_TAG_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
 
 def fetch_git_releases(repo_dir, config)
   pwd = Dir.pwd
