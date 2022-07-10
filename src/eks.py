@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 import json
 
+REPO_CLONE_URL = 'https://github.com/awsdocs/amazon-eks-user-guide.git'
 PATH = 'doc_source/kubernetes-versions.md'
 TEMP_REPO_PATH = '/tmp/eks-docs'
 REGEX = r"^\+ (?P<major>\d+)\\\.(?P<minor>\d+)\\\.(?P<patch>\d+)$"
@@ -19,6 +20,7 @@ def add_versions(c_versions, commit):
 def get_versions(markdown):
   return re.findall(REGEX, markdown, re.MULTILINE)
 
+pygit2.clone_repository(REPO_CLONE_URL, TEMP_REPO_PATH)
 repo = pygit2.Repository(TEMP_REPO_PATH)
 prev = None
 tree_list = []
