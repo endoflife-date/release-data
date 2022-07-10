@@ -30,7 +30,17 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
     - uses: actions/checkout@v3
-      name: Clone website
+      id: clone_same_branch
+      name: Clone website (Same Branch)
+      continue-on-error: true
+      with:
+        repository: endoflife-date/endoflife.date
+        path: website
+        submodules: false
+        ref: ${{github.ref_name}}
+    - uses: actions/checkout@v3
+      name: Clone website (Main)
+      if: steps.clone_same_branch.outcome != 'success'
       with:
         repository: endoflife-date/endoflife.date
         path: website
