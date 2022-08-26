@@ -6,7 +6,7 @@ import json
 REPO_CLONE_URL = 'https://github.com/awsdocs/amazon-eks-user-guide.git'
 PATH = 'doc_source/kubernetes-versions.md'
 TEMP_REPO_PATH = '/tmp/eks-docs'
-REGEX = r"^\+ (?P<major>\d+)\\\.(?P<minor>\d+)\\\.(?P<patch>\d+)$"
+REGEX = r"^\+ `?(?P<major>\d+)\\?\.(?P<minor>\d+)\\?\.(?P<patch>\d+)`?$"
 
 versions = {}
 
