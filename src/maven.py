@@ -18,7 +18,9 @@ def fetch_releases(package_identifier):
               date = datetime.datetime.utcfromtimestamp(row['timestamp'] / 1000)
               version = row['v']
               if not any(exception in version for exception in ['alpha', 'beta', 'nightly', 'rc']):
-                releases[version] = date.strftime("%Y-%m-%d")
+                abs_date = date.strftime("%Y-%m-%d")
+                releases[version] = abs_date
+                print("%s: %s" % (version, abs_date))
           start+=100
           if data['response']['numFound'] <= start:
             break
