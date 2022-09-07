@@ -17,7 +17,7 @@ def fetch_releases(package_identifier):
           for row in data['response']['docs']:
               date = datetime.datetime.utcfromtimestamp(row['timestamp'] / 1000)
               version = row['v']
-              if not any(exception in version for exception in ['alpha', 'beta', 'nightly', 'rc']):
+              if not any(exception in version for exception in ['alpha', 'beta', 'nightly', 'rc', '-M']):
                 abs_date = date.strftime("%Y-%m-%d")
                 releases[version] = abs_date
                 print("%s: %s" % (version, abs_date))
