@@ -1,13 +1,14 @@
 beautifulsoup4==4.11.1
 cffi==1.15.1
 html5lib==1.1
+Markdown==3.4.1
 mwparserfromhell==0.6.4
 pycparser==2.21
 pygit2==1.9.2
-python-frontmatter==1.0.0
-PyYAML==5.4
 python-dateutil==2.8.2
+python-frontmatter==1.0.0
 python-liquid==1.2.1
+PyYAML==5.4
 six==1.16.0
 soupsieve==2.3.2.post1
 typing_extensions==4.3.0
