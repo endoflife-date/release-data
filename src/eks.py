@@ -1,40 +1,36 @@
-import pygit2
+import urllib.request
+import datetime
+import markdown
 import re
-from datetime import datetime
 import json
+from datetime import datetime
+from bs4 import BeautifulSoup
 
-REPO_CLONE_URL = 'https://github.com/awsdocs/amazon-eks-user-guide.git'
-PATH = 'doc_source/kubernetes-versions.md'
-TEMP_REPO_PATH = '/tmp/eks-docs'
-REGEX = r"^\+ `?(?P<major>\d+)\\?\.(?P<minor>\d+)\\?\.(?P<patch>\d+)`?$"
+URL = "https://raw.githubusercontent.com/awsdocs/amazon-eks-user-guide/master/doc_source/platform-versions.md"
+REGEX = r"^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
 
-versions = {}
 
-def add_versions(c_versions, commit):
-  for v in c_versions:
-    if v not in versions:
-      version_string = "%s.%s.%s" % v
-      date = datetime.fromtimestamp(commit.commit_time).strftime('%Y-%m-%d')
-      versions[version_string] = date
+def parse_platforms_page():
+    versions = {}
+    with urllib.request.urlopen(URL, data=None, timeout=5) as contents:
+        html = markdown.markdown(contents.read().decode("utf-8"), extensions=["tables"])
+        soup = BeautifulSoup(html, features="html5lib")
+        for tr in soup.findAll("tr"):
+            td = tr.find("td")
+            if td and re.match(REGEX, td.text):
+                version = td.text
+                data = tr.findAll("td")
+                date = data[-1].text
+                if len(date) > 0:
+                    d = datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
+                    k8s_version = ".".join(data[0].text.split(".")[:-1])
+                    eks_version = data[1].text.replace(".", "-")
+                    version = "%s-%s" % (k8s_version, eks_version)
+                    versions[version] = d
+    return versions
 
-def get_versions(markdown):
-  return re.findall(REGEX, markdown, re.MULTILINE)
 
-pygit2.clone_repository(REPO_CLONE_URL, TEMP_REPO_PATH)
-repo = pygit2.Repository(TEMP_REPO_PATH)
-prev = None
-tree_list = []
-for cur in repo.walk(repo.head.target):
-  if prev is not None:
-    for d in cur.tree.diff_to_tree(prev.tree).deltas:
-      if(d.new_file.path ==  PATH and PATH in cur.tree):
-        contents = cur.tree[PATH].data.decode('UTF-8')
-        add_versions(get_versions(contents), cur)
-
-  if cur.parents:
-    prev = cur
-    cur = cur.parents[0]
-
-with open('releases/eks.json', 'w') as f:
-  f.write(json.dumps(versions, indent=2))
-
+if __name__ == "__main__":
+    versions = parse_platforms_page()
+    with open("releases/eks.json", "w") as f:
+        f.write(json.dumps(versions, indent=2))
