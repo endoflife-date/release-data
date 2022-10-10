@@ -7,7 +7,8 @@ URL = "https://www.paloaltonetworks.com/services/support/end-of-life-announcemen
 
 ID_MAPPING = {
   "pan-os-panorama": "pan-os",
-  "globalprotect": "pan-gp"
+  "globalprotect": "pan-gp",
+  "traps-esm-and-cortex": "pan-xdr"
 }
 
 def update_releases(html_id, file):
@@ -17,7 +18,13 @@ def update_releases(html_id, file):
     table = soup.find(id=html_id)
     for tr in table.findAll('tr')[3:]:
       td_list = tr.findAll('td')
-      version = td_list[0].get_text()
+      version = td_list[0].get_text().strip().lower().replace(" ", "-").replace("*","")
+      if file == 'pan-xdr':
+        if "xdr" not in version:
+          continue
+      version = version.removesuffix("-(cortex-xdr-agent)")
+      version = version.removesuffix("-(vm-series-only)")
+      version = version.removesuffix("-(panorama-only)")
       try:
         month,date,year = td_list[1].get_text().split('/')
         abs_date = f"{year}-{month:0>2}-{date:0>2}"
