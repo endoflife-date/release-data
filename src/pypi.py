@@ -32,7 +32,7 @@ def fetch_releases(pypi_id, regex):
             for r in regex:
                 if re.match(r, version):
                     matches = True
-            if matches:
+            if matches and R:
                 d = datetime.fromisoformat(R[0]["upload_time"]).strftime("%Y-%m-%d")
                 releases[version] = d
                 print("%s: %s" % (version, d))
