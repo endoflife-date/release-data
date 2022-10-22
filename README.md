@@ -27,6 +27,7 @@ As of Oct-2022, 83 of the 136 products tracked by endoflife.date have automatica
 - api-platform
 - blender
 - bootstrap
+- cakephp
 - composer
 - consul
 - couchbase-server
