@@ -19,10 +19,12 @@ URLS = [
 ]
 
 # If you are changing these, please
-# use https://www.toptal.com/developers/hastebin/mikahukube.txt as your corpus
+# use https://gist.githubusercontent.com/captn3m0/e7cb1f4fc3c07a5da0296ebda2b33e15/raw/5747e42ad611ec9ffdb7a2d1c0e3946bb87ab6d7/apple.txt as your corpus
 # to validate your changes
 CONFIG = {
     "macos": [
+        # This covers major releases with no minor version
+        r"macOS [\w ]+ (?P<version>\d{2})",
         # This covers Sierra and beyond
         r"macOS [\w ]+ (?P<version>\d{2}(?:\.\d+)+)",
         # This covers Mavericks - El Capitan
@@ -31,11 +33,18 @@ CONFIG = {
         r"^Mac OS X [\w ]+ v?(?P<version>\d{2}(?:\.\d+)+)",
     ],
     "ios": [
+        r"iOS (?P<version>\d+)",
         r"iOS (?P<version>\d+(?:)(?:\.\d+)+)",
         r"iPhone v?(?P<version>\d+(?:)(?:\.\d+)+)",
     ],
-    "ipados": [r"iPadOS (?P<version>\d+(?:)(?:\.\d+)+)"],
-    "watchos": [r"watchOS (?P<version>\d+(?:)(?:\.\d+)+)"],
+    "ipados": [
+        r"iPadOS (?P<version>\d+)",
+        r"iPadOS (?P<version>\d+(?:)(?:\.\d+)+)"
+    ],
+    "watchos": [
+        r"watchOS (?P<version>\d+)",
+        r"watchOS (?P<version>\d+(?:)(?:\.\d+)+)"
+    ],
 }
 
 release_lists = {k: {} for k in CONFIG.keys()}
@@ -62,6 +71,7 @@ for url in URLS:
                         for version in matches:
                             abs_date = None
                             try:
+                                print("== %s" % version_text.strip())
                                 abs_date = parse_date(td_list[2].get_text())
                                 print_date = abs_date.strftime("%Y-%m-%d")
                                 # Only update the date if we are adding first time
