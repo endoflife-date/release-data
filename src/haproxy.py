@@ -7,8 +7,9 @@ REGEX = r"^(\d{4})\/(\d{2})\/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$"
 
 list = {}
 
-for i in range(17, 27):
+for i in range(17, 28):
     url = "https://www.haproxy.org/download/%s/src/CHANGELOG" % (i / 10)
+    print(url)
     with urllib.request.urlopen(url) as response:
         for line in response:
             m = re.match(REGEX, line.decode("utf-8"))
