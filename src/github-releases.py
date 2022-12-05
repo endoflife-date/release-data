@@ -6,7 +6,9 @@ import json
 import frontmatter
 import urllib.request
 
-REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
+# Accept various formats : v1.2.3, 1.2.3-final...
+# See https://regex101.com/r/i7Iqa9/2.
+REGEX = r"^(?:[vV]?(\d+(?:\.\d+)*)(?:[.-](?:Final|final))?)$"
 AUTO_KEY = "github_releases"
 
 
