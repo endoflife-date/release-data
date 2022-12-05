@@ -6,9 +6,9 @@ import json
 import frontmatter
 import urllib.request
 
-# Accept various formats : v1.2.3, 1.2.3-final...
+# Accept various formats : 1.2.3, v1.2.3, 1.2.3-final, rel/1.2.3...
 # See https://regex101.com/r/i7Iqa9/2.
-REGEX = r"^(?:[vV]?(\d+(?:\.\d+)*)(?:[.-](?:Final|final))?)$"
+REGEX = r"^(?:(?:[vV]|rel\/)?(\d+(?:\.\d+)*)(?:[.-](?:Final|final))?)$"
 AUTO_KEY = "github_releases"
 
 
@@ -46,7 +46,8 @@ def fetch_releases(repo_id, regex):
                 releases[version] = d
                 print("%s: %s" % (version, d))
 
-    return releases
+    # Sort result by key (alphabetic).
+    return dict(sorted(releases.items(), key=lambda item: item))
 
 
 def update_product(product_name, config):
