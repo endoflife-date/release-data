@@ -21,7 +21,7 @@ def fetch_releases(repo_id, regex):
     releases = {}
     regex = [regex] if not isinstance(regex, list) else regex
 
-    url = f"https://api.github.com/repos/{repo_id}/releases?per_page=100"
+    url = f"https://api.github.com/repos/{repo_id}/releases?per_page=100&page="
     headers = {
         "Accept": "application/vnd.github+json",
         "User-Agent": "endoflife.date",
@@ -29,22 +29,32 @@ def fetch_releases(repo_id, regex):
         "Authorization": f"token {os.environ.get('GITHUB_API_TOKEN')}" if "GITHUB_API_TOKEN" in os.environ else ""
     }
 
-    request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, data=None, timeout=5) as response:
-        data = json.loads(response.read().decode("utf-8"))
-        for release in data:
-            raw_version = release["tag_name"]
+    page = 1
+    may_have_more_pages = True
+    data = []
 
-            version = None
-            for r in regex:
-                match = re.search(r, raw_version)
-                if match:
-                    version = match.group(1)
+    while may_have_more_pages:
+        request = urllib.request.Request(url + str(page), headers=headers)
 
-            if version and not(release["draft"]) and not(release["prerelease"]):
-                d = release["published_at"].split("T")[0]
-                releases[version] = d
-                print("%s: %s" % (version, d))
+        with urllib.request.urlopen(request, data=None, timeout=5) as response:
+            data = json.loads(response.read().decode("utf-8"))
+
+            for release in data:
+                raw_version = release["tag_name"]
+
+                version = None
+                for r in regex:
+                    match = re.search(r, raw_version)
+                    if match:
+                        version = match.group(1)
+
+                if version and not(release["draft"]) and not(release["prerelease"]):
+                    d = release["published_at"].split("T")[0]
+                    releases[version] = d
+                    print("%s: %s" % (version, d))
+
+            page = page + 1
+            may_have_more_pages = len(data) > 0
 
     # Sort result by key (alphabetic).
     return dict(sorted(releases.items(), key=lambda item: item))
