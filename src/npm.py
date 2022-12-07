@@ -21,7 +21,7 @@ def fetch_releases(npm_id, regex):
     if not isinstance(regex, list):
         regex = [regex]
 
-    url = "https://registry.npmjs.org/%s" % npm_id
+    url = f"https://registry.npmjs.org/{npm_id}"
     with urllib.request.urlopen(url, data=None, timeout=5) as response:
         data = json.loads(response.read().decode("utf-8"))
         for version in data["time"]:
@@ -37,7 +37,7 @@ def fetch_releases(npm_id, regex):
                         break
                     d += c
                 releases[version] = d
-                print("%s: %s" % (version, d))
+                print("{version}: {d}")
 
     return releases
 
@@ -58,10 +58,10 @@ def update_releases(product_filter=None):
 
 def update_product(product_name, config):
     if "npm" in config:
-        print("::group::%s" % product_name)
+        print(f"::group::{product_name}")
         config = config | {"regex": REGEX}
         r = fetch_releases(config["npm"], config["regex"])
-        with open("releases/%s.json" % product_name, "w") as f:
+        with open("releases/{product_name}.json", "w") as f:
             f.write(json.dumps(r, indent=2))
         print("::endgroup::")
 
