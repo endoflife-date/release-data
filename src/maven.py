@@ -8,13 +8,13 @@ import datetime
 
 
 def fetch_releases(package_identifier):
-    groupId, artifactId = package_identifier.split("/")
+    group_id, artifact_id = package_identifier.split("/")
     releases = {}
     start = 0
     while True:
         url = (
             "https://search.maven.org/solrsearch/select?q=g:%s+AND+a:%s&core=gav&rows=100&wt=json&start=%s"
-            % (groupId, artifactId, start)
+            % (group_id, artifact_id, start)
         )
         with urllib.request.urlopen(url, data=None, timeout=5) as response:
             data = json.load(response)
