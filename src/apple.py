@@ -3,7 +3,6 @@ import urllib.request
 import datetime
 from bs4 import BeautifulSoup
 import re
-from html.parser import HTMLParser
 
 URLS = [
     "https://support.apple.com/en-us/HT201222",  # latest
