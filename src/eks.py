@@ -18,7 +18,6 @@ def parse_platforms_page():
         for tr in soup.findAll("tr"):
             td = tr.find("td")
             if td and re.match(REGEX, td.text):
-                version = td.text
                 data = tr.findAll("td")
                 date = data[-1].text
                 if len(date) > 0:

@@ -31,7 +31,7 @@ def update_releases(html_identifier, file):
             try:
                 month, date, year = td_list[1].get_text().split("/")
                 abs_date = f"{year}-{month:0>2}-{date:0>2}"
-            except Exception as e:
+            except Exception:
                 date = datetime.datetime.strptime(td_list[1].get_text(), "%B %d, %Y")
                 abs_date = date.strftime("%Y-%m-%d")
 
