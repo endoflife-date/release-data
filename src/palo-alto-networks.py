@@ -12,11 +12,11 @@ ID_MAPPING = {
 }
 
 
-def update_releases(html_id, file):
+def update_releases(html_identifier, file):
     list = {}
     with urllib.request.urlopen(URL, data=None, timeout=5) as response:
         soup = BeautifulSoup(response, features="html5lib")
-        table = soup.find(id=html_id)
+        table = soup.find(id=html_identifier)
         for tr in table.findAll("tr")[3:]:
             td_list = tr.findAll("td")
             version = (
