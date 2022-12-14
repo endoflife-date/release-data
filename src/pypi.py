@@ -5,10 +5,7 @@ import sys
 import json
 import frontmatter
 import urllib.request
-from bs4 import BeautifulSoup
 from datetime import datetime
-from html.parser import HTMLParser
-from liquid import Template
 
 # Same as used in Ruby (update.rb)
 DEFAULT_TAG_TEMPLATE = (

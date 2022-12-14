@@ -11,14 +11,13 @@ REGEX = r"^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
 
 
 def parse_platforms_page():
-    versions = {}
+    all_versions = {}
     with urllib.request.urlopen(URL, data=None, timeout=5) as contents:
         html = markdown.markdown(contents.read().decode("utf-8"), extensions=["tables"])
         soup = BeautifulSoup(html, features="html5lib")
         for tr in soup.findAll("tr"):
             td = tr.find("td")
             if td and re.match(REGEX, td.text):
-                version = td.text
                 data = tr.findAll("td")
                 date = data[-1].text
                 if len(date) > 0:
@@ -26,8 +25,8 @@ def parse_platforms_page():
                     k8s_version = ".".join(data[0].text.split(".")[:-1])
                     eks_version = data[1].text.replace(".", "-")
                     version = "%s-%s" % (k8s_version, eks_version)
-                    versions[version] = d
-    return versions
+                    all_versions[version] = d
+    return all_versions
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ URL = "https://access.redhat.com/articles/3078"
 # https://regex101.com/r/877ibq/1
 regex = r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?"
 
-list = {}
+versions = {}
 headers = {"user-agent": "mozilla"}
 req = urllib.request.Request(URL, headers=headers)
 
@@ -23,7 +23,7 @@ with urllib.request.urlopen(req, timeout=5) as response:
                 version += ".%s" % m["minor"]
             if m["minor2"]:
                 version += ".%s" % m["minor2"]
-            list[version] = td_list[1].get_text()
+            versions[version] = td_list[1].get_text()
 
 with open("releases/redhat.json", "w") as f:
-    f.write(json.dumps(list, indent=2))
+    f.write(json.dumps(versions, indent=2))

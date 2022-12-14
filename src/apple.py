@@ -3,7 +3,6 @@ import urllib.request
 import datetime
 from bs4 import BeautifulSoup
 import re
-from html.parser import HTMLParser
 
 URLS = [
     "https://support.apple.com/en-us/HT201222",  # latest
@@ -51,8 +50,8 @@ release_lists = {k: {} for k in CONFIG.keys()}
 print("::group::apple")
 
 
-def parse_date(input):
-    d, m, y = input.strip().split(" ")
+def parse_date(s):
+    d, m, y = s.strip().split(" ")
     m = m[0:3].lower()
     return datetime.datetime.strptime("%s %s %s" % (d, m, y), "%d %b %Y")
 

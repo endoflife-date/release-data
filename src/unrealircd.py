@@ -6,7 +6,7 @@ import urllib.request
 URL = "https://www.unrealircd.org/docwiki/index.php?title=History_of_UnrealIRCd_releases&action=raw"
 REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
-list = {}
+versions = {}
 with urllib.request.urlopen(URL) as response:
     text = response.read()
     wikicode = mwparserfromhell.parse(text)
@@ -17,8 +17,8 @@ with urllib.request.urlopen(URL) as response:
             if re.match(REGEX, maybe_version):
                 maybe_date = items[1].__strip__()
                 if re.match(r"\d{4}-\d{2}-\d{2}", maybe_date):
-                    list[maybe_version] = maybe_date
+                    versions[maybe_version] = maybe_date
 
 
 with open("releases/unrealircd.json", "w") as f:
-    f.write(json.dumps(list, indent=2))
+    f.write(json.dumps(versions, indent=2))

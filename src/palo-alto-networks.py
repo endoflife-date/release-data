@@ -12,11 +12,11 @@ ID_MAPPING = {
 }
 
 
-def update_releases(html_id, file):
-    list = {}
+def update_releases(html_identifier, file):
+    versions = {}
     with urllib.request.urlopen(URL, data=None, timeout=5) as response:
         soup = BeautifulSoup(response, features="html5lib")
-        table = soup.find(id=html_id)
+        table = soup.find(id=html_identifier)
         for tr in table.findAll("tr")[3:]:
             td_list = tr.findAll("td")
             version = (
@@ -31,14 +31,14 @@ def update_releases(html_id, file):
             try:
                 month, date, year = td_list[1].get_text().split("/")
                 abs_date = f"{year}-{month:0>2}-{date:0>2}"
-            except Exception as e:
+            except Exception:
                 date = datetime.datetime.strptime(td_list[1].get_text(), "%B %d, %Y")
                 abs_date = date.strftime("%Y-%m-%d")
 
-            list[version] = abs_date
+            versions[version] = abs_date
 
     with open("releases/%s.json" % file, "w") as f:
-        f.write(json.dumps(list, indent=2))
+        f.write(json.dumps(versions, indent=2))
 
 
 for html_id in ID_MAPPING:

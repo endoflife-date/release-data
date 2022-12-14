@@ -8,7 +8,7 @@ URL = "https://wiki.ros.org/Distributions"
 # https://regex101.com/r/c1ribd/1
 regex = r"^ROS (?P<name>(\w| )+)"
 
-list = {}
+versions = {}
 
 with urllib.request.urlopen(URL, timeout=5) as response:
     soup = BeautifulSoup(response, features="html5lib")
@@ -29,8 +29,8 @@ with urllib.request.urlopen(URL, timeout=5) as response:
                     x = td_list[1].get_text().split(",")
                     date = datetime.datetime.strptime(x[0][:-2] + x[1], "%B %d %Y")
                 abs_date = date.strftime("%Y-%m-%d")
-                list[version] = abs_date
+                versions[version] = abs_date
                 print("%s: %s" % (version, abs_date))
 
 with open("releases/ros.json", "w") as f:
-    f.write(json.dumps(list, indent=2))
+    f.write(json.dumps(versions, indent=2))
