@@ -22,19 +22,15 @@ def fetch_releases(npm_id, regex):
     with urllib.request.urlopen(url, data=None, timeout=5) as response:
         data = json.loads(response.read().decode("utf-8"))
         for version in data["time"]:
-            R = data["time"][version]
             matches = False
             for r in regex:
                 if re.match(r, version):
                     matches = True
-            if matches and R:
-                d = ""
-                for c in R:
-                    if c == 'T':
-                        break
-                    d += c
-                releases[version] = d
-                print(f"{version}: {d}")
+
+            release_datetime = data["time"][version]
+            if matches and release_datetime:
+                releases[version] = release_datetime.split("T")[0]
+                print(f"{version}: {releases[version]}")
 
     return releases
 
@@ -44,6 +40,7 @@ def update_releases(product_filter=None):
         product_name = os.path.splitext(os.path.basename(product_file))[0]
         if product_filter and product_name != product_filter:
             continue
+
         with open(product_file, "r") as f:
             data = frontmatter.load(f)
             if "auto" in data:
@@ -58,9 +55,10 @@ def update_product(product_name, config):
         print(f"::group::{product_name}")
         config = {"regex": REGEX} | config
         r = fetch_releases(config["npm"], config["regex"])
+        print("::endgroup::")
+
         with open(f"releases/{product_name}.json", "w") as f:
             f.write(json.dumps(r, indent=2))
-        print("::endgroup::")
 
 
 if __name__ == "__main__":
