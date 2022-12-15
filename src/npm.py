@@ -5,15 +5,12 @@ import sys
 import json
 import frontmatter
 import urllib.request
-from datetime import datetime
-from html.parser import HTMLParser
-from liquid import Template
-
 
 DEFAULT_TAG_TEMPLATE = (
     "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
 )
 REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
+
 
 def fetch_releases(npm_id, regex):
     releases = {}
@@ -33,11 +30,11 @@ def fetch_releases(npm_id, regex):
             if matches and R:
                 d = ""
                 for c in R:
-                    if c=='T':
+                    if c == 'T':
                         break
                     d += c
                 releases[version] = d
-                print("{version}: {d}")
+                print(f"{version}: {d}")
 
     return releases
 
@@ -61,7 +58,7 @@ def update_product(product_name, config):
         print(f"::group::{product_name}")
         config = config | {"regex": REGEX}
         r = fetch_releases(config["npm"], config["regex"])
-        with open("releases/{product_name}.json", "w") as f:
+        with open(f"releases/{product_name}.json", "w") as f:
             f.write(json.dumps(r, indent=2))
         print("::endgroup::")
 
