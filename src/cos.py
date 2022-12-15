@@ -21,7 +21,6 @@ def parse_soup_for_versions(soup):
     for article in soup.find_all('article', class_='devsite-article'):
         # h2 contains the date, which we parse
         for heading in article.find_all(['h2', 'h3']):
-            # TODO: Ignore extra text in version
             version = heading.get('data-text')
             m = re.match(REGEX, version)
             if m:
@@ -41,7 +40,9 @@ def parse_soup_for_versions(soup):
 
     return versions
 
-ACTIVE_MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101]
+# Keep this list updated against https://cloud.google.com/container-optimized-os/docs/release-notes/#Current
+# So we only scrape active milestones
+ACTIVE_MILESTONES = [89, 93, 97, 101]
 
 def get_all_versions():
     all_versions = {}
@@ -55,8 +56,6 @@ def get_all_versions():
         print("::endgroup::")
 
     return all_versions
-
-
 
 if __name__ == '__main__':
     v = get_all_versions()
