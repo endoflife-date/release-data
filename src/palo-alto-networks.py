@@ -8,7 +8,7 @@ URL = "https://www.paloaltonetworks.com/services/support/end-of-life-announcemen
 ID_MAPPING = {
     "pan-os-panorama": "pan-os",
     "globalprotect": "pan-gp",
-    "traps-esm-and-cortex": "pan-xdr",
+    "traps-esm-and-cortex": "pan-cortex-xdr",
 }
 
 
