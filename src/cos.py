@@ -4,8 +4,9 @@ import re
 import json
 from datetime import datetime
 
-# TODO: Regex101 link
+# Keep updated against https://cloud.google.com/container-optimized-os/docs/release-notes/
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
+MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101]
 
 def fetch_milestone(channel):
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/m{}".format(channel)
@@ -41,13 +42,9 @@ def parse_soup_for_versions(soup):
 
     return versions
 
-# Keep this list updated against https://cloud.google.com/container-optimized-os/docs/release-notes/#Current
-# So we only scrape active milestones
-ACTIVE_MILESTONES = [89, 93, 97, 101]
-
 def get_all_versions():
     all_versions = {}
-    for milestone in ACTIVE_MILESTONES:
+    for milestone in MILESTONES:
         soup = fetch_milestone(milestone)
         print("::group::COS - {}".format(milestone))
         versions = parse_soup_for_versions(soup)
