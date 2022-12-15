@@ -56,7 +56,7 @@ def update_releases(product_filter=None):
 def update_product(product_name, config):
     if "npm" in config:
         print(f"::group::{product_name}")
-        config = config | {"regex": REGEX}
+        config = {"regex": REGEX} | config
         r = fetch_releases(config["npm"], config["regex"])
         with open(f"releases/{product_name}.json", "w") as f:
             f.write(json.dumps(r, indent=2))

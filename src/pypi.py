@@ -57,7 +57,7 @@ def update_releases(product_filter=None):
 def update_product(product_name, config):
     if "pypi" in config:
         print("::group::%s" % product_name)
-        config = config | {"regex": REGEX}
+        config = {"regex": REGEX} | config
         r = fetch_releases(config["pypi"], config["regex"])
         with open("releases/%s.json" % product_name, "w") as f:
             f.write(json.dumps(r, indent=2))
