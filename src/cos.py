@@ -37,6 +37,7 @@ def parse_soup_for_versions(soup):
                 d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
                 date = datetime.strptime(d, date_format).strftime('%Y-%m-%d')
                 print("%s: %s" % (version, date))
+                versions[version] = date
 
     return versions
 
