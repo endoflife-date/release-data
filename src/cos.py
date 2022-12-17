@@ -10,8 +10,16 @@ MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101]
 
 def fetch_milestone(channel):
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/m{}".format(channel)
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        return BeautifulSoup(response, features="html5lib")
+    # Google Docs website often returns SSL errors, retry the request in case of failures.
+    for i in range(0,5):
+        try:
+            with urllib.request.urlopen(url, data=None, timeout=5) as response:
+                return BeautifulSoup(response, features="html5lib")
+        except Exception as e:
+            print("Retrying Request")
+            continue
+    raise Exception("Failed to fetch COS milestone {}".format(channel))
+
 
 """
 Takes soup, and returns a dictionary of versions and their release dates
@@ -37,7 +45,6 @@ def parse_soup_for_versions(soup):
                 # Strip out the Date: section from the start
                 d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
                 date = datetime.strptime(d, date_format).strftime('%Y-%m-%d')
-                print("%s: %s" % (version, date))
                 versions[version] = date
 
     return versions
@@ -48,8 +55,6 @@ def get_all_versions():
         soup = fetch_milestone(milestone)
         print("::group::COS - {}".format(milestone))
         versions = parse_soup_for_versions(soup)
-        for version, date in versions.items():
-            print("{}: {}".format(version, date))
         all_versions |= versions
         print("::endgroup::")
 
