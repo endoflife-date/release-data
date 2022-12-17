@@ -1,0 +1,16 @@
+# This is triggered on every push to the main branch
+# and triggers a new deploy on the eol website.
+name: Trigger Deploy to the endoflife.date website
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Trigger Deploy on Netlify
+      run:
+        curl -X POST -d {} "$NETLIFY_BUILD_HOOK_URL"
