@@ -22,27 +22,25 @@ URLS = [
 # to validate your changes
 CONFIG = {
     "macos": [
-        # This covers major releases with no minor version
-        r"macOS [\w ]+ (?P<version>\d{2})",
         # This covers Sierra and beyond
-        r"macOS [\w ]+ (?P<version>\d{2}(?:\.\d+)+)",
+        r"macOS\s[\w\s]+\s(?P<version>\d+(?:\.\d+)*)",
         # This covers Mavericks - El Capitan
-        r"OS X [\w ]+ v?(?P<version>\d{2}(?:\.\d+)+)",
+        r"OS\s+X\s[\w\s]+\sv?(?P<version>\d+(?:\.\d+)+)",
         # This covers even older versions (OS X)
-        r"^Mac OS X [\w ]+ v?(?P<version>\d{2}(?:\.\d+)+)",
+        r"^Mac\s+OS\s+X\s[\w\s]+\sv?(?P<version>\d{2}(?:\.\d+)+)",
     ],
     "ios": [
-        r"iOS (?P<version>\d+)",
-        r"iOS (?P<version>\d+(?:)(?:\.\d+)+)",
-        r"iPhone v?(?P<version>\d+(?:)(?:\.\d+)+)",
+        r"iOS\s+(?P<version>\d+)",
+        r"iOS\s+(?P<version>\d+(?:)(?:\.\d+)+)",
+        r"iPhone\s+v?(?P<version>\d+(?:)(?:\.\d+)+)",
     ],
     "ipados": [
-        r"iPadOS (?P<version>\d+)",
-        r"iPadOS (?P<version>\d+(?:)(?:\.\d+)+)"
+        r"iPadOS\s+(?P<version>\d+)",
+        r"iPadOS\s+(?P<version>\d+(?:)(?:\.\d+)+)"
     ],
     "watchos": [
-        r"watchOS (?P<version>\d+)",
-        r"watchOS (?P<version>\d+(?:)(?:\.\d+)+)"
+        r"watchOS\s+(?P<version>\d+)",
+        r"watchOS\s+(?P<version>\d+(?:)(?:\.\d+)+)"
     ],
 }
 
