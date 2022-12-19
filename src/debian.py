@@ -30,8 +30,30 @@ def clone_repository():
     ret_code = call(f"git {git_opts} pull --depth 1 origin master", shell=True)
     exit(-ret_code) if ret_code < 0 else None
 
+def extract_major_releases(releases):
+    child = subprocess.Popen(
+        f"grep -RhE -A 1 '<define-tag pagetitle>Debian [0-9]+.+</q> released' {REPO_DIR}/english/News "
+        f"| cut -d '<' -f 2 "
+        f"| cut -d '>' -f 2 "
+        f"| grep -v -- '--'",
+        shell=True, stdout=subprocess.PIPE)
+    output = child.communicate()[0].decode('utf-8')
 
-def extract_releases():
+    is_release_line = True
+    version = None
+    for line in output.split('\n'):
+        if line:
+            if is_release_line:
+                version = line.split(" ")[1]
+                is_release_line = False
+            else:
+                date = line
+                print(f"{date} : {version}")
+                releases[version] = date
+                is_release_line = True
+
+
+def extract_point_releases(releases):
     child = subprocess.Popen(
         f"grep -Rh -B 10 '<define-tag revision>' {REPO_DIR}/english/News "
         "| grep -Eo '(release_date>(.*)<|revision>(.*)<)' "
@@ -42,7 +64,6 @@ def extract_releases():
         shell=True, stdout=subprocess.PIPE)
     output = child.communicate()[0].decode('utf-8')
 
-    releases = {}
     for line in output.split('\n'):
         if line:
             parts = line.split(' ')
@@ -51,17 +72,18 @@ def extract_releases():
             print(f"{date} : {version}")
             releases[version] = date
 
-    return dict(sorted(releases.items()))
-
 
 def main():
     print(f"::group::{PRODUCT}")
     clone_repository()
-    releases = extract_releases()
+
+    releases = {}
+    extract_major_releases(releases)
+    extract_point_releases(releases)
     print("::endgroup::")
 
     with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(releases, indent=2))
+        f.write(json.dumps(dict(sorted(releases.items())), indent=2))
 
 
 if __name__ == '__main__':
