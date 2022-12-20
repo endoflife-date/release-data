@@ -1,6 +1,6 @@
 # This is triggered on every push to the main branch
 # and triggers a new deploy on the eol website.
-name: Trigger Deploy to the endoflife.date website
+name: Deploy website
 on:
   push:
     branches:
@@ -12,5 +12,7 @@ jobs:
     environment: production
     steps:
     - name: Trigger Deploy on Netlify
+      env :
+        NETLIFY_BUILD_HOOK_URL: '${{secrets.NETLIFY_BUILD_HOOK_URL}}'
       run:
         curl -X POST -d {} "$NETLIFY_BUILD_HOOK_URL"
