@@ -2,9 +2,13 @@
 # and triggers a new deploy on the eol website.
 name: Deploy website
 on:
+  # We trigger a deploy, if we've updated
+  # release-data in this push.
   push:
     branches:
       - main
+    paths:
+      - 'releases/*'
 jobs:
   deploy:
     name: Deploy Website
