@@ -19,11 +19,13 @@ OPTIONAL_PRODUCT = ARGV[3]
 DEFAULT_VERSION_REGEX = '^v?(?<major>[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.?(?<patch>0|[1-9]\d*)?$'
 DEFAULT_TAG_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
 
+# extensions.partialClone=true is also set up in the workflow.
+# See also https://stackoverflow.com/a/65746233/374236
 def fetch_git_releases(repo_dir, config)
   pwd = Dir.pwd
   `git init --bare #{repo_dir}` unless Dir.exist? repo_dir
   Dir.chdir repo_dir
-  `git fetch --quiet --tags --filter=blob:none "#{config['git']}"`
+  `git fetch --quiet --tags --filter=blob:none --depth=1 "#{config['git']}"`
   Dir.chdir pwd
 end
 
@@ -158,7 +160,7 @@ Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
     data['auto'].each_with_index do |config, i|
       release_data.merge! get_releases(product, config, i)
     end
-     
+
     File.open(get_output_file(product), 'w') do |file|
       file.write(JSON.pretty_generate(release_data))
     end unless release_data.empty?

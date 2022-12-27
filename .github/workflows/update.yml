@@ -24,7 +24,7 @@ jobs:
         path: ~/.cache
         # The cache is reset on the first build of every week this way.
         # Change the -1 part if you need to force reset the cache
-        key: "${{ steps.current-time.outputs.formattedTime }}-1"
+        key: "${{ steps.current-time.outputs.formattedTime }}-2"
     - uses: actions/checkout@v3
       name: Clone self repository
       with:
