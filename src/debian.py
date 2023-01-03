@@ -48,7 +48,7 @@ def extract_major_releases(releases):
                 is_release_line = False
             else:
                 date = line
-                print(f"{date} : {version}")
+                print(f"{version}: {date}")
                 releases[version] = date
                 is_release_line = True
 
@@ -69,7 +69,7 @@ def extract_point_releases(releases):
             parts = line.split(' ')
             date = parts[0]
             version = parts[1]
-            print(f"{date} : {version}")
+            print(f"{version}: {date}")
             releases[version] = date
 
 
@@ -83,7 +83,10 @@ def main():
     print("::endgroup::")
 
     with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(dict(sorted(releases.items())), indent=2))
+        f.write(json.dumps(dict(
+            # sort by date then version (desc)
+            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        ), indent=2))
 
 
 if __name__ == '__main__':
