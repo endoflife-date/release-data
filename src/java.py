@@ -25,19 +25,23 @@ def fetch_releases(releases):
     r.html.render(sleep=1, scrolldown=3)
 
     previous_date = None
-    for row in r.html.find('#released tr.shade'):
-        version = row.find('td.anchor', first=True).attrs['id']
-        date = row.find('td')[1].text
-        date = previous_date if not date else date
-        print(f"{version}: {date}")
-        releases[version] = date
-        previous_date = date
+    for row in r.html.find('#released tr'):
+        version_cell = row.find('td.anchor', first=True)
+
+        if version_cell:
+            version = version_cell.attrs['id']
+            date = row.find('td')[1].text
+            date = previous_date if not date else date
+            print(f"{version}: {date}")
+            releases[version] = date
+            previous_date = date
 
 
 def main():
     print(f"::group::{PRODUCT}")
     releases = {}
     fetch_releases(releases)
+    releases.pop('1.0_alpha') # that's the only version we do not want, regex not needed
     print("::endgroup::")
 
     with open(f"releases/{PRODUCT}.json", "w") as f:
