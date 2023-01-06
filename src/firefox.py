@@ -5,6 +5,7 @@ import re
 import requests
 import urllib.request
 from bs4 import BeautifulSoup
+import concurrent.futures
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/en-US/firefox/releases/"""
 URL = "https://www.mozilla.org/en-US/firefox/releases/"
@@ -15,6 +16,10 @@ VERSION_REGEX = r"\d+(\.\d+)*"
 
 class UnsupportedReleasePageError(Exception):
     "Raised when a firefox release page is not supported"
+    pass
+
+class InvalidPageVariantError(Exception):
+    "Raised when an invalid variant is passed to get_version_and_date"
     pass
 
 def format_date(unformatted_date: str) -> str:
@@ -28,9 +33,9 @@ def format_date(unformatted_date: str) -> str:
             pass
     return ""
 
-def get_version_and_date_gt_28(soup: BeautifulSoup) -> Tuple[str, str]:
-    """ Version matching for firefox versions >= 28.0 """
-
+def get_version_and_date_varant_1(release_page: str) -> Tuple[str, str]:
+    """ Version matching for firefox versions >= 28.0 (usually) """
+    soup = make_bs_request(release_page)
     # get version
     version = soup.find("div", class_="c-release-version").get_text()
 
@@ -40,55 +45,65 @@ def get_version_and_date_gt_28(soup: BeautifulSoup) -> Tuple[str, str]:
 
     return (version, date)
 
-def get_version_and_date_gt_10(soup: BeautifulSoup) -> Tuple[str, str]:
-    """ Version matching for firefox versions >= 10.0 """
+def get_version_and_date_variant_2(release_page: str) -> Tuple[str, str]:
+    """ Version matching for firefox versions >= 10.0 (usually) """
+    soup = make_bs_request(release_page)
     release_info = soup.find("h2").find("small").text
 
     # get version
     version_match = re.search(VERSION_REGEX, soup.select('div#nav-access a')[0].get("href"))
     if version_match is None:
-        raise UnsupportedReleasePageError("Unable to find version")
+        raise InvalidPageVariantError("Unable to find version")
     version = version_match.group()
 
     # get date
     unformatted_date_match = re.search(DATE_REGEX, release_info)
     if unformatted_date_match is None:
-        raise UnsupportedReleasePageError("Unable to find date")
+        raise InvalidPageVariantError("Unable to find date")
     unformatted_date = unformatted_date_match.group()
     date = format_date(unformatted_date)
 
     return (version, date)
 
-def get_version_and_date_gt_3(soup: BeautifulSoup) -> Tuple[str, str]:
-    """ Version matching for firefox versions >= 3.0 """
+def get_version_and_date_variant_3(release_page: BeautifulSoup) -> Tuple[str, str]:
+    """ Version matching for firefox versions >= 3.0 (usually) """
+    soup = make_bs_request(release_page)
     release_info = soup.select('div#main-feature p em')[0].get_text()
 
     # get version
     version_match = re.search(VERSION_REGEX, release_info)
     if version_match is None:
-        raise UnsupportedReleasePageError("Unable to find version")
+        raise InvalidPageVariantError("Unable to find version")
     version = version_match.group()
 
     # get date
     unformatted_date_match = re.search(DATE_REGEX, release_info)
     if unformatted_date_match is None:
-        raise UnsupportedReleasePageError("Unable to find date")
+        raise InvalidPageVariantError("Unable to find date")
     unformatted_date = unformatted_date_match.group()
     date = format_date(unformatted_date)
 
     return (version, date)
 
-def get_version_and_date(soup: BeautifulSoup, release_page: str) -> Tuple[str, str]:
+def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, str]:
     """ Get version and date from the given release page """
-    functions = [get_version_and_date_gt_28, get_version_and_date_gt_10, get_version_and_date_gt_3]
+    major = int(release_version.split(".")[0])
 
-    # Note: firefox release pages for versions <3.0 don't include release dates so we
+    # firefox release pages for versions <3.0 don't include release dates so we
     # can't match these versions for now.
     # example: https://www.mozilla.org/en-US/firefox/2.0/releasenotes/
+    if major < 3:
+        raise UnsupportedReleasePageError("Unsupported release page: %s" % release_page)
+
+    # Firefox release pages come in 3 different variants. Unforunately, there is no
+    # consistent way to determine which variant a page is (say, by version number), so
+    # we have to try each variant until we find one that works.
+    functions = [get_version_and_date_varant_1, get_version_and_date_variant_2, get_version_and_date_variant_3]
+
     for function in functions:
         try:
-            return function(soup)
-        except (UnsupportedReleasePageError, AttributeError, IndexError):
+            return function(release_page)
+        except (InvalidPageVariantError, AttributeError, IndexError):
             pass
 
     raise UnsupportedReleasePageError("Unable to find version and date for %s" % release_page)
@@ -105,16 +120,21 @@ def fetch_releases():
     soup = make_bs_request(URL)
 
     ff_releases = soup.find_all("ol", class_="c-release-list")
-    for p in ff_releases[0].find_all("a")[::-1]:
-        release_page = requests.compat.urljoin(URL, p.get("href"))
-        rp_soup = make_bs_request(release_page)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_url = {
+            executor.submit(
+                get_version_and_date,
+                requests.compat.urljoin(URL, p.get("href")),
+                p.get_text()): p.get("href") for p in ff_releases[0].find_all("a")
+        }
 
-        try:
-            (version, date) = get_version_and_date(rp_soup, release_page)
-            print("%s: %s" % (version, date))
-            releases[version] = date
-        except UnsupportedReleasePageError:
-            print("Unsupported release page: %s" % release_page)
+        for future in concurrent.futures.as_completed(future_to_url):
+            try:
+                (version, date) = future.result()
+                print("%s: %s" % (version, date))
+                releases[version] = date
+            except UnsupportedReleasePageError:
+                print("Unsupported release page: %s" % future_to_url[future])
 
     return releases
 
@@ -123,10 +143,10 @@ def main():
 
     releases = fetch_releases()
     with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(
-            # sort by date desc
-            dict(sorted(releases.items(), key=lambda e: e[1], reverse=True)),
-            indent=2))
+        f.write(json.dumps(dict(
+            # sort by date then version (desc)
+            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        ), indent=2))
 
     print("::endgroup::")
 
