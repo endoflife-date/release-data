@@ -79,7 +79,12 @@ def get_version_and_date_gt_3(rp_soup) -> Tuple[str, str]:
     return (version, date)
 
 def get_version_and_date(soup: BeautifulSoup, release_page: str) -> Tuple[str, str]:
+    """ Get version and date from the given release page """
     functions = [get_version_and_date_gt_28, get_version_and_date_gt_10, get_version_and_date_gt_3]
+
+    # Note: firefox release pages for versions <3.0 don't include release dates so we
+    # can't match these versions for now.
+    # example: https://www.mozilla.org/en-US/firefox/2.0/releasenotes/
     for function in functions:
         try:
             return function(soup)
