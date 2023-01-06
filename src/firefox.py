@@ -33,9 +33,8 @@ def format_date(unformatted_date: str) -> str:
             pass
     return ""
 
-def get_version_and_date_varant_1(release_page: str) -> Tuple[str, str]:
+def get_version_and_date_varant_1(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 28.0 (usually) """
-    soup = make_bs_request(release_page)
     # get version
     version = soup.find("div", class_="c-release-version").get_text()
 
@@ -45,9 +44,8 @@ def get_version_and_date_varant_1(release_page: str) -> Tuple[str, str]:
 
     return (version, date)
 
-def get_version_and_date_variant_2(release_page: str) -> Tuple[str, str]:
+def get_version_and_date_variant_2(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 10.0 (usually) """
-    soup = make_bs_request(release_page)
     release_info = soup.find("h2").find("small").text
 
     # get version
@@ -65,9 +63,8 @@ def get_version_and_date_variant_2(release_page: str) -> Tuple[str, str]:
 
     return (version, date)
 
-def get_version_and_date_variant_3(release_page: BeautifulSoup) -> Tuple[str, str]:
+def get_version_and_date_variant_3(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 3.0 (usually) """
-    soup = make_bs_request(release_page)
     release_info = soup.select('div#main-feature p em')[0].get_text()
 
     # get version
@@ -99,10 +96,11 @@ def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, 
     # consistent way to determine which variant a page is (say, by version number), so
     # we have to try each variant until we find one that works.
     functions = [get_version_and_date_varant_1, get_version_and_date_variant_2, get_version_and_date_variant_3]
+    soup = make_bs_request(release_page)
 
     for function in functions:
         try:
-            return function(release_page)
+            return function(soup)
         except (InvalidPageVariantError, AttributeError, IndexError):
             pass
 
