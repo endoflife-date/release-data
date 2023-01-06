@@ -28,24 +28,24 @@ def format_date(unformatted_date: str) -> str:
             pass
     return ""
 
-def get_version_and_date_gt_28(rp_soup) -> Tuple[str, str]:
+def get_version_and_date_gt_28(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 28.0 """
 
     # get version
-    version = rp_soup.find("div", class_="c-release-version").get_text()
+    version = soup.find("div", class_="c-release-version").get_text()
 
     # get date
-    unformatted_date = rp_soup.find("p", class_="c-release-date").get_text()
+    unformatted_date = soup.find("p", class_="c-release-date").get_text()
     date = format_date(unformatted_date)
 
     return (version, date)
 
-def get_version_and_date_gt_10(rp_soup) -> Tuple[str, str]:
+def get_version_and_date_gt_10(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 10.0 """
-    release_info = rp_soup.find("h2").find("small").text
+    release_info = soup.find("h2").find("small").text
 
     # get version
-    version_match = re.search(VERSION_REGEX, rp_soup.select('div#nav-access a')[0].get("href"))
+    version_match = re.search(VERSION_REGEX, soup.select('div#nav-access a')[0].get("href"))
     if version_match is None:
         raise UnsupportedReleasePageError("Unable to find version")
     version = version_match.group()
@@ -59,9 +59,9 @@ def get_version_and_date_gt_10(rp_soup) -> Tuple[str, str]:
 
     return (version, date)
 
-def get_version_and_date_gt_3(rp_soup) -> Tuple[str, str]:
+def get_version_and_date_gt_3(soup: BeautifulSoup) -> Tuple[str, str]:
     """ Version matching for firefox versions >= 3.0 """
-    release_info = rp_soup.select('div#main-feature p em')[0].get_text()
+    release_info = soup.select('div#main-feature p em')[0].get_text()
 
     # get version
     version_match = re.search(VERSION_REGEX, release_info)
