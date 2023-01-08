@@ -41,7 +41,9 @@ def main():
     print(f"::group::{PRODUCT}")
     releases = {}
     fetch_releases(releases)
-    releases.pop('1.0_alpha') # that's the only version we do not want, regex not needed
+    # that's the only version we do not want, regex not needed
+    if '1.0_alpha' in releases:
+        releases.pop('1.0_alpha')
     print("::endgroup::")
 
     with open(f"releases/{PRODUCT}.json", "w") as f:
