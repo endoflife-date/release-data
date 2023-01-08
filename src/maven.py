@@ -10,6 +10,7 @@ import re
 # Major.Minor + Optional Patch, no RC, nightly releases.
 VERSION_REGEX = r'^\d+\.\d+(\.\d+)?$'
 
+
 # TODO: Add support for custom regexes
 # Hasn't been needed yet, so only write if we need it
 def valid_version(version):
@@ -17,27 +18,44 @@ def valid_version(version):
         return True
     return False
 
+
+def fetch_json(group_id, artifact_id, start):
+    url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&rows=100&wt=json&start={start}"
+    last_exception = None
+
+    # search.maven.org often time out lately, retry the request in case of failures.
+    for i in range(0, 5):
+        try:
+            with urllib.request.urlopen(url, data=None, timeout=5) as response:
+                return json.load(response)
+        except Exception as e:
+            last_exception = e
+            message = getattr(e, 'message', repr(e)) # https://stackoverflow.com/a/45532289/374236
+            print(f"Error while requesting {url} ({message}), retrying ({i})...")
+            continue
+
+    raise last_exception
+
+
 def fetch_releases(package_identifier):
-    group_id, artifact_id = package_identifier.split("/")
     releases = {}
     start = 0
+    group_id, artifact_id = package_identifier.split("/")
+
     while True:
-        url = (
-            "https://search.maven.org/solrsearch/select?q=g:%s+AND+a:%s&core=gav&rows=100&wt=json&start=%s"
-            % (group_id, artifact_id, start)
-        )
-        with urllib.request.urlopen(url, data=None, timeout=5) as response:
-            data = json.load(response)
-            for row in data["response"]["docs"]:
-                date = datetime.datetime.utcfromtimestamp(row["timestamp"] / 1000)
-                version = row["v"]
-                if valid_version(version):
-                    abs_date = date.strftime("%Y-%m-%d")
-                    releases[version] = abs_date
-                    print("%s: %s" % (version, abs_date))
-            start += 100
-            if data["response"]["numFound"] <= start:
-                break
+        data = fetch_json(group_id, artifact_id, start)
+
+        for row in data["response"]["docs"]:
+            version = row["v"]
+            if valid_version(version):
+                date = datetime.datetime.utcfromtimestamp(row["timestamp"] / 1000).strftime("%Y-%m-%d")
+                releases[version] = date
+                print("%s: %s" % (version, date))
+
+        start += 100
+        if data["response"]["numFound"] <= start:
+            break
+
     return releases
 
 
@@ -68,7 +86,6 @@ def write_file(product_name, releases):
             # sort by date then version (desc)
             sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
         ), indent=2))
-
 
 
 if __name__ == "__main__":
