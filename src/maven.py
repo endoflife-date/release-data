@@ -64,7 +64,10 @@ def update_releases(product_filter=None):
 
 def write_file(product_name, releases):
     with open("releases/%s.json" % product_name, "w") as f:
-        f.write(json.dumps(releases, indent=2))
+        f.write(json.dumps(dict(
+            # sort by date then version (desc)
+            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        ), indent=2))
 
 
 
