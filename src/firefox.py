@@ -108,10 +108,21 @@ def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, 
 
 def make_bs_request(url: str) -> BeautifulSoup:
     """ Make a request to the given url and return a BeautifulSoup object """
+    last_exception = None
     headers = {"user-agent": "mozilla"}
-    req = urllib.request.Request(url, headers=headers)
-    res = urllib.request.urlopen(req, timeout=5)
-    return BeautifulSoup(res.read(), features="html5lib")
+
+    # requests to www.mozilla.org often time out, retry in case of failures
+    for i in range(0, 5):
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=5) as response:
+                return BeautifulSoup(response.read(), features="html5lib")
+        except TimeoutError as e:
+            last_exception = e
+            print(f"Request to {url} timed out, retrying ({i})...")
+            continue
+
+    raise last_exception
 
 def fetch_releases():
     releases = {}
