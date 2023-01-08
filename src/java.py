@@ -45,10 +45,10 @@ def main():
     print("::endgroup::")
 
     with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(
-            # sort by date desc
-            dict(sorted(releases.items(), key=lambda e: e[1], reverse=True)),
-            indent=2))
+        f.write(json.dumps(dict(
+            # sort by date then version (desc)
+            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        ), indent=2))
 
 
 if __name__ == '__main__':
