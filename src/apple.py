@@ -23,7 +23,7 @@ URLS = [
 CONFIG = {
     "macos": [
         # This covers Sierra and beyond
-        r"macOS\s[\w\s]+\s(?P<version>\d+(?:\.\d+)*)",
+        r"macOS[\D]+(?P<version>\d+(?:\.\d+)*)",
         # This covers Mavericks - El Capitan
         r"OS\s+X\s[\w\s]+\sv?(?P<version>\d+(?:\.\d+)+)",
         # This covers even older versions (OS X)
