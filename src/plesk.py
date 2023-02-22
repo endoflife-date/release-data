@@ -13,6 +13,9 @@ def make_bs_request(url):
         return BeautifulSoup(response.read(), features="html5lib")
 
 
+# Only 18.0.20.3 and later will be picked up :
+# - format of the title for 18.0.20 and 18.0.19 are different,
+# - there is not entry for GA of version 18.0.18 and older.
 def fetch_releases():
     result = {}
 
@@ -28,6 +31,7 @@ def fetch_releases():
             continue
         date = datetime.strptime(release.p.text.strip(), '%d %B %Y').strftime("%Y-%m-%d")
         result[version] = date
+        print(f"{version}: {date}")
 
     return result
 
