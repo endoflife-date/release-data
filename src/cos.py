@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Keep updated against https://cloud.google.com/container-optimized-os/docs/release-notes/
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
-MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101]
+MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101, 105]
 
 def fetch_milestone(channel):
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/m{}".format(channel)
