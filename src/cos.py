@@ -4,9 +4,24 @@ import re
 import json
 from datetime import datetime
 
-# Keep updated against https://cloud.google.com/container-optimized-os/docs/release-notes/
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
-MILESTONES = [69, 73, 77, 81, 85, 89, 93, 97, 101]
+
+def fetch_all_milestones():
+    url = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
+    # Google Docs website often returns SSL errors, retry the request in case of failures.
+    for i in range(0,10):
+        try:
+            with urllib.request.urlopen(url, data=None, timeout=5) as response:
+                soup = BeautifulSoup(response, features="html5lib")
+                break
+        except Exception as e:
+            print("Retrying Request, got error: " + e)
+            continue
+    else:
+      raise Exception("Failed to fetch COS milestones")
+
+    milestones = soup.find_all('td', text=re.compile(r'COS \d+ LTS'))
+    return [m.text.split(' ')[1] for m in milestones]
 
 def fetch_milestone(channel):
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/m{}".format(channel)
@@ -51,7 +66,8 @@ def parse_soup_for_versions(soup):
 
 def get_all_versions():
     all_versions = {}
-    for milestone in MILESTONES:
+    all_milestones = fetch_all_milestones()
+    for milestone in all_milestones:
         soup = fetch_milestone(milestone)
         print("::group::COS - {}".format(milestone))
         versions = parse_soup_for_versions(soup)
