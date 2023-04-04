@@ -21,7 +21,7 @@ def fetch_all_milestones():
       raise Exception("Failed to fetch COS milestones")
 
     milestones_table = soup.find('h3', id='Current').find_next('table')
-    milestone_tds = milestones_table.find_all('td', text=re.compile(r'milestone \d+'))
+    milestone_tds = milestones_table.find_all('td', text=re.compile(r'COS \d+ LTS'))
     return [m.text.split(' ')[1] for m in milestone_tds]
 
 def fetch_milestone(channel):
