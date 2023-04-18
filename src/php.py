@@ -37,7 +37,7 @@ with open("releases/php.json", "w") as f:
         json.dumps(
             dict(sorted(
                 releases.items(),
-                key=lambda x: list(map(str, x[0].split(".")))
+                key=lambda x: list(map(int, x[0].split(".")))
             )),
             indent=2,
         )
