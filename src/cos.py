@@ -15,7 +15,7 @@ def fetch_all_milestones():
                 soup = BeautifulSoup(response, features="html5lib")
                 break
         except Exception as e:
-            print("Retrying Request, got error: " + e)
+            print("Retrying Request, got error: " + str(e))
             continue
     else:
       raise Exception("Failed to fetch COS milestones")
@@ -43,6 +43,11 @@ def parse_soup_for_versions(soup):
     """ Parse the soup """
     versions = {}
     for article in soup.find_all('article', class_='devsite-article'):
+        def parse_date(d):
+            # If the date begins with a >3 letter month name, trim it to just 3 letters
+            # Strip out the Date: section from the start
+            d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1,4})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
+            return datetime.strptime(d, date_format).strftime('%Y-%m-%d')
         # h2 contains the date, which we parse
         for heading in article.find_all(['h2', 'h3']):
             version = heading.get('data-text')
@@ -56,10 +61,11 @@ def parse_soup_for_versions(soup):
                 except:
                     # In some older releases, it is mentioned as Date: [Date] in the text
                     d = heading.find_next('i').text
-                # If the date begins with a 4 letter month name, trim it to just 3 letters
-                # Strip out the Date: section from the start
-                d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
-                date = datetime.strptime(d, date_format).strftime('%Y-%m-%d')
+                try:
+                    date = parse_date(d)
+                except ValueError:
+                    d = heading.find_previous('h2').get('data-text')
+                    date = parse_date(d)
                 versions[version] = date
 
     return versions
