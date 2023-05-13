@@ -1,15 +1,13 @@
-from glob import glob
-import os
 import re
 import sys
 import json
-import frontmatter
 import urllib.request
 from bs4 import BeautifulSoup
 from liquid import Template
+from common import endoflife
 
-# Same as used in Ruby (update.rb)
-DEFAULT_TAG_TEMPLATE = (
+METHOD = 'distrowatch'
+DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
     "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
 )
 
@@ -42,32 +40,21 @@ def fetch_releases(distrowatch_id, regex, template):
     return releases
 
 
-def update_releases(product_filter=None):
-    for product_file in glob("website/products/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
-        if product_filter and product_name != product_filter:
-            continue
-        with open(product_file, "r") as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                for config in data["auto"]:
-                    for key, d_id in config.items():
-                        if key == "distrowatch":
-                            update_product(product_name, config)
+def update_product(product_name, configs):
+    releases = {}
+
+    for config in configs:
+        t = config.get("template", DEFAULT_TAG_TEMPLATE)
+        if "regex" in config:
+            regex = config["regex"]
+            releases = releases | fetch_releases(config[METHOD], regex, t)
+
+    with open("releases/%s.json" % product_name, "w") as f:
+        f.write(json.dumps(releases, indent=2))
 
 
-def update_product(product_name, config):
-    t = config.get("template", DEFAULT_TAG_TEMPLATE)
-    if "regex" in config:
-        print("::group::%s" % product_name)
-        r = fetch_releases(config["distrowatch"], config["regex"], t)
-        with open("releases/%s.json" % product_name, "w") as f:
-            f.write(json.dumps(r, indent=2))
-        print("::endgroup::")
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        update_releases(sys.argv[1])
-    else:
-        update_releases()
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+for product, configs in endoflife.list_products(METHOD, p_filter).items():
+    print("::group::%s" % product)
+    update_product(product, configs)
+    print("::endgroup::")

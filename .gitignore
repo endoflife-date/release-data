@@ -2,3 +2,4 @@ website
 vendor
 .bundle
 pyrightconfig.json
+__pycache__
