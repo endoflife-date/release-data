@@ -1,13 +1,11 @@
-from glob import glob
-import os
 import re
 import sys
 import json
-import frontmatter
 import subprocess
+from common import endoflife
 
+METHOD = "github_releases"
 REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
-AUTO_KEY = "github_releases"
 
 
 # This script is using the GitHub CLI with the GraphQL API in order to retrieve
@@ -68,34 +66,18 @@ def fetch_releases(repo_id, regex):
 
 
 def update_product(product_name, configs):
-    print("::group::%s" % product_name)
     releases = {}
 
     for config in configs:
         config = config if "regex" in config else config | {"regex": REGEX}
-        releases = releases | fetch_releases(config[AUTO_KEY], config["regex"])
+        releases = releases | fetch_releases(config[METHOD], config["regex"])
 
     with open(f"releases/{product_name}.json", "w") as f:
         f.write(json.dumps(releases, indent=2))
+
+
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+for product, configs in endoflife.list_products(METHOD, p_filter).items():
+    print("::group::%s" % product)
+    update_product(product, configs)
     print("::endgroup::")
-
-
-def update_releases(product_filter=None):
-    for product_file in glob("website/products/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
-        if product_filter and product_name != product_filter:
-            continue
-
-        with open(product_file, "r") as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                configs = list(filter(lambda config: AUTO_KEY in config.keys(), data["auto"]))
-                if len(configs) > 0:
-                    update_product(product_name, configs)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        update_releases(sys.argv[1])
-    else:
-        update_releases()

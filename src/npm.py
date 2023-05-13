@@ -1,12 +1,11 @@
-from glob import glob
-import os
 import re
 import sys
 import json
-import frontmatter
 import urllib.request
+from common import endoflife
 
-DEFAULT_TAG_TEMPLATE = (
+METHOD = "npm"
+DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
     "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
 )
 REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
@@ -35,34 +34,21 @@ def fetch_releases(npm_id, regex):
     return releases
 
 
-def update_releases(product_filter=None):
-    for product_file in glob("website/products/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
-        if product_filter and product_name != product_filter:
-            continue
+def update_product(product_name, configs):
+    releases = {}
 
-        with open(product_file, "r") as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                for config in data["auto"]:
-                    for key, d_id in config.items():
-                        if key == "npm":
-                            update_product(product_name, config)
-
-
-def update_product(product_name, config):
-    if "npm" in config:
-        print(f"::group::{product_name}")
+    for config in configs:
         config = {"regex": REGEX} | config
-        r = fetch_releases(config["npm"], config["regex"])
-        print("::endgroup::")
+        releases = releases | fetch_releases(config[METHOD], config["regex"])
 
-        with open(f"releases/{product_name}.json", "w") as f:
-            f.write(json.dumps(r, indent=2))
+    with open(f"releases/{product_name}.json", "w") as f:
+        f.write(json.dumps(releases, indent=2))
 
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        update_releases(sys.argv[1])
-    else:
-        update_releases()
+
+
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+for product, configs in endoflife.list_products(METHOD, p_filter).items():
+    print("::group::%s" % product)
+    update_product(product, configs)
+    print("::endgroup::")
