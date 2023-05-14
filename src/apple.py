@@ -1,8 +1,8 @@
-import json
-import urllib.request
 import datetime
-from bs4 import BeautifulSoup
+import json
 import re
+from bs4 import BeautifulSoup
+from common import endoflife
 
 URLS = [
     "https://support.apple.com/en-us/HT201222",  # latest
@@ -55,45 +55,45 @@ def parse_date(s):
 
 
 for url in URLS:
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        soup = BeautifulSoup(response, features="html5lib")
-        table = soup.find(id="tableWraper")
-        for tr in reversed(table.findAll("tr")[1:]):
-            td_list = tr.findAll("td")
-            version_text = td_list[0].get_text()
-            for key, regexes in CONFIG.items():
-                for regex in regexes:
-                    matches = re.findall(regex, version_text, re.MULTILINE)
-                    if matches:
-                        for version in matches:
-                            abs_date = None
-                            try:
-                                print("== %s" % version_text.strip())
-                                abs_date = parse_date(td_list[2].get_text())
-                                print_date = abs_date.strftime("%Y-%m-%d")
-                                # Only update the date if we are adding first time
-                                # or if the date is lower
-                                if version not in release_lists[key]:
-                                    release_lists[key][version] = abs_date
-                                    print("%s-%s: %s" % (key, version, print_date))
-                                elif release_lists[key][version] < abs_date:
-                                    print(
-                                        "%s-%s: %s [IGNORED]"
-                                        % (key, version, print_date)
-                                    )
-                                elif release_lists[key][version] > abs_date:
-                                    # This is a lower date, so we mark it with a bang
-                                    print(
-                                        "%s-%s: %s [UPDATED]"
-                                        % (key, version, print_date)
-                                    )
-                                    release_lists[key][version] = abs_date
-                            except ValueError as e:
+    response = endoflife.fetch_url(url)
+    soup = BeautifulSoup(response, features="html5lib")
+    table = soup.find(id="tableWraper")
+    for tr in reversed(table.findAll("tr")[1:]):
+        td_list = tr.findAll("td")
+        version_text = td_list[0].get_text()
+        for key, regexes in CONFIG.items():
+            for regex in regexes:
+                matches = re.findall(regex, version_text, re.MULTILINE)
+                if matches:
+                    for version in matches:
+                        abs_date = None
+                        try:
+                            print("== %s" % version_text.strip())
+                            abs_date = parse_date(td_list[2].get_text())
+                            print_date = abs_date.strftime("%Y-%m-%d")
+                            # Only update the date if we are adding first time
+                            # or if the date is lower
+                            if version not in release_lists[key]:
+                                release_lists[key][version] = abs_date
+                                print("%s-%s: %s" % (key, version, print_date))
+                            elif release_lists[key][version] < abs_date:
                                 print(
-                                    "%s-%s Failed to parse Date (%s)"
-                                    % (key, version, td_list[2].get_text())
+                                    "%s-%s: %s [IGNORED]"
+                                    % (key, version, print_date)
                                 )
-                                next
+                            elif release_lists[key][version] > abs_date:
+                                # This is a lower date, so we mark it with a bang
+                                print(
+                                    "%s-%s: %s [UPDATED]"
+                                    % (key, version, print_date)
+                                )
+                                release_lists[key][version] = abs_date
+                        except ValueError as e:
+                            print(
+                                "%s-%s Failed to parse Date (%s)"
+                                % (key, version, td_list[2].get_text())
+                            )
+                            next
 
 
 for k in CONFIG.keys():

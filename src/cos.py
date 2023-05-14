@@ -1,46 +1,31 @@
-import urllib.request
-from bs4 import BeautifulSoup
-import re
 import json
+import re
+from bs4 import BeautifulSoup
+from common import endoflife
 from datetime import datetime
 
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
 
+
 def fetch_all_milestones():
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
-    # Google Docs website often returns SSL errors, retry the request in case of failures.
-    for i in range(0,10):
-        try:
-            with urllib.request.urlopen(url, data=None, timeout=5) as response:
-                soup = BeautifulSoup(response, features="html5lib")
-                break
-        except Exception as e:
-            print("Retrying Request, got error: " + str(e))
-            continue
-    else:
-      raise Exception("Failed to fetch COS milestones")
-
+    # Retry as Google Docs often returns SSL errors.
+    response = endoflife.fetch_url(url, retry_count=10)
+    soup = BeautifulSoup(response, features="html5lib")
     milestones = soup.find_all('td', text=re.compile(r'COS \d+ LTS'))
     return [m.text.split(' ')[1] for m in milestones]
 
+
 def fetch_milestone(channel):
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/m{}".format(channel)
-    # Google Docs website often returns SSL errors, retry the request in case of failures.
-    for i in range(0,5):
-        try:
-            with urllib.request.urlopen(url, data=None, timeout=5) as response:
-                return BeautifulSoup(response, features="html5lib")
-        except Exception as e:
-            print("Retrying Request")
-            continue
-    raise Exception("Failed to fetch COS milestone {}".format(channel))
+    # Retry as Google Docs often returns SSL errors.
+    response = endoflife.fetch_url(url, retry_count=10)
+    return BeautifulSoup(response, features="html5lib")
 
 
-"""
-Takes soup, and returns a dictionary of versions and their release dates
-"""
 def parse_soup_for_versions(soup):
-    """ Parse the soup """
+    """Takes soup, and returns a dictionary of versions and their release dates
+    """
     versions = {}
     for article in soup.find_all('article', class_='devsite-article'):
         def parse_date(d):
@@ -67,20 +52,22 @@ def parse_soup_for_versions(soup):
                     d = heading.find_previous('h2').get('data-text')
                     date = parse_date(d)
                 versions[version] = date
+                print("%s: %s" % (version, date))
 
     return versions
+
 
 def get_all_versions():
     all_versions = {}
     all_milestones = fetch_all_milestones()
+    print("::group::cos")
     for milestone in all_milestones:
         soup = fetch_milestone(milestone)
-        print("::group::COS - {}".format(milestone))
         versions = parse_soup_for_versions(soup)
         all_versions |= versions
-        print("::endgroup::")
-
+    print("::endgroup::")
     return all_versions
+
 
 if __name__ == '__main__':
     v = get_all_versions()

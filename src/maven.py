@@ -1,8 +1,7 @@
-import sys
-import json
-import urllib.request
 import datetime
+import json
 import re
+import sys
 from common import endoflife
 
 METHOD = "maven"
@@ -19,20 +18,8 @@ def valid_version(version):
 
 def fetch_json(group_id, artifact_id, start):
     url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&rows=100&wt=json&start={start}"
-    last_exception = None
-
-    # search.maven.org often time out lately, retry the request in case of failures.
-    for i in range(0, 5):
-        try:
-            with urllib.request.urlopen(url, data=None, timeout=5) as response:
-                return json.load(response)
-        except Exception as e:
-            last_exception = e
-            message = getattr(e, 'message', repr(e)) # https://stackoverflow.com/a/45532289/374236
-            print(f"Error while requesting {url} ({message}), retrying ({i})...")
-            continue
-
-    raise last_exception
+    response = endoflife.fetch_url(url, retry_count=5)
+    return json.loads(response)
 
 
 def fetch_releases(package_identifier):

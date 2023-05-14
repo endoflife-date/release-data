@@ -1,7 +1,7 @@
-import urllib.request
-from bs4 import BeautifulSoup
-import re
 import json
+import re
+from bs4 import BeautifulSoup
+from common import endoflife
 from datetime import datetime
 
 # https://regex101.com/r/zPxBqT/1
@@ -9,8 +9,8 @@ REGEX = r"\d.\d+\.\d+-gke\.\d+"
 
 def fetch_channel(channel):
     url = "https://cloud.google.com/kubernetes-engine/docs/release-notes-{}".format(channel)
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        return BeautifulSoup(response, features="html5lib")
+    response = endoflife.fetch_url(url)
+    return BeautifulSoup(response, features="html5lib")
 
 """
 Takes soup, and returns a dictionary of versions and their release dates

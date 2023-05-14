@@ -1,7 +1,6 @@
+import json
 import re
 import sys
-import json
-import urllib.request
 from common import endoflife
 
 METHOD = "npm"
@@ -18,18 +17,18 @@ def fetch_releases(npm_id, regex):
         regex = [regex]
 
     url = f"https://registry.npmjs.org/{npm_id}"
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        data = json.loads(response.read().decode("utf-8"))
-        for version in data["time"]:
-            matches = False
-            for r in regex:
-                if re.match(r, version):
-                    matches = True
+    response = endoflife.fetch_url(url)
+    data = json.loads(response)
+    for version in data["time"]:
+        matches = False
+        for r in regex:
+            if re.match(r, version):
+                matches = True
 
-            release_datetime = data["time"][version]
-            if matches and release_datetime:
-                releases[version] = release_datetime.split("T")[0]
-                print(f"{version}: {releases[version]}")
+        release_datetime = data["time"][version]
+        if matches and release_datetime:
+            releases[version] = release_datetime.split("T")[0]
+            print(f"{version}: {releases[version]}")
 
     return releases
 
