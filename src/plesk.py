@@ -1,16 +1,15 @@
 import json
-from datetime import datetime
-import urllib.request
 from bs4 import BeautifulSoup
+from common import endoflife
+from datetime import datetime
 
 URL = "https://docs.plesk.com/release-notes/obsidian/change-log"
 PRODUCT = "plesk"
 
 
 def make_bs_request(url):
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req, timeout=5) as response:
-        return BeautifulSoup(response.read(), features="html5lib")
+    response = endoflife.fetch_url(url)
+    return BeautifulSoup(response, features="html5lib")
 
 
 # Only 18.0.20.3 and later will be picked up :

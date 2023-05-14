@@ -1,9 +1,8 @@
-import re
 import json
-import urllib.request
-
-from datetime import datetime, timezone
+import re
 from bs4 import BeautifulSoup
+from common import endoflife
+from datetime import datetime, timezone
 
 """Fetch Linux Kernel versions with their dates from
 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags.
@@ -25,9 +24,8 @@ def parse_date(d):
 
 
 def make_bs_request(url):
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req, timeout=5) as response:
-        return BeautifulSoup(response.read(), features="html5lib")
+    response = endoflife.fetch_url(url)
+    return BeautifulSoup(response, features="html5lib")
 
 
 def fetch_releases():

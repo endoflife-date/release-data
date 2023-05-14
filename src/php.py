@@ -1,6 +1,6 @@
-import urllib.request
 import datetime
 import json
+from common import endoflife
 
 PHP_MAJOR_VERSIONS = [4, 5, 7, 8]
 
@@ -17,13 +17,13 @@ def parse_date(date_str):
 
 def fetch_versions(major_version):
     url = f"https://www.php.net/releases/index.php?json&max=-1&version={major_version}"
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        data = json.loads(response.read())
-        for v in data:
-            data[v] = parse_date(data[v]["date"])
-            print(f"{v}: {data[v]}")
+    response = endoflife.fetch_url(url)
+    data = json.loads(response)
+    for v in data:
+        data[v] = parse_date(data[v]["date"])
+        print(f"{v}: {data[v]}")
 
-        return data
+    return data
 
 
 with open("releases/php.json", "w") as f:

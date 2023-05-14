@@ -1,11 +1,11 @@
+import concurrent.futures
 import json
-from typing import Tuple
-from datetime import datetime
 import re
 import requests
-import urllib.request
 from bs4 import BeautifulSoup
-import concurrent.futures
+from common import endoflife
+from datetime import datetime
+from typing import Tuple
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/en-US/firefox/releases/"""
 URL = "https://www.mozilla.org/en-US/firefox/releases/"
@@ -107,22 +107,9 @@ def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, 
     raise UnsupportedReleasePageError("Unable to find version and date for %s" % release_page)
 
 def make_bs_request(url: str) -> BeautifulSoup:
-    """ Make a request to the given url and return a BeautifulSoup object """
-    last_exception = None
-    headers = {"user-agent": "mozilla"}
-
     # requests to www.mozilla.org often time out, retry in case of failures
-    for i in range(0, 5):
-        try:
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=5) as response:
-                return BeautifulSoup(response.read(), features="html5lib")
-        except TimeoutError as e:
-            last_exception = e
-            print(f"Request to {url} timed out, retrying ({i})...")
-            continue
-
-    raise last_exception
+    response = endoflife.fetch_url(url, timeout=10, retry_count=5)
+    return BeautifulSoup(response, features="html5lib")
 
 def fetch_releases():
     releases = {}

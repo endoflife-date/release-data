@@ -1,10 +1,9 @@
+import json
 import re
 import sys
-import json
-import urllib.request
 from bs4 import BeautifulSoup
-from liquid import Template
 from common import endoflife
+from liquid import Template
 
 METHOD = 'distrowatch'
 DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
@@ -28,15 +27,15 @@ def get_versions_from_headline(regex, headline, template):
 def fetch_releases(distrowatch_id, regex, template):
     releases = {}
     l_template = Template(template)
-    url = "https://distrowatch.com/index.php?distribution=%s" % distrowatch_id
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        soup = BeautifulSoup(response, features="html5lib")
-        for table in soup.select("td.News1>table.News"):
-            headline = table.select_one("td.NewsHeadline a[href]").get_text().strip()
-            date = table.select_one("td.NewsDate").get_text()
-            for v in get_versions_from_headline(regex, headline, l_template):
-                print("%s: %s" % (v, date))
-                releases[v] = date
+    url = f"https://distrowatch.com/index.php?distribution={distrowatch_id}"
+    response = endoflife.fetch_url(url)
+    soup = BeautifulSoup(response, features="html5lib")
+    for table in soup.select("td.News1>table.News"):
+        headline = table.select_one("td.NewsHeadline a[href]").get_text().strip()
+        date = table.select_one("td.NewsDate").get_text()
+        for v in get_versions_from_headline(regex, headline, l_template):
+            print("%s: %s" % (v, date))
+            releases[v] = date
     return releases
 
 

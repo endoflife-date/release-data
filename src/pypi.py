@@ -1,9 +1,8 @@
+import json
 import re
 import sys
-import json
-import urllib.request
-from datetime import datetime
 from common import endoflife
+from datetime import datetime
 
 METHOD = "pypi"
 DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
@@ -19,18 +18,18 @@ def fetch_releases(pypi_id, regex):
         regex = [regex]
 
     url = "https://pypi.org/pypi/%s/json" % pypi_id
-    with urllib.request.urlopen(url, data=None, timeout=5) as response:
-        data = json.loads(response.read().decode("utf-8"))
-        for version in data["releases"]:
-            R = data["releases"][version]
-            matches = False
-            for r in regex:
-                if re.match(r, version):
-                    matches = True
-            if matches and R:
-                d = datetime.fromisoformat(R[0]["upload_time"]).strftime("%Y-%m-%d")
-                releases[version] = d
-                print("%s: %s" % (version, d))
+    response = endoflife.fetch_url(url)
+    data = json.loads(response)
+    for version in data["releases"]:
+        R = data["releases"][version]
+        matches = False
+        for r in regex:
+            if re.match(r, version):
+                matches = True
+        if matches and R:
+            d = datetime.fromisoformat(R[0]["upload_time"]).strftime("%Y-%m-%d")
+            releases[version] = d
+            print("%s: %s" % (version, d))
 
     return releases
 
