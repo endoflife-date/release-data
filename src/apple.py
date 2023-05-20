@@ -43,60 +43,56 @@ CONFIG = {
     ],
 }
 
-release_lists = {k: {} for k in CONFIG.keys()}
-print("::group::apple")
-
 
 def parse_date(s):
     d, m, y = s.strip().split(" ")
     m = m[0:3].lower()
-    return datetime.datetime.strptime("%s %s %s" % (d, m, y), "%d %b %Y")
+    return datetime.datetime.strptime(f"{d} {m} {y}", "%d %b %Y")
 
 
-for url in URLS:
+# Only update the date if we are adding first time or if the date is lower
+def handle_version(key, version, date_text, releases):
+    try:
+        date = parse_date(date_text)
+        date_fmt = date.strftime("%Y-%m-%d")
+
+        if version not in releases[key]:
+            releases[key][version] = date
+            print(f"{key}-{version}: {date_fmt}")
+        elif releases[key][version] > date:
+            releases[key][version] = date
+            print(f"{key}-{version}: {date_fmt} [UPDATED]")
+        else:
+            print(f"{key}-{version}: {date_fmt} [IGNORED]")
+
+    except ValueError:
+        print(f"{key}-{version}: Failed to parse {date_text} for {version}")
+
+
+def parse(url, releases):
     response = endoflife.fetch_url(url)
     soup = BeautifulSoup(response, features="html5lib")
     table = soup.find(id="tableWraper")
     for tr in reversed(table.findAll("tr")[1:]):
         td_list = tr.findAll("td")
-        version_text = td_list[0].get_text()
+        version_text = td_list[0].get_text().strip()
         for key, regexes in CONFIG.items():
             for regex in regexes:
                 matches = re.findall(regex, version_text, re.MULTILINE)
-                if matches:
-                    for version in matches:
-                        abs_date = None
-                        try:
-                            print("== %s" % version_text.strip())
-                            abs_date = parse_date(td_list[2].get_text())
-                            print_date = abs_date.strftime("%Y-%m-%d")
-                            # Only update the date if we are adding first time
-                            # or if the date is lower
-                            if version not in release_lists[key]:
-                                release_lists[key][version] = abs_date
-                                print("%s-%s: %s" % (key, version, print_date))
-                            elif release_lists[key][version] < abs_date:
-                                print(
-                                    "%s-%s: %s [IGNORED]"
-                                    % (key, version, print_date)
-                                )
-                            elif release_lists[key][version] > abs_date:
-                                # This is a lower date, so we mark it with a bang
-                                print(
-                                    "%s-%s: %s [UPDATED]"
-                                    % (key, version, print_date)
-                                )
-                                release_lists[key][version] = abs_date
-                        except ValueError as e:
-                            print(
-                                "%s-%s Failed to parse Date (%s)"
-                                % (key, version, td_list[2].get_text())
-                            )
-                            next
+                for version in matches:
+                    date_text = td_list[2].get_text().strip()
+                    handle_version(key, version, date_text, releases)
 
+
+print("::group::apple")
+
+releases_by_product = {k: {} for k in CONFIG.keys()}
+for url in URLS:
+    parse(url, releases_by_product)
 
 for k in CONFIG.keys():
-    releases = {v: d.strftime("%Y-%m-%d") for v, d in release_lists[k].items()}
-    endoflife.write_releases(k, releases)
+    endoflife.write_releases(k, {
+        v: d.strftime("%Y-%m-%d") for v, d in releases_by_product[k].items()
+    })
 
 print("::endgroup::")
