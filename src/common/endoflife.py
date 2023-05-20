@@ -1,6 +1,6 @@
+import json
 import frontmatter
 import urllib.request
-
 from glob import glob
 from os import path
 
@@ -47,3 +47,8 @@ def fetch_url(url, retry_count=2, timeout=5, data=None, headers=None, encoding='
             continue
 
     raise last_exception
+
+
+def write_releases(product, releases, pathname="releases"):
+    with open(f"{pathname}/{product}.json", "w") as f:
+        f.write(json.dumps(releases, indent=2))

@@ -26,21 +26,13 @@ def fetch_versions(major_version):
     return data
 
 
-with open("releases/php.json", "w") as f:
-    print("::group::php")
-    releases = {}
+print("::group::php")
+releases = {}
 
-    for major_version in PHP_MAJOR_VERSIONS:
-        releases |= fetch_versions(major_version)
+for major_version in PHP_MAJOR_VERSIONS:
+    releases |= fetch_versions(major_version)
 
-    f.write(
-        json.dumps(
-            dict(sorted(
-                releases.items(),
-                key=lambda x: list(map(int, x[0].split(".")))
-            )),
-            indent=2,
-        )
-    )
-
-    print("::endgroup::")
+endoflife.write_releases('php', dict(sorted(
+    releases.items(), key=lambda x: list(map(int, x[0].split(".")))
+)))
+print("::endgroup::")

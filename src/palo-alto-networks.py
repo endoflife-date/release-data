@@ -1,5 +1,4 @@
 import datetime
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -19,6 +18,7 @@ def update_releases(html_identifier, file):
     print(f"::group::{html_identifier}")
     response = endoflife.fetch_url(URL)
     soup = BeautifulSoup(response, features="html5lib")
+
     table = soup.find(id=html_identifier)
     for tr in table.findAll("tr")[3:]:
         td_list = tr.findAll("td")
@@ -45,10 +45,9 @@ def update_releases(html_identifier, file):
 
             versions[version] = abs_date
             print("%s: %s" % (version, abs_date))
-    print("::endgroup::")
 
-    with open("releases/%s.json" % file, "w") as f:
-        f.write(json.dumps(versions, indent=2))
+    endoflife.write_releases(file, versions)
+    print("::endgroup::")
 
 
 for html_id in ID_MAPPING:

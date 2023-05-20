@@ -1,5 +1,4 @@
 import datetime
-import json
 import markdown
 import re
 from bs4 import BeautifulSoup
@@ -32,7 +31,5 @@ def parse_platforms_page():
     return all_versions
 
 
-if __name__ == "__main__":
-    versions = parse_platforms_page()
-    with open("releases/eks.json", "w") as f:
-        f.write(json.dumps(versions, indent=2))
+versions = parse_platforms_page()
+endoflife.write_releases('eks', versions)

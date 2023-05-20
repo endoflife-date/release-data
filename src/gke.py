@@ -1,4 +1,3 @@
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -38,20 +37,10 @@ def parse_soup_for_versions(soup):
 
 CHANNELS = ['nochannel', 'stable', 'regular', 'rapid']
 
-def main():
-    for channel in CHANNELS:
-        soup = fetch_channel(channel)
-        print("::group::GKE - {}".format(channel))
-        versions = parse_soup_for_versions(soup)
-        for version, date in versions.items():
-            print("{}: {}".format(version, date))
-        if channel == 'nochannel':
-            fn = 'releases/gke.json'
-        else:
-            fn = 'releases/gke-{}.json'.format(channel)
-        with open(fn, "w") as f:
-            f.write(json.dumps(versions, indent=2))
-        print("::endgroup::")
-
-if __name__ == '__main__':
-    main()
+for channel in CHANNELS:
+    soup = fetch_channel(channel)
+    print("::group::GKE - {}".format(channel))
+    versions = parse_soup_for_versions(soup)
+    name = 'gke' if channel == 'nochannel' else 'gke-{}'.format(channel)
+    endoflife.write_releases(name, versions)
+    print("::endgroup::")

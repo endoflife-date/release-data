@@ -50,11 +50,10 @@ def update_product(product_name, configs):
     for config in configs:
         releases = releases | fetch_releases(config[METHOD])
 
-    with open(f"releases/{product_name}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
+    endoflife.write_releases(product_name, dict(
+        # sort by date then version (desc)
+        sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    ))
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
