@@ -35,7 +35,7 @@ def fetch_releases(package_identifier):
             if valid_version(version):
                 date = datetime.datetime.utcfromtimestamp(row["timestamp"] / 1000).strftime("%Y-%m-%d")
                 releases[version] = date
-                print("%s: %s" % (version, date))
+                print(f"{version}: {date}")
 
         start += 100
         if data["response"]["numFound"] <= start:
@@ -58,6 +58,6 @@ def update_product(product_name, configs):
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print("::group::%s" % product)
+    print(f"::group::{product}")
     update_product(product, configs)
     print("::endgroup::")

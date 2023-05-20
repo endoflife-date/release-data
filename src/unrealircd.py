@@ -1,4 +1,3 @@
-import json
 import mwparserfromhell
 import re
 from common import endoflife
@@ -19,7 +18,7 @@ for tr in wikicode.ifilter_tags(matches=lambda node: node.tag == "tr"):
             maybe_date = items[1].__strip__()
             if re.match(r"\d{4}-\d{2}-\d{2}", maybe_date):
                 versions[maybe_version] = maybe_date
-                print("%s: %s" % (maybe_version, maybe_date))
+                print(f"{maybe_version}: {maybe_date}")
 
 endoflife.write_releases('unrealircd', versions)
 print("::endgroup::")

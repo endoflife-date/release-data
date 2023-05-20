@@ -27,7 +27,7 @@ for db, url in dbs.items():
             # Must match both the 'Supported XXX minor versions' and
             # 'Supported XXX major versions' to have correct release dates
             if len(columns) > 3:
-                r = r"(?P<v>\d+(?:\.\d+)*)" # https://regex101.com/r/BY1vwV/1
+                r = r"(?P<v>\d+(?:\.\d+)*)"  # https://regex101.com/r/BY1vwV/1
                 m = re.search(r, columns[0].text.strip(), flags=re.IGNORECASE)
                 if m:
                     version = m.group("v")

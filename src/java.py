@@ -18,11 +18,12 @@ PRODUCT = "java"
 URL = "https://www.java.com/releases/"
 
 
-def fetch_releases(releases):
+def fetch_releases():
     session = HTMLSession()
     r = session.get('https://www.java.com/releases/')
     r.html.render(sleep=1, scrolldown=3)
 
+    releases = {}
     previous_date = None
     for row in r.html.find('#released tr'):
         version_cell = row.find('td.anchor', first=True)
@@ -35,13 +36,14 @@ def fetch_releases(releases):
             releases[version] = date
             previous_date = date
 
+    return releases
+
 
 print(f"::group::{PRODUCT}")
-releases = {}
-fetch_releases(releases)
-releases.pop('1.0_alpha') # that's the only version we do not want, regex not needed
+all_releases = fetch_releases()
+all_releases.pop('1.0_alpha')  # only version we don't want, regex not needed
 endoflife.write_releases(PRODUCT, dict(
     # sort by date then version (desc)
-    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
 ))
 print("::endgroup::")

@@ -25,12 +25,12 @@ for tr in soup.findAll("tr"):
                     td_list[1].get_text().strip(), "%B %d, %Y"
                 )
             # The date is a suffix (May 23rd, 2020)
-            except Exception as e:
+            except ValueError as e:
                 x = td_list[1].get_text().split(",")
                 date = datetime.datetime.strptime(x[0][:-2] + x[1], "%B %d %Y")
             abs_date = date.strftime("%Y-%m-%d")
             versions[version] = abs_date
-            print("%s: %s" % (version, abs_date))
+            print(f"{version}: {abs_date}")
 
 endoflife.write_releases('ros', versions)
 print("::endgroup::")

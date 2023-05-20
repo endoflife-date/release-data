@@ -43,9 +43,10 @@ query($endCursor: String) {
 
 
 def fetch_releases(repo_id, regex):
-    """Returns this repository releases using https://docs.github.com/en/rest/releases/releases#list-releases.
-    Only the first page is fetched: there are rate limit rules in place on the GitHub API, and the most recent
-    releases are sufficient.
+    """Returns this repository releases using
+    https://docs.github.com/en/rest/releases/releases#list-releases. Only the
+    first page is fetched: there are rate limit rules in place on the GitHub
+    API, and the most recent releases are sufficient.
     """
     releases = {}
     regex = [regex] if not isinstance(regex, list) else regex
@@ -59,7 +60,7 @@ def fetch_releases(repo_id, regex):
                 version = match.group(1)
                 date = raw_date.split("T")[0]
                 releases[version] = date
-                print("%s: %s" % (version, date))
+                print(f"{version}: {date}")
 
     return releases
 
@@ -76,6 +77,6 @@ def update_product(product_name, configs):
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print("::group::%s" % product)
+    print(f"::group::{product}")
     update_product(product, configs)
     print("::endgroup::")

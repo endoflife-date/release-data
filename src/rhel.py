@@ -23,7 +23,7 @@ for tr in soup.findAll("tr"):
             version += ".%s" % m["minor2"]
         date = td_list[1].get_text()
         versions[version] = date
-        print("%s: %s" % (version, date))
+        print(f"{version}: {date}")
 
 endoflife.write_releases('redhat', versions)
 print("::endgroup::")

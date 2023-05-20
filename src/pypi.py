@@ -17,7 +17,7 @@ def fetch_releases(pypi_id, regex):
     if not isinstance(regex, list):
         regex = [regex]
 
-    url = "https://pypi.org/pypi/%s/json" % pypi_id
+    url = f"https://pypi.org/pypi/{pypi_id}/json"
     response = endoflife.fetch_url(url)
     data = json.loads(response)
     for version in data["releases"]:
@@ -29,7 +29,7 @@ def fetch_releases(pypi_id, regex):
         if matches and R:
             d = datetime.fromisoformat(R[0]["upload_time"]).strftime("%Y-%m-%d")
             releases[version] = d
-            print("%s: %s" % (version, d))
+            print(f"{version}: {d}")
 
     return releases
 
@@ -46,6 +46,6 @@ def update_product(product_name, configs):
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print("::group::%s" % product)
+    print(f"::group::{product}")
     update_product(product, configs)
     print("::endgroup::")

@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from common import endoflife
 
 URL = "https://www.paloaltonetworks.com/services/support/end-of-life-announcements/end-of-life-summary"
-
 ID_MAPPING = {
     "pan-os-panorama": "pan-os",
     "globalprotect": "pan-gp",
@@ -36,7 +35,7 @@ def update_releases(html_identifier, file):
             try:
                 month, date, year = td_list[1].get_text().split("/")
                 abs_date = f"{year}-{month:0>2}-{date:0>2}"
-            except Exception:
+            except ValueError:
                 # A few dates have 1st, 2nd, 4th etc. Fix that:
                 d = td_list[1].get_text()
                 d = re.sub(r'(\w+) (\d{1,2})(?:\w{2}), (\d{4})', r'\1 \2, \3', d)
@@ -44,7 +43,7 @@ def update_releases(html_identifier, file):
                 abs_date = date.strftime("%Y-%m-%d")
 
             versions[version] = abs_date
-            print("%s: %s" % (version, abs_date))
+            print(f"{version}: {abs_date}")
 
     endoflife.write_releases(file, versions)
     print("::endgroup::")
