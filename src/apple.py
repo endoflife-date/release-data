@@ -1,5 +1,4 @@
 import datetime
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -97,8 +96,7 @@ for url in URLS:
 
 
 for k in CONFIG.keys():
-    with open("releases/%s.json" % k, "w") as f:
-        data = {v: d.strftime("%Y-%m-%d") for v, d in release_lists[k].items()}
-        f.write(json.dumps(data, indent=2))
+    releases = {v: d.strftime("%Y-%m-%d") for v, d in release_lists[k].items()}
+    endoflife.write_releases(k, releases)
 
 print("::endgroup::")

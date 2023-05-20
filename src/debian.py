@@ -1,6 +1,6 @@
-import json
 import pathlib
 import subprocess
+from common import endoflife
 from hashlib import sha1
 from os.path import exists
 from subprocess import call
@@ -73,21 +73,13 @@ def extract_point_releases(releases):
             releases[version] = date
 
 
-def main():
-    print(f"::group::{PRODUCT}")
-    clone_repository()
-
-    releases = {}
-    extract_major_releases(releases)
-    extract_point_releases(releases)
-    print("::endgroup::")
-
-    with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
-
-
-if __name__ == '__main__':
-    main()
+print(f"::group::{PRODUCT}")
+clone_repository()
+releases = {}
+extract_major_releases(releases)
+extract_point_releases(releases)
+endoflife.write_releases(PRODUCT, dict(
+    # sort by date then version (desc)
+    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+))
+print("::endgroup::")

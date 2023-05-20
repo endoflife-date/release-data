@@ -1,4 +1,3 @@
-import json
 import re
 import sys
 from bs4 import BeautifulSoup
@@ -48,8 +47,7 @@ def update_product(product_name, configs):
             regex = config["regex"]
             releases = releases | fetch_releases(config[METHOD], regex, t)
 
-    with open("releases/%s.json" % product_name, "w") as f:
-        f.write(json.dumps(releases, indent=2))
+    endoflife.write_releases(product_name, releases)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

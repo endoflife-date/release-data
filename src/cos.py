@@ -1,4 +1,3 @@
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -69,7 +68,5 @@ def get_all_versions():
     return all_versions
 
 
-if __name__ == '__main__':
-    v = get_all_versions()
-    with open('releases/cos.json', "w") as f:
-        f.write(json.dumps(v, indent=2))
+releases = get_all_versions()
+endoflife.write_releases('cos', releases)

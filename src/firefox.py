@@ -1,5 +1,4 @@
 import concurrent.futures
-import json
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -134,18 +133,10 @@ def fetch_releases():
 
     return releases
 
-def main():
-    print(f"::group::{PRODUCT}")
-
-    releases = fetch_releases()
-    with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
-
-    print("::endgroup::")
-
-
-if __name__ == '__main__':
-    main()
+print(f"::group::{PRODUCT}")
+releases = fetch_releases()
+endoflife.write_releases(PRODUCT, dict(
+    # sort by date then version (desc)
+    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+))
+print("::endgroup::")

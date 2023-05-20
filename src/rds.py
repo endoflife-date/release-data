@@ -1,4 +1,3 @@
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -36,9 +35,8 @@ for db, url in dbs.items():
                     print(f"{version} : {date}")
                     releases[version] = date
 
+    endoflife.write_releases(f"amazon-rds-{db.lower()}", dict(
+        # sort by date then version (desc)
+        sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    ))
     print("::endgroup::")
-    with open(f"releases/amazon-rds-{db.lower()}.json", "w") as f:
-        json.dump(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), f, indent=2)

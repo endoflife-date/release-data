@@ -1,6 +1,5 @@
-import json
-
 from requests_html import HTMLSession
+from common import endoflife
 
 """Fetch Java versions with their dates from https://www.java.com/releases/.
 
@@ -37,19 +36,12 @@ def fetch_releases(releases):
             previous_date = date
 
 
-def main():
-    print(f"::group::{PRODUCT}")
-    releases = {}
-    fetch_releases(releases)
-    releases.pop('1.0_alpha') # that's the only version we do not want, regex not needed
-    print("::endgroup::")
-
-    with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
-
-
-if __name__ == '__main__':
-    main()
+print(f"::group::{PRODUCT}")
+releases = {}
+fetch_releases(releases)
+releases.pop('1.0_alpha') # that's the only version we do not want, regex not needed
+endoflife.write_releases(PRODUCT, dict(
+    # sort by date then version (desc)
+    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+))
+print("::endgroup::")

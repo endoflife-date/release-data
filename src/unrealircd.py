@@ -20,7 +20,6 @@ for tr in wikicode.ifilter_tags(matches=lambda node: node.tag == "tr"):
             if re.match(r"\d{4}-\d{2}-\d{2}", maybe_date):
                 versions[maybe_version] = maybe_date
                 print("%s: %s" % (maybe_version, maybe_date))
-print("::endgroup::")
 
-with open("releases/unrealircd.json", "w") as f:
-    f.write(json.dumps(versions, indent=2))
+endoflife.write_releases('unrealircd', versions)
+print("::endgroup::")

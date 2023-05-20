@@ -1,4 +1,3 @@
-import json
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
@@ -51,17 +50,10 @@ def fetch_releases():
     return releases
 
 
-def main():
-    print(f"::group::{PRODUCT}")
-    releases = fetch_releases()
-    print("::endgroup::")
-
-    with open(f"releases/{PRODUCT}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by version then date (asc)
-            sorted(releases.items(), key=lambda x: (x[0], x[1]))
-        ), indent=2))
-
-
-if __name__ == '__main__':
-    main()
+print(f"::group::{PRODUCT}")
+releases = fetch_releases()
+endoflife.write_releases(PRODUCT, dict(
+    # sort by version then date (asc)
+    sorted(releases.items(), key=lambda x: (x[0], x[1]))
+))
+print("::endgroup::")
