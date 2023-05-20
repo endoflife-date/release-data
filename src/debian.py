@@ -30,6 +30,7 @@ def clone_repository():
     ret_code = call(f"git {git_opts} pull --depth 1 origin master", shell=True)
     exit(-ret_code) if ret_code < 0 else None
 
+
 def extract_major_releases(releases):
     child = subprocess.Popen(
         f"grep -RhE -A 1 '<define-tag pagetitle>Debian [0-9]+.+</q> released' {REPO_DIR}/english/News "
@@ -48,8 +49,8 @@ def extract_major_releases(releases):
                 is_release_line = False
             else:
                 date = line
-                print(f"{version}: {date}")
                 releases[version] = date
+                print(f"{version}: {date}")
                 is_release_line = True
 
 
@@ -75,11 +76,11 @@ def extract_point_releases(releases):
 
 print(f"::group::{PRODUCT}")
 clone_repository()
-releases = {}
-extract_major_releases(releases)
-extract_point_releases(releases)
+all_releases = {}
+extract_major_releases(all_releases)
+extract_point_releases(all_releases)
 endoflife.write_releases(PRODUCT, dict(
     # sort by date then version (desc)
-    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
 ))
 print("::endgroup::")

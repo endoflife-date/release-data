@@ -16,9 +16,9 @@ URLS = [
     "https://support.apple.com/kb/HT1263",  # 2005-2007
 ]
 
-# If you are changing these, please
-# use https://gist.githubusercontent.com/captn3m0/e7cb1f4fc3c07a5da0296ebda2b33e15/raw/5747e42ad611ec9ffdb7a2d1c0e3946bb87ab6d7/apple.txt as your corpus
-# to validate your changes
+# If you are changing these, please use
+# https://gist.githubusercontent.com/captn3m0/e7cb1f4fc3c07a5da0296ebda2b33e15/raw/5747e42ad611ec9ffdb7a2d1c0e3946bb87ab6d7/apple.txt
+# as your corpus to validate your changes
 CONFIG = {
     "macos": [
         # This covers Sierra and beyond

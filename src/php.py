@@ -1,6 +1,6 @@
-import datetime
 import json
 from common import endoflife
+from datetime import datetime
 
 PHP_MAJOR_VERSIONS = [4, 5, 7, 8]
 
@@ -10,9 +10,9 @@ PHP_MAJOR_VERSIONS = [4, 5, 7, 8]
 # we return it as YYYY-MM-DD
 def parse_date(date_str):
     try:
-        return datetime.datetime.strptime(date_str, "%d %b %Y").strftime("%Y-%m-%d")
+        return datetime.strptime(date_str, "%d %b %Y").strftime("%Y-%m-%d")
     except ValueError:
-        return datetime.datetime.strptime(date_str, "%d %B %Y").strftime("%Y-%m-%d")
+        return datetime.strptime(date_str, "%d %B %Y").strftime("%Y-%m-%d")
 
 
 def fetch_versions(major_version):

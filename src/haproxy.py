@@ -2,7 +2,7 @@ import re
 from bs4 import BeautifulSoup
 from common import endoflife
 
-"""Fetch HAProxy versions with their dates from https://www.haproxy.org/download/.
+"""Fetch HAProxy versions with their dates from https://www.haproxy.org/.
 """
 
 PRODUCT = "haproxy"
@@ -51,11 +51,11 @@ def print_releases(releases):
 
 
 print(f"::group::{PRODUCT}")
-cycles = fetch_cycles()
-releases = fetch_releases(cycles)
-print_releases(releases)
+all_cycles = fetch_cycles()
+all_releases = fetch_releases(all_cycles)
+print_releases(all_releases)
 endoflife.write_releases(PRODUCT, dict(
     # sort by date then version (desc)
-    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
 ))
 print("::endgroup::")

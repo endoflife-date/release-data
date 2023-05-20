@@ -24,9 +24,9 @@ def parse_platforms_page():
                 d = datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
                 k8s_version = ".".join(data[0].text.split(".")[:-1])
                 eks_version = data[1].text.replace(".", "-")
-                version = "%s-%s" % (k8s_version, eks_version)
+                version = f"{k8s_version}-{eks_version}"
                 all_versions[version] = d
-                print("%s: %s" % (version, d))
+                print(f"{version}: {d}")
     print("::endgroup::")
     return all_versions
 

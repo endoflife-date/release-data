@@ -33,7 +33,7 @@ def fetch_releases(distrowatch_id, regex, template):
         headline = table.select_one("td.NewsHeadline a[href]").get_text().strip()
         date = table.select_one("td.NewsDate").get_text()
         for v in get_versions_from_headline(regex, headline, l_template):
-            print("%s: %s" % (v, date))
+            print(f"{v}: {date}")
             releases[v] = date
     return releases
 
@@ -52,6 +52,6 @@ def update_product(product_name, configs):
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print("::group::%s" % product)
+    print(f"::group::{product}")
     update_product(product, configs)
     print("::endgroup::")
