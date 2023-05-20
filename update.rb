@@ -129,19 +129,21 @@ def get_releases(product, config, i)
     return get_releases_from_git(dir, config)
   elsif type == 'dockerhub'
     return get_releases_from_dockerhub(config)
-  elsif type == 'custom'
-    puts "Custom script, skipping"
+  elsif type != nil
+    puts "Handled by #{type} script, skipping"
     return {}
   else
-    puts "Not implemented: #{type}"
+    puts "Undetected method for #{product}"
     return {}
   end
 end
 
 def get_update_type(config)
-  for i in ['git', 'oci', 'npm', 'dockerhub', 'custom']
+  for i in ['git', 'npm', 'dockerhub', 'distrowatch', 'custom', 'github_releases', 'pypi', 'maven']
     return i if config[i]
   end
+
+  return nil
 end
 
 Dir.glob("#{WEBSITE_DIR}/products/*.md").each do |product_file|
