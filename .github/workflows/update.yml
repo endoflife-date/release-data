@@ -51,7 +51,7 @@ jobs:
         bundler-cache: true
     - uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     - name: Setup Release Script
       run: |
         git config --global init.defaultBranch main
