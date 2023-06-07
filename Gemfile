@@ -2,8 +2,8 @@
 
 source "https://rubygems.org"
 
-gem "rugged", "~> 1.4"
-gem "liquid", "~> 5.3"
+gem "rugged", "~> 1.6"
+gem "liquid", "~> 5.4"
 
 gem "irb", "~> 1.4", :group => [:development]
 gem "rdoc", "~> 6.4", :group => [:development]
