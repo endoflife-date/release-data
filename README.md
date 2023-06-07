@@ -131,7 +131,7 @@ As of 2023-05-13, 147 of the 221 products tracked by endoflife.date have automat
 | Looker                               | /looker                     | ❌    | n/a             |
 | Mageia                               | /mageia                     | ❌    | n/a             |
 | Magento                              | /magento                    | ✔️   | git             |
-| MariaDB                              | /mariadb                    | ✔️   | git             |
+| MariaDB                              | /mariadb                    | ✔️   | custom          |
 | Mastodon                             | /mastodon                   | ✔️   | git             |
 | Mattermost                           | /mattermost                 | ✔️   | git             |
 | MediaWiki                            | /mediawiki                  | ✔️   | git             |
