@@ -21,7 +21,7 @@ def convert_date(date_str):
 
 
 def strip_version(version_str):
-    return version_str.strip("SUSE Linux Enterprise Server ")
+    return version_str.strip("SUSE Linux Enterprise Server ").replace(' ', '.')
 
 
 """
