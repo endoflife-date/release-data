@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "pip"
     directory: "/"
@@ -14,9 +14,9 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
