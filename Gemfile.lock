@@ -11,7 +11,7 @@ GEM
       psych (>= 4.0.0)
     reline (0.3.5)
       io-console (~> 0.5)
-    rugged (1.6.3)
+    rugged (1.5.1)
     stringio (3.0.7)
 
 PLATFORMS
@@ -21,7 +21,7 @@ DEPENDENCIES
   irb (~> 1.4)
   liquid (~> 5.4)
   rdoc (~> 6.4)
-  rugged (~> 1.6)
+  rugged (~> 1.5.1)
 
 BUNDLED WITH
    2.3.5

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rugged", "~> 1.6"
+gem "rugged", "~> 1.5.1"
 gem "liquid", "~> 5.4"
 
 gem "irb", "~> 1.4", :group => [:development]
