@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from liquid import Template
 
 """Fetch versions with their dates from a cgit repository, such as
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags.
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git.
 
 Ideally we would want to use the git repository directly, but cgit repositories
 do not support partial clone so we cannot.
@@ -32,7 +32,7 @@ def parse_date(d):
 
 
 def make_bs_request(url):
-    response = endoflife.fetch_url(url)
+    response = endoflife.fetch_url(url + '/refs/tags')
     return BeautifulSoup(response, features="html5lib")
 
 
