@@ -1,22 +1,24 @@
-import json
-import os
 import re
 import sys
-import urllib.request
-
-from datetime import datetime, timezone
-from glob import glob
-
-import frontmatter
 from bs4 import BeautifulSoup
+from common import endoflife
+from datetime import datetime, timezone
 from liquid import Template
 
+"""Fetch versions with their dates from a cgit repository, such as
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/tags.
+
+Ideally we would want to use the git repository directly, but cgit repositories
+do not support partial clone so we cannot.
+"""
+
+METHOD = 'cgit'
 # Same as used in Ruby (update.rb)
 DEFAULT_TAG_TEMPLATE = (
-    "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
+    "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%if tiny %}.{{tiny}}{%endif%}{%endif%}{%endif%}"
 )
 DEFAULT_VERSION_REGEX = (
-    r"^v?(?P<major>[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.?(?P<patch>0|[1-9]\d*)?$"
+    r"^v?(?P<major>\d+)\.(?P<minor>\d+)\.?(?P<patch>\d+)?\.?(?P<tiny>\d+)?$"
 )
 
 
@@ -30,15 +32,16 @@ def parse_date(d):
 
 
 def make_bs_request(url):
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req, timeout=5) as response:
-        return BeautifulSoup(response.read(), features="html5lib")
+    response = endoflife.fetch_url(url)
+    return BeautifulSoup(response, features="html5lib")
 
 
 def fetch_releases(url, regex, template):
     releases = {}
 
     soup = make_bs_request(url)
+    l_template = Template(template)
+
     for table in soup.find_all("table", class_="list"):
         for row in table.find_all("tr"):
             columns = row.find_all("td")
@@ -50,7 +53,7 @@ def fetch_releases(url, regex, template):
                     matches = re.match(regex.strip(), version_text)
                     if matches:
                         match_data = matches.groupdict()
-                        version_string = template.render(**match_data)
+                        version_string = l_template.render(**match_data)
                         date = parse_date(datetime_text)
                         print(f"{version_string} : {date}")
                         releases[version_string] = date
@@ -58,42 +61,22 @@ def fetch_releases(url, regex, template):
     return releases
 
 
-def update_product(product_name, config):
-    template = l_template = Template(config.get("template", DEFAULT_TAG_TEMPLATE))
-    regex = config.get("regex", DEFAULT_VERSION_REGEX)
+def update_product(product_name, configs):
+    releases = {}
 
-    print(f"::group::{product_name}")
-    releases = fetch_releases(config["cgit"], regex, template)
+    for config in configs:
+        t = config.get("template", DEFAULT_TAG_TEMPLATE)
+        regex = config.get("regex", DEFAULT_VERSION_REGEX)
+        releases = releases | fetch_releases(config[METHOD], regex, t)
+
+    endoflife.write_releases(product_name, dict(
+        # sort by version then date (asc)
+        sorted(releases.items(), key=lambda x: (x[0], x[1]))
+    ))
+
+
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+for product, configs in endoflife.list_products(METHOD, p_filter).items():
+    print(f"::group::{product}")
+    update_product(product, configs)
     print("::endgroup::")
-
-    with open(f"releases/{product_name}.json", "w") as f:
-        f.write(
-            json.dumps(
-                dict(
-                    # sort by version then date (asc)
-                    sorted(releases.items(), key=lambda x: (x[0], x[1]))
-                ),
-                indent=2,
-            )
-        )
-
-
-def update_releases(product_filter=None):
-    for product_file in glob("website/products/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
-        if product_filter and product_name != product_filter:
-            continue
-        with open(product_file, "r") as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                for config in data["auto"]:
-                    for key, d_id in config.items():
-                        if key == "cgit":
-                            update_product(product_name, config)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        update_releases(sys.argv[1])
-    else:
-        update_releases()
