@@ -17,12 +17,10 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-06-08, 152 of the 225 products tracked by endoflife.date have automatically tracked releases:
-
-As of 2023-06-08, 152 of the 225 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                     | Auto | Method          |
-|:-------------------------------------|:------------------------------|:-----|:----------------|
+|--------------------------------------|-------------------------------|------|-----------------|
 | Adobe ColdFusion                     | `/coldfusion`                 | ❌    | n/a             |
 | Alibaba Dragonwell                   | `/alibaba-dragonwell`         | ✔️   | git             |
 | AlmaLinux OS                         | `/almalinux`                  | ✔️   | distrowatch     |
@@ -73,7 +71,9 @@ As of 2023-06-08, 152 of the 225 products tracked by endoflife.date have automat
 | Confluence                           | `/confluence`                 | ❌    | n/a             |
 | Contao                               | `/contao`                     | ✔️   | git             |
 | Couchbase Server                     | `/couchbase-server`           | ✔️   | dockerhub       |
+| Craft CMS                            | `/craft-cms`                  | ✔️   | git             |
 | Debian                               | `/debian`                     | ✔️   | custom          |
+| Dependency-Track                     | `/dependency-track`           | ✔️   | git             |
 | Devuan                               | `/devuan`                     | ✔️   | distrowatch     |
 | Django                               | `/django`                     | ✔️   | git             |
 | Docker Engine                        | `/docker-engine`              | ✔️   | git             |
@@ -195,7 +195,7 @@ As of 2023-06-08, 152 of the 225 products tracked by endoflife.date have automat
 | phpMyAdmin                           | `/phpmyadmin`                 | ✔️   | git             |
 | Plesk                                | `/plesk`                      | ✔️   | custom          |
 | Pop!_OS                              | `/pop_os`                     | ❌    | n/a             |
-| Postfix                              | `/postfix`                    | ✔️   | custom          |
+| Postfix                              | `/postfix`                    | ✔️   | git             |
 | PostgreSQL                           | `/postgresql`                 | ✔️   | git             |
 | Proxmox VE                           | `/proxmox-ve`                 | ✔️   | distrowatch     |
 | Python                               | `/python`                     | ✔️   | git             |
@@ -217,12 +217,14 @@ As of 2023-06-08, 152 of the 225 products tracked by endoflife.date have automat
 | Ruby on Rails                        | `/rails`                      | ✔️   | git             |
 | Samsung Mobile                       | `/samsung-mobile`             | ❌    | n/a             |
 | Scala                                | `/scala`                      | ✔️   | git             |
+| Silverstripe CMS                     | `/silverstripe`               | ✔️   | git             |
 | Slackware Linux                      | `/slackware`                  | ✔️   | distrowatch     |
 | SonarQube                            | `/sonar`                      | ✔️   | git             |
 | Splunk                               | `/splunk`                     | ❌    | n/a             |
 | Spring Boot                          | `/spring-boot`                | ✔️   | git             |
 | Spring Framework                     | `/spring-framework`           | ✔️   | git             |
 | SQLite                               | `/sqlite`                     | ✔️   | git             |
+| Squid                                | `/squid`                      | ✔️   | git             |
 | SUSE Linux Enterprise Server         | `/sles`                       | ❌    | n/a             |
 | Symfony                              | `/symfony`                    | ✔️   | git             |
 | Tails                                | `/tails`                      | ✔️   | distrowatch     |
