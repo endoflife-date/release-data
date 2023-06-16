@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-06-25, 159 of the 232 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                     | Auto | Method          |
 |--------------------------------------|-------------------------------|------|-----------------|
@@ -208,7 +208,7 @@ As of 2023-06-25, 159 of the 232 products tracked by endoflife.date have automat
 | React                                | `/react`                      | ✔️   | npm             |
 | Red Hat Enterprise Linux             | `/rhel`                       | ❌    | n/a             |
 | Red Hat OpenShift                    | `/red-hat-openshift`          | ❌    | n/a             |
-| Red Hat Satellite                    | `/redhat-satellite`           | ❌    | n/a             |
+| Red Hat Satellite                    | `/redhat-satellite`           | ✔️   | custom          |
 | Redis                                | `/redis`                      | ✔️   | git             |
 | Redmine                              | `/redmine`                    | ✔️   | git             |
 | Rocky Linux                          | `/rocky-linux`                | ✔️   | distrowatch     |
