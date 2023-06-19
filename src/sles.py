@@ -1,13 +1,13 @@
 import json
+import re
 import urllib.request
-
-from bs4 import BeautifulSoup
 from datetime import datetime
 
+from bs4 import BeautifulSoup
 
 PRODUCT = "sles"
 URL = "https://www.suse.com/lifecycle"
-
+DATE_FORMAT = "%d %b %Y"
 
 def fetch_releases(url):
     headers = {"user-agent": "mozilla"}
@@ -17,8 +17,10 @@ def fetch_releases(url):
 
 
 def convert_date(date_str):
-    return datetime.strptime(date_str, "%d %b %Y").strftime("%Y-%m-%d")
-
+    # If the date begins with a >3 letter month name, trim it to just 3 letters
+    # Strip out the Date: section from the start
+    d = re.sub(r'(\d{1,2}) (\w{3})(?:\w{1,4})? (\d{4})', r'\1 \2 \3', date_str)
+    return datetime.strptime(d, DATE_FORMAT).strftime('%Y-%m-%d')
 
 def strip_version(version_str):
     print(version_str)
