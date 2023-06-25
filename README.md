@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-06-25, 159 of the 232 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                     | Auto | Method          |
 |--------------------------------------|-------------------------------|------|-----------------|
@@ -64,7 +64,7 @@ As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automat
 | CakePHP                              | `/cakephp`                    | ✔️   | git             |
 | CentOS                               | `/centos`                     | ❌    | n/a             |
 | CentOS Stream                        | `/centos-stream`              | ❌    | n/a             |
-| CFEngine                             | `/cfengine`                   | ❌    | n/a             |
+| CFEngine                             | `/cfengine`                   | ✔️   | git             |
 | Citrix Virtual Apps and Desktops     | `/citrix-vad`                 | ❌    | n/a             |
 | ClamAV                               | `/clamav`                     | ✔️   | git             |
 | Composer                             | `/composer`                   | ✔️   | git             |
@@ -110,6 +110,7 @@ As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automat
 | Hashicorp Consul                     | `/consul`                     | ✔️   | git             |
 | Hashicorp Terraform                  | `/terraform`                  | ✔️   | git             |
 | Hashicorp Vault                      | `/hashicorp-vault`            | ✔️   | git             |
+| IBM AIX                              | `/ibm-aix`                    | ✔️   | custom          |
 | Intel Processors                     | `/intel-processors`           | ❌    | n/a             |
 | Internet Explorer                    | `/internet-explorer`          | ❌    | n/a             |
 | Ionic Framework                      | `/ionic`                      | ✔️   | git             |
@@ -131,7 +132,7 @@ As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automat
 | Laravel                              | `/laravel`                    | ✔️   | git             |
 | LibreOffice                          | `/libreoffice`                | ❌    | n/a             |
 | LineageOS                            | `/lineageos`                  | ❌    | n/a             |
-| Linux Kernel                         | `/linux`                      | ✔️   | custom          |
+| Linux Kernel                         | `/linux`                      | ✔️   | cgit            |
 | Linux Mint                           | `/linuxmint`                  | ❌    | n/a             |
 | Logstash                             | `/logstash`                   | ✔️   | git             |
 | Looker                               | `/looker`                     | ❌    | n/a             |
@@ -192,6 +193,7 @@ As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automat
 | PCI-DSS                              | `/pci-dss`                    | ❌    | n/a             |
 | Perl                                 | `/perl`                       | ✔️   | git             |
 | PHP                                  | `/php`                        | ✔️   | custom          |
+| phpBB                                | `/phpbb`                      | ✔️   | git             |
 | phpMyAdmin                           | `/phpmyadmin`                 | ✔️   | git             |
 | Plesk                                | `/plesk`                      | ✔️   | custom          |
 | Pop!_OS                              | `/pop_os`                     | ❌    | n/a             |
@@ -238,6 +240,7 @@ As of 2023-06-11, 156 of the 229 products tracked by endoflife.date have automat
 | UnrealIRCd                           | `/unrealircd`                 | ✔️   | custom          |
 | Varnish                              | `/varnish`                    | ✔️   | git             |
 | Visual COBOL                         | `/visual-cobol`               | ❌    | n/a             |
+| VMware Cloud Foundation              | `/vmware-cloud-foundation`    | ❌    | n/a             |
 | VMware ESXi                          | `/esxi`                       | ❌    | n/a             |
 | VMware Horizon                       | `/horizon`                    | ❌    | n/a             |
 | VMware Photon                        | `/photon`                     | ❌    | n/a             |
