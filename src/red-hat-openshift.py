@@ -40,7 +40,10 @@ class Git:
             )
             return child.communicate()[0].decode("utf-8").split("\n")
 
-        return call(f"git {git_opts} {cmd}", shell=True) == 0
+        return call(f"git {git_opts} {cmd}",
+                    shell=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL) == 0
 
     def clone(self):
         self.repo_dir.mkdir(parents=True, exist_ok=True)
@@ -50,7 +53,7 @@ class Git:
 
     def list_branches(self):
         raw = self.run(
-            "ls-remote origin 'refs/heads/enterprise-*'",
+            "ls-remote origin 'refs/heads/enterprise-[4-9]*'",
             return_output=True,
         )
         return [line.split("\t")[1][11:] for line in raw if "\t" in line]
@@ -58,10 +61,13 @@ class Git:
     def list_versions_from_branch(self, branch: str) -> dict:
         # convert "enterprise-4.9" to 4-9
         version = branch.split("-")[1].replace(".", "-")
-        release_notes_file = self.repo_dir / f"release_notes/ocp-{version}-release-notes.adoc"
+        relative_notes_file = f"release_notes/ocp-{version}-release-notes.adoc"
+        release_notes_file = self.repo_dir / relative_notes_file
 
-        self.run(f"fetch --depth 1 origin {branch}")
-        self.run(f"switch {branch}")
+        self.run("sparse-checkout init --cone")
+        self.run(f"sparse-checkout set {relative_notes_file}")
+        self.run(f"fetch --filter=blob:none --depth 1 origin {branch}")
+        self.run(f"checkout {branch}")
 
         if not release_notes_file.exists():
             return {}
