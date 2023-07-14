@@ -53,6 +53,7 @@ class Git:
 
     def list_branches(self):
         raw = self.run(
+            # only list v4+ branches because the format in v3 is different
             "ls-remote origin 'refs/heads/enterprise-[4-9]*'",
             return_output=True,
         )
