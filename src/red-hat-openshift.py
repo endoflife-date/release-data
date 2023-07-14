@@ -1,11 +1,7 @@
 import re
-import subprocess
 from pathlib import Path
 from common import endoflife
-from hashlib import sha1
-from os.path import exists
-from subprocess import call
-from typing import Union
+from common.git import Git
 
 """
 Fetch Red Hat OpenShift versions from the documentation git repository
@@ -15,81 +11,32 @@ PRODUCT = "red-hat-openshift"
 REPO_URL = "https://github.com/openshift/openshift-docs.git"
 
 
-class Git:
-    """
-    Git cli wrapper
-    """
+def get_versions_from_file(release_notes_file: Path) -> dict:
+    if not release_notes_file.exists():
+        return {}
 
-    def __init__(self, url: str):
-        self.url: str = url
-        self._url_sha1: str = sha1(self.url.encode()).hexdigest()
-        self.repo_dir: Path = Path(f"~/.cache/git/red-hat-openshift_{self._url_sha1}").expanduser()
+    with open(release_notes_file, "rb") as f:
+        plain = f.read().decode("utf-8")
 
-    def run(self, cmd: str, return_output: bool = False) -> Union[bool, list]:
-        """
-        Run git command and return True on success or False on failure.
-        Optionaly returns command result instead.
-        """
-        git_opts = f"--git-dir={self.repo_dir}/.git --work-tree={self.repo_dir}"
-
-        if return_output:
-            child = subprocess.Popen(
-                f"git {git_opts} {cmd}",
-                shell=True,
-                stdout=subprocess.PIPE,
-            )
-            return child.communicate()[0].decode("utf-8").split("\n")
-
-        return call(f"git {git_opts} {cmd}",
-                    shell=True,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL) == 0
-
-    def clone(self):
-        self.repo_dir.mkdir(parents=True, exist_ok=True)
-        if not exists(f"{self.repo_dir}/.git"):
-            self.run("init")
-            self.run(f"remote add origin {self.url}")
-
-    def list_branches(self):
-        raw = self.run(
-            # only list v4+ branches because the format in v3 is different
-            "ls-remote origin 'refs/heads/enterprise-[4-9]*'",
-            return_output=True,
+    return {
+        version: date
+        for (version, date) in re.findall(
+            r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*$\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$",
+            plain,
+            re.MULTILINE,
         )
-        return [line.split("\t")[1][11:] for line in raw if "\t" in line]
+    }
 
-    def list_versions_from_branch(self, branch: str) -> dict:
-        # convert "enterprise-4.9" to 4-9
-        version = branch.split("-")[1].replace(".", "-")
-        relative_notes_file = f"release_notes/ocp-{version}-release-notes.adoc"
-        release_notes_file = self.repo_dir / relative_notes_file
-
-        self.run(f"sparse-checkout set {relative_notes_file}")
-        self.run(f"fetch --filter=blob:none --depth 1 origin {branch}")
-        self.run(f"checkout {branch}")
-
-        if not release_notes_file.exists():
-            return {}
-
-        with open(release_notes_file, "rb") as f:
-            plain = f.read().decode("utf-8")
-
-        return {
-            version: date
-            for (version, date) in re.findall(
-                r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*$\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$",
-                plain,
-                re.MULTILINE,
-            )
-        }
-
-
-g = Git(REPO_URL)
-g.clone()
+git = Git(REPO_URL)
+git.setup()
 versions = {}
-for branch in g.list_branches():
-    versions = {**versions, **g.list_versions_from_branch(branch)}
+
+# only fetch v4+ branches, because the format was different in openshift v3
+for branch in git.list_branches("refs/heads/enterprise-[4-9]*"):
+    version = branch.split("-")[1].replace(".", "-")
+    release_notes_file = f"release_notes/ocp-{version}-release-notes.adoc"
+    git.checkout(branch, file_list=[release_notes_file])
+    versions = {**versions, **get_versions_from_file(git.repo_dir / release_notes_file)}
 
 print(f"::group::{PRODUCT}")
 for version, date in versions.items():
