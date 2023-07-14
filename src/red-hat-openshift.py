@@ -65,7 +65,6 @@ class Git:
         relative_notes_file = f"release_notes/ocp-{version}-release-notes.adoc"
         release_notes_file = self.repo_dir / relative_notes_file
 
-        self.run("sparse-checkout init --cone")
         self.run(f"sparse-checkout set {relative_notes_file}")
         self.run(f"fetch --filter=blob:none --depth 1 origin {branch}")
         self.run(f"checkout {branch}")
