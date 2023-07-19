@@ -1,6 +1,7 @@
 import concurrent.futures
 import re
 import requests
+from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 from common import endoflife
 from datetime import datetime
@@ -24,6 +25,9 @@ class InvalidPageVariantError(Exception):
     """Raised when an invalid variant is passed to get_version_and_date"""
     pass
 
+class UnpublishedReleaseError(Exception):
+    """Raised when a page is not yet published, but linked"""
+    pass
 
 def format_date(unformatted_date: str) -> str:
     """ Format date from July 11, 2002 to 2002-07-11 """
@@ -107,7 +111,13 @@ def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, 
         get_version_and_date_variant_2,
         get_version_and_date_variant_3
     ]
-    soup = make_bs_request(release_page)
+    try:
+        soup = make_bs_request(release_page)
+    except(HTTPError) as e:
+        if(e.code == 404):
+            raise UnpublishedReleaseError(f"The release page is not yet published, got a 404: {release_page}")
+        else:
+            raise e
 
     for function in functions:
         try:
@@ -142,7 +152,7 @@ def fetch_releases():
                 (version, date) = future.result()
                 print(f"{version}: {date}")
                 releases[version] = date
-            except UnsupportedPageError:
+            except(UnsupportedPageError, UnpublishedReleaseError):
                 print(f"Unsupported release page: {future_to_url[future]}")
 
     return releases
