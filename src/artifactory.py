@@ -24,7 +24,7 @@ def fetch_releases():
 
     session = HTMLSession()
     r = session.get(URL)
-    r.html.render(sleep=1, scrolldown=3)
+    r.html.render(sleep=2, scrolldown=5)
 
     for row in r.html.find('.informaltable tbody tr'):
         cells = row.find("td")
