@@ -12,7 +12,7 @@ history. Not every version was released, the lines are filtered with
 consistent in the past with the wording, it seems better now).
 """
 
-PRODUCT = "apache"
+PRODUCT = "apache-http-server"
 REPO_URL = "https://github.com/apache/httpd.git"
 
 
