@@ -17,7 +17,8 @@ REPO_URL = "https://github.com/apache/httpd.git"
 
 
 def parse(date: str) -> str:
-    for format in ["%B %d, %Y", "%b %d, %Y"]:
+    date = date.replace("Feburary", "February")
+    for format in ["%B %d, %Y", "%B %d, %Y", "%b %d, %Y", "%b. %d, %Y"]:
         try:
             return datetime.strptime(date, format).strftime("%Y-%m-%d")
         except ValueError:
@@ -26,20 +27,30 @@ def parse(date: str) -> str:
     raise ValueError(f"Unknown date format for '{date}'")
 
 
-def get_versions_from_file(release_notes_file: Path) -> dict:
+def fetch_versions_from_file(release_notes_file: Path, versions: dict):
     if not release_notes_file.exists():
         return {}
 
     with open(release_notes_file, "rb") as f:
         plain = f.read().decode("utf-8", errors="ignore")
 
-    return {
-        version: date
-        for (version, date) in re.findall(
-            r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*(?:Released|Announced)\s(?:on\s)?(?P<date>\w+\s\d\d?,\s\d{4})",
-            plain,
-        )
-    }
+    # for most versions
+    for (version, date_str) in re.findall(r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*(?:Released|Announced|Released and Retired)\s(?:on\s)?(?P<date>\w+\s\d\d?,\s\d{4})", plain):
+        date = parse(date_str)
+        versions[version] = date
+        print(f"{version}: {date}")
+
+    # for older 2.0.x versions (only GA versions are considered)
+    for (version, date_str) in re.findall(r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*released\s(?P<date>\w+\s\d\d?,\s\d{4}) as GA", plain):
+        date = parse(date_str)
+        versions[version] = date
+        print(f"{version}: {date}")
+
+    # for older 1.3.x versions, we take the date of the tag and not the date of the release (too difficult to parse)
+    for (version, date_str) in re.findall(r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*Tagged and [rR]olled\s(?:on\s)?(?P<date>\w+\.?\s\d\d?,\s\d{4})", plain):
+        date = parse(date_str)
+        versions[version] = date
+        print(f"{version}: {date}")
 
 
 git = Git(REPO_URL)
@@ -50,10 +61,7 @@ print(f"::group::{PRODUCT}")
 for branch in git.list_branches("refs/heads/?.?.x"):
     status_file = "STATUS"
     git.checkout(branch, file_list=[status_file])
-    for version, date_str in get_versions_from_file(git.repo_dir / status_file).items():
-        date = parse(date_str)
-        versions[version] = date
-        print(f"{version}: {date}")
+    fetch_versions_from_file(git.repo_dir / status_file, versions)
 print("::endgroup::")
 
 endoflife.write_releases(
