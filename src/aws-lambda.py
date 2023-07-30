@@ -28,19 +28,20 @@ for table_header in table_headers[0:1]:
             r['deprecation'] = datetime.datetime.strptime(deprecation, '%b %d, %Y')
         runtimes[runtime] = r
 
-print("-----")
+for table_header in table_headers[1:]:
+    table = table_header.parent.parent.parent
+    for tr in table.findAll('tr'):
+        td_list = tr.findAll("td")
+        if not td_list:
+            continue
+        for td in td_list:
+            print(td)
+        runtime = td_list[1].find('code').text
+        r = {
+            'name': td_list[0].text.strip(),
+            'deprecation': datetime.datetime.strptime(td_list[3].text.strip(), '%b %d, %Y'),
+            'endoflife': datetime.datetime.strptime(td_list[4].text.strip(), '%b %d, %Y'),
+            }
+        runtimes[runtime] = r
 
-# for table_header in table_headers[1:]:
-#     print(table_header)
-#     table = table_header.parent.parent.parent
-#     for tr in table.findAll('tr'):
-#         td_list = tr.findAll("td")
-#         if not td_list:
-#             continue
-#         runtime = td_list[1].find('code').text
-#         runtimes[runtime] = {
-#                 'name': td_list[0].text,
-#                 'name': td_list[0].text,
-#                 }
-#
 print(runtimes)
