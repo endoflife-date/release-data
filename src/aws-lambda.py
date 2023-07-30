@@ -3,13 +3,22 @@ import re
 from bs4 import BeautifulSoup
 from common import endoflife
 
+"""Fetch versions with their dates from the RSS feed of
+https://docs.aws.amazon.com/neptune/latest/userguide/engine-releases.html.
+"""
+
+PRODUCT = "aws-lambda"
+URL = 'https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html'
+
 def parse_date(s):
     s = s.strip()
     if s == '':
         return None
     return datetime.datetime.strptime(s, '%b %d, %Y')
 
-response = endoflife.fetch_url(url)
+print(f"::group::{PRODUCT}")
+
+response = endoflife.fetch_url(URL)
 soup = BeautifulSoup(response, features="html5lib")
 table_headers = soup.findAll('th', {'class':'table-header'})
 
