@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-07-31, 175 of the 246 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                     | Auto | Method          |
 |--------------------------------------|-------------------------------|------|-----------------|
@@ -29,6 +29,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Amazon EKS                           | `/amazon-eks`                 | ✔️   | custom          |
 | Amazon Kindle                        | `/kindle`                     | ❌    | n/a             |
 | Amazon Linux                         | `/amazon-linux`               | ✔️   | dockerhub       |
+| Amazon Neptune                       | `/amazon-neptune`             | ✔️   | custom          |
 | Amazon RDS for MySQL                 | `/amazon-rds-mysql`           | ✔️   | custom          |
 | Amazon RDS for PostgreSQL            | `/amazon-rds-postgresql`      | ✔️   | custom          |
 | Android OS                           | `/android`                    | ❌    | n/a             |
@@ -36,12 +37,13 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Ansible                              | `/ansible`                    | ✔️   | pypi            |
 | Ansible-core                         | `/ansible-core`               | ✔️   | git             |
 | antiX Linux                          | `/antix`                      | ✔️   | distrowatch     |
+| Apache ActiveMQ                      | `/apache-activemq`            | ✔️   | git             |
 | Apache Airflow                       | `/apache-airflow`             | ✔️   | pypi            |
 | Apache Camel                         | `/apache-camel`               | ✔️   | maven           |
 | Apache Cassandra                     | `/apache-cassandra`           | ✔️   | git             |
 | Apache Groovy                        | `/apache-groovy`              | ✔️   | maven           |
 | Apache HBase                         | `/hbase`                      | ✔️   | git             |
-| Apache HTTP Server                   | `/apache`                     | ❌    | n/a             |
+| Apache HTTP Server                   | `/apache`                     | ✔️   | custom          |
 | Apache Kafka                         | `/apache-kafka`               | ✔️   | git             |
 | Apache Log4j                         | `/log4j`                      | ✔️   | maven           |
 | Apache Maven                         | `/maven`                      | ✔️   | maven           |
@@ -55,6 +57,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Apple iPhone                         | `/iphone`                     | ❌    | n/a             |
 | Apple macOS                          | `/macos`                      | ✔️   | custom          |
 | Apple watchOS                        | `/watchos`                    | ✔️   | custom          |
+| Artifactory                          | `/artifactory`                | ✔️   | custom          |
 | Azul Zulu                            | `/azul-zulu`                  | ❌    | n/a             |
 | Azure DevOps Server                  | `/azure-devops-server`        | ❌    | n/a             |
 | Azure Kubernetes Service             | `/azure-kubernetes-service`   | ❌    | n/a             |
@@ -70,7 +73,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Composer                             | `/composer`                   | ✔️   | git             |
 | Confluence                           | `/confluence`                 | ❌    | n/a             |
 | Contao                               | `/contao`                     | ✔️   | git             |
-| Couchbase Server                     | `/couchbase-server`           | ✔️   | dockerhub       |
+| Couchbase Server                     | `/couchbase-server`           | ✔️   | custom          |
 | Craft CMS                            | `/craft-cms`                  | ✔️   | git             |
 | Debian                               | `/debian`                     | ✔️   | custom          |
 | Dependency-Track                     | `/dependency-track`           | ✔️   | git             |
@@ -85,7 +88,10 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Electron                             | `/electron`                   | ✔️   | npm             |
 | Elixir                               | `/elixir`                     | ✔️   | git             |
 | Ember                                | `/emberjs`                    | ✔️   | npm             |
+| Envoy                                | `/envoy`                      | ✔️   | git             |
+| etcd                                 | `/etcd`                       | ✔️   | git             |
 | EuroLinux                            | `/eurolinux`                  | ✔️   | distrowatch     |
+| Exim                                 | `/exim`                       | ✔️   | git             |
 | Fairphone                            | `/fairphone`                  | ❌    | n/a             |
 | Fedora Linux                         | `/fedora`                     | ✔️   | distrowatch     |
 | FFmpeg                               | `/ffmpeg`                     | ✔️   | git             |
@@ -111,6 +117,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Hashicorp Terraform                  | `/terraform`                  | ✔️   | git             |
 | Hashicorp Vault                      | `/hashicorp-vault`            | ✔️   | git             |
 | IBM AIX                              | `/ibm-aix`                    | ✔️   | custom          |
+| IBM Semeru Runtime                   | `/ibm-semeru-runtime`         | ✔️   | github_releases |
 | Intel Processors                     | `/intel-processors`           | ❌    | n/a             |
 | Internet Explorer                    | `/internet-explorer`          | ❌    | n/a             |
 | Ionic Framework                      | `/ionic`                      | ✔️   | git             |
@@ -127,6 +134,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | KDE Plasma                           | `/kde-plasma`                 | ✔️   | git             |
 | Keycloak                             | `/keycloak`                   | ✔️   | git             |
 | Kibana                               | `/kibana`                     | ✔️   | git             |
+| Kirby                                | `/kirby`                      | ✔️   | git             |
 | Kotlin                               | `/kotlin`                     | ✔️   | npm             |
 | Kubernetes                           | `/kubernetes`                 | ✔️   | git             |
 | Laravel                              | `/laravel`                    | ✔️   | git             |
@@ -199,15 +207,18 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Pop!_OS                              | `/pop_os`                     | ❌    | n/a             |
 | Postfix                              | `/postfix`                    | ✔️   | git             |
 | PostgreSQL                           | `/postgresql`                 | ✔️   | git             |
+| Prometheus                           | `/prometheus`                 | ✔️   | git             |
 | Proxmox VE                           | `/proxmox-ve`                 | ✔️   | distrowatch     |
+| Puppet                               | `/puppet`                     | ✔️   | git             |
 | Python                               | `/python`                     | ✔️   | git             |
 | Qt                                   | `/qt`                         | ✔️   | git             |
-| Quarkus                              | `/quarkus-framework`          | ✔️   | git             |
+| Quarkus                              | `/quarkus-framework`          | ✔️   | github_releases |
 | RabbitMQ                             | `/rabbitmq`                   | ✔️   | git             |
 | Raspberry Pi                         | `/raspberry-pi`               | ❌    | n/a             |
 | React                                | `/react`                      | ✔️   | npm             |
+| Red Hat build of OpenJDK             | `/redhat-build-of-openjdk`    | ❌    | n/a             |
 | Red Hat Enterprise Linux             | `/rhel`                       | ❌    | n/a             |
-| Red Hat OpenShift                    | `/red-hat-openshift`          | ❌    | n/a             |
+| Red Hat OpenShift                    | `/red-hat-openshift`          | ✔️   | custom          |
 | Red Hat Satellite                    | `/redhat-satellite`           | ✔️   | custom          |
 | Redis                                | `/redis`                      | ✔️   | git             |
 | Redmine                              | `/redmine`                    | ✔️   | git             |
@@ -218,6 +229,7 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Ruby                                 | `/ruby`                       | ✔️   | git             |
 | Ruby on Rails                        | `/rails`                      | ✔️   | git             |
 | Samsung Mobile                       | `/samsung-mobile`             | ❌    | n/a             |
+| SapMachine                           | `/sapmachine`                 | ✔️   | github_releases |
 | Scala                                | `/scala`                      | ✔️   | git             |
 | Silverstripe CMS                     | `/silverstripe`               | ✔️   | git             |
 | Slackware Linux                      | `/slackware`                  | ✔️   | distrowatch     |
@@ -249,8 +261,10 @@ As of 2023-06-25, 160 of the 232 products tracked by endoflife.date have automat
 | Vue                                  | `/vue`                        | ✔️   | npm             |
 | Vuetify                              | `/vuetify`                    | ✔️   | npm             |
 | Wagtail                              | `/wagtail`                    | ✔️   | git             |
+| WeeChat                              | `/weechat`                    | ✔️   | git             |
 | WordPress                            | `/wordpress`                  | ✔️   | git             |
 | XCP-ng                               | `/xcp-ng`                     | ✔️   | git             |
+| Yarn                                 | `/yarn`                       | ✔️   | npm             |
 | Yocto Project                        | `/yocto`                      | ✔️   | git             |
 | Zabbix                               | `/zabbix`                     | ✔️   | git             |
 
