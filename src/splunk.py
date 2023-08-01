@@ -6,7 +6,7 @@ from typing import List, Dict
 
 PRODUCT = "splunk"
 URL = "https://docs.splunk.com/Documentation/Splunk"
-RELNOTES_URL_TEMPLATE = "https://docs.splunk.com/Documentation/Splunk/{release}/ReleaseNotes/MeetSplunk"
+RELNOTES_URL_TEMPLATE = "https://docs.splunk.com/Documentation/Splunk/{version}/ReleaseNotes/MeetSplunk"
 PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+\.\d+(?:\.\d+)?) was released on (?P<date>\w+\s\d\d?,\s\d{4})\."
 
 
@@ -19,13 +19,19 @@ releases = dict()
 main = endoflife.fetch_url(URL)
 soup = BeautifulSoup(main, features="html5lib")
 
-for option in soup.select("select#version-select > option"):
-    minor_release = option.attrs['value']
-    # skip all releases before 7.2
-    if minor_release and minor_release.split('.') < '7.2'.split('.'):
-        continue
+all_versions = list(map(
+    lambda option: option.attrs['value'],
+    soup.select("select#version-select > option")
+))
 
-    relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(release=minor_release))
+# Release notes for versions before 7.2 don't contain release information
+eligible_versions = list(filter(
+    lambda v: v.split('.') >= '7.2'.split('.'),
+    all_versions
+))
+
+for v in eligible_versions:
+    relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(version=v))
     for (version, date_str) in re.findall(PATTERN, relnotes, re.MULTILINE):
         date = convert_date(date_str)
         releases[version] = date
