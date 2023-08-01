@@ -2,14 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     io-console (0.6.0)
-    irb (1.7.0)
-      reline (>= 0.3.0)
+    irb (1.7.4)
+      reline (>= 0.3.6)
     liquid (5.4.0)
     psych (5.1.0)
       stringio
     rdoc (6.5.0)
       psych (>= 4.0.0)
-    reline (0.3.5)
+    reline (0.3.7)
       io-console (~> 0.5)
     rugged (1.5.1)
     stringio (3.0.7)
