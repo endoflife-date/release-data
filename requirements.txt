@@ -1,7 +1,7 @@
 beautifulsoup4==4.12.2
 cffi==1.15.1
 html5lib==1.1
-Markdown==3.4.3
+Markdown==3.4.4
 mwparserfromhell==0.6.4
 pycparser==2.21
 pygit2==1.12.2
