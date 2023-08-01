@@ -8,7 +8,7 @@ pygit2==1.12.2
 python-dateutil==2.8.2
 python-frontmatter==1.0.0
 python-liquid==1.9.2
-PyYAML==6.0
+PyYAML==6.0.1
 six==1.16.0
 soupsieve==2.4.1
 typing_extensions==4.7.0
