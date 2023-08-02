@@ -29,7 +29,12 @@ eligible_versions = list(filter(
     all_versions
 ))
 
-for v in eligible_versions:
+# iterate from highest to lowest version
+# higher version pages also contain informations about lower versions
+for v in sorted(eligible_versions, key=lambda x: x.split(), reverse=True):
+    # if we already have the release date, skip
+    if v in releases:
+        continue
     relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(version=v))
     for (version, date_str) in re.findall(PATTERN, relnotes, re.MULTILINE):
         date = convert_date(date_str)
