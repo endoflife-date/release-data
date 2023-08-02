@@ -29,18 +29,23 @@ eligible_versions = list(filter(
     all_versions
 ))
 
-# iterate from highest to lowest version
-# higher version pages also contain informations about lower versions
-for v in sorted(eligible_versions, key=lambda x: list(map(int, x.split("."))), reverse=True):
-    # if we already have the release date, skip
+# Sort from highest to lowest version so that we can skip versions we already
+# have (because, for example, 9.0.5 release notes also contains release notes
+# for 9.0.0 to 9.0.4).
+sorted_versions = sorted(
+    eligible_versions,
+    key=lambda x: list(map(int, x.split("."))), reverse=True
+)
+
+for v in sorted_versions:
     if v in releases:
-        continue
+        continue # if we already know the release date, skip it
+
     relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(version=v))
     for (version, date_str) in re.findall(PATTERN, relnotes, re.MULTILINE):
-        date = convert_date(date_str)
         # convert x.y to x.y.0
-        if len(version.split(".")) == 2:
-            version = f"{version}.0"
+        version = f"{version}.0" if len(version.split(".")) == 2 else version
+        date = convert_date(date_str)
         releases[version] = date
         print(f"{version}: {date}")
 
