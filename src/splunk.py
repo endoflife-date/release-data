@@ -2,7 +2,6 @@ import re
 from bs4 import BeautifulSoup
 from common import endoflife
 from datetime import datetime
-from typing import List, Dict
 
 PRODUCT = "splunk"
 URL = "https://docs.splunk.com/Documentation/Splunk"
