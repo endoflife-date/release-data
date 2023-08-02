@@ -6,7 +6,7 @@ from datetime import datetime
 PRODUCT = "splunk"
 URL = "https://docs.splunk.com/Documentation/Splunk"
 RELNOTES_URL_TEMPLATE = "https://docs.splunk.com/Documentation/Splunk/{version}/ReleaseNotes/MeetSplunk"
-PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+\.\d+(?:\.\d+)?) was released on (?P<date>\w+\s\d\d?,\s\d{4})\."
+PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was released on (?P<date>\w+\s\d\d?,\s\d{4})\."
 
 
 def convert_date(date: str) -> str:
