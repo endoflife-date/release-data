@@ -3,39 +3,40 @@ import re
 import sys
 from common import endoflife
 
-METHOD = "npm"
+METHOD = "docker_hub"
 REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
 
-def fetch_releases(npm_id, regex):
-    releases = {}
-
+def fetch_releases(url, regex, releases):
     if not isinstance(regex, list):
         regex = [regex]
 
-    url = f"https://registry.npmjs.org/{npm_id}"
     response = endoflife.fetch_url(url)
     data = json.loads(response)
-    for version in data["time"]:
+    for result in data["results"]:
+        version = result["name"]
+
         matches = False
         for r in regex:
             if re.match(r, version):
                 matches = True
 
-        release_datetime = data["time"][version]
-        if matches and release_datetime:
-            releases[version] = release_datetime.split("T")[0]
-            print(f"{version}: {releases[version]}")
+        if matches:
+            date = result['tag_last_pushed'].split("T")[0]
+            releases[version] = date
+            print(f"{version}: {date}")
 
-    return releases
+    if data["next"]:
+        fetch_releases(data["next"], regex, releases)
 
 
 def update_product(product_name, configs):
     releases = {}
 
     for config in configs:
+        url = f"https://hub.docker.com/v2/repositories/{config[METHOD]}/tags?page_size=100&page=1"
         config = {"regex": REGEX} | config
-        releases = releases | fetch_releases(config[METHOD], config["regex"])
+        fetch_releases(url, config["regex"], releases)
 
     endoflife.write_releases(product_name, releases)
 
