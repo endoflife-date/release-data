@@ -6,7 +6,7 @@ from datetime import datetime
 PRODUCT = "splunk"
 URL = "https://docs.splunk.com/Documentation/Splunk"
 RELNOTES_URL_TEMPLATE = "https://docs.splunk.com/Documentation/Splunk/{version}/ReleaseNotes/MeetSplunk"
-PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was released on (?P<date>\w+\s\d\d?,\s\d{4})\."
+PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\."
 
 
 def convert_date(date: str) -> str:
@@ -31,7 +31,7 @@ eligible_versions = list(filter(
 
 # iterate from highest to lowest version
 # higher version pages also contain informations about lower versions
-for v in sorted(eligible_versions, key=lambda x: x.split(), reverse=True):
+for v in sorted(eligible_versions, key=lambda x: list(map(int, x.split("."))), reverse=True):
     # if we already have the release date, skip
     if v in releases:
         continue
