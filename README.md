@@ -17,11 +17,12 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-07-31, 175 of the 246 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-08-05, 178 of the 248 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                     | Auto | Method          |
 |--------------------------------------|-------------------------------|------|-----------------|
 | Adobe ColdFusion                     | `/coldfusion`                 | ❌    | n/a             |
+| Akeneo PIM                           | `/akeneo-pim`                 | ✔️   | git             |
 | Alibaba Dragonwell                   | `/alibaba-dragonwell`         | ✔️   | git             |
 | AlmaLinux OS                         | `/almalinux`                  | ✔️   | distrowatch     |
 | Alpine Linux                         | `/alpine`                     | ✔️   | git             |
@@ -111,6 +112,7 @@ As of 2023-07-31, 175 of the 246 products tracked by endoflife.date have automat
 | Gradle                               | `/gradle`                     | ✔️   | git             |
 | Grafana                              | `/grafana`                    | ✔️   | git             |
 | Grails Framework                     | `/grails`                     | ✔️   | git             |
+| Graylog                              | `/graylog`                    | ✔️   | git             |
 | GStreamer                            | `/gstreamer`                  | ✔️   | git             |
 | HAProxy                              | `/haproxy`                    | ✔️   | custom          |
 | Hashicorp Consul                     | `/consul`                     | ✔️   | git             |
@@ -234,7 +236,7 @@ As of 2023-07-31, 175 of the 246 products tracked by endoflife.date have automat
 | Silverstripe CMS                     | `/silverstripe`               | ✔️   | git             |
 | Slackware Linux                      | `/slackware`                  | ✔️   | distrowatch     |
 | SonarQube                            | `/sonar`                      | ✔️   | git             |
-| Splunk                               | `/splunk`                     | ❌    | n/a             |
+| Splunk                               | `/splunk`                     | ✔️   | custom          |
 | Spring Boot                          | `/spring-boot`                | ✔️   | git             |
 | Spring Framework                     | `/spring-framework`           | ✔️   | git             |
 | SQLite                               | `/sqlite`                     | ✔️   | git             |
