@@ -45,9 +45,14 @@ def fetch_releases():
             # date and LTSS end date
             cells = row.find_all("td")
             version = strip_version(cells[0].text)
-            release_date = convert_date(cells[1].text)
-            versions[version] = release_date
-            print(f"{version}: {release_date}")
+
+            try:
+                release_date = convert_date(cells[1].text)
+                versions[version] = release_date
+                print(f"{version}: {release_date}")
+            except ValueError as e:
+                print(f"Ignoring {version}: {e}")
+                continue
 
     return versions
 
