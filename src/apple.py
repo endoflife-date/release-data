@@ -74,6 +74,8 @@ def parse(url, releases):
     response = endoflife.fetch_url(url)
     soup = BeautifulSoup(response, features="html5lib")
     table = soup.find(id="tableWraper")
+    if not table:
+        table = soup.find('table', class_="gb-table")
     for tr in reversed(table.findAll("tr")[1:]):
         td_list = tr.findAll("td")
         version_text = td_list[0].get_text().strip()
