@@ -31,7 +31,8 @@ def list_products(method, products_filter=None, pathname="website/products"):
     return products_with_method
 
 
-def fetch_url(url, retry_count=5, timeout=10, data=None, headers=None, encoding='utf-8'):
+# Keep the default timeout high enough to avoid errors with web.archive.org.
+def fetch_url(url, retry_count=5, timeout=30, data=None, headers=None, encoding='utf-8'):
     last_exception = None
 
     headers = {'User-Agent': USER_AGENT} | {} if headers is None else headers
