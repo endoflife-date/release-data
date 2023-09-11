@@ -26,7 +26,7 @@ def fetch_milestone(channel):
 def parse_date(d):
     # If the date begins with a >3 letter month name, trim it to just 3 letters
     # Strip out the Date: section from the start
-    d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1,4})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
+    d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1,})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
     return datetime.strptime(d, DATE_FORMAT).strftime('%Y-%m-%d')
 
 
