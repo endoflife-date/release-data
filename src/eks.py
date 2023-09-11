@@ -9,9 +9,9 @@ from datetime import datetime
 # Keep older pages at top of the list
 URLS = [
     # 1.19.eks.1
-    "https://web.archive.org/web/20221007150452id_/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
+    "https://web.archive.org/web/20221007150452/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
     # + 1.20
-    "https://web.archive.org/web/20230521061347id_/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
+    "https://web.archive.org/web/20230521061347/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
     # + latest
     "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
 ]
