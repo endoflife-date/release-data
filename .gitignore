@@ -3,3 +3,4 @@ vendor
 .bundle
 pyrightconfig.json
 __pycache__
+.venv
