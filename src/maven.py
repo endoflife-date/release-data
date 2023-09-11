@@ -18,7 +18,7 @@ def valid_version(version):
 
 def fetch_json(group_id, artifact_id, start):
     url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&rows=100&wt=json&start={start}"
-    response = endoflife.fetch_url(url, retry_count=5)
+    response = endoflife.fetch_url(url)
     return json.loads(response)
 
 

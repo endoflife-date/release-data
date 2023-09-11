@@ -129,8 +129,7 @@ def get_version_and_date(release_page: str, release_version: str) -> Tuple[str, 
 
 
 def make_bs_request(url: str) -> BeautifulSoup:
-    # requests to www.mozilla.org often time out, retry in case of failures
-    response = endoflife.fetch_url(url, timeout=10, retry_count=5)
+    response = endoflife.fetch_url(url)
     return BeautifulSoup(response, features="html5lib")
 
 
