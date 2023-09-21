@@ -3,17 +3,21 @@ from bs4 import BeautifulSoup
 from common import endoflife
 from datetime import datetime
 
-dbs = {
+VERSION_REGEX = r"(?P<v>\d+(?:\.\d+)*)"  # https://regex101.com/r/BY1vwV/1
+DBS = {
     "mysql": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html",
     "postgresql": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html",
 }
 
 
 def parse_date(d):
-    return datetime.strptime(d, "%d %B %Y").strftime("%Y-%m-%d")
+    try:
+        return datetime.strptime(d, "%d %B %Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return None
 
 
-for db, url in dbs.items():
+for db, url in DBS.items():
     print(f"::group::{db}")
     releases = {}
 
@@ -27,13 +31,13 @@ for db, url in dbs.items():
             # Must match both the 'Supported XXX minor versions' and
             # 'Supported XXX major versions' to have correct release dates
             if len(columns) > 3:
-                r = r"(?P<v>\d+(?:\.\d+)*)"  # https://regex101.com/r/BY1vwV/1
-                m = re.search(r, columns[0].text.strip(), flags=re.IGNORECASE)
+                m = re.search(VERSION_REGEX, columns[0].text.strip(), flags=re.IGNORECASE)
                 if m:
-                    version = m.group("v")
                     date = parse_date(columns[2].text.strip())
-                    print(f"{version} : {date}")
-                    releases[version] = date
+                    if date:
+                        version = m.group("v")
+                        print(f"{version} : {date}")
+                        releases[version] = date
 
     endoflife.write_releases(f"amazon-rds-{db.lower()}", dict(
         # sort by date then version (desc)
