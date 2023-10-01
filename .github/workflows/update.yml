@@ -25,11 +25,11 @@ jobs:
         # The cache is reset on the first build of every week this way.
         # Change the -1 part if you need to force reset the cache
         key: "${{ steps.current-time.outputs.formattedTime }}-2"
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       name: Clone self repository
       with:
         ref: ${{ github.head_ref }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       id: clone_same_branch
       name: Clone website (Same Branch)
       continue-on-error: true
@@ -38,7 +38,7 @@ jobs:
         path: website
         submodules: false
         ref: ${{github.ref_name}}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       name: Clone website (Main)
       if: steps.clone_same_branch.outcome != 'success'
       with:
