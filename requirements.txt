@@ -11,6 +11,6 @@ python-liquid==1.9.4
 PyYAML==6.0.1
 six==1.16.0
 soupsieve==2.5
-typing_extensions==4.7.1
+typing_extensions==4.8.0
 webencodings==0.5.1
 requests-html==0.10.0
