@@ -54,42 +54,37 @@ def parse_date(text):
     raise ValueError("Cannot parse '" + text + "' with formats " + str(date_formats))
 
 
-def get_date_from_dedicated_page(release_title) -> str:
-    page_url = BASE_URL + release_title.find('a').get('href')
-    page = BeautifulSoup(endoflife.fetch_url(page_url), features="html5lib")
+def get_date_from_version_page(page_path) -> str:
+    url = BASE_URL + page_path
+    page = BeautifulSoup(endoflife.fetch_url(url), features="html5lib")
 
-    date = page.find('time')
-    if date:
-        return date.get('datetime')
+    date_tag = page.find('time')
+    if date_tag:
+        return date_tag.get('datetime')
+
+    date_label = page.find(string=DATE_PATTERN)
+    if not date_label:
+        raise ValueError(f"cannot find date on {url}")
 
     try:
-        return parse_date(page.find('p', string=DATE_PATTERN).text)
+        return parse_date(date_label.text)
     except ValueError:
-        raise ValueError(f"cannot find date on dedicated page {page_url}")
+        raise ValueError(f"cannot extract date from '{date_label.text}' on {url}")
 
 
-def fetch_releases_from_relnotes(link, unpublished_versions):
+def fetch_versions_from(release_cycle_path, unpublished_versions):
     versions = {}
-    relnotes_url = BASE_URL + link.get('href')
-    relnotes = BeautifulSoup(endoflife.fetch_url(relnotes_url), features="html5lib")
+    relnotes = BeautifulSoup(endoflife.fetch_url(BASE_URL + release_cycle_path), features="html5lib")
 
-    for release_title in relnotes.find_all(['h3', 'p'], string=RESOLVED_IN_PATTERN):
-        version = release_title.text.split(' ')[-1]
-        date_paragraph = release_title.find_next('p')
-        date_text = date_paragraph.text.strip() if date_paragraph else ''
-
-        try:
-            date = parse_date(date_text)
-            versions[version] = date
-            print(f"{version}: {date}")
-        except ValueError as ex:
-            if version not in unpublished_versions:
-                try:
-                    date = get_date_from_dedicated_page(release_title)
-                    versions[version] = date
-                    print(f"{version}: {date}")
-                except ValueError as ex:
-                    print(f"Error parsing date for {version}: {ex}")
+    for version_title in relnotes.find_all(['h3', 'p'], string=RESOLVED_IN_PATTERN):
+        version = version_title.text.split(' ')[-1]
+        if version not in unpublished_versions:
+            try:
+                date = get_date_from_version_page(version_title.find('a').get('href'))
+                versions[version] = date
+                print(f"{version}: {date}")
+            except ValueError as ex:
+                print(f"Error parsing date for {version}: {ex}")
 
     return versions
 
@@ -101,8 +96,8 @@ def fetch_releases(main_urls, unpublished_versions):
         main = BeautifulSoup(endoflife.fetch_url(main_url), features="html5lib")
         releases_div = main.find('div', class_='sidepanel-in-this-section')
 
-        for link in releases_div.find_all('a', string=RELNOTES_PATTERN):
-            versions = versions | fetch_releases_from_relnotes(link, unpublished_versions)
+        for release_cycle_link in releases_div.find_all('a', string=RELNOTES_PATTERN):
+            versions = versions | fetch_versions_from(release_cycle_link.get('href'), unpublished_versions)
 
     return versions
 
