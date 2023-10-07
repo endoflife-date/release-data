@@ -1,11 +1,13 @@
 import frontmatter
+import sys
 import time
 from glob import glob
 
 products = {}
 count = 0
 count_auto = 0
-for product_file in sorted(list(glob('website/products/*.md'))):
+products_dir = sys.argv[1] if len(sys.argv) > 1 else 'website/products/'
+for product_file in sorted(list(glob(f'{products_dir}/*.md'))):
     with open(product_file, "r") as f:
         data = frontmatter.load(f)
         count += 1
