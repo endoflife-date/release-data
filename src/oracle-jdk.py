@@ -14,7 +14,7 @@ variable in the python script does not work, so it has to be done before this
 script execution.
 """
 
-PRODUCT = "java"
+PRODUCT = "oracle-jdk"
 URL = "https://www.java.com/releases/"
 
 
