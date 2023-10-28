@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-10-28, 198 of the 268 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                       | Auto | Method          |
 |--------------------------------------|---------------------------------|------|-----------------|
@@ -47,6 +47,7 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Apache Groovy                        | `/apache-groovy`                | ✔️   | maven           |
 | Apache Hadoop                        | `/apache-hadoop`                | ✔️   | git             |
 | Apache HBase                         | `/hbase`                        | ✔️   | git             |
+| Apache Hop                           | `/apache-hop`                   | ✔️   | github_releases |
 | Apache HTTP Server                   | `/apache`                       | ✔️   | custom          |
 | Apache Kafka                         | `/apache-kafka`                 | ✔️   | git             |
 | Apache Log4j                         | `/log4j`                        | ✔️   | maven           |
@@ -61,6 +62,7 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Apple iPadOS                         | `/ipados`                       | ✔️   | custom          |
 | Apple iPhone                         | `/iphone`                       | ❌    | n/a             |
 | Apple macOS                          | `/macos`                        | ✔️   | custom          |
+| Apple Watch                          | `/apple-watch`                  | ❌    | n/a             |
 | Apple watchOS                        | `/watchos`                      | ✔️   | custom          |
 | Argo CD                              | `/argo-cd`                      | ✔️   | git             |
 | Artifactory                          | `/artifactory`                  | ✔️   | custom          |
@@ -77,10 +79,11 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Citrix Virtual Apps and Desktops     | `/citrix-vad`                   | ❌    | n/a             |
 | ClamAV                               | `/clamav`                       | ✔️   | git             |
 | Composer                             | `/composer`                     | ✔️   | git             |
-| Confluence                           | `/confluence`                   | ❌    | n/a             |
+| Confluence                           | `/confluence`                   | ✔️   | custom          |
 | Contao                               | `/contao`                       | ✔️   | git             |
 | Couchbase Server                     | `/couchbase-server`             | ✔️   | custom          |
 | Craft CMS                            | `/craft-cms`                    | ✔️   | git             |
+| dbt Core                             | `/dbt-core`                     | ✔️   | git             |
 | Debian                               | `/debian`                       | ✔️   | custom          |
 | Dependency-Track                     | `/dependency-track`             | ✔️   | git             |
 | Devuan                               | `/devuan`                       | ✔️   | distrowatch     |
@@ -95,6 +98,7 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Elixir                               | `/elixir`                       | ✔️   | git             |
 | Ember                                | `/emberjs`                      | ✔️   | npm             |
 | Envoy                                | `/envoy`                        | ✔️   | git             |
+| Erlang                               | `/erlang`                       | ✔️   | git             |
 | etcd                                 | `/etcd`                         | ✔️   | git             |
 | EuroLinux                            | `/eurolinux`                    | ✔️   | distrowatch     |
 | Exim                                 | `/exim`                         | ✔️   | git             |
@@ -134,11 +138,12 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Jekyll                               | `/jekyll`                       | ✔️   | git             |
 | Jenkins                              | `/jenkins`                      | ✔️   | git             |
 | JHipster                             | `/jhipster`                     | ✔️   | npm             |
-| Jira Software                        | `/jira-software`                | ❌    | n/a             |
+| Jira Software                        | `/jira-software`                | ✔️   | custom          |
 | Joomla!                              | `/joomla`                       | ✔️   | git             |
 | jQuery                               | `/jquery`                       | ✔️   | git             |
 | JReleaser                            | `/jreleaser`                    | ✔️   | maven           |
 | KDE Plasma                           | `/kde-plasma`                   | ✔️   | git             |
+| KEDA                                 | `/keda`                         | ✔️   | git             |
 | Keycloak                             | `/keycloak`                     | ✔️   | git             |
 | Kibana                               | `/kibana`                       | ✔️   | git             |
 | Kirby                                | `/kirby`                        | ✔️   | git             |
@@ -151,7 +156,7 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Linux Kernel                         | `/linux`                        | ✔️   | cgit            |
 | Linux Mint                           | `/linuxmint`                    | ❌    | n/a             |
 | Logstash                             | `/logstash`                     | ✔️   | git             |
-| Looker                               | `/looker`                       | ❌    | n/a             |
+| Looker                               | `/looker`                       | ✔️   | custom          |
 | Mageia                               | `/mageia`                       | ✔️   | distrowatch     |
 | Magento                              | `/magento`                      | ✔️   | git             |
 | MariaDB                              | `/mariadb`                      | ✔️   | git             |
@@ -205,7 +210,8 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | OpenZFS                              | `/openzfs`                      | ✔️   | git             |
 | Oracle Database                      | `/oracle-database`              | ❌    | n/a             |
 | Oracle JDK                           | `/oracle-jdk`                   | ✔️   | custom          |
-| Oracle Linux                         | `/oraclelinux`                  | ✔️   | distrowatch     |
+| Oracle Linux                         | `/oracle-linux`                 | ✔️   | distrowatch     |
+| Oracle Solaris                       | `/oracle-solaris`               | ❌    | n/a             |
 | Palo Alto Networks Cortex XDR agent  | `/cortex-xdr`                   | ❌    | n/a             |
 | Palo Alto Networks GlobalProtect App | `/pangp`                        | ❌    | n/a             |
 | Palo Alto Networks PAN-OS            | `/panos`                        | ❌    | n/a             |
@@ -235,9 +241,10 @@ As of 2023-10-07, 190 of the 261 products tracked by endoflife.date have automat
 | Red Hat Satellite                    | `/redhat-satellite`             | ✔️   | custom          |
 | Redis                                | `/redis`                        | ✔️   | git             |
 | Redmine                              | `/redmine`                      | ✔️   | git             |
+| Rocket.Chat                          | `/rocket-chat`                  | ✔️   | git             |
 | Rocky Linux                          | `/rocky-linux`                  | ✔️   | custom          |
 | ROS                                  | `/ros`                          | ❌    | n/a             |
-| ROS2                                 | `/ros2`                         | ❌    | n/a             |
+| ROS 2                                | `/ros-2`                        | ❌    | n/a             |
 | Roundcube Webmail                    | `/roundcube`                    | ✔️   | git             |
 | Ruby                                 | `/ruby`                         | ✔️   | git             |
 | Ruby on Rails                        | `/rails`                        | ✔️   | git             |
