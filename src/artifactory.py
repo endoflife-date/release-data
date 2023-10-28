@@ -36,6 +36,9 @@ def fetch_releases():
                 result[version] = date
                 print(f"{version}: {date}")
 
+    # 7.29.9 release date is wrong on https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life.
+    # Sent a mail to jfrog-help-center-feedback@jfrog.com to fix it, but in the meantime...
+    result['7.29.9'] = '2022-01-11'
     return result
 
 
