@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-10-28, 198 of the 268 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-11-01, 201 of the 268 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                              | Permalink                       | Auto | Method          |
 |--------------------------------------|---------------------------------|------|-----------------|
@@ -195,9 +195,9 @@ As of 2023-10-28, 198 of the 268 products tracked by endoflife.date have automat
 | Nokia Mobile                         | `/nokia`                        | ❌    | n/a             |
 | Nomad                                | `/nomad`                        | ✔️   | git             |
 | NumPy                                | `/numpy`                        | ✔️   | pypi            |
-| Nutanix AOS                          | `/nutanix-aos`                  | ❌    | n/a             |
-| Nutanix Files                        | `/nutanix-files`                | ❌    | n/a             |
-| Nutanix Prism Central                | `/nutanix-prism`                | ❌    | n/a             |
+| Nutanix AOS                          | `/nutanix-aos`                  | ✔️   | custom          |
+| Nutanix Files                        | `/nutanix-files`                | ✔️   | custom          |
+| Nutanix Prism Central                | `/nutanix-prism`                | ✔️   | custom          |
 | Nuxt                                 | `/nuxt`                         | ✔️   | npm             |
 | NVIDIA Driver                        | `/nvidia`                       | ❌    | n/a             |
 | NVIDIA GPUs                          | `/nvidia-gpu`                   | ❌    | n/a             |
