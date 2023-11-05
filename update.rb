@@ -108,7 +108,7 @@ end
 
 def get_releases(product, config, i)
   type = get_update_type(config)
-  if type == 'git'
+  if type == 'oldgit'  # replaced by the git.py script, code kept for now to facilitate rollbacks
     dir = get_cache_dir('git', product, config)
     fetch_git_releases(dir, config)
     return get_releases_from_git(dir, config)
