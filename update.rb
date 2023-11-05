@@ -105,30 +105,12 @@ def generate_commit_message
   end
 end
 
-def get_releases_from_dockerhub(config)
-  url = "https://hub.docker.com/v2/repositories/#{config['dockerhub']}/tags?page_size=100&page=1"
-  ret = {}
-  loop do
-    data = JSON.parse Net::HTTP.get(URI.parse(url))
-    data['results'].each do |r|
-      next unless good_tag(r['name'], config)
-      tag_proper_name = render_tag(r['name'], config)
-      ret[tag_proper_name] = r['tag_last_pushed'][0..9]
-    end
-    url = data['next']
-    break if url.nil?
-  end
-  ret
-end
-
 def get_releases(product, config, i)
   type = get_update_type(config)
   if type == 'git'
     dir = get_cache_dir('git', product, config)
     fetch_git_releases(dir, config)
     return get_releases_from_git(dir, config)
-  elsif type == 'dockerhub'
-    return get_releases_from_dockerhub(config)
   elsif type != nil
     puts "Handled by #{type} script, skipping"
     return {}
@@ -139,7 +121,7 @@ def get_releases(product, config, i)
 end
 
 def get_update_type(config)
-  for i in ['git', 'npm', 'dockerhub', 'distrowatch', 'custom', 'github_releases', 'pypi', 'maven']
+  for i in ['git', 'npm', 'docker_hub', 'distrowatch', 'custom', 'github_releases', 'pypi', 'maven']
     return i if config[i]
   end
 
