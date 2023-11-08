@@ -13,11 +13,12 @@ CACHE_DIR = ARGV[1]
 OUTPUT_DIR = ARGV[2]
 OPTIONAL_PRODUCT = ARGV[3]
 
-# This regex is used in absence of anything else
-# This is more lenient from semver, but disallows MAJOR=0 as well
-# It also allows MAJOR.MINOR, which is quite common
-DEFAULT_VERSION_REGEX = '^v?(?<major>[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.?(?<patch>0|[1-9]\d*)?$'
-DEFAULT_TAG_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
+# This regex is used in absence of anything else.
+# This is more lenient from semver, but disallows MAJOR=0 as well.
+# It allows MAJOR.MINOR, MAJOR.MINOR.PATCH and MAJOR.MINOR.PATCH.TINY versions,
+# with or without a 'v' prefix, which are quite common.
+DEFAULT_VERSION_REGEX = '^v?(?<major>[1-9]\d*)\.(?<minor>\d+)(\.(?<patch>\d+)(\.(?<tiny>\d+))?)?$'
+DEFAULT_TAG_TEMPLATE = "{{major}}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}"
 
 # extensions.partialClone=true is also set up in the workflow.
 # See also https://stackoverflow.com/a/65746233/374236
@@ -112,7 +113,7 @@ def get_releases(product, config, i)
     fetch_git_releases(dir, config)
     return get_releases_from_git(dir, config)
   elsif type != nil
-    puts "Handled by #{type} script, skipping"
+    puts "#{product} handled by #{type} script, skipping"
     return {}
   else
     puts "Undetected method for #{product}"
