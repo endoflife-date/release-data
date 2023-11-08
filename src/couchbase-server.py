@@ -25,8 +25,8 @@ URLS = [
 ]
 FIXED_VERSIONS = {
     "6.0.0": "2018-10-31",  # https://www.couchbase.com/blog/announcing-couchbase-6-0/
-    "6.0.1": "2019-02-15",
-    # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
+    "6.0.1": "2019-02-15",  # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
+    "6.6.0": "2020-08-12",  # https://www.couchbase.com/blog/whats-new-and-improved-in-couchbase-server-6-6/
     "7.2.0": "2023-06-01",  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
 }
 
