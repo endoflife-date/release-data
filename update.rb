@@ -57,15 +57,14 @@ def get_releases_from_git(repo_dir, auto_config)
     if tag.annotated?
       # We pick the data from the "tagger" which includes offset information
       t = tag.annotation.tagger[:time]
-      data[tag_proper_name] = t.strftime('%F')
-      puts "#{tag_proper_name}: #{t.strftime('%F %X %z')}"
+      data[tag_proper_name] = t.utc.strftime('%F')
     else
       # In other cases, we de-reference the tag to get the commit
       # and use the date of the commit itself
       t = tag.target.committer[:time]
-      data[tag_proper_name] = t.strftime('%F')
-      puts "#{tag_proper_name}: #{t.strftime('%F %X %z')}"
+      data[tag_proper_name] = t.utc.strftime('%F')
     end
+    puts "#{tag_proper_name}: #{data[tag_proper_name]}"
     rescue StandardError
       puts "::warning No timestamp for #{tag.name}, ignoring"
     end
