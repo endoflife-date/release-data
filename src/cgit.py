@@ -62,17 +62,14 @@ def fetch_releases(url, regex, template):
 
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
         t = config.get("template", DEFAULT_TAG_TEMPLATE)
         regex = config.get("regex", DEFAULT_VERSION_REGEX)
-        releases = releases | fetch_releases(config[METHOD], regex, t)
+        versions = versions | fetch_releases(config[METHOD], regex, t)
 
-    endoflife.write_releases(product_name, dict(
-        # sort by version then date (asc)
-        sorted(releases.items(), key=lambda x: (x[0], x[1]))
-    ))
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

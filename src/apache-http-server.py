@@ -64,10 +64,4 @@ for branch in git.list_branches("refs/heads/?.?.x"):
     fetch_versions_from_file(git.repo_dir / status_file, versions)
 print("::endgroup::")
 
-endoflife.write_releases(
-    PRODUCT,
-    dict(
-        # sort by date then version (desc)
-        sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    ),
-)
+endoflife.write_releases(PRODUCT, versions)

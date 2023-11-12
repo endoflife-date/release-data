@@ -52,8 +52,5 @@ for base_url in URLS:
                 print(f"{version}: {date}")
 
 versions = versions | FIXED_VERSIONS
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")

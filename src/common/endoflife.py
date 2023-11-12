@@ -52,4 +52,7 @@ def fetch_url(url, retry_count=5, timeout=30, data=None, headers=None, encoding=
 
 def write_releases(product, releases, pathname="releases"):
     with open(f"{pathname}/{product}.json", "w") as f:
-        f.write(json.dumps(releases, indent=2))
+        f.write(json.dumps(dict(
+            # sort by date then version (desc)
+            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        ), indent=2))

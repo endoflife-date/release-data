@@ -14,7 +14,7 @@ BASE_URL = "https://portal.nutanix.com/api/v1/eol/find?type="
 
 
 def fetch_releases(product_code):
-    releases = {}
+    versions = {}
     url = BASE_URL + product_code
     print(url)
     response = endoflife.fetch_url(url)
@@ -24,17 +24,14 @@ def fetch_releases(product_code):
         if 'GENERAL_AVAILABILITY' in version_data:
             version = version_data["version"]
             date = version_data["GENERAL_AVAILABILITY"].split("T")[0]
-            releases[version] = date
+            versions[version] = date
             print(f"{version}: {date}")
 
-    return releases
+    return versions
 
 
 for product_name, product_code in PRODUCTS.items():
     print(f"::group::{product_name}")
-    all_releases = fetch_releases(product_code)
-    endoflife.write_releases(product_name, dict(
-        # sort by date then version (desc)
-        sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    ))
+    all_versions = fetch_releases(product_code)
+    endoflife.write_releases(product_name, all_versions)
     print("::endgroup::")

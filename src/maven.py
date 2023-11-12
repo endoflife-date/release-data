@@ -45,15 +45,12 @@ def fetch_releases(package_identifier):
 
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
-        releases = releases | fetch_releases(config[METHOD])
+        versions = versions | fetch_releases(config[METHOD])
 
-    endoflife.write_releases(product_name, dict(
-        # sort by date then version (desc)
-        sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    ))
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

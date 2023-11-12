@@ -43,9 +43,6 @@ def fetch_releases():
 
 
 print(f"::group::{PRODUCT}")
-releases = fetch_releases()
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+versions = fetch_releases()
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")

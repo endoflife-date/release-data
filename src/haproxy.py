@@ -52,10 +52,7 @@ def print_releases(releases):
 
 print(f"::group::{PRODUCT}")
 all_cycles = fetch_cycles()
-all_releases = fetch_releases(all_cycles)
-print_releases(all_releases)
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+all_versions = fetch_releases(all_cycles)
+print_releases(all_versions)
+endoflife.write_releases(PRODUCT, all_versions)
 print("::endgroup::")

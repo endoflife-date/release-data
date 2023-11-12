@@ -70,5 +70,5 @@ def get_all_versions():
     return all_versions
 
 
-releases = get_all_versions()
-endoflife.write_releases('cos', releases)
+versions = get_all_versions()
+endoflife.write_releases('cos', versions)

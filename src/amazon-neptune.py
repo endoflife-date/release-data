@@ -26,8 +26,5 @@ for item in rss.getElementsByTagName("item"):
         versions[version] = date
         print(f"{version}: {date}")
 
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")

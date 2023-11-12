@@ -41,12 +41,6 @@ for branch in git.list_branches("refs/heads/enterprise-[4-9]*"):
 print(f"::group::{PRODUCT}")
 for version, date in versions.items():
     print(f"{version}: {date}")
-print("::endgroup::")
 
-endoflife.write_releases(
-    PRODUCT,
-    dict(
-        # sort by date then version (desc)
-        sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    ),
-)
+endoflife.write_releases(PRODUCT, versions)
+print("::endgroup::")

@@ -29,8 +29,5 @@ for version_block in r.html.find('.versions-list'):
     print(f"{version}: {date}")
     versions[version] = date
 
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (asc)
-    sorted(versions.items(), key=lambda x: (x[1], x[0]))
-))
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")

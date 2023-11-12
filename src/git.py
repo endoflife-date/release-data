@@ -37,15 +37,15 @@ def fetch_releases(product_name, url, regex, template):
     return releases
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
         t = config.get("template", DEFAULT_TAG_TEMPLATE)
         regex = config.get("regex", DEFAULT_VERSION_REGEX)
         regex = regex.replace("(?<", "(?P<")  # convert ruby regex to python regex
-        releases = releases | fetch_releases(product_name, config[METHOD], regex, t)
+        versions = versions | fetch_releases(product_name, config[METHOD], regex, t)
 
-    endoflife.write_releases(product_name, releases)
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

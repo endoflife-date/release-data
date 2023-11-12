@@ -30,14 +30,11 @@ def fetch_releases(releases, url) -> str:
 
 
 print(f"::group::{PRODUCT}")
-all_releases = {}
+all_versions = {}
 next_page_url = URL
 
 while next_page_url:
-    next_page_url = fetch_releases(all_releases, next_page_url)
+    next_page_url = fetch_releases(all_versions, next_page_url)
 
-endoflife.write_releases(PRODUCT, dict(
-    # sort by version then date (asc)
-    sorted(all_releases.items(), key=lambda x: (x[0], x[1]))
-))
+endoflife.write_releases(PRODUCT, all_versions)
 print("::endgroup::")

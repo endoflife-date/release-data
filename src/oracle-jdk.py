@@ -40,10 +40,7 @@ def fetch_releases():
 
 
 print(f"::group::{PRODUCT}")
-all_releases = fetch_releases()
-all_releases.pop('1.0_alpha')  # only version we don't want, regex not needed
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+all_versions = fetch_releases()
+all_versions.pop('1.0_alpha')  # only version we don't want, regex not needed
+endoflife.write_releases(PRODUCT, all_versions)
 print("::endgroup::")

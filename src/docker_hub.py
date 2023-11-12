@@ -31,14 +31,14 @@ def fetch_releases(url, regex, releases):
 
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
         url = f"https://hub.docker.com/v2/repositories/{config[METHOD]}/tags?page_size=100&page=1"
         config = {"regex": REGEX} | config
-        fetch_releases(url, config["regex"], releases)
+        fetch_releases(url, config["regex"], versions)
 
-    endoflife.write_releases(product_name, releases)
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
