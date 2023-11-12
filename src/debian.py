@@ -51,11 +51,11 @@ def extract_point_releases(releases, repo_dir):
             print(f"{version}: {date}")
             releases[version] = date
 
+print(f"::group::{PRODUCT}")
 git = Git(REPO_URL)
 git.setup()
 git.checkout("master", file_list=["english/News"])
 
-print(f"::group::{PRODUCT}")
 all_releases = {}
 extract_major_releases(all_releases, git.repo_dir)
 extract_point_releases(all_releases, git.repo_dir)
