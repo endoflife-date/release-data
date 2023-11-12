@@ -19,7 +19,7 @@ def parse_date(d):
 
 for db, url in DBS.items():
     print(f"::group::{db}")
-    releases = {}
+    versions = {}
 
     response = endoflife.fetch_url(url)
     soup = BeautifulSoup(response, features="html5lib")
@@ -37,10 +37,7 @@ for db, url in DBS.items():
                     if date:
                         version = m.group("v")
                         print(f"{version} : {date}")
-                        releases[version] = date
+                        versions[version] = date
 
-    endoflife.write_releases(f"amazon-rds-{db.lower()}", dict(
-        # sort by date then version (desc)
-        sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    ))
+    endoflife.write_releases(f"amazon-rds-{db.lower()}", versions)
     print("::endgroup::")

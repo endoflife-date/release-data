@@ -14,7 +14,7 @@ def convert_date(date: str) -> str:
 
 
 print(f"::group::{PRODUCT}")
-releases = dict()
+versions = dict()
 main = endoflife.fetch_url(URL)
 soup = BeautifulSoup(main, features="html5lib")
 
@@ -38,7 +38,7 @@ sorted_versions = sorted(
 )
 
 for v in sorted_versions:
-    if v in releases:
+    if v in versions:
         continue # if we already know the release date, skip it
 
     relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(version=v))
@@ -46,11 +46,8 @@ for v in sorted_versions:
         # convert x.y to x.y.0
         version = f"{version}.0" if len(version.split(".")) == 2 else version
         date = convert_date(date_str)
-        releases[version] = date
+        versions[version] = date
         print(f"{version}: {date}")
 
-endoflife.write_releases(PRODUCT, dict(
-    # sort by version then date (asc)
-    sorted(releases.items(), key=lambda x: (x[0], x[1]))
-))
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")

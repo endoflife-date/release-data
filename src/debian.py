@@ -56,11 +56,8 @@ git = Git(REPO_URL)
 git.setup()
 git.checkout("master", file_list=["english/News"])
 
-all_releases = {}
-extract_major_releases(all_releases, git.repo_dir)
-extract_point_releases(all_releases, git.repo_dir)
-endoflife.write_releases(PRODUCT, dict(
-    # sort by date then version (desc)
-    sorted(all_releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+all_versions = {}
+extract_major_releases(all_versions, git.repo_dir)
+extract_point_releases(all_versions, git.repo_dir)
+endoflife.write_releases(PRODUCT, all_versions)
 print("::endgroup::")

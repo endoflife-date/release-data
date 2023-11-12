@@ -28,8 +28,6 @@ def parse_markdown_table(table_text):
 
 print("::group::rockylinux")
 response = endoflife.fetch_url(URL)
-
 versions = parse_markdown_table(response)
 endoflife.write_releases('rockylinux', versions)
-
 print("::endgroup::")

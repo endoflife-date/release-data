@@ -31,8 +31,5 @@ for table in soup.findAll("tbody"):
             versions[version] = date
             print(f"{version}: {date}")
 
-endoflife.write_releases('redhat-satellite', dict(
-    # sort by date then version (desc)
-    sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-))
+endoflife.write_releases('redhat-satellite', versions)
 print("::endgroup::")

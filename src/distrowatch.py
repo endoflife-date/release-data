@@ -39,15 +39,15 @@ def fetch_releases(distrowatch_id, regex, template):
 
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
         t = config.get("template", DEFAULT_TAG_TEMPLATE)
         if "regex" in config:
             regex = config["regex"]
-            releases = releases | fetch_releases(config[METHOD], regex, t)
+            versions = versions | fetch_releases(config[METHOD], regex, t)
 
-    endoflife.write_releases(product_name, releases)
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

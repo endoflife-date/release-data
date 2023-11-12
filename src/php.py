@@ -27,12 +27,9 @@ def fetch_versions(major_version):
 
 
 print("::group::php")
-releases = {}
-
+versions = {}
 for major_version in PHP_MAJOR_VERSIONS:
-    releases |= fetch_versions(major_version)
+    versions |= fetch_versions(major_version)
 
-endoflife.write_releases('php', dict(sorted(
-    releases.items(), key=lambda x: list(map(int, x[0].split(".")))
-)))
+endoflife.write_releases('php', versions)
 print("::endgroup::")

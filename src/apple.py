@@ -53,16 +53,16 @@ def parse_date(s):
 
 
 # Only update the date if we are adding first time or if the date is lower
-def handle_version(key, version, date_text, releases):
+def handle_version(key, version, date_text, versions):
     try:
         date = parse_date(date_text)
         date_fmt = date.strftime("%Y-%m-%d")
 
-        if version not in releases[key]:
-            releases[key][version] = date
+        if version not in versions[key]:
+            versions[key][version] = date
             print(f"{key}-{version}: {date_fmt}")
-        elif releases[key][version] > date:
-            releases[key][version] = date
+        elif versions[key][version] > date:
+            versions[key][version] = date
             print(f"{key}-{version}: {date_fmt} [UPDATED]")
         else:
             print(f"{key}-{version}: {date_fmt} [IGNORED]")
@@ -71,7 +71,7 @@ def handle_version(key, version, date_text, releases):
         print(f"{key}-{version}: Failed to parse {date_text} for {version}")
 
 
-def parse(url, releases):
+def parse(url, versions):
     response = endoflife.fetch_url(url)
     soup = BeautifulSoup(response, features="html5lib")
     table = soup.find(id="tableWraper")
@@ -85,18 +85,17 @@ def parse(url, releases):
                 matches = re.findall(regex, version_text, re.MULTILINE)
                 for version in matches:
                     date_text = td_list[2].get_text().strip()
-                    handle_version(key, version, date_text, releases)
+                    handle_version(key, version, date_text, versions)
 
 
 print("::group::apple")
 
-releases_by_product = {k: {} for k in CONFIG.keys()}
+versions_by_product = {k: {} for k in CONFIG.keys()}
 for url in URLS:
-    parse(url, releases_by_product)
+    parse(url, versions_by_product)
 
 for k in CONFIG.keys():
-    endoflife.write_releases(k, {
-        v: d.strftime("%Y-%m-%d") for v, d in releases_by_product[k].items()
-    })
+    versions = { v: d.strftime("%Y-%m-%d") for v, d in versions_by_product[k].items() }
+    endoflife.write_releases(k, versions)
 
 print("::endgroup::")

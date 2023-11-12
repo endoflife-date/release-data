@@ -31,13 +31,13 @@ def fetch_releases(npm_id, regex):
 
 
 def update_product(product_name, configs):
-    releases = {}
+    versions = {}
 
     for config in configs:
         config = {"regex": REGEX} | config
-        releases = releases | fetch_releases(config[METHOD], config["regex"])
+        versions = versions | fetch_releases(config[METHOD], config["regex"])
 
-    endoflife.write_releases(product_name, releases)
+    endoflife.write_releases(product_name, versions)
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None

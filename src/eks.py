@@ -41,5 +41,6 @@ def parse_platforms_pages():
     print("::endgroup::")
     return all_versions
 
+
 versions = parse_platforms_pages()
 endoflife.write_releases('eks', versions)
