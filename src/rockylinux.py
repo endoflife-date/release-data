@@ -7,8 +7,10 @@ REGEX = r"^(\d+\.\d+)$"
 
 def parse_date(date_str):
     date_str = date_str.replace(',', '').strip()
-    date_obj = datetime.strptime(date_str, "%B %d %Y")
-    return date_obj.strftime("%Y-%m-%d")
+    try:
+        return datetime.strptime(date_str, "%B %d %Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return datetime.strptime(date_str, "%b %d %Y").strftime("%Y-%m-%d")
 
 def parse_markdown_table(table_text):
     lines = table_text.strip().split('\n')
