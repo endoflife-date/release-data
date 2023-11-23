@@ -8,6 +8,13 @@ from os import path
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0'
 
 
+def load_product(product_name, pathname="website/products"):
+    """Load the product's file frontmatter.
+    """
+    with open(f"{pathname}/{product_name}.md", "r") as f:
+        return frontmatter.load(f)
+
+
 def list_products(method, products_filter=None, pathname="website/products"):
     """Return a list of products that are using the same given update method.
     """
