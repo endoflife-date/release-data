@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from common import endoflife
+from datetime import datetime
 
 """Fetch new AWS lambda runtimes from https://docs.aws.amazon.com.
 
@@ -25,7 +26,7 @@ def fetch_product_file_release_date(releaseCycle, product):
             if releaseCycle == release['releaseCycle']:
                 return release['releaseDate'].strftime("%Y-%m-%d")
 
-    return '9999-12-31'
+    return datetime.now().strftime("%Y-%m-%d")
 
 
 print(f"::group::{PRODUCT}")
