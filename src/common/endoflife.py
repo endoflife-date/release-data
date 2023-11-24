@@ -1,6 +1,8 @@
 import json
 import frontmatter
-import urllib.request
+from requests import Session
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
 from glob import glob
 from os import path
 
@@ -39,22 +41,12 @@ def list_products(method, products_filter=None, pathname="website/products"):
 
 
 # Keep the default timeout high enough to avoid errors with web.archive.org.
-def fetch_url(url, retry_count=5, timeout=30, data=None, headers=None, encoding='utf-8'):
-    last_exception = None
-
+def fetch_url(url, retry_count=5, timeout=30, data=None, headers=None):
     headers = {'User-Agent': USER_AGENT} | {} if headers is None else headers
-    request = urllib.request.Request(url, headers=headers)
-
-    for retry in range(0, retry_count):
-        try:
-            resp = urllib.request.urlopen(request, data=data, timeout=timeout)
-            return resp.read().decode(encoding)
-        except Exception as e:
-            last_exception = e
-            print(f"Fetch of {url} failed (retry={retry}), got: " + str(e))
-            continue
-
-    raise last_exception
+    with Session() as s:
+        s.mount('https://', HTTPAdapter(max_retries=Retry(total=retry_count, backoff_factor=0.2)))
+        r = s.get(url, headers=headers, data=data, timeout=timeout)
+        return r.text
 
 
 def write_releases(product, releases, pathname="releases"):
