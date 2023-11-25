@@ -15,4 +15,5 @@ typing_extensions==4.8.0
 webencodings==0.5.1
 requests==2.31.0
 requests-html==0.10.0
+requests-futures==1.0.1
 regex==2023.10.3
