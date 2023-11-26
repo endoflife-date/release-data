@@ -33,6 +33,8 @@ print(f"::group::{PRODUCT}")
 all_versions = {}
 next_page_url = URL
 
+# Do not try to fetch multiple pages in parallel: it is raising a lot of ChunkedEncodingErrors and
+# make the overall process slower.
 while next_page_url:
     next_page_url = fetch_releases(all_versions, next_page_url)
 

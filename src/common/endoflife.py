@@ -45,30 +45,23 @@ def list_products(method, products_filter=None, pathname="website/products") -> 
 
 # Keep the default timeout high enough to avoid errors with web.archive.org.
 def fetch_urls(urls, data=None, headers=None, max_retries=10, backoff_factor=0.5, timeout=30) -> list[Response]:
-    adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
-    session = FuturesSession()
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
-
-    headers = {'User-Agent': USER_AGENT} | ({} if headers is None else headers)
-    futures = [session.get(url, headers=headers, data=data, timeout=timeout) for url in urls]
-
-    return [result_or_retry(future) for future in as_completed(futures)]
-
-
-def result_or_retry(future) -> Response:
-    """Return the future's result or retry the request if there is an error.
-    This may lead to an infinite loop, but let's try it for now.
-    """
     try:
-        return future.result()
-    except ChunkedEncodingError as e:
-        # Intermittent ChunkedEncodingErrors occurs while fetching URLs. This change try to fix it by retrying.
-        # According to https://stackoverflow.com/a/44511691/374236, most servers transmit all data, but that's not
-        # what was observed.
-        url = e.response.url
-        print(f"Got ChunkedEncodingError while fetching {url}, retrying...")
-        return fetch_urls([url], e.request.body, e.request.headers)[0]
+        with FuturesSession() as session:
+            adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
+            session.mount('http://', adapter)
+            session.mount('https://', adapter)
+
+            headers = {'User-Agent': USER_AGENT} | ({} if headers is None else headers)
+            futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
+            return [future.result() for future in as_completed(futures)]
+    except ChunkedEncodingError as e:  # See https://github.com/psf/requests/issues/4771#issue-354077499
+        next_max_retries = max_retries - 1
+        if next_max_retries == 0:
+            raise e  # So that the function does not get stuck in an infinite loop.
+        else:
+            # We could wait a bit before retrying, but it's not clear if it would help.
+            print(f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
+            return fetch_urls(urls, data, headers, next_max_retries, backoff_factor, timeout)
 
 
 def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30) -> str:
