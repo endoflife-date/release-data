@@ -1,8 +1,7 @@
 import re
-
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime, timezone
 from xml.dom.minidom import parseString
 
 """Fetch Looker versions with their dates from the Google Cloud release notes RSS feed.
@@ -14,16 +13,13 @@ ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IG
 VERSION_PATTERN = re.compile(r"Looker\s+(?P<version>\d+\.\d+)", re.IGNORECASE)
 
 
-def parse_date(date_str):
-    return datetime.fromisoformat(date_str).astimezone(timezone.utc).strftime("%Y-%m-%d")
-
 print(f"::group::{PRODUCT}")
 versions = {}
 
 response = endoflife.fetch_url(URL)
 rss = parseString(response)
 for item in rss.getElementsByTagName("entry"):
-    date = parse_date(item.getElementsByTagName("updated")[0].firstChild.nodeValue)
+    date = dates.parse_datetime(item.getElementsByTagName("updated")[0].firstChild.nodeValue).strftime("%Y-%m-%d")
     content = item.getElementsByTagName("content")[0].firstChild.nodeValue
     soup = BeautifulSoup(content, features="html5lib")
 

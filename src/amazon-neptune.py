@@ -1,7 +1,7 @@
 import re
 from xml.dom.minidom import parseString
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 """Fetch versions with their dates from the RSS feed of
 https://docs.aws.amazon.com/neptune/latest/userguide/engine-releases.html.
@@ -22,7 +22,7 @@ for item in rss.getElementsByTagName("item"):
     matches = re.match(REGEX, title)
     if matches:
         version = matches['version']
-        date = datetime.strptime(pubDate, "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d")
+        date = dates.parse_datetime(pubDate).strftime("%Y-%m-%d")
         versions[version] = date
         print(f"{version}: {date}")
 

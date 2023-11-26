@@ -1,16 +1,9 @@
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
-
 
 PRODUCT = "ibm-aix"
 URL = "https://www.ibm.com/support/pages/aix-support-lifecycle-information"
-
-
-# Convert date from e.g. "November 2022" format to "2022-11-01"
-def convert_date(date_str):
-    return datetime.strptime(date_str, "%B %Y").strftime("%Y-%m-%d")
-
 
 def fetch_releases():
     response = endoflife.fetch_url(URL)
@@ -23,7 +16,7 @@ def fetch_releases():
         for row in release_table.find_all("tr")[1:]:
             cells = row.find_all("td")
             version = cells[0].text.strip("AIX ").replace(' TL', '.')
-            date = convert_date(cells[1].text)
+            date = dates.parse_month_year_date(cells[1].text).strftime("%Y-%m-%d")
             print(f"{version} : {date}")
             releases[version] = date
 

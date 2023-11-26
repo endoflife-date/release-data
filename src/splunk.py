@@ -1,16 +1,12 @@
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 PRODUCT = "splunk"
 URL = "https://docs.splunk.com/Documentation/Splunk"
 RELNOTES_URL_TEMPLATE = "https://docs.splunk.com/Documentation/Splunk/{version}/ReleaseNotes/MeetSplunk"
 PATTERN = r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\."
-
-
-def convert_date(date: str) -> str:
-    return datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
 
 
 def get_latest_minor_versions(versions):
@@ -55,7 +51,7 @@ latest_minor_versions_urls = [RELNOTES_URL_TEMPLATE.format(version=v) for v in l
 for response in endoflife.fetch_urls(latest_minor_versions_urls):
     for (version, date_str) in re.findall(PATTERN, response.text, re.MULTILINE):
         version = f"{version}.0" if len(version.split(".")) == 2 else version  # convert x.y to x.y.0
-        date = convert_date(date_str)
+        date = dates.parse_date(date_str).strftime("%Y-%m-%d")
         versions[version] = date
         print(f"{version}: {date}")
 

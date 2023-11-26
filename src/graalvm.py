@@ -1,13 +1,10 @@
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 URL = "https://www.graalvm.org/release-calendar/"
 # https://regex101.com/r/877ibq/1
 regex = r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?"
-
-def parse_date(text):
-    return datetime.strptime(text, "%B %d, %Y").strftime("%Y-%m-%d")
 
 def split_versions(text):
     # GraalVM for JDK versions has to be prefixed as their release cycle collide
@@ -21,7 +18,7 @@ soup = BeautifulSoup(response, features="html5lib")
 versions = {}
 for tr in soup.findAll("table")[1].find("tbody").findAll("tr"):
     td_list = tr.findAll("td")
-    date = parse_date(td_list[0].get_text())
+    date = dates.parse_date(td_list[0].get_text()).strftime("%Y-%m-%d")
 
     for version in split_versions(td_list[2].get_text()):
         versions[version] = date

@@ -1,8 +1,8 @@
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/"""
 
@@ -12,13 +12,7 @@ PRODUCT = "firefox"
 
 def format_date(text: str) -> str:
     text = text.replace(')', '')
-    formats = ["%b %d, %Y", "%B %d, %Y"]
-    for f in formats:
-        try:
-            return datetime.strptime(text, f).strftime("%Y-%m-%d")
-        except ValueError:
-            pass
-    return ""
+    return dates.parse_date(text).strftime("%Y-%m-%d")
 
 
 print(f"::group::{PRODUCT}")

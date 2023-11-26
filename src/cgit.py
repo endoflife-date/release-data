@@ -1,8 +1,8 @@
 import re
 import sys
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime, timezone
 from liquid import Template
 
 """Fetch versions with their dates from a cgit repository, such as
@@ -20,15 +20,6 @@ DEFAULT_TAG_TEMPLATE = (
 DEFAULT_VERSION_REGEX = (
     r"^v?(?P<major>\d+)\.(?P<minor>\d+)\.?(?P<patch>\d+)?\.?(?P<tiny>\d+)?$"
 )
-
-
-# Parse date with format 2023-05-01 08:32:34 +0900 and convert to UTC
-def parse_date(d):
-    return (
-        datetime.strptime(d, "%Y-%m-%d %H:%M:%S %z")
-        .astimezone(timezone.utc)
-        .strftime("%Y-%m-%d")
-    )
 
 
 def make_bs_request(url):
@@ -54,7 +45,7 @@ def fetch_releases(url, regex, template):
                     if matches:
                         match_data = matches.groupdict()
                         version_string = l_template.render(**match_data)
-                        date = parse_date(datetime_text)
+                        date = dates.parse_datetime(datetime_text).strftime("%Y-%m-%d")
                         print(f"{version_string} : {date}")
                         releases[version_string] = date
 

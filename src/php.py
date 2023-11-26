@@ -1,18 +1,8 @@
 import json
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 PHP_MAJOR_VERSIONS = [4, 5, 7, 8]
-
-
-# Date format is 03 Nov 2022
-# With some versions using 03 November 2022 instead
-# we return it as YYYY-MM-DD
-def parse_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%d %b %Y").strftime("%Y-%m-%d")
-    except ValueError:
-        return datetime.strptime(date_str, "%d %B %Y").strftime("%Y-%m-%d")
 
 
 def fetch_versions(major_version):
@@ -20,7 +10,7 @@ def fetch_versions(major_version):
     response = endoflife.fetch_url(url)
     data = json.loads(response)
     for v in data:
-        data[v] = parse_date(data[v]["date"])
+        data[v] = dates.parse_date(data[v]["date"]).strftime("%Y-%m-%d")
         print(f"{v}: {data[v]}")
 
     return data

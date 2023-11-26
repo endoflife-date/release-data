@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 URL = "https://docs.plesk.com/release-notes/obsidian/change-log"
 PRODUCT = "plesk"
@@ -27,7 +27,7 @@ def fetch_releases():
         version = version.replace(' Update ', '.').replace('Plesk Obsidian ', '')
         if ' ' in version:
             continue
-        date = datetime.strptime(release.p.text.strip(), '%d %B %Y').strftime("%Y-%m-%d")
+        date = dates.parse_date(release.p.text).strftime("%Y-%m-%d")
         result[version] = date
         print(f"{version}: {date}")
 
