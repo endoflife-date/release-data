@@ -67,7 +67,7 @@ def result_or_retry(future) -> Response:
         # According to https://stackoverflow.com/a/44511691/374236, most servers transmit all data, but that's not
         # what was observed.
         print(f"Got ChunkedEncodingError while fetching {e.request.url}, retrying...")
-        return fetch_urls([e.request.url], e.request.body, e.request.headers)[0]
+        return fetch_urls([e.response.url], e.request.body, e.request.headers)[0]
 
 
 def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30) -> str:
