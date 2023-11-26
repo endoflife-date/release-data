@@ -25,7 +25,7 @@ for tr in soup.findAll("tr"):
                     td_list[1].get_text().strip(), "%B %d, %Y"
                 )
             # The date is a suffix (May 23rd, 2020)
-            except ValueError as e:
+            except ValueError:
                 x = td_list[1].get_text().split(",")
                 date = datetime.datetime.strptime(x[0][:-2] + x[1], "%B %d %Y")
             abs_date = date.strftime("%Y-%m-%d")

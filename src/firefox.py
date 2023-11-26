@@ -3,11 +3,6 @@ import urllib.parse
 from bs4 import BeautifulSoup
 from common import endoflife
 from datetime import datetime
-from urllib3.util import Retry
-from requests.adapters import HTTPAdapter
-from requests_futures.sessions import FuturesSession
-from requests.exceptions import ChunkedEncodingError
-from concurrent.futures import as_completed
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/"""
 
