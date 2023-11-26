@@ -1,6 +1,6 @@
 from hashlib import sha1
 from pathlib import Path
-from subprocess import run, PIPE
+from subprocess import run
 
 
 class Git:
