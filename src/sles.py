@@ -1,4 +1,3 @@
-import re
 from bs4 import BeautifulSoup
 from common import dates
 from common import endoflife
