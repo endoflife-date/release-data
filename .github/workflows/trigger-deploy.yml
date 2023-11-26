@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     name: Deploy Website
+    if: github.repository_owner == 'endoflife-date'
     runs-on: ubuntu-latest
     environment: production
     steps:
