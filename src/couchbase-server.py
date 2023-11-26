@@ -19,7 +19,7 @@ Notes:
 PRODUCT = "couchbase-server"
 REGEX = r"^Release (?P<version>\d+\.\d+(\.\d+)?) \((?P<date>.+)\)$"
 URLS = [
-    # Disabled, too much timed out.
+    # Disabled, this link is now dead.
     # "https://web.archive.org/web/20230519160357/https://docs.couchbase.com/server/",
     "https://docs.couchbase.com/server",
 ]
