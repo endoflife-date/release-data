@@ -1,10 +1,12 @@
+import http.client
 import json
 import frontmatter
-from requests import Session
-from requests.adapters import HTTPAdapter
-from urllib3.util import Retry
+from concurrent.futures import as_completed
 from glob import glob
 from os import path
+from requests.adapters import HTTPAdapter
+from requests_futures.sessions import FuturesSession
+from urllib3.util import Retry
 
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0'
@@ -41,12 +43,20 @@ def list_products(method, products_filter=None, pathname="website/products"):
 
 
 # Keep the default timeout high enough to avoid errors with web.archive.org.
-def fetch_url(url, retry_count=5, timeout=30, data=None, headers=None):
-    headers = {'User-Agent': USER_AGENT} | {} if headers is None else headers
-    with Session() as s:
-        s.mount('https://', HTTPAdapter(max_retries=Retry(total=retry_count, backoff_factor=0.2)))
-        r = s.get(url, headers=headers, data=data, timeout=timeout)
-        return r.text
+def fetch_urls(urls, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30):
+    adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
+    session = FuturesSession()
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    headers = {'User-Agent': USER_AGENT} | ({} if headers is None else headers)
+    futures = [session.get(url, headers=headers, data=data, timeout=timeout) for url in urls]
+
+    return [future.result() for future in as_completed(futures)]
+
+
+def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30):
+    return fetch_urls([url], data, headers, max_retries, backoff_factor, timeout)[0].text
 
 
 def write_releases(product, releases, pathname="releases"):
@@ -55,3 +65,19 @@ def write_releases(product, releases, pathname="releases"):
             # sort by date then version (desc)
             sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
         ), indent=2))
+
+
+def patch_http_response_read(func):
+    def inner(*args):
+        try:
+            return func(*args)
+        except http.client.IncompleteRead as e:
+            return e.partial
+    return inner
+
+
+# This patch HTTPResponse to prevent ChunkedEncodingError when fetching some websites, such as
+# Mozilla's website. According to https://stackoverflow.com/a/44511691/374236, this is an issue at
+# server side that cannot be avoided: most servers transmit all data, but due implementation errors
+# they wrongly close session.
+http.client.HTTPResponse.read = patch_http_response_read(http.client.HTTPResponse.read)
