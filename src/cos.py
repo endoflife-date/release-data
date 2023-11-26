@@ -3,24 +3,21 @@ from bs4 import BeautifulSoup
 from common import endoflife
 from datetime import datetime
 
+URL = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
 DATE_FORMAT = '%b %d, %Y'
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
 
 
-def fetch_all_milestones():
-    url = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
-    # Retry as Google Docs often returns SSL errors.
-    response = endoflife.fetch_url(url)
+def list_milestones():
+    response = endoflife.fetch_url(URL)
     soup = BeautifulSoup(response, features="html5lib")
     milestones = soup.find_all('td', string=re.compile(r'COS \d+ LTS'))
     return [m.text.split(' ')[1] for m in milestones]
 
 
-def fetch_milestone(channel):
-    url = f"https://cloud.google.com/container-optimized-os/docs/release-notes/m{channel}"
-    # Retry as Google Docs often returns SSL errors.
-    response = endoflife.fetch_url(url)
-    return BeautifulSoup(response, features="html5lib")
+def fetch_milestones(milestones):
+    urls = [f"{URL}m{channel}" for channel in milestones]
+    return endoflife.fetch_urls(urls)
 
 
 def parse_date(d):
@@ -30,10 +27,11 @@ def parse_date(d):
     return datetime.strptime(d, DATE_FORMAT).strftime('%Y-%m-%d')
 
 
-def parse_soup_for_versions(soup):
+def find_versions(text):
     """Takes soup, and returns a dictionary of versions and their release dates
     """
     versions = {}
+    soup = BeautifulSoup(text, features="html5lib")
     for article in soup.find_all('article', class_='devsite-article'):
         # h2 contains the date, which we parse
         for heading in article.find_all(['h2', 'h3']):
@@ -58,17 +56,11 @@ def parse_soup_for_versions(soup):
     return versions
 
 
-def get_all_versions():
-    all_versions = {}
-    all_milestones = fetch_all_milestones()
-    print("::group::cos")
-    for milestone in all_milestones:
-        soup = fetch_milestone(milestone)
-        versions = parse_soup_for_versions(soup)
-        all_versions |= versions
-    print("::endgroup::")
-    return all_versions
+print("::group::cos")
+versions = {}
 
+for response in fetch_milestones(list_milestones()):
+    versions |= find_versions(response.text)
 
-versions = get_all_versions()
 endoflife.write_releases('cos', versions)
+print("::endgroup::")
