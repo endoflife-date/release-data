@@ -1,6 +1,6 @@
 import re
-from datetime import datetime
 from pathlib import Path
+from common import dates
 from common import endoflife
 from common.git import Git
 
@@ -18,13 +18,8 @@ REPO_URL = "https://github.com/apache/httpd.git"
 
 def parse(date: str) -> str:
     date = date.replace("Feburary", "February")
-    for format in ["%B %d, %Y", "%B %d, %Y", "%b %d, %Y", "%b. %d, %Y"]:
-        try:
-            return datetime.strptime(date, format).strftime("%Y-%m-%d")
-        except ValueError:
-            pass
-
-    raise ValueError(f"Unknown date format for '{date}'")
+    date = date.replace(". ", " ")
+    return dates.parse_date(date).strftime("%Y-%m-%d")
 
 
 def fetch_versions_from_file(release_notes_file: Path, versions: dict):

@@ -1,7 +1,7 @@
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 # https://regex101.com/r/zPxBqT/1
 REGEX = r"\d.\d+\.\d+-gke\.\d+"
@@ -22,7 +22,7 @@ def parse_soup_for_versions(soup):
         # h2 contains the date, which we parse
         for h2 in section.find_all('h2'):
             date = h2.get('data-text')
-            date = datetime.strptime(date, '%B %d, %Y').strftime('%Y-%m-%d')
+            date = dates.parse_date(date).strftime("%Y-%m-%d")
             # The div next to the h2 contains the notes about changes made
             # on that date
             next_div = h2.find_next('div')

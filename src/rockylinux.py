@@ -1,16 +1,15 @@
 import re
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 URL = "https://raw.githubusercontent.com/rocky-linux/wiki.rockylinux.org/development/docs/include/releng/version_table.md"
 REGEX = r"^(\d+\.\d+)$"
 
+
 def parse_date(date_str):
     date_str = date_str.replace(',', '').strip()
-    try:
-        return datetime.strptime(date_str, "%B %d %Y").strftime("%Y-%m-%d")
-    except ValueError:
-        return datetime.strptime(date_str, "%b %d %Y").strftime("%Y-%m-%d")
+    return dates.parse_date(date_str).strftime("%Y-%m-%d")
+
 
 def parse_markdown_table(table_text):
     lines = table_text.strip().split('\n')
@@ -25,6 +24,7 @@ def parse_markdown_table(table_text):
             versions[version] = date
 
     return versions
+
 
 print("::group::rockylinux")
 response = endoflife.fetch_url(URL)

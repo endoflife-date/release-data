@@ -1,22 +1,14 @@
+from common import dates
 from common import endoflife
-from datetime import datetime
 from requests_html import HTMLSession
 
 URL = "https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life"
 PRODUCT = "artifactory"
 
 
-def parse_date(text):
-    text = text.replace("Sept", "Sep").replace("_", "-")
-    date_formats = ['%d-%b-%Y', '%d-%B-%Y']
-
-    for date_format in date_formats:
-        try:
-            return datetime.strptime(text, date_format).strftime("%Y-%m-%d")
-        except ValueError:
-            pass
-
-    raise ValueError("Cannot parse '" + text + "' with formats " + str(date_formats))
+def parse_date(date_str):
+    date_str = date_str.replace("Sept", "Sep").replace("_", "-")
+    return dates.parse_date(date_str).strftime("%Y-%m-%d")
 
 
 def fetch_releases():

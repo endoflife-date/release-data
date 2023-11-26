@@ -1,8 +1,8 @@
 import json
 import re
 import sys
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 METHOD = "pypi"
 DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
@@ -27,7 +27,7 @@ def fetch_releases(pypi_id, regex):
             if re.match(r, version):
                 matches = True
         if matches and R:
-            d = datetime.fromisoformat(R[0]["upload_time"]).strftime("%Y-%m-%d")
+            d = dates.parse_datetime(R[0]["upload_time"], to_utc=False).strftime("%Y-%m-%d")
             releases[version] = d
             print(f"{version}: {d}")
 

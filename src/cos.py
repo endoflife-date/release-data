@@ -1,10 +1,9 @@
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 URL = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
-DATE_FORMAT = '%b %d, %Y'
 REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
 
 
@@ -20,11 +19,10 @@ def fetch_milestones(milestones):
     return endoflife.fetch_urls(urls)
 
 
-def parse_date(d):
-    # If the date begins with a >3 letter month name, trim it to just 3 letters
-    # Strip out the Date: section from the start
-    d = re.sub(r'(?:Date\: )?(\w{3})(?:\w{1,})? (\d{1,2}), (\d{4})', r'\1 \2, \3', d)
-    return datetime.strptime(d, DATE_FORMAT).strftime('%Y-%m-%d')
+def parse_date(date_str):
+    date_str = date_str.strip().replace('Date: ', '')
+    date_str = re.sub(r'Sep[a-zA-Z]+', 'Sep', date_str)
+    return dates.parse_date(date_str).strftime('%Y-%m-%d')
 
 
 def find_versions(text):

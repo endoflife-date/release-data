@@ -1,6 +1,6 @@
-import datetime
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
 
 URLS = [
@@ -46,10 +46,9 @@ CONFIG = {
 }
 
 
-def parse_date(s):
-    d, m, y = s.strip().split(" ")
-    m = m[0:3].lower()  # reduce months to 3 letters, such as "Sept" to "Sep", so it can be parsed
-    return datetime.datetime.strptime(f"{d} {m} {y}", "%d %b %Y")
+def parse_date(date_str):
+    date_str = date_str.replace("Sept", "Sep")
+    return dates.parse_date(date_str)
 
 
 print("::group::apple")

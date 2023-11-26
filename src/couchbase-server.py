@@ -1,7 +1,7 @@
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 """Fetch versions with their dates from docs.couchbase.com.
 
@@ -46,7 +46,7 @@ for response in endoflife.fetch_urls(minor_version_urls):
         m = re.match(REGEX, versionAndDate)
         if m:
             version = f"{m['version']}.0" if len(m['version'].split('.')) == 2 else m['version']
-            date = datetime.strptime(m['date'], "%B %Y").strftime("%Y-%m-15")
+            date = dates.parse_month_year_date(m['date']).strftime("%Y-%m-%d")
             versions[version] = date
             print(f"{version}: {date}")
 

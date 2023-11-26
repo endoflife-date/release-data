@@ -1,19 +1,10 @@
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
-from datetime import datetime
 
 PRODUCT = "sles"
 URL = "https://www.suse.com/lifecycle"
-DATE_FORMAT = "%d %b %Y"
-
-
-# Convert date from e.g. "16 Jul 2018" to "2018-07-16"
-def convert_date(date_str):
-    # If the date begins with a >3 letter month name, trim it to just 3 letters
-    # Strip out the Date: section from the start
-    d = re.sub(r'(\d{1,2}) (\w{3})(?:\w{1,4})? (\d{4})', r'\1 \2 \3', date_str)
-    return datetime.strptime(d, DATE_FORMAT).strftime('%Y-%m-%d')
 
 
 def strip_version(version_str):
@@ -47,7 +38,7 @@ def fetch_releases():
             version = strip_version(cells[0].text)
 
             try:
-                release_date = convert_date(cells[1].text)
+                release_date = dates.parse_date(cells[1].text).strftime("%Y-%m-%d")
                 versions[version] = release_date
                 print(f"{version}: {release_date}")
             except ValueError as e:
