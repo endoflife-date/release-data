@@ -1,10 +1,11 @@
-import http.client
 import json
 import frontmatter
 from concurrent.futures import as_completed
 from glob import glob
 from os import path
+from requests import Response
 from requests.adapters import HTTPAdapter
+from requests.exceptions import ChunkedEncodingError
 from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
@@ -12,14 +13,14 @@ from urllib3.util import Retry
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0'
 
 
-def load_product(product_name, pathname="website/products"):
+def load_product(product_name, pathname="website/products") -> frontmatter.Post:
     """Load the product's file frontmatter.
     """
     with open(f"{pathname}/{product_name}.md", "r") as f:
         return frontmatter.load(f)
 
 
-def list_products(method, products_filter=None, pathname="website/products"):
+def list_products(method, products_filter=None, pathname="website/products") -> dict[str, list[dict]]:
     """Return a list of products that are using the same given update method.
     """
     products_with_method = {}
@@ -43,7 +44,7 @@ def list_products(method, products_filter=None, pathname="website/products"):
 
 
 # Keep the default timeout high enough to avoid errors with web.archive.org.
-def fetch_urls(urls, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30):
+def fetch_urls(urls, data=None, headers=None, max_retries=10, backoff_factor=0.5, timeout=30) -> list[Response]:
     adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
     session = FuturesSession()
     session.mount('http://', adapter)
@@ -52,32 +53,30 @@ def fetch_urls(urls, data=None, headers=None, max_retries=5, backoff_factor=0.5,
     headers = {'User-Agent': USER_AGENT} | ({} if headers is None else headers)
     futures = [session.get(url, headers=headers, data=data, timeout=timeout) for url in urls]
 
-    return [future.result() for future in as_completed(futures)]
+    return [result_or_retry(future) for future in as_completed(futures)]
 
 
-def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30):
+def result_or_retry(future) -> Response:
+    """Return the future's result or retry the request if there is an error.
+    This may lead to an infinite loop, but let's try it for now.
+    """
+    try:
+        return future.result()
+    except ChunkedEncodingError as e:
+        # Intermittent ChunkedEncodingErrors occurs while fetching URLs. This change try to fix it by retrying.
+        # According to https://stackoverflow.com/a/44511691/374236, most servers transmit all data, but that's not
+        # what was observed.
+        print(f"Got ChunkedEncodingError while fetching {e.request.url}, retrying...")
+        return fetch_urls([e.request.url], e.request.body, e.request.headers)[0]
+
+
+def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30) -> str:
     return fetch_urls([url], data, headers, max_retries, backoff_factor, timeout)[0].text
 
 
-def write_releases(product, releases, pathname="releases"):
+def write_releases(product, releases, pathname="releases") -> None:
     with open(f"{pathname}/{product}.json", "w") as f:
         f.write(json.dumps(dict(
             # sort by date then version (desc)
             sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
         ), indent=2))
-
-
-def patch_http_response_read(func):
-    def inner(*args):
-        try:
-            return func(*args)
-        except http.client.IncompleteRead as e:
-            return e.partial
-    return inner
-
-
-# This patch HTTPResponse to prevent ChunkedEncodingError when fetching some websites, such as
-# Mozilla's website. According to https://stackoverflow.com/a/44511691/374236, this is an issue at
-# server side that cannot be avoided: most servers transmit all data, but due implementation errors
-# they wrongly close session.
-http.client.HTTPResponse.read = patch_http_response_read(http.client.HTTPResponse.read)
