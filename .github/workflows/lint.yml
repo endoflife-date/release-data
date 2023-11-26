@@ -1,12 +1,16 @@
 name: Lint
 
-on: [push, pull_request, workflow_dispatch]
-
-env:
-  FORCE_COLOR: 1
+on:
+  push:
+    branches: ['main']
+  pull_request:
+  workflow_dispatch: # Allows running the workflow manually from the Actions tab
 
 permissions:
   contents: read
+
+env:
+  FORCE_COLOR: 1
 
 jobs:
   lint:
