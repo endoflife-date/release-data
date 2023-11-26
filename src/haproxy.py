@@ -31,10 +31,9 @@ def fetch_cycles():
 def fetch_releases(cycles):
     releases = {}
 
-    for cycle in cycles:
-        url = f"https://www.haproxy.org/download/{cycle}/src/CHANGELOG"
-        response = endoflife.fetch_url(url)
-        for line in response.split('\n'):
+    urls = [f"https://www.haproxy.org/download/{cycle}/src/CHANGELOG" for cycle in cycles]
+    for response in endoflife.fetch_urls(urls):
+        for line in response.text.split('\n'):
             m = re.match(VERSION_REGEX, line)
             if m:
                 year, month, day, version = m.groups()
