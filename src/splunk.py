@@ -13,6 +13,30 @@ def convert_date(date: str) -> str:
     return datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
 
 
+def get_latest_minor_versions(versions):
+    versions_split = [version.split('.') for version in versions]
+
+    # Group versions by major and minor version
+    version_groups = {}
+    for version in versions_split:
+        major, minor = map(int, version[:2])
+        # Release notes for versions before 7.2 don't contain release information
+        if major < 7 or (major == 7 and minor < 2):
+            continue
+        major_minor = '.'.join(version[:2])
+        if major_minor not in version_groups:
+            version_groups[major_minor] = []
+        version_groups[major_minor].append(version)
+
+    # For each group, find the version with the highest patch version
+    latest_versions = []
+    for major_minor, group in version_groups.items():
+        latest_patch = max(group, key=lambda version: int(version[2]))
+        latest_versions.append('.'.join(latest_patch))
+
+    return latest_versions
+
+
 print(f"::group::{PRODUCT}")
 versions = dict()
 main = endoflife.fetch_url(URL)
@@ -23,28 +47,14 @@ all_versions = list(map(
     soup.select("select#version-select > option")
 ))
 
-# Release notes for versions before 7.2 don't contain release information
-eligible_versions = list(filter(
-    lambda v: v.split('.') >= '7.2'.split('.'),
-    all_versions
-))
+# Latest minor release notes contains release notes for all previous minor versions.
+# For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
+latest_minor_versions = get_latest_minor_versions(all_versions)
+latest_minor_versions_urls = [RELNOTES_URL_TEMPLATE.format(version=v) for v in latest_minor_versions]
 
-# Sort from highest to lowest version so that we can skip versions we already
-# have (because, for example, 9.0.5 release notes also contains release notes
-# for 9.0.0 to 9.0.4).
-sorted_versions = sorted(
-    eligible_versions,
-    key=lambda x: list(map(int, x.split("."))), reverse=True
-)
-
-for v in sorted_versions:
-    if v in versions:
-        continue # if we already know the release date, skip it
-
-    relnotes = endoflife.fetch_url(RELNOTES_URL_TEMPLATE.format(version=v))
-    for (version, date_str) in re.findall(PATTERN, relnotes, re.MULTILINE):
-        # convert x.y to x.y.0
-        version = f"{version}.0" if len(version.split(".")) == 2 else version
+for response in endoflife.fetch_urls(latest_minor_versions_urls):
+    for (version, date_str) in re.findall(PATTERN, response.text, re.MULTILINE):
+        version = f"{version}.0" if len(version.split(".")) == 2 else version  # convert x.y to x.y.0
         date = convert_date(date_str)
         versions[version] = date
         print(f"{version}: {date}")
