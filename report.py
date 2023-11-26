@@ -8,7 +8,7 @@ count = 0
 count_auto = 0
 products_dir = sys.argv[1] if len(sys.argv) > 1 else 'website/products/'
 for product_file in sorted(list(glob(f'{products_dir}/*.md'))):
-    with open(product_file, "r") as f:
+    with open(product_file) as f:
         data = frontmatter.load(f)
         count += 1
         title = data['title']

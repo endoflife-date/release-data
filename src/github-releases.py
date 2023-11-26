@@ -36,7 +36,7 @@ query($endCursor: String) {
     }
   }
 }' --jq '.data.repository.releases.edges.[].node | select(.isPrerelease == false) | [.name, .publishedAt] | join(",")'
-""" % (repo, owner)
+""" % (repo, owner)  # noqa: UP031
 
     child = subprocess.Popen(query, shell=True, stdout=subprocess.PIPE)
     return child.communicate()[0].decode('utf-8')
