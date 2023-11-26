@@ -48,54 +48,44 @@ CONFIG = {
 
 def parse_date(s):
     d, m, y = s.strip().split(" ")
-    m = m[0:3].lower()
+    m = m[0:3].lower()  # reduce months to 3 letters, such as "Sept" to "Sep", so it can be parsed
     return datetime.datetime.strptime(f"{d} {m} {y}", "%d %b %Y")
 
 
-# Only update the date if we are adding first time or if the date is lower
-def handle_version(key, version, date_text, versions):
-    try:
-        date = parse_date(date_text)
-        date_fmt = date.strftime("%Y-%m-%d")
-
-        if version not in versions[key]:
-            versions[key][version] = date
-            print(f"{key}-{version}: {date_fmt}")
-        elif versions[key][version] > date:
-            versions[key][version] = date
-            print(f"{key}-{version}: {date_fmt} [UPDATED]")
-        else:
-            print(f"{key}-{version}: {date_fmt} [IGNORED]")
-
-    except ValueError:
-        print(f"{key}-{version}: Failed to parse {date_text} for {version}")
-
-
-def parse(url, versions):
-    response = endoflife.fetch_url(url)
-    soup = BeautifulSoup(response, features="html5lib")
-    table = soup.find(id="tableWraper")
-    if not table:
-        table = soup.find('table', class_="gb-table")
-    for tr in reversed(table.findAll("tr")[1:]):
-        td_list = tr.findAll("td")
-        version_text = td_list[0].get_text().strip()
-        for key, regexes in CONFIG.items():
-            for regex in regexes:
-                matches = re.findall(regex, version_text, re.MULTILINE)
-                for version in matches:
-                    date_text = td_list[2].get_text().strip()
-                    handle_version(key, version, date_text, versions)
-
-
 print("::group::apple")
-
 versions_by_product = {k: {} for k in CONFIG.keys()}
-for url in URLS:
-    parse(url, versions_by_product)
+
+for response in endoflife.fetch_urls(URLS):
+    soup = BeautifulSoup(response.text, features="html5lib")
+    versions_table = soup.find(id="tableWraper")
+    versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
+
+    for row in versions_table.findAll("tr")[1:]:
+        cells = row.findAll("td")
+        version_text = cells[0].get_text().strip()
+        date_text = cells[2].get_text().strip()
+
+        date_match = re.search(r"\b\d+\s[A-Za-z]+\s\d+\b", date_text)
+        if not date_match:
+            print(f"{version_text}: {date_text} [IGNORED]")
+            continue
+
+        date = parse_date(date_match.group(0))
+        for product in CONFIG.keys():
+            versions = versions_by_product[product]
+
+            for version_regex in CONFIG[product]:
+                for version in re.findall(version_regex, version_text, re.MULTILINE):
+                    if version not in versions:
+                        versions[version] = date
+                        print(f"{product}-{version}: {date}")
+                    elif versions[version] > date:
+                        versions[version] = date
+                        print(f"{product}-{version}: {date} [UPDATED]")
+                    else:
+                        print(f"{product}-{version}: {date} [IGNORED]")
 
 for k in CONFIG.keys():
-    versions = { v: d.strftime("%Y-%m-%d") for v, d in versions_by_product[k].items() }
+    versions = {v: d.strftime("%Y-%m-%d") for v, d in versions_by_product[k].items()}
     endoflife.write_releases(k, versions)
-
 print("::endgroup::")
