@@ -1,8 +1,7 @@
-import datetime
+import datetime as dt
 import re
 from bs4 import BeautifulSoup
 from common import endoflife
-from datetime import datetime
 
 # Now that AWS no longer publishes docs on GitHub,
 # we use the Web Archive to still get the older versions
@@ -32,7 +31,7 @@ def parse_platforms_pages():
                 data = tr.findAll("td")
                 date = data[-1].text.strip()
                 if len(date) > 0:
-                    d = datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
+                    d = dt.datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
                     k8s_version = ".".join(data[0].text.strip().split(".")[:-1])
                     eks_version = data[1].text.strip().replace(".", "-")
                     version = f"{k8s_version}-{eks_version}"
