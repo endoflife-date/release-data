@@ -16,7 +16,7 @@ USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/1
 def load_product(product_name, pathname="website/products") -> frontmatter.Post:
     """Load the product's file frontmatter.
     """
-    with open(f"{pathname}/{product_name}.md", "r") as f:
+    with open(f"{pathname}/{product_name}.md") as f:
         return frontmatter.load(f)
 
 
@@ -30,7 +30,7 @@ def list_products(method, products_filter=None, pathname="website/products") -> 
         if products_filter and product_name != products_filter:
             continue
 
-        with open(product_file, "r") as f:
+        with open(product_file) as f:
             data = frontmatter.load(f)
             if "auto" in data:
                 configs = list(filter(
