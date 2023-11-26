@@ -10,16 +10,16 @@ REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
 def fetch_all_milestones():
     url = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
     # Retry as Google Docs often returns SSL errors.
-    response = endoflife.fetch_url(url, retry_count=10)
+    response = endoflife.fetch_url(url)
     soup = BeautifulSoup(response, features="html5lib")
-    milestones = soup.find_all('td', text=re.compile(r'COS \d+ LTS'))
+    milestones = soup.find_all('td', string=re.compile(r'COS \d+ LTS'))
     return [m.text.split(' ')[1] for m in milestones]
 
 
 def fetch_milestone(channel):
     url = f"https://cloud.google.com/container-optimized-os/docs/release-notes/m{channel}"
     # Retry as Google Docs often returns SSL errors.
-    response = endoflife.fetch_url(url, retry_count=10)
+    response = endoflife.fetch_url(url)
     return BeautifulSoup(response, features="html5lib")
 
 
