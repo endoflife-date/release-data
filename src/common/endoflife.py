@@ -66,8 +66,9 @@ def result_or_retry(future) -> Response:
         # Intermittent ChunkedEncodingErrors occurs while fetching URLs. This change try to fix it by retrying.
         # According to https://stackoverflow.com/a/44511691/374236, most servers transmit all data, but that's not
         # what was observed.
-        print(f"Got ChunkedEncodingError while fetching {e.request.url}, retrying...")
-        return fetch_urls([e.response.url], e.request.body, e.request.headers)[0]
+        url = e.response.url
+        print(f"Got ChunkedEncodingError while fetching {url}, retrying...")
+        return fetch_urls([url], e.request.body, e.request.headers)[0]
 
 
 def fetch_url(url, data=None, headers=None, max_retries=5, backoff_factor=0.5, timeout=30) -> str:
