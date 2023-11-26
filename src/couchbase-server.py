@@ -18,11 +18,7 @@ Notes:
 
 PRODUCT = "couchbase-server"
 REGEX = r"^Release (?P<version>\d+\.\d+(\.\d+)?) \((?P<date>.+)\)$"
-URLS = [
-    # Disabled, this link is now dead.
-    # "https://web.archive.org/web/20230519160357/https://docs.couchbase.com/server/",
-    "https://docs.couchbase.com/server",
-]
+URLS = "https://docs.couchbase.com/server"
 FIXED_VERSIONS = {
     "6.0.0": "2018-10-31",  # https://www.couchbase.com/blog/announcing-couchbase-6-0/
     "6.0.1": "2019-02-15",  # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
@@ -33,23 +29,26 @@ FIXED_VERSIONS = {
 print(f"::group::{PRODUCT}")
 versions = {}
 
-for base_url in URLS:
-    response = endoflife.fetch_url(f"{base_url}/current/install/install-intro.html")
-    soup = BeautifulSoup(response, features="html5lib")
-    for option in soup.find(class_="version_list").find_all("option"):
-        minor = option.attrs["value"]
-        versions[minor + '.0'] = 'N/A'  # there is no date available for x.y.0
+response = endoflife.fetch_url(f"{URLS}/current/install/install-intro.html")
+soup = BeautifulSoup(response, features="html5lib")
 
-        response = endoflife.fetch_url(f"{base_url}/{minor}/release-notes/relnotes.html")
-        soup = BeautifulSoup(response, features="html5lib")
-        for title in soup.find_all("h2"):
-            versionAndDate = title.get_text().strip()
-            m = re.match(REGEX, versionAndDate)
-            if m:
-                version = f"{m['version']}.0" if len(m['version'].split('.')) == 2 else m['version']
-                date = datetime.strptime(m['date'], "%B %Y").strftime("%Y-%m-15")
-                versions[version] = date
-                print(f"{version}: {date}")
+minor_versions = [options.attrs["value"] for options in soup.find(class_="version_list").find_all("option")]
+
+# there is no date available for x.y.0
+for minor in minor_versions:
+    versions[minor + '.0'] = 'N/A'
+
+minor_version_urls = [f"{URLS}/{minor}/release-notes/relnotes.html" for minor in minor_versions]
+for response in endoflife.fetch_urls(minor_version_urls):
+    soup = BeautifulSoup(response.text, features="html5lib")
+    for title in soup.find_all("h2"):
+        versionAndDate = title.get_text().strip()
+        m = re.match(REGEX, versionAndDate)
+        if m:
+            version = f"{m['version']}.0" if len(m['version'].split('.')) == 2 else m['version']
+            date = datetime.strptime(m['date'], "%B %Y").strftime("%Y-%m-15")
+            versions[version] = date
+            print(f"{version}: {date}")
 
 versions = versions | FIXED_VERSIONS
 endoflife.write_releases(PRODUCT, versions)
