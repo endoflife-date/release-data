@@ -1,6 +1,6 @@
 import re
 from bs4 import BeautifulSoup
-from datetime import datetime
+from common import dates
 from common import endoflife
 
 URLS = [
@@ -13,48 +13,21 @@ URLS = [
 ]
 
 PRODUCT = "coldfusion"
-regex = r"[r|R]elease [d|D]ate[,|:]? (.*?)\).*?Build Number: (.*?)$"
+REGEX = r"[r|R]elease [d|D]ate[,|:]? (.*?)\).*?Build Number: (.*?)$"
 
-"""
-Make a HEAD request to the URL
-and parse the Last-Modified header
-to return a YYYY-MM-DD string
-"""
-def parse_release_date(text):
-    text = text.replace(",", "")
-    date_formats = ['%d %b %Y', '%d %B %Y', '%b %d %Y', '%B %d %Y']
+print(f"::group::{PRODUCT}")
+versions = {}
 
-    for date_format in date_formats:
-        try:
-            return datetime.strptime(text, date_format).strftime("%Y-%m-%d")
-        except ValueError:
-            pass
-
-    raise ValueError("Cannot parse date '" + text + "' with formats " + str(date_formats))
-
-def parse(url, versions):
-    response = endoflife.fetch_url(url)
-    soup = BeautifulSoup(response, features="html5lib")
+for response in endoflife.fetch_urls(URLS):
+    soup = BeautifulSoup(response.text, features="html5lib")
     for p in soup.findAll("div", class_="text"):
         text = p.get_text().strip().replace('\xa0', ' ')
-        matches = re.findall(regex, text, re.DOTALL | re.MULTILINE)
+        matches = re.findall(REGEX, text, re.DOTALL | re.MULTILINE)
         for m in matches:
-            date = parse_release_date(m[0].strip())
+            date = dates.parse_date(m[0]).strftime("%Y-%m-%d")
             version = m[1].strip().replace(",",".")
             versions[version] = date
             print(f"{version}: {date}")
 
-def fetch_releases():
-    releases = {}
-    for url in URLS:
-        parse(url, releases)
-
-    return releases
-
-print(f"::group::{PRODUCT}")
-releases = fetch_releases()
-endoflife.write_releases(PRODUCT, dict(
-    # sort by version (desc)
-    sorted(releases.items(), key=lambda x: (x[0]), reverse=True)
-))
+endoflife.write_releases(PRODUCT, versions)
 print("::endgroup::")
