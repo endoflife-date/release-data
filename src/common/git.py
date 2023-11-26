@@ -18,7 +18,7 @@ class Git:
             child = run(f"git {cmd}", capture_output=True, timeout=300, check=True, shell=True, cwd=self.repo_dir)
             return child.stdout.decode("utf-8").strip().split("\n")
         except ChildProcessError as ex:
-            raise RuntimeError(f"Failed to run '{git_command}': {ex}")
+            raise RuntimeError(f"Failed to run '{cmd}': {ex}")
 
     def setup(self, bare: bool = False):
         """Creates the repository path and runs:
