@@ -5,13 +5,12 @@ import sys
 from common import endoflife
 
 METHOD = "maven"
-VERSION_REGEX = r'^\d+\.\d+(\.\d+)?$'
 
 
 # TODO: Add support for custom regexes
 # Hasn't been needed yet, so only write if we need it
 def valid_version(version):
-    if re.match(VERSION_REGEX, version):
+    if re.match(endoflife.DEFAULT_VERSION_REGEX, version):
         return True
     return False
 

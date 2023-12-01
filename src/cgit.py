@@ -13,14 +13,6 @@ do not support partial clone so we cannot.
 """
 
 METHOD = 'cgit'
-# Same as used in Ruby (update.rb)
-DEFAULT_TAG_TEMPLATE = (
-    "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%if tiny %}.{{tiny}}{%endif%}{%endif%}{%endif%}"
-)
-DEFAULT_VERSION_REGEX = (
-    r"^v?(?P<major>\d+)\.(?P<minor>\d+)\.?(?P<patch>\d+)?\.?(?P<tiny>\d+)?$"
-)
-
 
 def make_bs_request(url):
     response = endoflife.fetch_url(url + '/refs/tags')
@@ -56,8 +48,8 @@ def update_product(product_name, configs):
     versions = {}
 
     for config in configs:
-        t = config.get("template", DEFAULT_TAG_TEMPLATE)
-        regex = config.get("regex", DEFAULT_VERSION_REGEX)
+        t = config.get("template", endoflife.DEFAULT_TAG_TEMPLATE)
+        regex = config.get("regex", endoflife.DEFAULT_VERSION_REGEX)
         versions = versions | fetch_releases(config[METHOD], regex, t)
 
     endoflife.write_releases(product_name, versions)

@@ -4,7 +4,6 @@ import sys
 from common import endoflife
 
 METHOD = "npm"
-REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
 
 def fetch_releases(npm_id, regex):
@@ -34,7 +33,7 @@ def update_product(product_name, configs):
     versions = {}
 
     for config in configs:
-        config = {"regex": REGEX} | config
+        config = {"regex": endoflife.DEFAULT_VERSION_REGEX} | config
         versions = versions | fetch_releases(config[METHOD], config["regex"])
 
     endoflife.write_releases(product_name, versions)
