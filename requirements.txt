@@ -4,7 +4,7 @@ html5lib==1.1
 Markdown==3.5.1
 mwparserfromhell==0.6.5
 pycparser==2.21
-pygit2==1.13.2
+pygit2==1.13.3
 python-dateutil==2.8.2
 python-frontmatter==1.0.0
 python-liquid==1.10.0
