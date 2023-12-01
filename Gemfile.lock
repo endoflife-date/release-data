@@ -8,7 +8,7 @@ GEM
     liquid (5.4.0)
     psych (5.1.1.1)
       stringio
-    rdoc (6.5.0)
+    rdoc (6.6.0)
       psych (>= 4.0.0)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -21,7 +21,7 @@ PLATFORMS
 DEPENDENCIES
   irb (~> 1.9)
   liquid (~> 5.4)
-  rdoc (~> 6.4)
+  rdoc (~> 6.6)
   rugged (~> 1.5.1)
 
 BUNDLED WITH
