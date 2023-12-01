@@ -16,11 +16,9 @@ identically named groups (as used in the mariadb product).
 # craft-cms, exim, gerrit, jquery, kdeplasma, kirby, logstash, nexus, silverstripe
 # and tarantool versions.
 METHOD = 'git'
-DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
-DEFAULT_TAG_TEMPLATE = "{{major}}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}"
 
 
-def fetch_releases(product_name, url, regex, template):
+def fetch_releases(url, regex, template):
     releases = {}
 
     git = Git(url)
@@ -40,10 +38,10 @@ def update_product(product_name, configs):
     versions = {}
 
     for config in configs:
-        t = config.get("template", DEFAULT_TAG_TEMPLATE)
-        regex = config.get("regex", DEFAULT_VERSION_REGEX)
+        t = config.get("template", endoflife.DEFAULT_TAG_TEMPLATE)
+        regex = config.get("regex", endoflife.DEFAULT_VERSION_REGEX)
         regex = regex.replace("(?<", "(?P<")  # convert ruby regex to python regex
-        versions = versions | fetch_releases(product_name, config[METHOD], regex, t)
+        versions = versions | fetch_releases(config[METHOD], regex, t)
 
     endoflife.write_releases(product_name, versions)
 

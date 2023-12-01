@@ -4,7 +4,6 @@ import sys
 from common import endoflife
 
 METHOD = "docker_hub"
-REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
 
 def fetch_releases(url, regex, releases):
@@ -35,7 +34,7 @@ def update_product(product_name, configs):
 
     for config in configs:
         url = f"https://hub.docker.com/v2/repositories/{config[METHOD]}/tags?page_size=100&page=1"
-        config = {"regex": REGEX} | config
+        config = {"regex": endoflife.DEFAULT_VERSION_REGEX} | config
         fetch_releases(url, config["regex"], versions)
 
     endoflife.write_releases(product_name, versions)

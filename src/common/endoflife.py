@@ -12,6 +12,11 @@ from urllib3.util import Retry
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0'
 
+# Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
+# Major version must be >= 1.
+DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
+DEFAULT_TAG_TEMPLATE = "{{major}}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}"
+
 
 def load_product(product_name, pathname="website/products") -> frontmatter.Post:
     """Load the product's file frontmatter.

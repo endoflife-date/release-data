@@ -1,6 +1,6 @@
-import datetime as dt
 import re
 from bs4 import BeautifulSoup
+from common import dates
 from common import endoflife
 
 # Now that AWS no longer publishes docs on GitHub,
@@ -16,7 +16,6 @@ URLS = [
     # + latest
     "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
 ]
-REGEX = r"^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
 
 
 def parse_platforms_pages():
@@ -27,11 +26,11 @@ def parse_platforms_pages():
         soup = BeautifulSoup(response, features="html5lib")
         for tr in soup.select("#main-col-body")[0].findAll("tr"):
             td = tr.find("td")
-            if td and re.match(REGEX, td.text.strip()):
+            if td and re.match(endoflife.DEFAULT_VERSION_REGEX, td.text.strip()):
                 data = tr.findAll("td")
                 date = data[-1].text.strip()
                 if len(date) > 0:
-                    d = dt.datetime.strptime(date, "%B %d, %Y").strftime("%Y-%m-%d")
+                    d = dates.parse_date(date).strftime("%Y-%m-%d")
                     k8s_version = ".".join(data[0].text.strip().split(".")[:-1])
                     eks_version = data[1].text.strip().replace(".", "-")
                     version = f"{k8s_version}-{eks_version}"
