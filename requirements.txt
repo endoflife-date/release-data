@@ -6,7 +6,7 @@ mwparserfromhell==0.6.5
 pycparser==2.21
 pygit2==1.13.3
 python-dateutil==2.8.2
-python-frontmatter==1.0.0
+python-frontmatter==1.0.1
 python-liquid==1.10.0
 PyYAML==6.0.1
 six==1.16.0
