@@ -19,279 +19,279 @@ Common Release Data for various projects in a consumable format. Current format 
 
 As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automatically tracked releases:
 
-| Product                                       | Permalink                       | Auto | Method          |
-|-----------------------------------------------|---------------------------------|------|-----------------|
-| Adobe ColdFusion                              | `/coldfusion`                   | ✔️   | custom          |
-| Akeneo PIM                                    | `/akeneo-pim`                   | ✔️   | git             |
-| Alibaba Dragonwell                            | `/alibaba-dragonwell`           | ✔️   | git             |
-| AlmaLinux OS                                  | `/almalinux`                    | ✔️   | distrowatch     |
-| Alpine Linux                                  | `/alpine`                       | ✔️   | git             |
-| Amazon CDK                                    | `/amazon-cdk`                   | ✔️   | git             |
-| Amazon Corretto                               | `/amazon-corretto`              | ✔️   | github_releases |
-| Amazon EKS                                    | `/amazon-eks`                   | ✔️   | custom          |
-| Amazon Glue                                   | `/amazon-glue`                  | ❌    | n/a             |
-| Amazon Kindle                                 | `/kindle`                       | ❌    | n/a             |
-| Amazon Linux                                  | `/amazon-linux`                 | ✔️   | docker_hub      |
-| Amazon Neptune                                | `/amazon-neptune`               | ✔️   | custom          |
-| Amazon RDS for MySQL                          | `/amazon-rds-mysql`             | ✔️   | custom          |
-| Amazon RDS for PostgreSQL                     | `/amazon-rds-postgresql`        | ✔️   | custom          |
-| Android OS                                    | `/android`                      | ❌    | n/a             |
-| Angular                                       | `/angular`                      | ✔️   | git             |
-| AngularJS                                     | `/angularjs`                    | ✔️   | npm             |
-| Ansible                                       | `/ansible`                      | ✔️   | pypi            |
-| Ansible-core                                  | `/ansible-core`                 | ✔️   | git             |
-| antiX Linux                                   | `/antix`                        | ✔️   | distrowatch     |
-| Apache ActiveMQ                               | `/apache-activemq`              | ✔️   | git             |
-| Apache Airflow                                | `/apache-airflow`               | ✔️   | pypi            |
-| Apache Camel                                  | `/apache-camel`                 | ✔️   | maven           |
-| Apache Cassandra                              | `/apache-cassandra`             | ✔️   | git             |
-| Apache Groovy                                 | `/apache-groovy`                | ✔️   | maven           |
-| Apache Hadoop                                 | `/apache-hadoop`                | ✔️   | git             |
-| Apache HBase                                  | `/hbase`                        | ✔️   | git             |
-| Apache Hop                                    | `/apache-hop`                   | ✔️   | github_releases |
-| Apache HTTP Server                            | `/apache`                       | ✔️   | custom          |
-| Apache Kafka                                  | `/apache-kafka`                 | ✔️   | git             |
-| Apache Log4j                                  | `/log4j`                        | ✔️   | maven           |
-| Apache Maven                                  | `/maven`                        | ✔️   | maven           |
-| Apache Solr                                   | `/solr`                         | ✔️   | git             |
-| Apache Spark                                  | `/apache-spark`                 | ✔️   | git             |
-| Apache Tomcat                                 | `/tomcat`                       | ✔️   | maven           |
-| Apache ZooKeeper                              | `/zookeeper`                    | ✔️   | maven           |
-| API Platform                                  | `/api-platform`                 | ✔️   | git             |
-| Apple iOS                                     | `/ios`                          | ✔️   | custom          |
-| Apple iPad                                    | `/ipad`                         | ❌    | n/a             |
-| Apple iPadOS                                  | `/ipados`                       | ✔️   | custom          |
-| Apple iPhone                                  | `/iphone`                       | ❌    | n/a             |
-| Apple macOS                                   | `/macos`                        | ✔️   | custom          |
-| Apple Watch                                   | `/apple-watch`                  | ❌    | n/a             |
-| Apple watchOS                                 | `/watchos`                      | ✔️   | custom          |
-| Argo CD                                       | `/argo-cd`                      | ✔️   | git             |
-| Artifactory                                   | `/artifactory`                  | ✔️   | custom          |
-| AWS Lambda                                    | `/aws-lambda`                   | ✔️   | custom          |
-| Azul Zulu                                     | `/azul-zulu`                    | ❌    | n/a             |
-| Azure DevOps Server                           | `/azure-devops-server`          | ❌    | n/a             |
-| Azure Kubernetes Service                      | `/azure-kubernetes-service`     | ❌    | n/a             |
-| Bellsoft Liberica JDK                         | `/bellsoft-liberica`            | ✔️   | github_releases |
-| Blender                                       | `/blender`                      | ✔️   | git             |
-| Bootstrap                                     | `/bootstrap`                    | ✔️   | git             |
-| CakePHP                                       | `/cakephp`                      | ✔️   | git             |
-| CentOS                                        | `/centos`                       | ❌    | n/a             |
-| CentOS Stream                                 | `/centos-stream`                | ❌    | n/a             |
-| CFEngine                                      | `/cfengine`                     | ✔️   | git             |
-| Citrix Virtual Apps and Desktops              | `/citrix-vad`                   | ❌    | n/a             |
-| ClamAV                                        | `/clamav`                       | ✔️   | git             |
-| Composer                                      | `/composer`                     | ✔️   | git             |
-| Confluence                                    | `/confluence`                   | ✔️   | custom          |
-| Contao                                        | `/contao`                       | ✔️   | git             |
-| Couchbase Server                              | `/couchbase-server`             | ✔️   | custom          |
-| Craft CMS                                     | `/craft-cms`                    | ✔️   | git             |
-| dbt Core                                      | `/dbt-core`                     | ✔️   | git             |
-| Debian                                        | `/debian`                       | ✔️   | custom          |
-| Dependency-Track                              | `/dependency-track`             | ✔️   | git             |
-| Devuan                                        | `/devuan`                       | ✔️   | distrowatch     |
-| Django                                        | `/django`                       | ✔️   | git             |
-| Docker Engine                                 | `/docker-engine`                | ✔️   | git             |
-| Drupal                                        | `/drupal`                       | ✔️   | git             |
-| Drush                                         | `/drush`                        | ✔️   | git             |
-| Eclipse Temurin                               | `/eclipse-temurin`              | ✔️   | github_releases |
-| Elastic Beats                                 | `/beats`                        | ✔️   | git             |
-| Elasticsearch                                 | `/elasticsearch`                | ✔️   | git             |
-| Electron                                      | `/electron`                     | ✔️   | npm             |
-| Elixir                                        | `/elixir`                       | ✔️   | git             |
-| Ember                                         | `/emberjs`                      | ✔️   | npm             |
-| Envoy                                         | `/envoy`                        | ✔️   | git             |
-| Erlang                                        | `/erlang`                       | ✔️   | git             |
-| etcd                                          | `/etcd`                         | ✔️   | git             |
-| EuroLinux                                     | `/eurolinux`                    | ✔️   | distrowatch     |
-| Exim                                          | `/exim`                         | ✔️   | git             |
-| Fairphone                                     | `/fairphone`                    | ❌    | n/a             |
-| Fedora Linux                                  | `/fedora`                       | ✔️   | distrowatch     |
-| FFmpeg                                        | `/ffmpeg`                       | ✔️   | git             |
-| FileMaker Platform                            | `/filemaker`                    | ❌    | n/a             |
-| Firefox                                       | `/firefox`                      | ✔️   | custom          |
-| Flux                                          | `/flux`                         | ✔️   | git             |
-| FortiOS                                       | `/fortios`                      | ❌    | n/a             |
-| FreeBSD                                       | `/freebsd`                      | ❌    | n/a             |
-| Gerrit                                        | `/gerrit`                       | ✔️   | git             |
-| GitLab                                        | `/gitlab`                       | ✔️   | git             |
-| Go                                            | `/go`                           | ✔️   | git             |
-| Godot                                         | `/godot`                        | ✔️   | git             |
-| Google Container-Optimized OS (COS)           | `/cos`                          | ✔️   | custom          |
-| Google Kubernetes Engine                      | `/google-kubernetes-engine`     | ✔️   | custom          |
-| Google Pixel                                  | `/pixel`                        | ❌    | n/a             |
-| Gorilla Toolkit                               | `/gorilla`                      | ❌    | n/a             |
-| GraalVM                                       | `/graalvm`                      | ✔️   | custom          |
-| Gradle                                        | `/gradle`                       | ✔️   | git             |
-| Grafana                                       | `/grafana`                      | ✔️   | git             |
-| Grails Framework                              | `/grails`                       | ✔️   | git             |
-| Graylog                                       | `/graylog`                      | ✔️   | git             |
-| GStreamer                                     | `/gstreamer`                    | ✔️   | git             |
-| HAProxy                                       | `/haproxy`                      | ✔️   | custom          |
-| Hashicorp Consul                              | `/consul`                       | ✔️   | git             |
-| Hashicorp Terraform                           | `/terraform`                    | ✔️   | git             |
-| Hashicorp Vault                               | `/hashicorp-vault`              | ✔️   | git             |
-| IBM AIX                                       | `/ibm-aix`                      | ✔️   | custom          |
-| IBM Semeru Runtime                            | `/ibm-semeru-runtime`           | ✔️   | github_releases |
-| Intel Processors                              | `/intel-processors`             | ❌    | n/a             |
-| Internet Explorer                             | `/internet-explorer`            | ❌    | n/a             |
-| Ionic Framework                               | `/ionic`                        | ✔️   | git             |
-| ISC DHCP                                      | `/isc-dhcp`                     | ❌    | n/a             |
-| Istio                                         | `/istio`                        | ✔️   | git             |
-| Jekyll                                        | `/jekyll`                       | ✔️   | git             |
-| Jenkins                                       | `/jenkins`                      | ✔️   | git             |
-| JHipster                                      | `/jhipster`                     | ✔️   | npm             |
-| Jira Software                                 | `/jira-software`                | ✔️   | custom          |
-| Joomla!                                       | `/joomla`                       | ✔️   | git             |
-| jQuery                                        | `/jquery`                       | ✔️   | git             |
-| JReleaser                                     | `/jreleaser`                    | ✔️   | maven           |
-| KDE Plasma                                    | `/kde-plasma`                   | ✔️   | git             |
-| KEDA                                          | `/keda`                         | ✔️   | git             |
-| Keycloak                                      | `/keycloak`                     | ✔️   | git             |
-| Kibana                                        | `/kibana`                       | ✔️   | git             |
-| Kirby                                         | `/kirby`                        | ✔️   | git             |
-| Kong Gateway                                  | `/kong-gateway`                 | ✔️   | git             |
-| Kotlin                                        | `/kotlin`                       | ✔️   | npm             |
-| Kubernetes                                    | `/kubernetes`                   | ✔️   | git             |
-| Laravel                                       | `/laravel`                      | ✔️   | git             |
-| LibreOffice                                   | `/libreoffice`                  | ❌    | n/a             |
-| LineageOS                                     | `/lineageos`                    | ❌    | n/a             |
-| Linux Kernel                                  | `/linux`                        | ✔️   | cgit            |
-| Linux Mint                                    | `/linuxmint`                    | ❌    | n/a             |
-| Logstash                                      | `/logstash`                     | ✔️   | git             |
-| Looker                                        | `/looker`                       | ✔️   | custom          |
-| Mageia                                        | `/mageia`                       | ✔️   | distrowatch     |
-| Magento                                       | `/magento`                      | ✔️   | git             |
-| MariaDB                                       | `/mariadb`                      | ✔️   | git             |
-| Mastodon                                      | `/mastodon`                     | ✔️   | git             |
-| Mattermost                                    | `/mattermost`                   | ✔️   | git             |
-| MediaWiki                                     | `/mediawiki`                    | ✔️   | git             |
-| Micronaut Framework                           | `/micronaut`                    | ✔️   | git             |
-| Microsoft .NET                                | `/dotnet`                       | ✔️   | git             |
-| Microsoft .NET Framework                      | `/dotnetfx`                     | ❌    | n/a             |
-| Microsoft Build of OpenJDK                    | `/microsoft-build-of-openjdk`   | ✔️   | git             |
-| Microsoft Exchange                            | `/msexchange`                   | ❌    | n/a             |
-| Microsoft Office                              | `/office`                       | ❌    | n/a             |
-| Microsoft PowerShell                          | `/powershell`                   | ✔️   | git             |
-| Microsoft SharePoint                          | `/sharepoint`                   | ❌    | n/a             |
-| Microsoft SQL Server                          | `/mssqlserver`                  | ❌    | n/a             |
-| Microsoft Surface                             | `/surface`                      | ❌    | n/a             |
-| Microsoft Visual Studio                       | `/visual-studio`                | ❌    | n/a             |
-| Microsoft Windows                             | `/windows`                      | ❌    | n/a             |
-| Microsoft Windows Embedded                    | `/windows-embedded`             | ❌    | n/a             |
-| Microsoft Windows Server                      | `/windows-server`               | ❌    | n/a             |
-| MongoDB Server                                | `/mongodb`                      | ✔️   | git             |
-| Moodle                                        | `/moodle`                       | ✔️   | git             |
-| Mule Runtime                                  | `/mulesoft-runtime`             | ❌    | n/a             |
-| MX Linux                                      | `/mxlinux`                      | ✔️   | distrowatch     |
-| MySQL                                         | `/mysql`                        | ✔️   | git             |
-| Neo4j                                         | `/neo4j`                        | ✔️   | git             |
-| NetBSD                                        | `/netbsd`                       | ❌    | n/a             |
-| Netgear ReadyNAS                              | `/readynas`                     | ❌    | n/a             |
-| Next.js                                       | `/nextjs`                       | ✔️   | npm             |
-| Nextcloud                                     | `/nextcloud`                    | ✔️   | git             |
-| Nexus Repository OSS                          | `/nexus`                        | ✔️   | git             |
-| nginx                                         | `/nginx`                        | ✔️   | git             |
-| nix                                           | `/nix`                          | ✔️   | git             |
-| NixOS                                         | `/nixos`                        | ❌    | n/a             |
-| Node.js                                       | `/nodejs`                       | ✔️   | git             |
-| Nokia Mobile                                  | `/nokia`                        | ❌    | n/a             |
-| Nomad                                         | `/nomad`                        | ✔️   | git             |
-| NumPy                                         | `/numpy`                        | ✔️   | pypi            |
-| Nutanix AOS                                   | `/nutanix-aos`                  | ✔️   | custom          |
-| Nutanix Files                                 | `/nutanix-files`                | ✔️   | custom          |
-| Nutanix Prism Central                         | `/nutanix-prism`                | ✔️   | custom          |
-| Nuxt                                          | `/nuxt`                         | ✔️   | npm             |
-| NVIDIA Driver                                 | `/nvidia`                       | ❌    | n/a             |
-| NVIDIA GPUs                                   | `/nvidia-gpu`                   | ❌    | n/a             |
-| OpenBSD                                       | `/openbsd`                      | ❌    | n/a             |
-| OpenJDK builds from Oracle                    | `/openjdk-builds-from-oracle`   | ❌    | n/a             |
-| OpenSearch                                    | `/opensearch`                   | ✔️   | git             |
-| OpenSSL                                       | `/openssl`                      | ✔️   | git             |
-| openSUSE                                      | `/opensuse`                     | ❌    | n/a             |
-| OpenWrt                                       | `/openwrt`                      | ✔️   | git             |
-| OpenZFS                                       | `/openzfs`                      | ✔️   | git             |
-| Oracle Database                               | `/oracle-database`              | ❌    | n/a             |
-| Oracle JDK                                    | `/oracle-jdk`                   | ✔️   | custom          |
-| Oracle Linux                                  | `/oracle-linux`                 | ✔️   | distrowatch     |
-| Oracle Solaris                                | `/oracle-solaris`               | ❌    | n/a             |
-| Palo Alto Networks Cortex XDR agent           | `/cortex-xdr`                   | ❌    | n/a             |
-| Palo Alto Networks GlobalProtect App          | `/pangp`                        | ❌    | n/a             |
-| Palo Alto Networks PAN-OS                     | `/panos`                        | ❌    | n/a             |
-| PCI-DSS                                       | `/pci-dss`                      | ❌    | n/a             |
-| Perl                                          | `/perl`                         | ✔️   | git             |
-| PHP                                           | `/php`                          | ✔️   | custom          |
-| phpBB                                         | `/phpbb`                        | ✔️   | git             |
-| phpMyAdmin                                    | `/phpmyadmin`                   | ✔️   | git             |
-| Plesk                                         | `/plesk`                        | ✔️   | custom          |
-| Pop!_OS                                       | `/pop-os`                       | ❌    | n/a             |
-| Postfix                                       | `/postfix`                      | ✔️   | git             |
-| PostgreSQL                                    | `/postgresql`                   | ✔️   | git             |
-| Prometheus                                    | `/prometheus`                   | ✔️   | git             |
-| Protractor                                    | `/protractor`                   | ✔️   | npm             |
-| Proxmox VE                                    | `/proxmox-ve`                   | ✔️   | distrowatch     |
-| Puppet                                        | `/puppet`                       | ✔️   | git             |
-| Python                                        | `/python`                       | ✔️   | git             |
-| Qt                                            | `/qt`                           | ✔️   | git             |
-| Quarkus                                       | `/quarkus-framework`            | ✔️   | github_releases |
-| Quasar                                        | `/quasar`                       | ✔️   | npm             |
-| RabbitMQ                                      | `/rabbitmq`                     | ✔️   | git             |
-| Rancher                                       | `/rancher`                      | ✔️   | git             |
-| Raspberry Pi                                  | `/raspberry-pi`                 | ❌    | n/a             |
-| React                                         | `/react`                        | ✔️   | npm             |
-| Red Hat build of OpenJDK                      | `/redhat-build-of-openjdk`      | ❌    | n/a             |
-| Red Hat Enterprise Linux                      | `/rhel`                         | ❌    | n/a             |
-| Red Hat JBoss Enterprise Application Platform | `/redhat-jboss-eap`             | ❌    | n/a             |
-| Red Hat OpenShift                             | `/red-hat-openshift`            | ✔️   | custom          |
-| Red Hat Satellite                             | `/redhat-satellite`             | ✔️   | custom          |
-| Redis                                         | `/redis`                        | ✔️   | git             |
-| Redmine                                       | `/redmine`                      | ✔️   | git             |
-| Rocket.Chat                                   | `/rocket-chat`                  | ✔️   | git             |
-| Rocky Linux                                   | `/rocky-linux`                  | ✔️   | custom          |
-| ROS                                           | `/ros`                          | ❌    | n/a             |
-| ROS 2                                         | `/ros-2`                        | ❌    | n/a             |
-| Roundcube Webmail                             | `/roundcube`                    | ✔️   | git             |
-| Ruby                                          | `/ruby`                         | ✔️   | git             |
-| Ruby on Rails                                 | `/rails`                        | ✔️   | git             |
-| Salt                                          | `/salt`                         | ✔️   | git             |
-| Samsung Mobile                                | `/samsung-mobile`               | ❌    | n/a             |
-| SapMachine                                    | `/sapmachine`                   | ✔️   | github_releases |
-| Scala                                         | `/scala`                        | ✔️   | git             |
-| Silverstripe CMS                              | `/silverstripe`                 | ✔️   | git             |
-| Slackware Linux                               | `/slackware`                    | ✔️   | distrowatch     |
-| SonarQube                                     | `/sonar`                        | ✔️   | git             |
-| Splunk                                        | `/splunk`                       | ✔️   | custom          |
-| Spring Boot                                   | `/spring-boot`                  | ✔️   | git             |
-| Spring Framework                              | `/spring-framework`             | ✔️   | git             |
-| SQLite                                        | `/sqlite`                       | ✔️   | git             |
-| Squid                                         | `/squid`                        | ✔️   | git             |
-| SUSE Linux Enterprise Server                  | `/sles`                         | ❌    | n/a             |
-| Symfony                                       | `/symfony`                      | ✔️   | git             |
-| Tails                                         | `/tails`                        | ✔️   | distrowatch     |
-| Tarantool                                     | `/tarantool`                    | ✔️   | git             |
-| Telegraf                                      | `/telegraf`                     | ✔️   | git             |
-| Twig                                          | `/twig`                         | ✔️   | git             |
-| TYPO3                                         | `/typo3`                        | ✔️   | custom          |
-| Ubuntu                                        | `/ubuntu`                       | ✔️   | distrowatch     |
-| Umbraco CMS                                   | `/umbraco`                      | ✔️   | git             |
-| Unity                                         | `/unity`                        | ✔️   | custom          |
-| UnrealIRCd                                    | `/unrealircd`                   | ✔️   | custom          |
-| Varnish                                       | `/varnish`                      | ✔️   | git             |
-| Veeam Backup & Replication                    | `/veeam-backup-and-replication` | ❌    | n/a             |
-| Visual COBOL                                  | `/visual-cobol`                 | ❌    | n/a             |
-| VMware Cloud Foundation                       | `/vmware-cloud-foundation`      | ❌    | n/a             |
-| VMware ESXi                                   | `/esxi`                         | ❌    | n/a             |
-| VMware Horizon                                | `/horizon`                      | ❌    | n/a             |
-| VMware Photon                                 | `/photon`                       | ❌    | n/a             |
-| VMware Site Recovery Manager                  | `/vmware-srm`                   | ❌    | n/a             |
-| VMware vCenter Server                         | `/vcenter`                      | ❌    | n/a             |
-| Vue                                           | `/vue`                          | ✔️   | npm             |
-| Vuetify                                       | `/vuetify`                      | ✔️   | npm             |
-| Wagtail                                       | `/wagtail`                      | ✔️   | pypi            |
-| WeeChat                                       | `/weechat`                      | ✔️   | git             |
-| WordPress                                     | `/wordpress`                    | ✔️   | git             |
-| XCP-ng                                        | `/xcp-ng`                       | ✔️   | git             |
-| Yarn                                          | `/yarn`                         | ✔️   | npm             |
-| Yocto Project                                 | `/yocto`                        | ✔️   | git             |
-| Zabbix                                        | `/zabbix`                       | ✔️   | git             |
+| Product                                       | Permalink                                                                              | Auto | Method          |
+|-----------------------------------------------|----------------------------------------------------------------------------------------|------|-----------------|
+| Adobe ColdFusion                              | [`/coldfusion`](https://endoflife.date/coldfusion)                                     | ✔️   | custom          |
+| Akeneo PIM                                    | [`/akeneo-pim`](https://endoflife.date/akeneo-pim)                                     | ✔️   | git             |
+| Alibaba Dragonwell                            | [`/alibaba-dragonwell`](https://endoflife.date/alibaba-dragonwell)                     | ✔️   | git             |
+| AlmaLinux OS                                  | [`/almalinux`](https://endoflife.date/almalinux)                                       | ✔️   | distrowatch     |
+| Alpine Linux                                  | [`/alpine`](https://endoflife.date/alpine)                                             | ✔️   | git             |
+| Amazon CDK                                    | [`/amazon-cdk`](https://endoflife.date/amazon-cdk)                                     | ✔️   | git             |
+| Amazon Corretto                               | [`/amazon-corretto`](https://endoflife.date/amazon-corretto)                           | ✔️   | github_releases |
+| Amazon EKS                                    | [`/amazon-eks`](https://endoflife.date/amazon-eks)                                     | ✔️   | custom          |
+| Amazon Glue                                   | [`/amazon-glue`](https://endoflife.date/amazon-glue)                                   | ❌    | n/a             |
+| Amazon Kindle                                 | [`/kindle`](https://endoflife.date/kindle)                                             | ❌    | n/a             |
+| Amazon Linux                                  | [`/amazon-linux`](https://endoflife.date/amazon-linux)                                 | ✔️   | docker_hub      |
+| Amazon Neptune                                | [`/amazon-neptune`](https://endoflife.date/amazon-neptune)                             | ✔️   | custom          |
+| Amazon RDS for MySQL                          | [`/amazon-rds-mysql`](https://endoflife.date/amazon-rds-mysql)                         | ✔️   | custom          |
+| Amazon RDS for PostgreSQL                     | [`/amazon-rds-postgresql`](https://endoflife.date/amazon-rds-postgresql)               | ✔️   | custom          |
+| Android OS                                    | [`/android`](https://endoflife.date/android)                                           | ❌    | n/a             |
+| Angular                                       | [`/angular`](https://endoflife.date/angular)                                           | ✔️   | git             |
+| AngularJS                                     | [`/angularjs`](https://endoflife.date/angularjs)                                       | ✔️   | npm             |
+| Ansible                                       | [`/ansible`](https://endoflife.date/ansible)                                           | ✔️   | pypi            |
+| Ansible-core                                  | [`/ansible-core`](https://endoflife.date/ansible-core)                                 | ✔️   | git             |
+| antiX Linux                                   | [`/antix`](https://endoflife.date/antix)                                               | ✔️   | distrowatch     |
+| Apache ActiveMQ                               | [`/apache-activemq`](https://endoflife.date/apache-activemq)                           | ✔️   | git             |
+| Apache Airflow                                | [`/apache-airflow`](https://endoflife.date/apache-airflow)                             | ✔️   | pypi            |
+| Apache Camel                                  | [`/apache-camel`](https://endoflife.date/apache-camel)                                 | ✔️   | maven           |
+| Apache Cassandra                              | [`/apache-cassandra`](https://endoflife.date/apache-cassandra)                         | ✔️   | git             |
+| Apache Groovy                                 | [`/apache-groovy`](https://endoflife.date/apache-groovy)                               | ✔️   | maven           |
+| Apache Hadoop                                 | [`/apache-hadoop`](https://endoflife.date/apache-hadoop)                               | ✔️   | git             |
+| Apache HBase                                  | [`/hbase`](https://endoflife.date/hbase)                                               | ✔️   | git             |
+| Apache Hop                                    | [`/apache-hop`](https://endoflife.date/apache-hop)                                     | ✔️   | github_releases |
+| Apache HTTP Server                            | [`/apache`](https://endoflife.date/apache)                                             | ✔️   | custom          |
+| Apache Kafka                                  | [`/apache-kafka`](https://endoflife.date/apache-kafka)                                 | ✔️   | git             |
+| Apache Log4j                                  | [`/log4j`](https://endoflife.date/log4j)                                               | ✔️   | maven           |
+| Apache Maven                                  | [`/maven`](https://endoflife.date/maven)                                               | ✔️   | maven           |
+| Apache Solr                                   | [`/solr`](https://endoflife.date/solr)                                                 | ✔️   | git             |
+| Apache Spark                                  | [`/apache-spark`](https://endoflife.date/apache-spark)                                 | ✔️   | git             |
+| Apache Tomcat                                 | [`/tomcat`](https://endoflife.date/tomcat)                                             | ✔️   | maven           |
+| Apache ZooKeeper                              | [`/zookeeper`](https://endoflife.date/zookeeper)                                       | ✔️   | maven           |
+| API Platform                                  | [`/api-platform`](https://endoflife.date/api-platform)                                 | ✔️   | git             |
+| Apple iOS                                     | [`/ios`](https://endoflife.date/ios)                                                   | ✔️   | custom          |
+| Apple iPad                                    | [`/ipad`](https://endoflife.date/ipad)                                                 | ❌    | n/a             |
+| Apple iPadOS                                  | [`/ipados`](https://endoflife.date/ipados)                                             | ✔️   | custom          |
+| Apple iPhone                                  | [`/iphone`](https://endoflife.date/iphone)                                             | ❌    | n/a             |
+| Apple macOS                                   | [`/macos`](https://endoflife.date/macos)                                               | ✔️   | custom          |
+| Apple Watch                                   | [`/apple-watch`](https://endoflife.date/apple-watch)                                   | ❌    | n/a             |
+| Apple watchOS                                 | [`/watchos`](https://endoflife.date/watchos)                                           | ✔️   | custom          |
+| Argo CD                                       | [`/argo-cd`](https://endoflife.date/argo-cd)                                           | ✔️   | git             |
+| Artifactory                                   | [`/artifactory`](https://endoflife.date/artifactory)                                   | ✔️   | custom          |
+| AWS Lambda                                    | [`/aws-lambda`](https://endoflife.date/aws-lambda)                                     | ✔️   | custom          |
+| Azul Zulu                                     | [`/azul-zulu`](https://endoflife.date/azul-zulu)                                       | ❌    | n/a             |
+| Azure DevOps Server                           | [`/azure-devops-server`](https://endoflife.date/azure-devops-server)                   | ❌    | n/a             |
+| Azure Kubernetes Service                      | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service)         | ❌    | n/a             |
+| Bellsoft Liberica JDK                         | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica)                       | ✔️   | github_releases |
+| Blender                                       | [`/blender`](https://endoflife.date/blender)                                           | ✔️   | git             |
+| Bootstrap                                     | [`/bootstrap`](https://endoflife.date/bootstrap)                                       | ✔️   | git             |
+| CakePHP                                       | [`/cakephp`](https://endoflife.date/cakephp)                                           | ✔️   | git             |
+| CentOS                                        | [`/centos`](https://endoflife.date/centos)                                             | ❌    | n/a             |
+| CentOS Stream                                 | [`/centos-stream`](https://endoflife.date/centos-stream)                               | ❌    | n/a             |
+| CFEngine                                      | [`/cfengine`](https://endoflife.date/cfengine)                                         | ✔️   | git             |
+| Citrix Virtual Apps and Desktops              | [`/citrix-vad`](https://endoflife.date/citrix-vad)                                     | ❌    | n/a             |
+| ClamAV                                        | [`/clamav`](https://endoflife.date/clamav)                                             | ✔️   | git             |
+| Composer                                      | [`/composer`](https://endoflife.date/composer)                                         | ✔️   | git             |
+| Confluence                                    | [`/confluence`](https://endoflife.date/confluence)                                     | ✔️   | custom          |
+| Contao                                        | [`/contao`](https://endoflife.date/contao)                                             | ✔️   | git             |
+| Couchbase Server                              | [`/couchbase-server`](https://endoflife.date/couchbase-server)                         | ✔️   | custom          |
+| Craft CMS                                     | [`/craft-cms`](https://endoflife.date/craft-cms)                                       | ✔️   | git             |
+| dbt Core                                      | [`/dbt-core`](https://endoflife.date/dbt-core)                                         | ✔️   | git             |
+| Debian                                        | [`/debian`](https://endoflife.date/debian)                                             | ✔️   | custom          |
+| Dependency-Track                              | [`/dependency-track`](https://endoflife.date/dependency-track)                         | ✔️   | git             |
+| Devuan                                        | [`/devuan`](https://endoflife.date/devuan)                                             | ✔️   | distrowatch     |
+| Django                                        | [`/django`](https://endoflife.date/django)                                             | ✔️   | git             |
+| Docker Engine                                 | [`/docker-engine`](https://endoflife.date/docker-engine)                               | ✔️   | git             |
+| Drupal                                        | [`/drupal`](https://endoflife.date/drupal)                                             | ✔️   | git             |
+| Drush                                         | [`/drush`](https://endoflife.date/drush)                                               | ✔️   | git             |
+| Eclipse Temurin                               | [`/eclipse-temurin`](https://endoflife.date/eclipse-temurin)                           | ✔️   | github_releases |
+| Elastic Beats                                 | [`/beats`](https://endoflife.date/beats)                                               | ✔️   | git             |
+| Elasticsearch                                 | [`/elasticsearch`](https://endoflife.date/elasticsearch)                               | ✔️   | git             |
+| Electron                                      | [`/electron`](https://endoflife.date/electron)                                         | ✔️   | npm             |
+| Elixir                                        | [`/elixir`](https://endoflife.date/elixir)                                             | ✔️   | git             |
+| Ember                                         | [`/emberjs`](https://endoflife.date/emberjs)                                           | ✔️   | npm             |
+| Envoy                                         | [`/envoy`](https://endoflife.date/envoy)                                               | ✔️   | git             |
+| Erlang                                        | [`/erlang`](https://endoflife.date/erlang)                                             | ✔️   | git             |
+| etcd                                          | [`/etcd`](https://endoflife.date/etcd)                                                 | ✔️   | git             |
+| EuroLinux                                     | [`/eurolinux`](https://endoflife.date/eurolinux)                                       | ✔️   | distrowatch     |
+| Exim                                          | [`/exim`](https://endoflife.date/exim)                                                 | ✔️   | git             |
+| Fairphone                                     | [`/fairphone`](https://endoflife.date/fairphone)                                       | ❌    | n/a             |
+| Fedora Linux                                  | [`/fedora`](https://endoflife.date/fedora)                                             | ✔️   | distrowatch     |
+| FFmpeg                                        | [`/ffmpeg`](https://endoflife.date/ffmpeg)                                             | ✔️   | git             |
+| FileMaker Platform                            | [`/filemaker`](https://endoflife.date/filemaker)                                       | ❌    | n/a             |
+| Firefox                                       | [`/firefox`](https://endoflife.date/firefox)                                           | ✔️   | custom          |
+| Flux                                          | [`/flux`](https://endoflife.date/flux)                                                 | ✔️   | git             |
+| FortiOS                                       | [`/fortios`](https://endoflife.date/fortios)                                           | ❌    | n/a             |
+| FreeBSD                                       | [`/freebsd`](https://endoflife.date/freebsd)                                           | ❌    | n/a             |
+| Gerrit                                        | [`/gerrit`](https://endoflife.date/gerrit)                                             | ✔️   | git             |
+| GitLab                                        | [`/gitlab`](https://endoflife.date/gitlab)                                             | ✔️   | git             |
+| Go                                            | [`/go`](https://endoflife.date/go)                                                     | ✔️   | git             |
+| Godot                                         | [`/godot`](https://endoflife.date/godot)                                               | ✔️   | git             |
+| Google Container-Optimized OS (COS)           | [`/cos`](https://endoflife.date/cos)                                                   | ✔️   | custom          |
+| Google Kubernetes Engine                      | [`/google-kubernetes-engine`](https://endoflife.date/google-kubernetes-engine)         | ✔️   | custom          |
+| Google Pixel                                  | [`/pixel`](https://endoflife.date/pixel)                                               | ❌    | n/a             |
+| Gorilla Toolkit                               | [`/gorilla`](https://endoflife.date/gorilla)                                           | ❌    | n/a             |
+| GraalVM                                       | [`/graalvm`](https://endoflife.date/graalvm)                                           | ✔️   | custom          |
+| Gradle                                        | [`/gradle`](https://endoflife.date/gradle)                                             | ✔️   | git             |
+| Grafana                                       | [`/grafana`](https://endoflife.date/grafana)                                           | ✔️   | git             |
+| Grails Framework                              | [`/grails`](https://endoflife.date/grails)                                             | ✔️   | git             |
+| Graylog                                       | [`/graylog`](https://endoflife.date/graylog)                                           | ✔️   | git             |
+| GStreamer                                     | [`/gstreamer`](https://endoflife.date/gstreamer)                                       | ✔️   | git             |
+| HAProxy                                       | [`/haproxy`](https://endoflife.date/haproxy)                                           | ✔️   | custom          |
+| Hashicorp Consul                              | [`/consul`](https://endoflife.date/consul)                                             | ✔️   | git             |
+| Hashicorp Terraform                           | [`/terraform`](https://endoflife.date/terraform)                                       | ✔️   | git             |
+| Hashicorp Vault                               | [`/hashicorp-vault`](https://endoflife.date/hashicorp-vault)                           | ✔️   | git             |
+| IBM AIX                                       | [`/ibm-aix`](https://endoflife.date/ibm-aix)                                           | ✔️   | custom          |
+| IBM Semeru Runtime                            | [`/ibm-semeru-runtime`](https://endoflife.date/ibm-semeru-runtime)                     | ✔️   | github_releases |
+| Intel Processors                              | [`/intel-processors`](https://endoflife.date/intel-processors)                         | ❌    | n/a             |
+| Internet Explorer                             | [`/internet-explorer`](https://endoflife.date/internet-explorer)                       | ❌    | n/a             |
+| Ionic Framework                               | [`/ionic`](https://endoflife.date/ionic)                                               | ✔️   | git             |
+| ISC DHCP                                      | [`/isc-dhcp`](https://endoflife.date/isc-dhcp)                                         | ❌    | n/a             |
+| Istio                                         | [`/istio`](https://endoflife.date/istio)                                               | ✔️   | git             |
+| Jekyll                                        | [`/jekyll`](https://endoflife.date/jekyll)                                             | ✔️   | git             |
+| Jenkins                                       | [`/jenkins`](https://endoflife.date/jenkins)                                           | ✔️   | git             |
+| JHipster                                      | [`/jhipster`](https://endoflife.date/jhipster)                                         | ✔️   | npm             |
+| Jira Software                                 | [`/jira-software`](https://endoflife.date/jira-software)                               | ✔️   | custom          |
+| Joomla!                                       | [`/joomla`](https://endoflife.date/joomla)                                             | ✔️   | git             |
+| jQuery                                        | [`/jquery`](https://endoflife.date/jquery)                                             | ✔️   | git             |
+| JReleaser                                     | [`/jreleaser`](https://endoflife.date/jreleaser)                                       | ✔️   | maven           |
+| KDE Plasma                                    | [`/kde-plasma`](https://endoflife.date/kde-plasma)                                     | ✔️   | git             |
+| KEDA                                          | [`/keda`](https://endoflife.date/keda)                                                 | ✔️   | git             |
+| Keycloak                                      | [`/keycloak`](https://endoflife.date/keycloak)                                         | ✔️   | git             |
+| Kibana                                        | [`/kibana`](https://endoflife.date/kibana)                                             | ✔️   | git             |
+| Kirby                                         | [`/kirby`](https://endoflife.date/kirby)                                               | ✔️   | git             |
+| Kong Gateway                                  | [`/kong-gateway`](https://endoflife.date/kong-gateway)                                 | ✔️   | git             |
+| Kotlin                                        | [`/kotlin`](https://endoflife.date/kotlin)                                             | ✔️   | npm             |
+| Kubernetes                                    | [`/kubernetes`](https://endoflife.date/kubernetes)                                     | ✔️   | git             |
+| Laravel                                       | [`/laravel`](https://endoflife.date/laravel)                                           | ✔️   | git             |
+| LibreOffice                                   | [`/libreoffice`](https://endoflife.date/libreoffice)                                   | ❌    | n/a             |
+| LineageOS                                     | [`/lineageos`](https://endoflife.date/lineageos)                                       | ❌    | n/a             |
+| Linux Kernel                                  | [`/linux`](https://endoflife.date/linux)                                               | ✔️   | cgit            |
+| Linux Mint                                    | [`/linuxmint`](https://endoflife.date/linuxmint)                                       | ❌    | n/a             |
+| Logstash                                      | [`/logstash`](https://endoflife.date/logstash)                                         | ✔️   | git             |
+| Looker                                        | [`/looker`](https://endoflife.date/looker)                                             | ✔️   | custom          |
+| Mageia                                        | [`/mageia`](https://endoflife.date/mageia)                                             | ✔️   | distrowatch     |
+| Magento                                       | [`/magento`](https://endoflife.date/magento)                                           | ✔️   | git             |
+| MariaDB                                       | [`/mariadb`](https://endoflife.date/mariadb)                                           | ✔️   | git             |
+| Mastodon                                      | [`/mastodon`](https://endoflife.date/mastodon)                                         | ✔️   | git             |
+| Mattermost                                    | [`/mattermost`](https://endoflife.date/mattermost)                                     | ✔️   | git             |
+| MediaWiki                                     | [`/mediawiki`](https://endoflife.date/mediawiki)                                       | ✔️   | git             |
+| Micronaut Framework                           | [`/micronaut`](https://endoflife.date/micronaut)                                       | ✔️   | git             |
+| Microsoft .NET                                | [`/dotnet`](https://endoflife.date/dotnet)                                             | ✔️   | git             |
+| Microsoft .NET Framework                      | [`/dotnetfx`](https://endoflife.date/dotnetfx)                                         | ❌    | n/a             |
+| Microsoft Build of OpenJDK                    | [`/microsoft-build-of-openjdk`](https://endoflife.date/microsoft-build-of-openjdk)     | ✔️   | git             |
+| Microsoft Exchange                            | [`/msexchange`](https://endoflife.date/msexchange)                                     | ❌    | n/a             |
+| Microsoft Office                              | [`/office`](https://endoflife.date/office)                                             | ❌    | n/a             |
+| Microsoft PowerShell                          | [`/powershell`](https://endoflife.date/powershell)                                     | ✔️   | git             |
+| Microsoft SharePoint                          | [`/sharepoint`](https://endoflife.date/sharepoint)                                     | ❌    | n/a             |
+| Microsoft SQL Server                          | [`/mssqlserver`](https://endoflife.date/mssqlserver)                                   | ❌    | n/a             |
+| Microsoft Surface                             | [`/surface`](https://endoflife.date/surface)                                           | ❌    | n/a             |
+| Microsoft Visual Studio                       | [`/visual-studio`](https://endoflife.date/visual-studio)                               | ❌    | n/a             |
+| Microsoft Windows                             | [`/windows`](https://endoflife.date/windows)                                           | ❌    | n/a             |
+| Microsoft Windows Embedded                    | [`/windows-embedded`](https://endoflife.date/windows-embedded)                         | ❌    | n/a             |
+| Microsoft Windows Server                      | [`/windows-server`](https://endoflife.date/windows-server)                             | ❌    | n/a             |
+| MongoDB Server                                | [`/mongodb`](https://endoflife.date/mongodb)                                           | ✔️   | git             |
+| Moodle                                        | [`/moodle`](https://endoflife.date/moodle)                                             | ✔️   | git             |
+| Mule Runtime                                  | [`/mulesoft-runtime`](https://endoflife.date/mulesoft-runtime)                         | ❌    | n/a             |
+| MX Linux                                      | [`/mxlinux`](https://endoflife.date/mxlinux)                                           | ✔️   | distrowatch     |
+| MySQL                                         | [`/mysql`](https://endoflife.date/mysql)                                               | ✔️   | git             |
+| Neo4j                                         | [`/neo4j`](https://endoflife.date/neo4j)                                               | ✔️   | git             |
+| NetBSD                                        | [`/netbsd`](https://endoflife.date/netbsd)                                             | ❌    | n/a             |
+| Netgear ReadyNAS                              | [`/readynas`](https://endoflife.date/readynas)                                         | ❌    | n/a             |
+| Next.js                                       | [`/nextjs`](https://endoflife.date/nextjs)                                             | ✔️   | npm             |
+| Nextcloud                                     | [`/nextcloud`](https://endoflife.date/nextcloud)                                       | ✔️   | git             |
+| Nexus Repository OSS                          | [`/nexus`](https://endoflife.date/nexus)                                               | ✔️   | git             |
+| nginx                                         | [`/nginx`](https://endoflife.date/nginx)                                               | ✔️   | git             |
+| nix                                           | [`/nix`](https://endoflife.date/nix)                                                   | ✔️   | git             |
+| NixOS                                         | [`/nixos`](https://endoflife.date/nixos)                                               | ❌    | n/a             |
+| Node.js                                       | [`/nodejs`](https://endoflife.date/nodejs)                                             | ✔️   | git             |
+| Nokia Mobile                                  | [`/nokia`](https://endoflife.date/nokia)                                               | ❌    | n/a             |
+| Nomad                                         | [`/nomad`](https://endoflife.date/nomad)                                               | ✔️   | git             |
+| NumPy                                         | [`/numpy`](https://endoflife.date/numpy)                                               | ✔️   | pypi            |
+| Nutanix AOS                                   | [`/nutanix-aos`](https://endoflife.date/nutanix-aos)                                   | ✔️   | custom          |
+| Nutanix Files                                 | [`/nutanix-files`](https://endoflife.date/nutanix-files)                               | ✔️   | custom          |
+| Nutanix Prism Central                         | [`/nutanix-prism`](https://endoflife.date/nutanix-prism)                               | ✔️   | custom          |
+| Nuxt                                          | [`/nuxt`](https://endoflife.date/nuxt)                                                 | ✔️   | npm             |
+| NVIDIA Driver                                 | [`/nvidia`](https://endoflife.date/nvidia)                                             | ❌    | n/a             |
+| NVIDIA GPUs                                   | [`/nvidia-gpu`](https://endoflife.date/nvidia-gpu)                                     | ❌    | n/a             |
+| OpenBSD                                       | [`/openbsd`](https://endoflife.date/openbsd)                                           | ❌    | n/a             |
+| OpenJDK builds from Oracle                    | [`/openjdk-builds-from-oracle`](https://endoflife.date/openjdk-builds-from-oracle)     | ❌    | n/a             |
+| OpenSearch                                    | [`/opensearch`](https://endoflife.date/opensearch)                                     | ✔️   | git             |
+| OpenSSL                                       | [`/openssl`](https://endoflife.date/openssl)                                           | ✔️   | git             |
+| openSUSE                                      | [`/opensuse`](https://endoflife.date/opensuse)                                         | ❌    | n/a             |
+| OpenWrt                                       | [`/openwrt`](https://endoflife.date/openwrt)                                           | ✔️   | git             |
+| OpenZFS                                       | [`/openzfs`](https://endoflife.date/openzfs)                                           | ✔️   | git             |
+| Oracle Database                               | [`/oracle-database`](https://endoflife.date/oracle-database)                           | ❌    | n/a             |
+| Oracle JDK                                    | [`/oracle-jdk`](https://endoflife.date/oracle-jdk)                                     | ✔️   | custom          |
+| Oracle Linux                                  | [`/oracle-linux`](https://endoflife.date/oracle-linux)                                 | ✔️   | distrowatch     |
+| Oracle Solaris                                | [`/oracle-solaris`](https://endoflife.date/oracle-solaris)                             | ❌    | n/a             |
+| Palo Alto Networks Cortex XDR agent           | [`/cortex-xdr`](https://endoflife.date/cortex-xdr)                                     | ❌    | n/a             |
+| Palo Alto Networks GlobalProtect App          | [`/pangp`](https://endoflife.date/pangp)                                               | ❌    | n/a             |
+| Palo Alto Networks PAN-OS                     | [`/panos`](https://endoflife.date/panos)                                               | ❌    | n/a             |
+| PCI-DSS                                       | [`/pci-dss`](https://endoflife.date/pci-dss)                                           | ❌    | n/a             |
+| Perl                                          | [`/perl`](https://endoflife.date/perl)                                                 | ✔️   | git             |
+| PHP                                           | [`/php`](https://endoflife.date/php)                                                   | ✔️   | custom          |
+| phpBB                                         | [`/phpbb`](https://endoflife.date/phpbb)                                               | ✔️   | git             |
+| phpMyAdmin                                    | [`/phpmyadmin`](https://endoflife.date/phpmyadmin)                                     | ✔️   | git             |
+| Plesk                                         | [`/plesk`](https://endoflife.date/plesk)                                               | ✔️   | custom          |
+| Pop!_OS                                       | [`/pop-os`](https://endoflife.date/pop-os)                                             | ❌    | n/a             |
+| Postfix                                       | [`/postfix`](https://endoflife.date/postfix)                                           | ✔️   | git             |
+| PostgreSQL                                    | [`/postgresql`](https://endoflife.date/postgresql)                                     | ✔️   | git             |
+| Prometheus                                    | [`/prometheus`](https://endoflife.date/prometheus)                                     | ✔️   | git             |
+| Protractor                                    | [`/protractor`](https://endoflife.date/protractor)                                     | ✔️   | npm             |
+| Proxmox VE                                    | [`/proxmox-ve`](https://endoflife.date/proxmox-ve)                                     | ✔️   | distrowatch     |
+| Puppet                                        | [`/puppet`](https://endoflife.date/puppet)                                             | ✔️   | git             |
+| Python                                        | [`/python`](https://endoflife.date/python)                                             | ✔️   | git             |
+| Qt                                            | [`/qt`](https://endoflife.date/qt)                                                     | ✔️   | git             |
+| Quarkus                                       | [`/quarkus-framework`](https://endoflife.date/quarkus-framework)                       | ✔️   | github_releases |
+| Quasar                                        | [`/quasar`](https://endoflife.date/quasar)                                             | ✔️   | npm             |
+| RabbitMQ                                      | [`/rabbitmq`](https://endoflife.date/rabbitmq)                                         | ✔️   | git             |
+| Rancher                                       | [`/rancher`](https://endoflife.date/rancher)                                           | ✔️   | git             |
+| Raspberry Pi                                  | [`/raspberry-pi`](https://endoflife.date/raspberry-pi)                                 | ❌    | n/a             |
+| React                                         | [`/react`](https://endoflife.date/react)                                               | ✔️   | npm             |
+| Red Hat build of OpenJDK                      | [`/redhat-build-of-openjdk`](https://endoflife.date/redhat-build-of-openjdk)           | ❌    | n/a             |
+| Red Hat Enterprise Linux                      | [`/rhel`](https://endoflife.date/rhel)                                                 | ❌    | n/a             |
+| Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap)                         | ❌    | n/a             |
+| Red Hat OpenShift                             | [`/red-hat-openshift`](https://endoflife.date/red-hat-openshift)                       | ✔️   | custom          |
+| Red Hat Satellite                             | [`/redhat-satellite`](https://endoflife.date/redhat-satellite)                         | ✔️   | custom          |
+| Redis                                         | [`/redis`](https://endoflife.date/redis)                                               | ✔️   | git             |
+| Redmine                                       | [`/redmine`](https://endoflife.date/redmine)                                           | ✔️   | git             |
+| Rocket.Chat                                   | [`/rocket-chat`](https://endoflife.date/rocket-chat)                                   | ✔️   | git             |
+| Rocky Linux                                   | [`/rocky-linux`](https://endoflife.date/rocky-linux)                                   | ✔️   | custom          |
+| ROS                                           | [`/ros`](https://endoflife.date/ros)                                                   | ❌    | n/a             |
+| ROS 2                                         | [`/ros-2`](https://endoflife.date/ros-2)                                               | ❌    | n/a             |
+| Roundcube Webmail                             | [`/roundcube`](https://endoflife.date/roundcube)                                       | ✔️   | git             |
+| Ruby                                          | [`/ruby`](https://endoflife.date/ruby)                                                 | ✔️   | git             |
+| Ruby on Rails                                 | [`/rails`](https://endoflife.date/rails)                                               | ✔️   | git             |
+| Salt                                          | [`/salt`](https://endoflife.date/salt)                                                 | ✔️   | git             |
+| Samsung Mobile                                | [`/samsung-mobile`](https://endoflife.date/samsung-mobile)                             | ❌    | n/a             |
+| SapMachine                                    | [`/sapmachine`](https://endoflife.date/sapmachine)                                     | ✔️   | github_releases |
+| Scala                                         | [`/scala`](https://endoflife.date/scala)                                               | ✔️   | git             |
+| Silverstripe CMS                              | [`/silverstripe`](https://endoflife.date/silverstripe)                                 | ✔️   | git             |
+| Slackware Linux                               | [`/slackware`](https://endoflife.date/slackware)                                       | ✔️   | distrowatch     |
+| SonarQube                                     | [`/sonar`](https://endoflife.date/sonar)                                               | ✔️   | git             |
+| Splunk                                        | [`/splunk`](https://endoflife.date/splunk)                                             | ✔️   | custom          |
+| Spring Boot                                   | [`/spring-boot`](https://endoflife.date/spring-boot)                                   | ✔️   | git             |
+| Spring Framework                              | [`/spring-framework`](https://endoflife.date/spring-framework)                         | ✔️   | git             |
+| SQLite                                        | [`/sqlite`](https://endoflife.date/sqlite)                                             | ✔️   | git             |
+| Squid                                         | [`/squid`](https://endoflife.date/squid)                                               | ✔️   | git             |
+| SUSE Linux Enterprise Server                  | [`/sles`](https://endoflife.date/sles)                                                 | ❌    | n/a             |
+| Symfony                                       | [`/symfony`](https://endoflife.date/symfony)                                           | ✔️   | git             |
+| Tails                                         | [`/tails`](https://endoflife.date/tails)                                               | ✔️   | distrowatch     |
+| Tarantool                                     | [`/tarantool`](https://endoflife.date/tarantool)                                       | ✔️   | git             |
+| Telegraf                                      | [`/telegraf`](https://endoflife.date/telegraf)                                         | ✔️   | git             |
+| Twig                                          | [`/twig`](https://endoflife.date/twig)                                                 | ✔️   | git             |
+| TYPO3                                         | [`/typo3`](https://endoflife.date/typo3)                                               | ✔️   | custom          |
+| Ubuntu                                        | [`/ubuntu`](https://endoflife.date/ubuntu)                                             | ✔️   | distrowatch     |
+| Umbraco CMS                                   | [`/umbraco`](https://endoflife.date/umbraco)                                           | ✔️   | git             |
+| Unity                                         | [`/unity`](https://endoflife.date/unity)                                               | ✔️   | custom          |
+| UnrealIRCd                                    | [`/unrealircd`](https://endoflife.date/unrealircd)                                     | ✔️   | custom          |
+| Varnish                                       | [`/varnish`](https://endoflife.date/varnish)                                           | ✔️   | git             |
+| Veeam Backup & Replication                    | [`/veeam-backup-and-replication`](https://endoflife.date/veeam-backup-and-replication) | ❌    | n/a             |
+| Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                 | ❌    | n/a             |
+| VMware Cloud Foundation                       | [`/vmware-cloud-foundation`](https://endoflife.date/vmware-cloud-foundation)           | ❌    | n/a             |
+| VMware ESXi                                   | [`/esxi`](https://endoflife.date/esxi)                                                 | ❌    | n/a             |
+| VMware Horizon                                | [`/horizon`](https://endoflife.date/horizon)                                           | ❌    | n/a             |
+| VMware Photon                                 | [`/photon`](https://endoflife.date/photon)                                             | ❌    | n/a             |
+| VMware Site Recovery Manager                  | [`/vmware-srm`](https://endoflife.date/vmware-srm)                                     | ❌    | n/a             |
+| VMware vCenter Server                         | [`/vcenter`](https://endoflife.date/vcenter)                                           | ❌    | n/a             |
+| Vue                                           | [`/vue`](https://endoflife.date/vue)                                                   | ✔️   | npm             |
+| Vuetify                                       | [`/vuetify`](https://endoflife.date/vuetify)                                           | ✔️   | npm             |
+| Wagtail                                       | [`/wagtail`](https://endoflife.date/wagtail)                                           | ✔️   | pypi            |
+| WeeChat                                       | [`/weechat`](https://endoflife.date/weechat)                                           | ✔️   | git             |
+| WordPress                                     | [`/wordpress`](https://endoflife.date/wordpress)                                       | ✔️   | git             |
+| XCP-ng                                        | [`/xcp-ng`](https://endoflife.date/xcp-ng)                                             | ✔️   | git             |
+| Yarn                                          | [`/yarn`](https://endoflife.date/yarn)                                                 | ✔️   | npm             |
+| Yocto Project                                 | [`/yocto`](https://endoflife.date/yocto)                                               | ✔️   | git             |
+| Zabbix                                        | [`/zabbix`](https://endoflife.date/zabbix)                                             | ✔️   | git             |
 
 This table has been generated by [report.py](/report.py).
