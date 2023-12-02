@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -28,7 +29,7 @@ REGEX = r"[r|R]elease [d|D]ate[,|:]? (.*?)\).*?Build Number: (.*?)$"
 print(f"::group::{PRODUCT}")
 versions = RELEASE_DATES | {}
 
-for response in endoflife.fetch_urls(URLS):
+for response in http.fetch_urls(URLS):
     soup = BeautifulSoup(response.text, features="html5lib")
     for p in soup.findAll("div", class_="text"):
         text = p.get_text().strip().replace('\xa0', ' ')

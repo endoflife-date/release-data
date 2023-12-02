@@ -1,6 +1,6 @@
-import json
 import re
 import sys
+from common import http
 from common import endoflife
 
 METHOD = "docker_hub"
@@ -10,8 +10,8 @@ def fetch_releases(url, regex, releases):
     if not isinstance(regex, list):
         regex = [regex]
 
-    response = endoflife.fetch_url(url)
-    data = json.loads(response)
+    response = http.fetch_url(url)
+    data = response.json()
     for result in data["results"]:
         version = result["name"]
 

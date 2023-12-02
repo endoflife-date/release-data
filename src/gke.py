@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -10,8 +11,8 @@ CHANNELS = ['nochannel', 'stable', 'regular', 'rapid']
 
 def fetch_channel(channel):
     url = f"https://cloud.google.com/kubernetes-engine/docs/release-notes-{channel}"
-    response = endoflife.fetch_url(url)
-    return BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(url)
+    return BeautifulSoup(response.text, features="html5lib")
 
 
 def parse_soup_for_versions(soup):

@@ -1,4 +1,4 @@
-import json
+from common import http
 from common import endoflife
 
 """Fetch Nutanix products versions with their dates from https://portal.nutanix.com/api/v1.
@@ -17,8 +17,8 @@ def fetch_releases(product_code):
     versions = {}
     url = BASE_URL + product_code
     print(url)
-    response = endoflife.fetch_url(url)
-    data = json.loads(response)
+    response = http.fetch_url(url)
+    data = response.json()
 
     for version_data in data["contents"]:
         if 'GENERAL_AVAILABILITY' in version_data:

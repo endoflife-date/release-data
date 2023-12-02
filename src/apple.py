@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -12,7 +13,6 @@ URLS = [
     "https://support.apple.com/kb/HT205759",  # 2013
     "https://support.apple.com/kb/HT204611",  # 2011 to 2012
     # Apple still links to the following articles, but they are 404:
-    # Disabled, too much timed out.
     "http://web.archive.org/web/20230404214605_/https://support.apple.com/en-us/HT5165",  # 2010
     "http://web.archive.org/web/20230327200842_/https://support.apple.com/en-us/HT4218",  # 2008-2009
     "http://web.archive.org/web/20230204234533_/https://support.apple.com/en-us/HT1263",  # 2005-2007
@@ -54,7 +54,7 @@ def parse_date(date_str):
 print("::group::apple")
 versions_by_product = {k: {} for k in CONFIG.keys()}
 
-for response in endoflife.fetch_urls(URLS):
+for response in http.fetch_urls(URLS):
     soup = BeautifulSoup(response.text, features="html5lib")
     versions_table = soup.find(id="tableWraper")
     versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")

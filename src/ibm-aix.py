@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -6,8 +7,8 @@ PRODUCT = "ibm-aix"
 URL = "https://www.ibm.com/support/pages/aix-support-lifecycle-information"
 
 def fetch_releases():
-    response = endoflife.fetch_url(URL)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(URL)
+    soup = BeautifulSoup(response.text, features="html5lib")
 
     releases = {}
     # for all release tables

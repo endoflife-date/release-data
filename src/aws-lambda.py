@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 from datetime import datetime
 
@@ -37,10 +38,9 @@ except FileNotFoundError:
     releases_data = {}
     print(f"{PRODUCT} file not found, real release dates will not be used.")
 
-response = endoflife.fetch_url(URL)
-soup = BeautifulSoup(response, features="html5lib")
-
 versions = {}
+response = http.fetch_url(URL)
+soup = BeautifulSoup(response.text, features="html5lib")
 for row in soup.find_all("tr"):
     cells = row.find_all("td")
     if len(cells) == 6:  # Supported Runtimes

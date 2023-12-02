@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 from xml.dom.minidom import parseString
@@ -16,8 +17,8 @@ VERSION_PATTERN = re.compile(r"Looker\s+(?P<version>\d+\.\d+)", re.IGNORECASE)
 print(f"::group::{PRODUCT}")
 versions = {}
 
-response = endoflife.fetch_url(URL)
-rss = parseString(response)
+response = http.fetch_url(URL)
+rss = parseString(response.text)
 for item in rss.getElementsByTagName("entry"):
     date = dates.parse_datetime(item.getElementsByTagName("updated")[0].firstChild.nodeValue).strftime("%Y-%m-%d")
     content = item.getElementsByTagName("content")[0].firstChild.nodeValue

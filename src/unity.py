@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 
 # Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there,
@@ -13,8 +14,8 @@ URL = 'https://unity.com/releases/editor/qa/lts-releases'
 
 def fetch_releases(releases, url) -> str:
     print(url)
-    response = endoflife.fetch_url(url)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(url)
+    soup = BeautifulSoup(response.text, features="html5lib")
 
     for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
         version = release.find('h4').find('span').text

@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 
 """Fetch versions with their dates from access.redhat.com.
@@ -13,8 +14,8 @@ URL = "https://access.redhat.com/articles/1365633"
 regex = r"^Satellite (?P<version>\d+\.\d+\.\d+([.-]\d+)?) ([Uu]pdate|[Rr]elease)$"
 
 print("::group::redhat-satellite")
-response = endoflife.fetch_url(URL)
-soup = BeautifulSoup(response, features="html5lib")
+response = http.fetch_url(URL)
+soup = BeautifulSoup(response.text, features="html5lib")
 
 versions = {}
 for table in soup.findAll("tbody"):

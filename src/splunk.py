@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -35,8 +36,8 @@ def get_latest_minor_versions(versions):
 
 print(f"::group::{PRODUCT}")
 versions = dict()
-main = endoflife.fetch_url(URL)
-soup = BeautifulSoup(main, features="html5lib")
+main = http.fetch_url(URL)
+soup = BeautifulSoup(main.text, features="html5lib")
 
 all_versions = list(map(
     lambda option: option.attrs['value'],
@@ -48,7 +49,7 @@ all_versions = list(map(
 latest_minor_versions = get_latest_minor_versions(all_versions)
 latest_minor_versions_urls = [RELNOTES_URL_TEMPLATE.format(version=v) for v in latest_minor_versions]
 
-for response in endoflife.fetch_urls(latest_minor_versions_urls):
+for response in http.fetch_urls(latest_minor_versions_urls):
     for (version, date_str) in re.findall(PATTERN, response.text, re.MULTILINE):
         version = f"{version}.0" if len(version.split(".")) == 2 else version  # convert x.y to x.y.0
         date = dates.parse_date(date_str).strftime("%Y-%m-%d")

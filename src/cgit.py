@@ -1,6 +1,7 @@
 import re
 import sys
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 from liquid import Template
@@ -14,15 +15,12 @@ do not support partial clone so we cannot.
 
 METHOD = 'cgit'
 
-def make_bs_request(url):
-    response = endoflife.fetch_url(url + '/refs/tags')
-    return BeautifulSoup(response, features="html5lib")
-
 
 def fetch_releases(url, regex, template):
     releases = {}
 
-    soup = make_bs_request(url)
+    response = http.fetch_url(url + '/refs/tags')
+    soup = BeautifulSoup(response.text, features="html5lib")
     l_template = Template(template)
 
     for table in soup.find_all("table", class_="list"):

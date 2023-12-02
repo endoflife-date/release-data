@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -29,8 +30,8 @@ FIXED_VERSIONS = {
 print(f"::group::{PRODUCT}")
 versions = {}
 
-response = endoflife.fetch_url(f"{URLS}/current/install/install-intro.html")
-soup = BeautifulSoup(response, features="html5lib")
+response = http.fetch_url(f"{URLS}/current/install/install-intro.html")
+soup = BeautifulSoup(response.text, features="html5lib")
 
 minor_versions = [options.attrs["value"] for options in soup.find(class_="version_list").find_all("option")]
 
@@ -39,7 +40,7 @@ for minor in minor_versions:
     versions[minor + '.0'] = 'N/A'
 
 minor_version_urls = [f"{URLS}/{minor}/release-notes/relnotes.html" for minor in minor_versions]
-for response in endoflife.fetch_urls(minor_version_urls):
+for response in http.fetch_urls(minor_version_urls):
     soup = BeautifulSoup(response.text, features="html5lib")
     for title in soup.find_all("h2"):
         versionAndDate = title.get_text().strip()

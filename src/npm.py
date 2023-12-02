@@ -1,6 +1,6 @@
-import json
 import re
 import sys
+from common import http
 from common import endoflife
 
 METHOD = "npm"
@@ -13,8 +13,8 @@ def fetch_releases(npm_id, regex):
         regex = [regex]
 
     url = f"https://registry.npmjs.org/{npm_id}"
-    response = endoflife.fetch_url(url)
-    data = json.loads(response)
+    response = http.fetch_url(url)
+    data = response.json()
     for version in data["time"]:
         matches = False
         for r in regex:

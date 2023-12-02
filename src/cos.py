@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -8,15 +9,15 @@ REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
 
 
 def list_milestones():
-    response = endoflife.fetch_url(URL)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(URL)
+    soup = BeautifulSoup(response.text, features="html5lib")
     milestones = soup.find_all('td', string=re.compile(r'COS \d+ LTS'))
     return [m.text.split(' ')[1] for m in milestones]
 
 
 def fetch_milestones(milestones):
     urls = [f"{URL}m{channel}" for channel in milestones]
-    return endoflife.fetch_urls(urls)
+    return http.fetch_urls(urls)
 
 
 def parse_date(date_str):

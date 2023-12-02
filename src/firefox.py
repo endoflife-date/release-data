@@ -1,6 +1,7 @@
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -18,11 +19,11 @@ def format_date(text: str) -> str:
 print(f"::group::{PRODUCT}")
 versions = {}
 
-response = endoflife.fetch_url(URL)
-ff_releases = BeautifulSoup(response, features="html5lib").find_all("ol", class_="c-release-list")
+response = http.fetch_url(URL)
+ff_releases = BeautifulSoup(response.text, features="html5lib").find_all("ol", class_="c-release-list")
 urls = [urllib.parse.urljoin(URL, p.get("href")) for p in ff_releases[0].find_all("a")]
 
-for response in endoflife.fetch_urls(urls):
+for response in http.fetch_urls(urls):
     soup = BeautifulSoup(response.text, features="html5lib")
 
     version = response.request.url.split("/")[-3]
