@@ -17,11 +17,11 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-11-26, 203 of the 271 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                       | Auto | Method          |
 |-----------------------------------------------|---------------------------------|------|-----------------|
-| Adobe ColdFusion                              | `/coldfusion`                   | ❌    | n/a             |
+| Adobe ColdFusion                              | `/coldfusion`                   | ✔️   | custom          |
 | Akeneo PIM                                    | `/akeneo-pim`                   | ✔️   | git             |
 | Alibaba Dragonwell                            | `/alibaba-dragonwell`           | ✔️   | git             |
 | AlmaLinux OS                                  | `/almalinux`                    | ✔️   | distrowatch     |
@@ -235,6 +235,7 @@ As of 2023-11-26, 203 of the 271 products tracked by endoflife.date have automat
 | Quarkus                                       | `/quarkus-framework`            | ✔️   | github_releases |
 | Quasar                                        | `/quasar`                       | ✔️   | npm             |
 | RabbitMQ                                      | `/rabbitmq`                     | ✔️   | git             |
+| Rancher                                       | `/rancher`                      | ✔️   | git             |
 | Raspberry Pi                                  | `/raspberry-pi`                 | ❌    | n/a             |
 | React                                         | `/react`                        | ✔️   | npm             |
 | Red Hat build of OpenJDK                      | `/redhat-build-of-openjdk`      | ❌    | n/a             |
