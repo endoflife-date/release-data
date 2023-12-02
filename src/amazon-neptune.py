@@ -1,7 +1,8 @@
 import re
-from xml.dom.minidom import parseString
+from common import http
 from common import dates
 from common import endoflife
+from xml.dom.minidom import parseString
 
 """Fetch versions with their dates from the RSS feed of
 https://docs.aws.amazon.com/neptune/latest/userguide/engine-releases.html.
@@ -14,8 +15,8 @@ URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
 print(f"::group::{PRODUCT}")
 versions = {}
 
-response = endoflife.fetch_url(URL)
-rss = parseString(response)
+response = http.fetch_url(URL)
+rss = parseString(response.text)
 for item in rss.getElementsByTagName("item"):
     title = item.getElementsByTagName("title")[0].firstChild.nodeValue
     pubDate = item.getElementsByTagName("pubDate")[0].firstChild.nodeValue

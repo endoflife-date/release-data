@@ -1,6 +1,6 @@
-import json
 import re
 import sys
+from common import http
 from common import dates
 from common import endoflife
 
@@ -14,8 +14,8 @@ def fetch_releases(pypi_id, regex):
         regex = [regex]
 
     url = f"https://pypi.org/pypi/{pypi_id}/json"
-    response = endoflife.fetch_url(url)
-    data = json.loads(response)
+    response = http.fetch_url(url)
+    data = response.json()
     for version in data["releases"]:
         R = data["releases"][version]
         matches = False

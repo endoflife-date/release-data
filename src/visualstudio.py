@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -16,7 +17,7 @@ URLS = [
 print(f"::group::{PRODUCT}")
 versions = {}
 
-for response in endoflife.fetch_urls(URLS):
+for response in http.fetch_urls(URLS):
     soup = BeautifulSoup(response.text, features="html5lib")
     for table in soup.find_all("table"):
         headers = [th.get_text().strip().lower() for th in table.find_all("th")]

@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -7,8 +8,8 @@ PRODUCT = "plesk"
 
 
 def make_bs_request(url):
-    response = endoflife.fetch_url(url)
-    return BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(url)
+    return BeautifulSoup(response.text, features="html5lib")
 
 
 # Only 18.0.20.3 and later will be picked up :

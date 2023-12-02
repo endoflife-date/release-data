@@ -1,4 +1,5 @@
 import re
+from common import http
 from common import dates
 from common import endoflife
 
@@ -26,7 +27,7 @@ def parse_markdown_table(table_text):
 
 
 print("::group::rockylinux")
-response = endoflife.fetch_url(URL)
-versions = parse_markdown_table(response)
+response = http.fetch_url(URL)
+versions = parse_markdown_table(response.text)
 endoflife.write_releases('rockylinux', versions)
 print("::endgroup::")

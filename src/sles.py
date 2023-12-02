@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -11,8 +12,8 @@ def strip_version(version_str):
 
 
 def fetch_releases():
-    response = endoflife.fetch_url(URL)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(URL)
+    soup = BeautifulSoup(response.text, features="html5lib")
     products_table = soup.find("tbody", id="productSupportLifecycle")
     # Get rows with SLES products
     sles_header_rows = products_table.find_all("tr", class_="row", attrs={"data-productfilter": "SUSE Linux Enterprise Server"})

@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -12,8 +13,8 @@ def split_versions(text):
     return text.replace("GraalVM for JDK ", "jdk-").split(", ")
 
 print("::group::graalvm")
-response = endoflife.fetch_url(URL)
-soup = BeautifulSoup(response, features="html5lib")
+response = http.fetch_url(URL)
+soup = BeautifulSoup(response.text, features="html5lib")
 
 versions = {}
 for tr in soup.findAll("table")[1].find("tbody").findAll("tr"):

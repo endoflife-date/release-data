@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -22,8 +23,8 @@ def parse_platforms_pages():
     all_versions = {}
     print("::group::eks")
     for url in URLS:
-        response = endoflife.fetch_url(url)
-        soup = BeautifulSoup(response, features="html5lib")
+        response = http.fetch_url(url)
+        soup = BeautifulSoup(response.text, features="html5lib")
         for tr in soup.select("#main-col-body")[0].findAll("tr"):
             td = tr.find("td")
             if td and re.match(endoflife.DEFAULT_VERSION_REGEX, td.text.strip()):

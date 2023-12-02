@@ -1,12 +1,13 @@
 import mwparserfromhell
 import re
+from common import http
 from common import endoflife
 
 URL = "https://www.unrealircd.org/docwiki/index.php?title=History_of_UnrealIRCd_releases&action=raw"
 
 print("::group::unrealircd")
-response = endoflife.fetch_url(URL)
-wikicode = mwparserfromhell.parse(response)
+response = http.fetch_url(URL)
+wikicode = mwparserfromhell.parse(response.text)
 
 versions = {}
 for tr in wikicode.ifilter_tags(matches=lambda node: node.tag == "tr"):
