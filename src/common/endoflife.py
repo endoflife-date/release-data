@@ -1,7 +1,9 @@
-import json
 import frontmatter
+import json
+import logging
 from glob import glob
 from os import path
+logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
 # Major version must be >= 1.

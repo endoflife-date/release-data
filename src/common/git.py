@@ -1,3 +1,4 @@
+import logging
 from hashlib import sha1
 from pathlib import Path
 from subprocess import run
@@ -15,6 +16,7 @@ class Git:
         """Run git command and return command result as a list of lines.
         """
         try:
+            logging.info(f"Running 'git {cmd}' on {self.url}")
             child = run(f"git {cmd}", capture_output=True, timeout=300, check=True, shell=True, cwd=self.repo_dir)
             return child.stdout.decode("utf-8").strip().split("\n")
         except ChildProcessError as ex:
@@ -54,7 +56,7 @@ class Git:
 
         return [line.split("\t")[1][11:] for line in lines if "\t" in line]
 
-    def checkout(self, branch: str, file_list=None):
+    def checkout(self, branch: str, file_list: list[str] = None):
         """Checks out a branch
         If `file_list` is given, sparse-checkout is used to save bandwidth
         and only download the given files
