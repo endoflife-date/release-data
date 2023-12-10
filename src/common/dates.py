@@ -1,5 +1,5 @@
-from datetime import datetime, timezone
 import calendar
+from datetime import datetime, timezone
 
 
 def parse_date(text, formats=frozenset([
@@ -42,7 +42,6 @@ def parse_datetime(text, formats=frozenset([
     """
     # so that we don't have to deal with some special characters in formats
     text = text.strip().replace(", ", " ").replace(". ", " ").replace("(", "").replace(")", "")
-    text = text.replace("Sept ", "Sep ")  # common typo, for ex. on Apple and Artifactory products
     for fmt in formats:
         try:
             date = datetime.strptime(text, fmt)
