@@ -1,23 +1,22 @@
-import re
+import json
+import logging
 import sys
 import subprocess
+from common import dates
 from common import endoflife
 
+"""Fetches versions from GitHub releases using the GraphQL API and the GitHub CLI.
+
+Note: GraphQL API and GitHub CLI are used because it's simpler: no need to manage pagination and authentication.
+"""
+
 METHOD = "github_releases"
-REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
 
-# This script is using the GitHub CLI with the GraphQL API in order to retrieve
-# releases. The reasons are:
-# - using 'gh release list' does not return all the releases
-# - using the API, directly or via GitHub CLI, is slow, produces a lot of 502
-#   errors, and is harder due to pagination.
-# - using the GraphQL API directly is hard due to pagination.
-# - using a library, such as graphql-python, is sightly harder than using the
-#   GitHub CLI (and still requires a GITHUB_TOKEN).
-def fetch_json(repo_id):
+def fetch_releases(repo_id):
+    logging.info(f"fetching {repo_id} GitHub releases")
     (owner, repo) = repo_id.split('/')
-    query = """gh api graphql --paginate -f query='
+    child = subprocess.run("""gh api graphql --paginate -f query='
 query($endCursor: String) {
   repository(name: "%s", owner: "%s") {
     releases(
@@ -35,48 +34,31 @@ query($endCursor: String) {
       }
     }
   }
-}' --jq '.data.repository.releases.edges.[].node | select(.isPrerelease == false) | [.name, .publishedAt] | join(",")'
-""" % (repo, owner)  # noqa: UP031
+}'""" % (repo, owner), capture_output=True, timeout=300, check=True, shell=True)  # noqa: UP031
+    logging.info(f"fetched {repo_id} GitHub releases")
 
-    child = subprocess.Popen(query, shell=True, stdout=subprocess.PIPE)
-    return child.communicate()[0].decode('utf-8')
-
-
-def fetch_releases(repo_id, regex):
-    """Returns this repository releases using
-    https://docs.github.com/en/rest/releases/releases#list-releases. Only the
-    first page is fetched: there are rate limit rules in place on the GitHub
-    API, and the most recent releases are sufficient.
-    """
-    releases = {}
-    regex = [regex] if not isinstance(regex, list) else regex
-
-    for release in fetch_json(repo_id).splitlines():
-        (raw_version, raw_date) = release.split(',')
-
-        for r in regex:
-            match = re.search(r, raw_version)
-            if match:
-                version = match.group(1)
-                date = raw_date.split("T")[0]
-                releases[version] = date
-                print(f"{version}: {date}")
-
-    return releases
-
-
-def update_product(product_name, configs):
-    versions = {}
-
-    for config in configs:
-        config = config if "regex" in config else config | {"regex": REGEX}
-        versions = versions | fetch_releases(config[METHOD], config["regex"])
-
-    endoflife.write_releases(product_name, versions)
+    # splitting because response may contain multiple JSON objects on a single line
+    responses = child.stdout.decode("utf-8").strip().replace('}{', '}\n{').split("\n")
+    return [json.loads(response) for response in responses]
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product}")
-    update_product(product, configs)
+for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
+    print(f"::group::{product_name}")
+    product = endoflife.Product(product_name, load_product_data=True)
+
+    for config in product.get_auto_configs(METHOD):
+        for page in fetch_releases(config.url):
+            releases = [edge['node'] for edge in (page['data']['repository']['releases']['edges'])]
+
+            for release in releases:
+                if not release['isPrerelease']:
+                    version_str = release['name']
+                    version_match = config.first_match(version_str)
+                    if version_match:
+                        version = config.render(version_match)
+                        date = dates.parse_datetime(release['publishedAt'])
+                        product.declare_version(version, date)
+
+    product.write()
     print("::endgroup::")
