@@ -47,7 +47,7 @@ class Product:
         if version not in self.versions:
             raise ValueError(f"version {version} cannot be replaced as it does not exist for {self.name}")
 
-        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) to {self.name}")
+        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) in {self.name}")
         self.versions[version] = date
 
     def remove_version(self, version: str) -> None:

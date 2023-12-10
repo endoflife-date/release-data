@@ -1,40 +1,27 @@
+import datetime
 from common import dates
 from common import endoflife
 from requests_html import HTMLSession
 
-URL = "https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life"
-PRODUCT = "artifactory"
+"""Fetches Artifactory versions from https://jfrog.com, using requests_html because JavaScript is
+needed to render the page."""
 
+product = endoflife.Product("artifactory")
+print(f"::group::{product.name}")
+r = HTMLSession().get("https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life")
+r.html.render(sleep=2, scrolldown=5)
 
-def parse_date(date_str):
-    date_str = date_str.replace("Sept", "Sep").replace("_", "-")
-    return dates.parse_date(date_str).strftime("%Y-%m-%d")
+for row in r.html.find('.informaltable tbody tr'):
+    cells = row.find("td")
+    if len(cells) >= 2:
+        version = cells[0].text.strip()
+        if version:
+            date_str = cells[1].text.strip().replace("_", "-").replace("Sept-", "Sep-")
+            product.declare_version(version, dates.parse_date(date_str))
 
+# 7.29.9 release date is wrong on https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life.
+# Sent a mail to jfrog-help-center-feedback@jfrog.com to fix it, but in the meantime...
+product.replace_version('7.29.9', datetime.datetime(2022, 1, 11))
 
-def fetch_releases():
-    result = {}
-
-    session = HTMLSession()
-    r = session.get(URL)
-    r.html.render(sleep=2, scrolldown=5)
-
-    for row in r.html.find('.informaltable tbody tr'):
-        cells = row.find("td")
-        if len(cells) >= 2:
-            version = cells[0].text.strip()
-            date_text = cells[1].text.strip()
-            if date_text:
-                date = parse_date(date_text)
-                result[version] = date
-                print(f"{version}: {date}")
-
-    # 7.29.9 release date is wrong on https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life.
-    # Sent a mail to jfrog-help-center-feedback@jfrog.com to fix it, but in the meantime...
-    result['7.29.9'] = '2022-01-11'
-    return result
-
-
-print(f"::group::{PRODUCT}")
-versions = fetch_releases()
-endoflife.write_releases(PRODUCT, versions)
+product.write()
 print("::endgroup::")

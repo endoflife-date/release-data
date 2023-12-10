@@ -74,7 +74,8 @@ for product_name in VERSION_PATTERNS.keys():
                 logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
                 continue
 
-            date = dates.parse_date(date_match.group(0))
+            date_str = date_match.group(0).replace("Sept ", "Sep ")
+            date = dates.parse_date(date_str)
             for version_pattern in VERSION_PATTERNS[product.name]:
                 for version in version_pattern.findall(version_text):
                     if not product.has_version(version):
