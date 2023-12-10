@@ -3,27 +3,20 @@ from common import http
 from common import dates
 from common import endoflife
 
-URL = "https://www.graalvm.org/release-calendar/"
-# https://regex101.com/r/877ibq/1
-regex = r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?"
+product = endoflife.Product("graalvm")
+print(f"::group::{product.name}")
+release_calendar = http.fetch_url("https://www.graalvm.org/release-calendar/")
+release_calendar_soup = BeautifulSoup(release_calendar.text, features="html5lib")
 
-def split_versions(text):
-    # GraalVM for JDK versions has to be prefixed as their release cycle collide
-    # with older GraalVM release cycles. Example: GraalVM for JDK 20 and 20.0.
-    return text.replace("GraalVM for JDK ", "jdk-").split(", ")
+for tr in release_calendar_soup.findAll("table")[1].find("tbody").findAll("tr"):
+    cells = tr.findAll("td")
+    date = dates.parse_date(cells[0].get_text())
 
-print("::group::graalvm")
-response = http.fetch_url(URL)
-soup = BeautifulSoup(response.text, features="html5lib")
+    # 'GraalVM for JDK' versions has to be prefixed as their release cycle collide with older
+    # GraalVM release cycles. Example: GraalVM for JDK 20 and 20.0.
+    versions_str = cells[2].get_text().replace("GraalVM for JDK ", "jdk-")
+    for version in versions_str.split(", "):
+        product.declare_version(version, date)
 
-versions = {}
-for tr in soup.findAll("table")[1].find("tbody").findAll("tr"):
-    td_list = tr.findAll("td")
-    date = dates.parse_date(td_list[0].get_text()).strftime("%Y-%m-%d")
-
-    for version in split_versions(td_list[2].get_text()):
-        versions[version] = date
-        print(f"{version}: {date}")
-
-endoflife.write_releases('graalvm', versions)
+product.write()
 print("::endgroup::")
