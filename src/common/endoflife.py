@@ -11,6 +11,7 @@ logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
 # Major version must be >= 1.
 DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
+DEFAULT_VERSION_PATTERN = re.compile(DEFAULT_VERSION_REGEX)
 DEFAULT_TAG_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}{%endif%}"
 
 PRODUCTS_PATH = os.environ.get("PRODUCTS_PATH", "website/products")
