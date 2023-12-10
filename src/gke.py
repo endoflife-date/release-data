@@ -5,45 +5,29 @@ from common import dates
 from common import endoflife
 
 # https://regex101.com/r/zPxBqT/1
-REGEX = r"\d.\d+\.\d+-gke\.\d+"
-CHANNELS = ['nochannel', 'stable', 'regular', 'rapid']
+VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
+URL_BY_PRODUCT = {
+    "gke": "https://cloud.google.com/kubernetes-engine/docs/release-notes-nochannel",
+    "gke-stable": "https://cloud.google.com/kubernetes-engine/docs/release-notes-stable",
+    "gke-regular": "https://cloud.google.com/kubernetes-engine/docs/release-notes-regular",
+    "gke-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
+}
 
+for product_name, url in URL_BY_PRODUCT.items():
+    product = endoflife.Product(product_name)
+    print(f"::group::{product.name}")
+    relnotes = http.fetch_url(url)
+    relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 
-def fetch_channel(channel):
-    url = f"https://cloud.google.com/kubernetes-engine/docs/release-notes-{channel}"
-    response = http.fetch_url(url)
-    return BeautifulSoup(response.text, features="html5lib")
+    for section in relnotes_soup.find_all('section', class_='releases'):
+        for h2 in section.find_all('h2'):  # h2 contains the date
+            date = dates.parse_date(h2.get('data-text'))
 
-
-def parse_soup_for_versions(soup):
-    """Takes soup, and returns a dictionary of versions and their release dates
-    """
-    versions = {}
-    for section in soup.find_all('section', class_='releases'):
-        # h2 contains the date, which we parse
-        for h2 in section.find_all('h2'):
-            date = h2.get('data-text')
-            date = dates.parse_date(date).strftime("%Y-%m-%d")
-            # The div next to the h2 contains the notes about changes made
-            # on that date
-            next_div = h2.find_next('div')
-            # New releases are noted in a nested list, so we look for that
-            # and parse it using the version regex
+            next_div = h2.find_next('div')  # The div next to the h2 contains the notes about changes made on that date
             for li in next_div.find_all('li'):
-                # If the <li> text contains with "versions are now available:",
-                # get the <ul> inside the li
                 if "versions are now available" in li.text:
-                    ul = li.find('ul')
-                    for version in re.findall(REGEX, ul.text):
-                        versions[version] = date
-                        print(f"{version}: {date}")
-    return versions
+                    for version in VERSION_PATTERN.findall(li.find('ul').text):
+                        product.declare_version(version, date)
 
-
-for channel in CHANNELS:
-    soup = fetch_channel(channel)
-    print(f"::group::GKE - {channel}")
-    versions = parse_soup_for_versions(soup)
-    name = 'gke' if channel == 'nochannel' else f'gke-{channel}'
-    endoflife.write_releases(name, versions)
+    product.write()
     print("::endgroup::")
