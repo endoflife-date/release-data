@@ -2,8 +2,10 @@ import frontmatter
 import json
 import logging
 import os
+import re
 from datetime import datetime
 from glob import glob
+from liquid import Template
 logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
@@ -11,17 +13,61 @@ logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
 DEFAULT_TAG_TEMPLATE = "{{major}}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}"
 
+PRODUCTS_PATH = os.environ.get("PRODUCTS_PATH", "website/products")
 VERSIONS_PATH = os.environ.get("VERSIONS_PATH", "releases")
+
+
+class AutoConfig:
+    def __init__(self, method: str, config: dict):
+        self.method = method
+        self.url = config[method]
+        self.version_template = Template(config.get("template", DEFAULT_TAG_TEMPLATE))
+
+        regexes = config.get("regex", DEFAULT_VERSION_REGEX)
+        regexes = regexes if isinstance(regexes, list) else [regexes]
+        regexes = [regex.replace("(?<", "(?P<") for regex in regexes]  # convert ruby to python regex
+        self.version_patterns = [re.compile(regex) for regex in regexes]
+
+    def first_match(self, version: str) -> re.Match:
+        for pattern in self.version_patterns:
+            match = pattern.match(version)
+            if match:
+                return match
+
+    def render(self, match: re.Match) -> str:
+        return self.version_template.render(**match.groupdict())
 
 
 class Product:
     """Model an endoflife.date product.
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, load_product_data: bool = False):
         self.name: str = name
         self.versions = {}
         self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
+        self.product_path: str = f"{PRODUCTS_PATH}/{name}.md"
+
+        if load_product_data:
+            if os.path.isfile(self.product_path):
+                with open(self.product_path) as f:
+                    self.product_data = frontmatter.load(f)
+                    logging.info(f"loaded product data for {self.name} from {self.product_path}")
+            else:
+                logging.warning(f"no product data found for {self.name} at {self.product_path}")
+                self.product_data = None
+
+    def get_auto_configs(self, method: str) -> list[AutoConfig]:
+        configs = []
+
+        if "auto" in self.product_data:
+            for config in self.product_data["auto"]:
+                if method in config.keys():
+                    configs.append(AutoConfig(method, config))
+                else:
+                    logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
+
+        return configs
 
     def has_version(self, version: str) -> bool:
         return version in self.versions
@@ -69,19 +115,19 @@ class Product:
         return f"<{self.name}>"
 
 
-def load_product(product_name, pathname="website/products") -> frontmatter.Post:
+def load_product(product_name) -> frontmatter.Post:
     """Load the product's file frontmatter.
     """
-    with open(f"{pathname}/{product_name}.md") as f:
+    with open(f"{PRODUCTS_PATH}/{product_name}.md") as f:
         return frontmatter.load(f)
 
 
-def list_products(method, products_filter=None, pathname="website/products") -> dict[str, list[dict]]:
+def list_products(method, products_filter=None) -> dict[str, list[dict]]:
     """Return a list of products that are using the same given update method.
     """
     products_with_method = {}
 
-    for product_file in glob(f"{pathname}/*.md"):
+    for product_file in glob(f"{PRODUCTS_PATH}/*.md"):
         product_name = os.path.splitext(os.path.basename(product_file))[0]
         if products_filter and product_name != products_filter:
             continue
