@@ -4,62 +4,44 @@ from common import http
 from common import dates
 from common import endoflife
 
-URL = "https://cloud.google.com/container-optimized-os/docs/release-notes/"
-REGEX = r"^(cos-\d+-\d+-\d+-\d+)"
+MILESTONE_PATTERN = re.compile(r'COS \d+ LTS')
+VERSION_PATTERN = re.compile(r"^(cos-\d+-\d+-\d+-\d+)")
 
 
-def list_milestones():
-    response = http.fetch_url(URL)
-    soup = BeautifulSoup(response.text, features="html5lib")
-    milestones = soup.find_all('td', string=re.compile(r'COS \d+ LTS'))
-    return [m.text.split(' ')[1] for m in milestones]
+def parse_date(date_text):
+    date_text = date_text.strip().replace('Date: ', '')
+    date_text = re.sub(r'Sep[a-zA-Z]+', 'Sep', date_text)
+    return dates.parse_date(date_text)
 
 
-def fetch_milestones(milestones):
-    urls = [f"{URL}m{channel}" for channel in milestones]
-    return http.fetch_urls(urls)
+product = endoflife.Product("cos")
+print(f"::group::{product.name}")
+main = http.fetch_url("https://cloud.google.com/container-optimized-os/docs/release-notes/")
+main_soup = BeautifulSoup(main.text, features="html5lib")
+milestones = [cell.text.split(' ')[1] for cell in main_soup.find_all('td', string=MILESTONE_PATTERN)]
 
+milestones_urls = [f"{main.url}m{milestone}" for milestone in milestones]
+for milestone in http.fetch_urls(milestones_urls):
+    milestone_soup = BeautifulSoup(milestone.text, features="html5lib")
+    for article in milestone_soup.find_all('article', class_='devsite-article'):
+        for heading in article.find_all(['h2', 'h3']):  # headings contains the date, which we parse
+            version_str = heading.get('data-text')
+            version_match = VERSION_PATTERN.match(version_str)
+            if not version_match:
+                continue
 
-def parse_date(date_str):
-    date_str = date_str.strip().replace('Date: ', '')
-    date_str = re.sub(r'Sep[a-zA-Z]+', 'Sep', date_str)
-    return dates.parse_date(date_str).strftime('%Y-%m-%d')
+            try:  # 1st row is the header, so pick the first td in the 2nd row
+                date_str = heading.find_next('tr').find_next('tr').find_next('td').text
+            except AttributeError:  # In some older releases, it is mentioned as Date: [Date]
+                date_str = heading.find_next('i').text
 
+            try:
+                date = parse_date(date_str)
+            except ValueError:  # for some h3, the date is in the previous h2
+                date_str = heading.find_previous('h2').get('data-text')
+                date = parse_date(date_str)
 
-def find_versions(text):
-    """Takes soup, and returns a dictionary of versions and their release dates
-    """
-    versions = {}
-    soup = BeautifulSoup(text, features="html5lib")
-    for article in soup.find_all('article', class_='devsite-article'):
-        # h2 contains the date, which we parse
-        for heading in article.find_all(['h2', 'h3']):
-            version = heading.get('data-text')
-            m = re.match(REGEX, version)
-            if m:
-                version = m.group(1)
-                try:
-                    # 1st row is the header, so pick the first td in the 2nd row
-                    d = heading.find_next('tr').find_next('tr').find_next('td').text
-                except AttributeError:
-                    # In some older releases, it is mentioned as Date: [Date]
-                    d = heading.find_next('i').text
-                try:
-                    date = parse_date(d)
-                except ValueError:
-                    d = heading.find_previous('h2').get('data-text')
-                    date = parse_date(d)
-                versions[version] = date
-                print(f"{version}: {date}")
+            product.declare_version(version_match.group(1), date)
 
-    return versions
-
-
-print("::group::cos")
-versions = {}
-
-for response in fetch_milestones(list_milestones()):
-    versions |= find_versions(response.text)
-
-endoflife.write_releases('cos', versions)
+product.write()
 print("::endgroup::")
