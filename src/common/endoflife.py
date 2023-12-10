@@ -2,7 +2,7 @@ import frontmatter
 import json
 import logging
 import os
-import re
+import regex as re  # Python re module does not support identically named groups (as used in the mariadb product)
 from datetime import datetime
 from glob import glob
 from liquid import Template
