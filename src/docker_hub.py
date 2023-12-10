@@ -1,47 +1,36 @@
-import re
 import sys
-from common import http
+from common import dates
 from common import endoflife
+from common import http
+
+"""Fetches releases from the Docker Hub API.
+
+Unfortunately images creation date cannot be retrieved, so we had to use the tag_last_pushed field instead."""
 
 METHOD = "docker_hub"
 
 
-def fetch_releases(url, regex, releases):
-    if not isinstance(regex, list):
-        regex = [regex]
+def fetch_releases(product, config, url):
+    data = http.fetch_url(url).json()
 
-    response = http.fetch_url(url)
-    data = response.json()
     for result in data["results"]:
-        version = result["name"]
-
-        matches = False
-        for r in regex:
-            if re.match(r, version):
-                matches = True
-
-        if matches:
-            date = result['tag_last_pushed'].split("T")[0]
-            releases[version] = date
-            print(f"{version}: {date}")
+        version_str = result["name"]
+        if config.first_match(version_str):
+            date = dates.parse_datetime(result["tag_last_pushed"])
+            product.declare_version(version_str, date)
 
     if data["next"]:
-        fetch_releases(data["next"], regex, releases)
-
-
-def update_product(product_name, configs):
-    versions = {}
-
-    for config in configs:
-        url = f"https://hub.docker.com/v2/repositories/{config[METHOD]}/tags?page_size=100&page=1"
-        config = {"regex": endoflife.DEFAULT_VERSION_REGEX} | config
-        fetch_releases(url, config["regex"], versions)
-
-    endoflife.write_releases(product_name, versions)
+        fetch_releases(product, config, data["next"])
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product}")
-    update_product(product, configs)
+for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
+    print(f"::group::{product_name}")
+    product = endoflife.Product(product_name, load_product_data=True)
+
+    for config in product.get_auto_configs(METHOD):
+        url = f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1"
+        fetch_releases(product, config, url)
+
+    product.write()
     print("::endgroup::")
