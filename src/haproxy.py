@@ -2,57 +2,34 @@ import re
 from bs4 import BeautifulSoup
 from common import http
 from common import endoflife
+from datetime import datetime
 
-"""Fetch HAProxy versions with their dates from https://www.haproxy.org/.
-"""
+CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
+DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1
 
-PRODUCT = "haproxy"
-CYCLE_REGEX = r"^(\d+\.\d+)/$"
-# https://regex101.com/r/1JCnFC/1
-VERSION_REGEX = r"^(\d{4})\/(\d{2})\/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$"
+product = endoflife.Product("haproxy")
+print(f"::group::{product.name}")
+# First, get all minor releases from the download page
+download = http.fetch_url('https://www.haproxy.org/download/')
+download_soup = BeautifulSoup(download.text, features="html5lib")
+minor_versions = []
+for link in download_soup.select("a"):
+    minor_version_match = CYCLE_PATTERN.match(link.attrs["href"])
+    if not minor_version_match:
+        continue
 
+    minor_version = minor_version_match.groups()[0]
+    if minor_version != "1.0":  # No changelog in https://www.haproxy.org/download/1.0/src
+        minor_versions.append(minor_version)
 
-def fetch_cycles():
-    cycles = []
+# Then, fetches all versions from each changelog
+changelog_urls = [f"https://www.haproxy.org/download/{minor_version}/src/CHANGELOG" for minor_version in minor_versions]
+for changelog in http.fetch_urls(changelog_urls):
+    for line in changelog.text.split('\n'):
+        date_and_version_match = DATE_AND_VERSION_PATTERN.match(line)
+        if date_and_version_match:
+            year, month, day, version = date_and_version_match.groups()
+            product.declare_version(version, datetime(int(year), int(month), int(day)))
 
-    response = http.fetch_url('https://www.haproxy.org/download/')
-    soup = BeautifulSoup(response.text, features="html5lib")
-    for link in soup.select("a"):
-        m = re.match(CYCLE_REGEX, link.attrs["href"])
-        if m:
-            cycle = m.groups()[0]
-            cycles.append(cycle)
-
-    # No changelog in https://www.haproxy.org/download/1.0/src
-    cycles.remove("1.0")
-
-    return cycles
-
-
-def fetch_releases(cycles):
-    releases = {}
-
-    urls = [f"https://www.haproxy.org/download/{cycle}/src/CHANGELOG" for cycle in cycles]
-    for response in http.fetch_urls(urls):
-        for line in response.text.split('\n'):
-            m = re.match(VERSION_REGEX, line)
-            if m:
-                year, month, day, version = m.groups()
-                date = f"{year}-{month}-{day}"
-                releases[version] = date
-
-    return releases
-
-
-def print_releases(releases):
-    # Do not print versions in fetch_releases because it contains duplicates
-    for version, date in releases.items():
-        print(f"{version} : {date}")
-
-
-print(f"::group::{PRODUCT}")
-all_cycles = fetch_cycles()
-all_versions = fetch_releases(all_cycles)
-print_releases(all_versions)
-endoflife.write_releases(PRODUCT, all_versions)
+product.write()
 print("::endgroup::")
