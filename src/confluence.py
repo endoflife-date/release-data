@@ -13,8 +13,8 @@ r.html.render(sleep=1, scrolldown=3)
 
 for version_block in r.html.find('.versions-list'):
     version = version_block.find('a.product-versions', first=True).attrs['data-version']
-    date_text = version_block.find('.release-date', first=True).text
-    product.declare_version(version, dates.parse_date(date_text))
+    date = dates.parse_date(version_block.find('.release-date', first=True).text)
+    product.declare_version(version, date)
 
 product.write()
 print("::endgroup::")
