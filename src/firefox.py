@@ -5,38 +5,30 @@ from common import http
 from common import dates
 from common import endoflife
 
-"""Fetch Firefox versions with their dates from https://www.mozilla.org/"""
+"""Fetch Firefox versions with their dates from https://www.mozilla.org/.
 
-URL = "https://www.mozilla.org/en-US/firefox/releases/"
-PRODUCT = "firefox"
+Versions lower than 10.0 are ignored because too difficult to parse."""
 
+product = endoflife.Product("firefox")
+print(f"::group::{product.name}")
+releases_page = http.fetch_url("https://www.mozilla.org/en-US/firefox/releases/")
+releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
+releases_list = releases_soup.find_all("ol", class_="c-release-list")
+release_notes_urls = [urllib.parse.urljoin(releases_page.url, p.get("href")) for p in releases_list[0].find_all("a")]
 
-def format_date(text: str) -> str:
-    text = text.replace(')', '')
-    return dates.parse_date(text).strftime("%Y-%m-%d")
+for release_notes in http.fetch_urls(release_notes_urls):
+    version = release_notes.url.split("/")[-3]
 
+    release_notes_soup = BeautifulSoup(release_notes.text, features="html5lib")
+    if release_notes_soup.find("div", class_="c-release-version"):
+        date = dates.parse_date(release_notes_soup.find("p", class_="c-release-date").get_text())
+        product.declare_version(version, date)
 
-print(f"::group::{PRODUCT}")
-versions = {}
+    elif release_notes_soup.find("small", string=re.compile("^.?First offered")):
+        element = release_notes_soup.find("small", string=re.compile("^.?First offered"))
+        date = dates.parse_date(' '.join(element.get_text().split(" ")[-3:]))  # get last 3 words
+        product.declare_version(version, date)
+    # versions < 10.0 are ignored
 
-response = http.fetch_url(URL)
-ff_releases = BeautifulSoup(response.text, features="html5lib").find_all("ol", class_="c-release-list")
-urls = [urllib.parse.urljoin(URL, p.get("href")) for p in ff_releases[0].find_all("a")]
-
-for response in http.fetch_urls(urls):
-    soup = BeautifulSoup(response.text, features="html5lib")
-
-    version = response.request.url.split("/")[-3]
-    if soup.find("div", class_="c-release-version"):
-        date = format_date(soup.find("p", class_="c-release-date").get_text())
-        versions[version] = date
-        print(f"{version}: {date}")
-    elif soup.find("small", string=re.compile("^.?First offered")):
-        element = soup.find("small", string=re.compile("^.?First offered"))
-        date = format_date(' '.join(element.get_text().split(" ")[-3:]))  # get last 3 words
-        versions[version] = date
-        print(f"{version}: {date}")
-    # we don't get version <= 10.0, not a big deal
-
-endoflife.write_releases(PRODUCT, versions)
+product.write()
 print("::endgroup::")
