@@ -43,6 +43,13 @@ class Product:
         for (version, date) in dates_by_version.items():
             self.declare_version(version, date)
 
+    def replace_version(self, version: str, date: datetime) -> None:
+        if version not in self.versions:
+            raise ValueError(f"version {version} cannot be replaced as it does not exist for {self.name}")
+
+        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) to {self.name}")
+        self.versions[version] = date
+
     def remove_version(self, version: str) -> None:
         if not self.has_version(version):
             logging.warning(f"version {version} cannot be removed as it does not exist for {self.name}")
