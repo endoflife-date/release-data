@@ -12,7 +12,7 @@ logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 # Major version must be >= 1.
 DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
 DEFAULT_VERSION_PATTERN = re.compile(DEFAULT_VERSION_REGEX)
-DEFAULT_TAG_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{%endif%}{%endif%}{%endif%}"
+DEFAULT_VERSION_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{% endif %}{% endif %}{% endif %}"
 
 PRODUCTS_PATH = os.environ.get("PRODUCTS_PATH", "website/products")
 VERSIONS_PATH = os.environ.get("VERSIONS_PATH", "releases")
@@ -22,7 +22,7 @@ class AutoConfig:
     def __init__(self, method: str, config: dict):
         self.method = method
         self.url = config[method]
-        self.version_template = Template(config.get("template", DEFAULT_TAG_TEMPLATE))
+        self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
 
         regexes = config.get("regex", DEFAULT_VERSION_REGEX)
         regexes = regexes if isinstance(regexes, list) else [regexes]

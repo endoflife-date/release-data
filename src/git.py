@@ -38,7 +38,7 @@ def update_product(product_name, configs):
     versions = {}
 
     for config in configs:
-        t = config.get("template", endoflife.DEFAULT_TAG_TEMPLATE)
+        t = config.get("template", endoflife.DEFAULT_VERSION_TEMPLATE)
         regex = config.get("regex", endoflife.DEFAULT_VERSION_REGEX)
         regex = regex.replace("(?<", "(?P<")  # convert ruby regex to python regex
         versions = versions | fetch_releases(config[METHOD], regex, t)
