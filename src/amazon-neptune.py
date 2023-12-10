@@ -7,7 +7,7 @@ from common import endoflife
 """Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 
 RSS_URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
-VERSION_REGEX = re.compile(r"^Engine version (?P<version>[0-9R.]+)$")
+VERSION_PATTERN = re.compile(r"^Engine version (?P<version>[0-9R.]+)$")
 
 product = endoflife.Product("amazon-neptune")
 print(f"::group::{product.name}")
@@ -18,7 +18,7 @@ for entry in rss.getElementsByTagName("item"):
     version_str = entry.getElementsByTagName("title")[0].firstChild.nodeValue
     date_str = entry.getElementsByTagName("pubDate")[0].firstChild.nodeValue
 
-    version_match = VERSION_REGEX.match(version_str)
+    version_match = VERSION_PATTERN.match(version_str)
     if version_match:
         product.declare_version(version_match['version'], dates.parse_datetime(date_str))
 
