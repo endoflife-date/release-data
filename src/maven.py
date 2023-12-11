@@ -1,25 +1,24 @@
 import datetime
-import json
 import re
 import sys
+from common import http
 from common import endoflife
 
 METHOD = "maven"
-VERSION_REGEX = r'^\d+\.\d+(\.\d+)?$'
 
 
 # TODO: Add support for custom regexes
 # Hasn't been needed yet, so only write if we need it
 def valid_version(version):
-    if re.match(VERSION_REGEX, version):
+    if re.match(endoflife.DEFAULT_VERSION_REGEX, version):
         return True
     return False
 
 
 def fetch_json(group_id, artifact_id, start):
     url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&rows=100&wt=json&start={start}"
-    response = endoflife.fetch_url(url)
-    return json.loads(response)
+    response = http.fetch_url(url)
+    return response.json()
 
 
 def fetch_releases(package_identifier):

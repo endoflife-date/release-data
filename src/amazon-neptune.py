@@ -1,30 +1,26 @@
 import re
-from xml.dom.minidom import parseString
+import xml.dom.minidom
+from common import http
 from common import dates
 from common import endoflife
 
-"""Fetch versions with their dates from the RSS feed of
-https://docs.aws.amazon.com/neptune/latest/userguide/engine-releases.html.
-"""
+"""Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 
-PRODUCT = "amazon-neptune"
-REGEX = r"^Engine version (?P<version>[0-9R.]+)$"
-URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
+RSS_URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
+VERSION_PATTERN = re.compile(r"^Engine version (?P<version>[0-9R.]+)$")
 
-print(f"::group::{PRODUCT}")
-versions = {}
+product = endoflife.Product("amazon-neptune")
+print(f"::group::{product.name}")
+rss_response = http.fetch_url(RSS_URL)
+rss = xml.dom.minidom.parseString(rss_response.text)
 
-response = endoflife.fetch_url(URL)
-rss = parseString(response)
-for item in rss.getElementsByTagName("item"):
-    title = item.getElementsByTagName("title")[0].firstChild.nodeValue
-    pubDate = item.getElementsByTagName("pubDate")[0].firstChild.nodeValue
-    matches = re.match(REGEX, title)
-    if matches:
-        version = matches['version']
-        date = dates.parse_datetime(pubDate).strftime("%Y-%m-%d")
-        versions[version] = date
-        print(f"{version}: {date}")
+for entry in rss.getElementsByTagName("item"):
+    version_str = entry.getElementsByTagName("title")[0].firstChild.nodeValue
+    date_str = entry.getElementsByTagName("pubDate")[0].firstChild.nodeValue
 
-endoflife.write_releases(PRODUCT, versions)
+    version_match = VERSION_PATTERN.match(version_str)
+    if version_match:
+        product.declare_version(version_match['version'], dates.parse_datetime(date_str))
+
+product.write()
 print("::endgroup::")

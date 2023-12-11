@@ -1,5 +1,5 @@
-from datetime import datetime, timezone
 import calendar
+from datetime import datetime, timezone
 
 
 def parse_date(text, formats=frozenset([
@@ -9,6 +9,8 @@ def parse_date(text, formats=frozenset([
     "%d %b %Y",   # 1 Jan 2020
     "%d-%b-%Y",   # 1-Jan-2020
     "%d-%B-%Y",   # 1-January-2020
+    "%Y-%m-%d",   # 2020-01-01
+    "%m/%d/%Y",   # 01/25/2020
 ])) -> datetime:
     """Parse a given text representing a date using a list of formats.
     """
@@ -31,14 +33,15 @@ def parse_datetime(text, formats=frozenset([
     "%Y-%m-%d %H:%M:%S",         # 2023-05-01 08:32:34
     "%Y-%m-%dT%H:%M:%S",         # 2023-05-01T08:32:34
     "%Y-%m-%d %H:%M:%S %z",      # 2023-05-01 08:32:34 +0900
-    "%a %d %b %Y %H:%M:%S %Z",  # Wed, 01 Jan 2020 00:00:00 GMT
     "%Y-%m-%dT%H:%M:%S%z",       # 2023-05-01T08:32:34+0900
+    "%Y-%m-%dT%H:%M:%S.%f%z",    # 2023-05-01T08:32:34.123456Z
+    "%a %d %b %Y %H:%M:%S %Z",   # Wed, 01 Jan 2020 00:00:00 GMT
 ]), to_utc=True) -> datetime:
     """Parse a given text representing a datetime using a list of formats,
     optionally converting it to UTC.
     """
-    text = text.strip()
-    text = text.replace(", ", " ")  # so that we don't have to deal with commas in formats
+    # so that we don't have to deal with some special characters in formats
+    text = text.strip().replace(", ", " ").replace(". ", " ").replace("(", "").replace(")", "")
     for fmt in formats:
         try:
             date = datetime.strptime(text, fmt)

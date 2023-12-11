@@ -1,6 +1,7 @@
 import datetime
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 
 URL = "https://www.paloaltonetworks.com/services/support/end-of-life-announcements/end-of-life-summary"
@@ -15,8 +16,8 @@ def update_releases(html_identifier, file):
     versions = {}
 
     print(f"::group::{html_identifier}")
-    response = endoflife.fetch_url(URL)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(URL)
+    soup = BeautifulSoup(response.text, features="html5lib")
 
     table = soup.find(id=html_identifier)
     for tr in table.findAll("tr")[3:]:

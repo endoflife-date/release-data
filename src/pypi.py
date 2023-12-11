@@ -1,14 +1,10 @@
-import json
 import re
 import sys
+from common import http
 from common import dates
 from common import endoflife
 
 METHOD = "pypi"
-DEFAULT_TAG_TEMPLATE = (  # Same as used in Ruby (update.rb)
-    "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{%endif%}{%endif%}"
-)
-REGEX = r"^(?:(\d+\.(?:\d+\.)*\d+))$"
 
 
 def fetch_releases(pypi_id, regex):
@@ -18,8 +14,8 @@ def fetch_releases(pypi_id, regex):
         regex = [regex]
 
     url = f"https://pypi.org/pypi/{pypi_id}/json"
-    response = endoflife.fetch_url(url)
-    data = json.loads(response)
+    response = http.fetch_url(url)
+    data = response.json()
     for version in data["releases"]:
         R = data["releases"][version]
         matches = False
@@ -38,7 +34,7 @@ def update_product(product_name, configs):
     versions = {}
 
     for config in configs:
-        config = {"regex": REGEX} | config
+        config = {"regex": endoflife.DEFAULT_VERSION_REGEX} | config
         versions = versions | fetch_releases(config[METHOD], config["regex"])
 
     endoflife.write_releases(product_name, versions)

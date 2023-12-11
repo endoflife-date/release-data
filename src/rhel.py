@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 
 URL = "https://access.redhat.com/articles/3078"
@@ -7,8 +8,8 @@ URL = "https://access.redhat.com/articles/3078"
 regex = r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?"
 
 print("::group::rhel")
-response = endoflife.fetch_url(URL)
-soup = BeautifulSoup(response, features="html5lib")
+response = http.fetch_url(URL)
+soup = BeautifulSoup(response.text, features="html5lib")
 
 versions = {}
 for tr in soup.findAll("tr"):

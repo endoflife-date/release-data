@@ -1,7 +1,13 @@
+import logging
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
+
+"""Fetches and parses version and release date information from Apple's support website for macOS,
+iOS, iPadOS, and watchOS. While all URLs are fetched once for performance reasons, the actual
+parsing for each product is done in a separate loop for having easier-to-read logs."""
 
 URLS = [
     "https://support.apple.com/en-us/HT201222",  # latest
@@ -12,7 +18,6 @@ URLS = [
     "https://support.apple.com/kb/HT205759",  # 2013
     "https://support.apple.com/kb/HT204611",  # 2011 to 2012
     # Apple still links to the following articles, but they are 404:
-    # Disabled, too much timed out.
     "http://web.archive.org/web/20230404214605_/https://support.apple.com/en-us/HT5165",  # 2010
     "http://web.archive.org/web/20230327200842_/https://support.apple.com/en-us/HT4218",  # 2008-2009
     "http://web.archive.org/web/20230204234533_/https://support.apple.com/en-us/HT1263",  # 2005-2007
@@ -21,70 +26,64 @@ URLS = [
 # If you are changing these, please use
 # https://gist.githubusercontent.com/captn3m0/e7cb1f4fc3c07a5da0296ebda2b33e15/raw/5747e42ad611ec9ffdb7a2d1c0e3946bb87ab6d7/apple.txt
 # as your corpus to validate your changes
-CONFIG = {
+VERSION_PATTERNS = {
     "macos": [
         # This covers Sierra and beyond
-        r"^macOS[\D]+(?P<version>\d+(?:\.\d+)*)",
+        re.compile(r"^macOS[\D]+(?P<version>\d+(?:\.\d+)*)", re.MULTILINE),
         # This covers Mavericks - El Capitan
-        r"OS\s+X\s[\w\s]+\sv?(?P<version>\d+(?:\.\d+)+)",
+        re.compile(r"OS\s+X\s[\w\s]+\sv?(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
         # This covers even older versions (OS X)
-        r"^Mac\s+OS\s+X\s[\w\s]+\sv?(?P<version>\d{2}(?:\.\d+)+)",
+        re.compile(r"^Mac\s+OS\s+X\s[\w\s]+\sv?(?P<version>\d{2}(?:\.\d+)+)", re.MULTILINE),
     ],
     "ios": [
-        r"iOS\s+(?P<version>\d+)",
-        r"iOS\s+(?P<version>\d+(?:)(?:\.\d+)+)",
-        r"iPhone\s+v?(?P<version>\d+(?:)(?:\.\d+)+)",
+        re.compile(r"iOS\s+(?P<version>\d+)", re.MULTILINE),
+        re.compile(r"iOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
+        re.compile(r"iPhone\s+v?(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
     ],
     "ipados": [
-        r"iPadOS\s+(?P<version>\d+)",
-        r"iPadOS\s+(?P<version>\d+(?:)(?:\.\d+)+)"
+        re.compile(r"iPadOS\s+(?P<version>\d+)", re.MULTILINE),
+        re.compile(r"iPadOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
     ],
     "watchos": [
-        r"watchOS\s+(?P<version>\d+)",
-        r"watchOS\s+(?P<version>\d+(?:)(?:\.\d+)+)"
+        re.compile(r"watchOS\s+(?P<version>\d+)", re.MULTILINE),
+        re.compile(r"watchOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
     ],
 }
 
-
-def parse_date(date_str):
-    date_str = date_str.replace("Sept", "Sep")
-    return dates.parse_date(date_str)
-
+DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
 print("::group::apple")
-versions_by_product = {k: {} for k in CONFIG.keys()}
-
-for response in endoflife.fetch_urls(URLS):
-    soup = BeautifulSoup(response.text, features="html5lib")
-    versions_table = soup.find(id="tableWraper")
-    versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
-
-    for row in versions_table.findAll("tr")[1:]:
-        cells = row.findAll("td")
-        version_text = cells[0].get_text().strip()
-        date_text = cells[2].get_text().strip()
-
-        date_match = re.search(r"\b\d+\s[A-Za-z]+\s\d+\b", date_text)
-        if not date_match:
-            print(f"{version_text}: {date_text} [IGNORED]")
-            continue
-
-        date = parse_date(date_match.group(0))
-        for product in CONFIG.keys():
-            versions = versions_by_product[product]
-
-            for version_regex in CONFIG[product]:
-                for version in re.findall(version_regex, version_text, re.MULTILINE):
-                    if version not in versions:
-                        versions[version] = date
-                        print(f"{product}-{version}: {date}")
-                    elif versions[version] > date:
-                        versions[version] = date
-                        print(f"{product}-{version}: {date} [UPDATED]")
-                    else:
-                        print(f"{product}-{version}: {date} [IGNORED]")
-
-for k in CONFIG.keys():
-    versions = {v: d.strftime("%Y-%m-%d") for v, d in versions_by_product[k].items()}
-    endoflife.write_releases(k, versions)
+soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
 print("::endgroup::")
+
+for product_name in VERSION_PATTERNS.keys():
+    product = endoflife.Product(product_name)
+    print(f"::group::{product.name}")
+
+    for soup in soups:
+        versions_table = soup.find(id="tableWraper")
+        versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
+
+        for row in versions_table.findAll("tr")[1:]:
+            cells = row.findAll("td")
+            version_text = cells[0].get_text().strip()
+            date_text = cells[2].get_text().strip()
+
+            date_match = DATE_PATTERN.search(date_text)
+            if not date_match:
+                logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
+                continue
+
+            date_str = date_match.group(0).replace("Sept ", "Sep ")
+            date = dates.parse_date(date_str)
+            for version_pattern in VERSION_PATTERNS[product.name]:
+                for version in version_pattern.findall(version_text):
+                    if not product.has_version(version):
+                        product.declare_version(version, date)
+                    elif product.get_version_date(version) > date:
+                        product.replace_version(version, date)
+                    else:
+                        logging.info(f"ignoring version {version} ({date}) for {product.name}")
+
+    product.write()
+    print("::endgroup::")

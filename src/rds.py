@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
@@ -13,8 +14,8 @@ for db, url in DBS.items():
     print(f"::group::{db}")
     versions = {}
 
-    response = endoflife.fetch_url(url)
-    soup = BeautifulSoup(response, features="html5lib")
+    response = http.fetch_url(url)
+    soup = BeautifulSoup(response.text, features="html5lib")
 
     for table in soup.find_all("table"):
         for row in table.find_all("tr"):

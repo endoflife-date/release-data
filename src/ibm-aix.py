@@ -1,29 +1,24 @@
 from bs4 import BeautifulSoup
+from common import http
 from common import dates
 from common import endoflife
 
-PRODUCT = "ibm-aix"
-URL = "https://www.ibm.com/support/pages/aix-support-lifecycle-information"
+URLS = [
+    "https://web.archive.org/web/20210123024247/https://www.ibm.com/support/pages/aix-support-lifecycle-information",
+    "https://www.ibm.com/support/pages/aix-support-lifecycle-information",
+]
 
-def fetch_releases():
-    response = endoflife.fetch_url(URL)
-    soup = BeautifulSoup(response, features="html5lib")
+product = endoflife.Product("ibm-aix")
+print(f"::group::{product.name}")
+for page in http.fetch_urls(URLS):
+    page_soup = BeautifulSoup(page.text, features="html5lib")
 
-    releases = {}
-    # for all release tables
-    for release_table in soup.find("div", class_="ibm-container-body").find_all("table", class_="ibm-data-table ibm-grid"):
-        # for all rows except the header one
-        for row in release_table.find_all("tr")[1:]:
+    for release_table in page_soup.find("div", class_="ibm-container-body").find_all("table", class_="ibm-data-table ibm-grid"):
+        for row in release_table.find_all("tr")[1:]:  # for all rows except the header
             cells = row.find_all("td")
             version = cells[0].text.strip("AIX ").replace(' TL', '.')
-            date = dates.parse_month_year_date(cells[1].text).strftime("%Y-%m-%d")
-            print(f"{version} : {date}")
-            releases[version] = date
+            date = dates.parse_month_year_date(cells[1].text)
+            product.declare_version(version, date)
 
-    return releases
-
-
-print(f"::group::{PRODUCT}")
-versions = fetch_releases()
-endoflife.write_releases(PRODUCT, versions)
+product.write()
 print("::endgroup::")

@@ -1,6 +1,7 @@
 import datetime
 import re
 from bs4 import BeautifulSoup
+from common import http
 from common import endoflife
 
 URL = "https://wiki.ros.org/Distributions"
@@ -8,8 +9,8 @@ URL = "https://wiki.ros.org/Distributions"
 regex = r"^ROS (?P<name>(\w| )+)"
 
 print("::group::ros")
-response = endoflife.fetch_url(URL)
-soup = BeautifulSoup(response, features="html5lib")
+response = http.fetch_url(URL)
+soup = BeautifulSoup(response.text, features="html5lib")
 
 versions = {}
 for tr in soup.findAll("tr"):
