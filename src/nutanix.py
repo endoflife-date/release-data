@@ -1,37 +1,25 @@
-from common import http
+from common import dates
 from common import endoflife
+from common import http
 
-"""Fetch Nutanix products versions with their dates from https://portal.nutanix.com/api/v1.
-"""
+"""Fetch Nutanix products versions from https://portal.nutanix.com/api/v1."""
 
 PRODUCTS = {
-    'nutanix-aos': 'NOS',
-    'nutanix-files': 'FILES',
-    'nutanix-prism': 'PC',
+    'nutanix-aos': 'https://portal.nutanix.com/api/v1/eol/find?type=NOS',
+    'nutanix-files': 'https://portal.nutanix.com/api/v1/eol/find?type=FILES',
+    'nutanix-prism': 'https://portal.nutanix.com/api/v1/eol/find?type=PC',
 }
 
-BASE_URL = "https://portal.nutanix.com/api/v1/eol/find?type="
+for product_name, url in PRODUCTS.items():
+    print(f"::group::{product_name}")
+    product = endoflife.Product(product_name)
 
-
-def fetch_releases(product_code):
-    versions = {}
-    url = BASE_URL + product_code
-    print(url)
-    response = http.fetch_url(url)
-    data = response.json()
-
+    data = http.fetch_url(url).json()
     for version_data in data["contents"]:
         if 'GENERAL_AVAILABILITY' in version_data:
             version = version_data["version"]
-            date = version_data["GENERAL_AVAILABILITY"].split("T")[0]
-            versions[version] = date
-            print(f"{version}: {date}")
+            date = dates.parse_datetime(version_data["GENERAL_AVAILABILITY"])
+            product.declare_version(version, date)
 
-    return versions
-
-
-for product_name, product_code in PRODUCTS.items():
-    print(f"::group::{product_name}")
-    all_versions = fetch_releases(product_code)
-    endoflife.write_releases(product_name, all_versions)
+    product.write()
     print("::endgroup::")
