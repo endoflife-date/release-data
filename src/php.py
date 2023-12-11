@@ -2,24 +2,23 @@ from common import http
 from common import dates
 from common import endoflife
 
-PHP_MAJOR_VERSIONS = [4, 5, 7, 8]
+MAIN_URL = "https://www.php.net/releases/index.php?json&max=-1"
 
+product = endoflife.Product("php")
+print(f"::group::{product.name}")
 
-def fetch_versions(major_version):
-    url = f"https://www.php.net/releases/index.php?json&max=-1&version={major_version}"
-    response = http.fetch_url(url)
-    data = response.json()
-    for v in data:
-        data[v] = dates.parse_date(data[v]["date"]).strftime("%Y-%m-%d")
-        print(f"{v}: {data[v]}")
+# Fetch major versions
+latest_by_major = http.fetch_url(MAIN_URL).json()
+major_versions = [major for major in latest_by_major]
+major_version_urls = [f"{MAIN_URL}&version={major_version}" for major_version in major_versions]
 
-    return data
+# Fetch all versions for major versions
+for major_versions_response in http.fetch_urls(major_version_urls):
+    major_versions_data = major_versions_response.json()
+    for version in major_versions_data:
+        if endoflife.DEFAULT_VERSION_PATTERN.match(version):  # exclude versions such as "3.0.x (latest)"
+            date = dates.parse_date(major_versions_data[version]["date"])
+            product.declare_version(version, date)
 
-
-print("::group::php")
-versions = {}
-for major_version in PHP_MAJOR_VERSIONS:
-    versions |= fetch_versions(major_version)
-
-endoflife.write_releases('php', versions)
+product.write()
 print("::endgroup::")
