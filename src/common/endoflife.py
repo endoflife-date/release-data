@@ -144,11 +144,3 @@ def list_products(method, products_filter=None) -> dict[str, list[dict]]:
                     products_with_method[product_name] = configs
 
     return products_with_method
-
-
-def write_releases(product, releases, pathname="releases") -> None:
-    with open(f"{pathname}/{product}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
