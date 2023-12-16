@@ -11,7 +11,7 @@ for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
     product = endoflife.Product(product_name, load_product_data=True)
     for config in product.get_auto_configs(METHOD):
         data = http.fetch_url(f"https://registry.npmjs.org/{config.url}").json()
-        for version_str in data["time"]:
+        for version_str in data["versions"]:
             version_match = config.first_match(version_str)
             if version_match:
                 version = config.render(version_match)
