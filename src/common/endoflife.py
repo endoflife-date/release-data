@@ -2,7 +2,7 @@ import frontmatter
 import json
 import logging
 import os
-import regex as re  # Python re module does not support identically named groups (as used in the mariadb product)
+import re
 from datetime import datetime
 from glob import glob
 from liquid import Template
@@ -26,7 +26,6 @@ class AutoConfig:
 
         regexes = config.get("regex", DEFAULT_VERSION_REGEX)
         regexes = regexes if isinstance(regexes, list) else [regexes]
-        regexes = [regex.replace("(?<", "(?P<") for regex in regexes]  # convert ruby to python regex
         self.version_patterns = [re.compile(regex) for regex in regexes]
 
     def first_match(self, version: str) -> re.Match:
