@@ -40,10 +40,9 @@ class AutoConfig:
 
 
 class Product:
-    """Model an endoflife.date product.
-    """
+    """Model an endoflife.date product."""
 
-    def __init__(self, name: str, load_product_data: bool = False):
+    def __init__(self, name: str, load_product_data: bool = False, load_versions_data: bool = False):
         self.name: str = name
         self.versions = {}
         self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
@@ -57,6 +56,15 @@ class Product:
             else:
                 logging.warning(f"no product data found for {self.name} at {self.product_path}")
                 self.product_data = None
+
+        if load_versions_data:
+            if os.path.isfile(self.versions_path):
+                with open(self.versions_path) as f:
+                    logging.info(f"loaded versions data for {self.name} from {self.versions_path}")
+                    self.old_versions = json.load(f)
+            else:
+                logging.warning(f"no versions data found for {self.name} at {self.versions_path}")
+                self.old_versions = None
 
     def get_auto_configs(self, method: str) -> list[AutoConfig]:
         configs = []
@@ -75,6 +83,17 @@ class Product:
 
     def get_version_date(self, version: str) -> datetime:
         return self.versions[version] if version in self.versions else None
+
+    def get_old_version_date(self, version: str) -> datetime:
+        return datetime.strptime(self.old_versions[version], "%Y-%m-%d") if (
+            self.old_versions
+            and version in self.old_versions
+        ) else None
+
+    def get_release_date(self, release_cycle: str) -> datetime:
+        for release in self.product_data["releases"]:
+            if release["releaseCycle"] == release_cycle:
+                return release["releaseDate"]
 
     def declare_version(self, version: str, date: datetime) -> None:
         if version in self.versions:
