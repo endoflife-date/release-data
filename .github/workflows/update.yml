@@ -1,75 +1,83 @@
 name: Update Data
+
 on:
   workflow_dispatch:
   push:
   schedule:
-    # Run 4 times a day (every 6 hours)
-    # At minute 17 past hour 0, 6, 12, and 18
-    # https://crontab.guru/#17_6,18_*_*_*
+    # See https://crontab.guru/#17_6,18_*_*_*
     - cron: '17 0,6,12,18 * * *'
+
+# Cancel previous runs for a given branch if they are still running when a new one starts.
+# This is useful to avoid errors as the same branch would be changed multiple times.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update:
     name: Update data
     runs-on: ubuntu-latest
     steps:
-    - name: Get current week
-      uses: josStorer/get-current-time@v2
-      id: current-time
-      with:
-        # 2022-01 to 2022-52 for eg
-        format: YYYY-ww
-    - name: Cache Repositories
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache
-        # The cache is reset on the first build of every week this way.
-        # Change the -1 part if you need to force reset the cache
-        key: "${{ steps.current-time.outputs.formattedTime }}-2"
-    - uses: actions/checkout@v4
-      name: Clone self repository
-      with:
-        ref: ${{ github.head_ref }}
-    - uses: actions/checkout@v4
-      id: clone_same_branch
-      name: Clone website (Same Branch)
-      continue-on-error: true
-      with:
-        repository: endoflife-date/endoflife.date
-        path: website
-        submodules: false
-        ref: ${{github.ref_name}}
-    - uses: actions/checkout@v4
-      name: Clone website (Main)
-      if: steps.clone_same_branch.outcome != 'success'
-      with:
-        repository: endoflife-date/endoflife.date
-        path: website
-        submodules: false
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1
-        bundler-cache: true
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    - name: Setup Release Script
-      run: |
-        git config --global init.defaultBranch main
-        git config --global extensions.partialClone true
-        pip install -r requirements.txt
-    - name: Custom Updates
-      env:
-        # Add chromium downloaded by pyppeteer to the cache. See java.py for more information.
-        # Note that using we had to use /home/runner because using ~ does not work, despite what's
-        # explained in the https://github.com/actions/upload-artifact/tree/v2-preview#environment-variables-and-tilde-expansion.
-        PYPPETEER_HOME: /home/runner/.cache/pyppeteer
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: for i in src/*.py; do python $i;done
-    - name: Git and DockerHub Updates
-      run: bundle exec ruby update.rb ./website ~/.cache releases
-      id: update_releases
-    - uses: stefanzweifel/git-auto-commit-action@v5
-      name: Commit and update new releases
-      with:
-        commit_message: ${{ fromJSON(steps.update_releases.outputs.commit_message)}}
-        commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+      - name: Get current week
+        uses: josStorer/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-ww # 2022-01 to 2022-52 for eg
+
+      - name: Cache fetched repositories
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache
+          # The cache is reset on the first build of every week this way.
+          # Change the -1 part if you need to force reset the cache
+          key: "${{ steps.current-time.outputs.formattedTime }}-2"
+
+      - uses: actions/checkout@v4
+        name: Clone self repository
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/checkout@v4
+        id: clone_same_branch
+        name: Clone website (Same Branch)
+        continue-on-error: true
+        with:
+          repository: endoflife-date/endoflife.date
+          path: website
+          submodules: false
+          ref: ${{github.ref_name}}
+
+      - uses: actions/checkout@v4
+        name: Clone website (Main)
+        if: steps.clone_same_branch.outcome != 'success'
+        with:
+          repository: endoflife-date/endoflife.date
+          path: website
+          submodules: false
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+
+      - name: Custom Updates
+        env:
+          PYPPETEER_HOME: /home/runner/.cache/pyppeteer # Add chromium downloaded by pyppeteer to the cache.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: for i in src/*.py; do python $i;done
+
+      - name: Build commit message
+        id: update_releases
+        run: bundle exec ruby update.rb
+
+      - name: Commit and update new releases
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ${{ fromJSON(steps.update_releases.outputs.commit_message)}}
+          commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
