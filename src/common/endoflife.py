@@ -39,38 +39,24 @@ class AutoConfig:
         return self.version_template.render(**match.groupdict())
 
 
-class Product:
-    """Model an endoflife.date product."""
-
-    def __init__(self, name: str, load_product_data: bool = False, load_versions_data: bool = False):
+class ProductFrontmatter:
+    def __init__(self, name: str):
         self.name: str = name
-        self.versions = {}
-        self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
-        self.product_path: str = f"{PRODUCTS_PATH}/{name}.md"
+        self.path: str = f"{PRODUCTS_PATH}/{name}.md"
 
-        if load_product_data:
-            if os.path.isfile(self.product_path):
-                with open(self.product_path) as f:
-                    self.product_data = frontmatter.load(f)
-                    logging.info(f"loaded product data for {self.name} from {self.product_path}")
-            else:
-                logging.warning(f"no product data found for {self.name} at {self.product_path}")
-                self.product_data = None
-
-        if load_versions_data:
-            if os.path.isfile(self.versions_path):
-                with open(self.versions_path) as f:
-                    logging.info(f"loaded versions data for {self.name} from {self.versions_path}")
-                    self.old_versions = json.load(f)
-            else:
-                logging.warning(f"no versions data found for {self.name} at {self.versions_path}")
-                self.old_versions = None
+        self.data = None
+        if os.path.isfile(self.path):
+            with open(self.path) as f:
+                self.data = frontmatter.load(f)
+                logging.info(f"loaded product data for {self.name} from {self.path}")
+        else:
+            logging.warning(f"no product data found for {self.name} at {self.path}")
 
     def get_auto_configs(self, method: str) -> list[AutoConfig]:
         configs = []
 
-        if "auto" in self.product_data:
-            for config in self.product_data["auto"]:
+        if "auto" in self.data:
+            for config in self.data["auto"]:
                 if method in config.keys():
                     configs.append(AutoConfig(method, config))
                 else:
@@ -78,22 +64,37 @@ class Product:
 
         return configs
 
+    def get_release_date(self, release_cycle: str) -> datetime:
+        for release in self.data["releases"]:
+            if release["releaseCycle"] == release_cycle:
+                return release["releaseDate"]
+
+
+class Product:
+    def __init__(self, name: str):
+        self.name: str = name
+        self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
+        self.versions = {}
+
+    @staticmethod
+    def from_file(name: str):
+        product = Product(name)
+
+        if not os.path.isfile(product.versions_path):
+            with open(product.versions_path) as f:
+                for version, date in json.load(f).items():
+                    product.versions[version] = datetime.strptime(date, "%Y-%m-%d")
+            logging.info(f"loaded versions data for {product.name} from {product.versions_path}")
+        else:
+            logging.warning(f"no versions data found for {product.name} at {product.versions_path}")
+
+        return product
+
     def has_version(self, version: str) -> bool:
         return version in self.versions
 
     def get_version_date(self, version: str) -> datetime:
         return self.versions[version] if version in self.versions else None
-
-    def get_old_version_date(self, version: str) -> datetime:
-        return datetime.strptime(self.old_versions[version], "%Y-%m-%d") if (
-            self.old_versions
-            and version in self.old_versions
-        ) else None
-
-    def get_release_date(self, release_cycle: str) -> datetime:
-        for release in self.product_data["releases"]:
-            if release["releaseCycle"] == release_cycle:
-                return release["releaseDate"]
 
     def declare_version(self, version: str, date: datetime) -> None:
         if version in self.versions:
@@ -133,13 +134,6 @@ class Product:
 
     def __repr__(self) -> str:
         return f"<{self.name}>"
-
-
-def load_product(product_name) -> frontmatter.Post:
-    """Load the product's file frontmatter.
-    """
-    with open(f"{PRODUCTS_PATH}/{product_name}.md") as f:
-        return frontmatter.load(f)
 
 
 def list_products(method, products_filter=None) -> dict[str, list[dict]]:

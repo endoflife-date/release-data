@@ -13,8 +13,10 @@ If one day release dates are available in the AWS documentation, it would be bet
 them though. Note that this would also be unnecessary if it was possible to disable release/latest
 release dates updates in the latest.py script."""
 
-print("::group::aws-lambda")
-product = endoflife.Product("aws-lambda", load_product_data=True, load_versions_data=True)
+product = endoflife.Product("aws-lambda")
+print(f"::group::{product.name}")
+old_product = endoflife.Product.from_file(product.name)
+product_frontmatter = endoflife.ProductFrontmatter(product.name)
 response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -28,9 +30,9 @@ for table in soup.find_all("table"):
         cells = row.find_all("td")
         identifier = cells[identifier_index].get_text().strip()
 
-        date = product.get_release_date(identifier)  # use the product releaseDate if available
+        date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
         if date is None:
-            date = product.get_old_version_date(identifier)  # else use the previously found date
+            date = old_product.get_version_date(identifier)  # else use the previously found date
         if date is None:
             date = datetime.date.today()  # else use today's date
 

@@ -25,10 +25,11 @@ def fetch_releases(product, config, url):
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product_name}")
-    product = endoflife.Product(product_name, load_product_data=True)
+    product = endoflife.Product(product_name)
+    print(f"::group::{product.name}")
 
-    for config in product.get_auto_configs(METHOD):
+    product_frontmatter = endoflife.ProductFrontmatter(product.name)
+    for config in product_frontmatter.get_auto_configs(METHOD):
         url = f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1"
         fetch_releases(product, config, url)
 
