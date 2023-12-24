@@ -11,10 +11,11 @@ METHOD = "cgit"
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product_name}")
-    product = endoflife.Product(product_name, load_product_data=True)
+    product = endoflife.Product(product_name)
+    print(f"::group::{product.name}")
 
-    for auto_config in product.get_auto_configs(METHOD):
+    product_frontmatter = endoflife.ProductFrontmatter(product.name)
+    for auto_config in product_frontmatter.get_auto_configs(METHOD):
         response = http.fetch_url(auto_config.url + '/refs/tags')
         soup = BeautifulSoup(response.text, features="html5lib")
 
