@@ -55,29 +55,28 @@ jobs:
           path: website
           submodules: false
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-          bundler-cache: true
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
           cache: 'pip'
       - run: pip install -r requirements.txt
 
-      - name: Custom Updates
+      - name: Update data
+        id: update_data
         env:
           PYPPETEER_HOME: /home/runner/.cache/pyppeteer # Add chromium downloaded by pyppeteer to the cache.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: for i in src/*.py; do python $i;done
+        continue-on-error: true # commit even if the data was not fully updated
+        run: python update.py
 
-      - name: Build commit message
-        id: update_releases
-        run: bundle exec ruby update.rb
-
-      - name: Commit and update new releases
+      - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
+        if: steps.update_data.outputs.commit_message != ''
         with:
-          commit_message: ${{ fromJSON(steps.update_releases.outputs.commit_message)}}
+          commit_message: ${{ steps.update_data.outputs.commit_message }}
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+
+      # we still want to easily know if something went wrong
+      - name: Set job status
+        if: steps.update_data.outcome != 'success'
+        run: exit 1
