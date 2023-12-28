@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automatically tracked releases:
+As of 2023-12-28, 212 of the 279 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                              | Auto | Method          |
 |-----------------------------------------------|----------------------------------------------------------------------------------------|------|-----------------|
@@ -71,12 +71,14 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Azul Zulu                                     | [`/azul-zulu`](https://endoflife.date/azul-zulu)                                       | ❌    | n/a             |
 | Azure DevOps Server                           | [`/azure-devops-server`](https://endoflife.date/azure-devops-server)                   | ❌    | n/a             |
 | Azure Kubernetes Service                      | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service)         | ❌    | n/a             |
+| Bazel                                         | [`/bazel`](https://endoflife.date/bazel)                                               | ✔️   | git             |
 | Bellsoft Liberica JDK                         | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica)                       | ✔️   | github_releases |
 | Blender                                       | [`/blender`](https://endoflife.date/blender)                                           | ✔️   | git             |
 | Bootstrap                                     | [`/bootstrap`](https://endoflife.date/bootstrap)                                       | ✔️   | git             |
 | CakePHP                                       | [`/cakephp`](https://endoflife.date/cakephp)                                           | ✔️   | git             |
 | CentOS                                        | [`/centos`](https://endoflife.date/centos)                                             | ❌    | n/a             |
 | CentOS Stream                                 | [`/centos-stream`](https://endoflife.date/centos-stream)                               | ❌    | n/a             |
+| cert-manager                                  | [`/cert-manager`](https://endoflife.date/cert-manager)                                 | ✔️   | git             |
 | CFEngine                                      | [`/cfengine`](https://endoflife.date/cfengine)                                         | ✔️   | git             |
 | Citrix Virtual Apps and Desktops              | [`/citrix-vad`](https://endoflife.date/citrix-vad)                                     | ❌    | n/a             |
 | ClamAV                                        | [`/clamav`](https://endoflife.date/clamav)                                             | ✔️   | git             |
@@ -93,6 +95,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Docker Engine                                 | [`/docker-engine`](https://endoflife.date/docker-engine)                               | ✔️   | git             |
 | Drupal                                        | [`/drupal`](https://endoflife.date/drupal)                                             | ✔️   | git             |
 | Drush                                         | [`/drush`](https://endoflife.date/drush)                                               | ✔️   | git             |
+| Eclipse Jetty                                 | [`/eclipse-jetty`](https://endoflife.date/eclipse-jetty)                               | ✔️   | maven           |
 | Eclipse Temurin                               | [`/eclipse-temurin`](https://endoflife.date/eclipse-temurin)                           | ✔️   | github_releases |
 | Elastic Beats                                 | [`/beats`](https://endoflife.date/beats)                                               | ✔️   | git             |
 | Elasticsearch                                 | [`/elasticsearch`](https://endoflife.date/elasticsearch)                               | ✔️   | git             |
@@ -165,6 +168,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Mastodon                                      | [`/mastodon`](https://endoflife.date/mastodon)                                         | ✔️   | git             |
 | Mattermost                                    | [`/mattermost`](https://endoflife.date/mattermost)                                     | ✔️   | git             |
 | MediaWiki                                     | [`/mediawiki`](https://endoflife.date/mediawiki)                                       | ✔️   | git             |
+| Memcached                                     | [`/memcached`](https://endoflife.date/memcached)                                       | ✔️   | git             |
 | Micronaut Framework                           | [`/micronaut`](https://endoflife.date/micronaut)                                       | ✔️   | git             |
 | Microsoft .NET                                | [`/dotnet`](https://endoflife.date/dotnet)                                             | ✔️   | git             |
 | Microsoft .NET Framework                      | [`/dotnetfx`](https://endoflife.date/dotnetfx)                                         | ❌    | n/a             |
@@ -175,7 +179,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Microsoft SharePoint                          | [`/sharepoint`](https://endoflife.date/sharepoint)                                     | ❌    | n/a             |
 | Microsoft SQL Server                          | [`/mssqlserver`](https://endoflife.date/mssqlserver)                                   | ❌    | n/a             |
 | Microsoft Surface                             | [`/surface`](https://endoflife.date/surface)                                           | ❌    | n/a             |
-| Microsoft Visual Studio                       | [`/visual-studio`](https://endoflife.date/visual-studio)                               | ❌    | n/a             |
+| Microsoft Visual Studio                       | [`/visual-studio`](https://endoflife.date/visual-studio)                               | ✔️   | custom          |
 | Microsoft Windows                             | [`/windows`](https://endoflife.date/windows)                                           | ❌    | n/a             |
 | Microsoft Windows Embedded                    | [`/windows-embedded`](https://endoflife.date/windows-embedded)                         | ❌    | n/a             |
 | Microsoft Windows Server                      | [`/windows-server`](https://endoflife.date/windows-server)                             | ❌    | n/a             |
@@ -252,6 +256,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Roundcube Webmail                             | [`/roundcube`](https://endoflife.date/roundcube)                                       | ✔️   | git             |
 | Ruby                                          | [`/ruby`](https://endoflife.date/ruby)                                                 | ✔️   | git             |
 | Ruby on Rails                                 | [`/rails`](https://endoflife.date/rails)                                               | ✔️   | git             |
+| Rust                                          | [`/rust`](https://endoflife.date/rust)                                                 | ✔️   | git             |
 | Salt                                          | [`/salt`](https://endoflife.date/salt)                                                 | ✔️   | git             |
 | Samsung Mobile                                | [`/samsung-mobile`](https://endoflife.date/samsung-mobile)                             | ❌    | n/a             |
 | SapMachine                                    | [`/sapmachine`](https://endoflife.date/sapmachine)                                     | ✔️   | github_releases |
@@ -269,6 +274,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Tails                                         | [`/tails`](https://endoflife.date/tails)                                               | ✔️   | distrowatch     |
 | Tarantool                                     | [`/tarantool`](https://endoflife.date/tarantool)                                       | ✔️   | git             |
 | Telegraf                                      | [`/telegraf`](https://endoflife.date/telegraf)                                         | ✔️   | git             |
+| Traefik                                       | [`/traefik`](https://endoflife.date/traefik)                                           | ✔️   | git             |
 | Twig                                          | [`/twig`](https://endoflife.date/twig)                                                 | ✔️   | git             |
 | TYPO3                                         | [`/typo3`](https://endoflife.date/typo3)                                               | ✔️   | custom          |
 | Ubuntu                                        | [`/ubuntu`](https://endoflife.date/ubuntu)                                             | ✔️   | distrowatch     |
@@ -280,6 +286,7 @@ As of 2023-12-02, 205 of the 272 products tracked by endoflife.date have automat
 | Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                 | ❌    | n/a             |
 | VMware Cloud Foundation                       | [`/vmware-cloud-foundation`](https://endoflife.date/vmware-cloud-foundation)           | ❌    | n/a             |
 | VMware ESXi                                   | [`/esxi`](https://endoflife.date/esxi)                                                 | ❌    | n/a             |
+| VMware Harbor Registry                        | [`/vmware-harbor-registry`](https://endoflife.date/vmware-harbor-registry)             | ❌    | n/a             |
 | VMware Horizon                                | [`/horizon`](https://endoflife.date/horizon)                                           | ❌    | n/a             |
 | VMware Photon                                 | [`/photon`](https://endoflife.date/photon)                                             | ❌    | n/a             |
 | VMware Site Recovery Manager                  | [`/vmware-srm`](https://endoflife.date/vmware-srm)                                     | ❌    | n/a             |
