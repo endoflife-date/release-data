@@ -1,4 +1,5 @@
 beautifulsoup4==4.12.2 # used by a lot of script to parse html
+deepdiff==6.7.1 # used in update.py
 html5lib==1.1 # used in conjunction with beautifulsoup4
 mwparserfromhell==0.6.5 # used in unrealircd.py
 packaging==23.2 # used in latest.py
