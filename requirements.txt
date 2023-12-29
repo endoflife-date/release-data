@@ -5,7 +5,7 @@ mwparserfromhell==0.6.5 # used in unrealircd.py
 packaging==23.2 # used in latest.py
 pre-commit==3.6.0 # used to check code before commit
 python-frontmatter==1.0.1 # used in endoflife.py to parse products YAML frontmatters
-python-liquid==1.10.0 # used in endoflife.py to render version templates
+python-liquid==1.10.2 # used in endoflife.py to render version templates
 requests==2.31.0 # used in http.py to make HTTP requests simpler
 requests-html==0.10.0 # used by a few scripts to parse html that needs javascript to be rendered
 requests-futures==1.0.1 # used in http.py to be able to make async HTTP requests
