@@ -1,8 +1,7 @@
 import re
-from datetime import datetime
 
 from bs4 import BeautifulSoup
-from common import endoflife, http
+from common import dates, endoflife, http
 
 CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
 DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1
@@ -29,7 +28,7 @@ for changelog in http.fetch_urls(changelog_urls):
         date_and_version_match = DATE_AND_VERSION_PATTERN.match(line)
         if date_and_version_match:
             year, month, day, version = date_and_version_match.groups()
-            product.declare_version(version, datetime(int(year), int(month), int(day)))
+            product.declare_version(version, dates.date(int(year), int(month), int(day)))
 
 product.write()
 print("::endgroup::")

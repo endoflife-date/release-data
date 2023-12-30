@@ -1,7 +1,6 @@
-import datetime
 
 from bs4 import BeautifulSoup
-from common import endoflife, http
+from common import dates, endoflife, http
 
 """Fetches AWS lambda runtimes from https://docs.aws.amazon.com.
 
@@ -34,7 +33,7 @@ for table in soup.find_all("table"):
         if date is None:
             date = old_product.get_version_date(identifier)  # else use the previously found date
         if date is None:
-            date = datetime.date.today()  # else use today's date
+            date = dates.today()  # else use today's date
 
         product.declare_version(identifier, date)
 

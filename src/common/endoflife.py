@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from glob import glob
 
 import frontmatter
@@ -84,7 +84,8 @@ class Product:
         if not os.path.isfile(product.versions_path):
             with open(product.versions_path) as f:
                 for version, date in json.load(f).items():
-                    product.versions[version] = datetime.strptime(date, "%Y-%m-%d")
+                    date_obj = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+                    product.versions[version] = date_obj
             logging.info(f"loaded versions data for {product.name} from {product.versions_path}")
         else:
             logging.warning(f"no versions data found for {product.name} at {product.versions_path}")
