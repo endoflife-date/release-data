@@ -1,6 +1,6 @@
 import sys
-from common import dates
-from common import endoflife
+
+from common import dates, endoflife
 from common.git import Git
 
 """Fetches versions from tags in a git repository. This replace the old update.rb script."""

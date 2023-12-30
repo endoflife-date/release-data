@@ -1,8 +1,7 @@
 import re
 import xml.dom.minidom
-from common import http
-from common import dates
-from common import endoflife
+
+from common import dates, endoflife, http
 
 """Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 

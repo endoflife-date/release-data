@@ -1,9 +1,9 @@
 import json
 import logging
-import sys
 import subprocess
-from common import dates
-from common import endoflife
+import sys
+
+from common import dates, endoflife
 
 """Fetches versions from GitHub releases using the GraphQL API and the GitHub CLI.
 

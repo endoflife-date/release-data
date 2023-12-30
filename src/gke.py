@@ -1,8 +1,7 @@
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 # https://regex101.com/r/zPxBqT/1
 VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")

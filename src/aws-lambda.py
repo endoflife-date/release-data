@@ -1,7 +1,7 @@
 import datetime
+
 from bs4 import BeautifulSoup
-from common import http
-from common import endoflife
+from common import endoflife, http
 
 """Fetches AWS lambda runtimes from https://docs.aws.amazon.com.
 

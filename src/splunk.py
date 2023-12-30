@@ -1,8 +1,7 @@
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 VERSION_DATE_PATTERN = re.compile(r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\.", re.MULTILINE)
 

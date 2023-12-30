@@ -1,7 +1,7 @@
-from common import dates
-from common import endoflife
-from common.git import Git
 from subprocess import run
+
+from common import dates, endoflife
+from common.git import Git
 
 """Fetch Debian versions by parsing news in www.debian.org source repository."""
 

@@ -1,8 +1,7 @@
 import sys
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 """Fetches versions from repositories managed with cgit, such as the Linux kernel repository.
 Ideally we would want to use the git repository directly, but cgit-managed repositories don't support partial clone."""

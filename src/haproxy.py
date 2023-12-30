@@ -1,8 +1,8 @@
 import re
-from bs4 import BeautifulSoup
-from common import http
-from common import endoflife
 from datetime import datetime
+
+from bs4 import BeautifulSoup
+from common import endoflife, http
 
 CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
 DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1

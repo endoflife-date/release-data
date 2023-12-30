@@ -1,7 +1,6 @@
 import sys
-from common import dates
-from common import endoflife
-from common import http
+
+from common import dates, endoflife, http
 
 """Fetches releases from the Docker Hub API.
 

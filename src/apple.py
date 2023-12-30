@@ -1,9 +1,8 @@
 import logging
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 """Fetches and parses version and release date information from Apple's support website for macOS,
 iOS, iPadOS, and watchOS. While all URLs are fetched once for performance reasons, the actual

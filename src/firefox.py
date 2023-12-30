@@ -1,9 +1,8 @@
 import re
 import urllib.parse
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/.
 

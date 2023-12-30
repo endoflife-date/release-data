@@ -1,6 +1,4 @@
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 product = endoflife.Product("rockylinux")
 print(f"::group::{product.name}")

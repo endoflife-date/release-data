@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 """Fetches EKS versions from AWS docs.
 Now that AWS no longer publishes docs on GitHub, we use the Web Archive to still get the older versions."""

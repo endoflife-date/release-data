@@ -1,8 +1,7 @@
-import mwparserfromhell
 import re
-from common import dates
-from common import endoflife
-from common import http
+
+import mwparserfromhell
+from common import dates, endoflife, http
 
 DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
 

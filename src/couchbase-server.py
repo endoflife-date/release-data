@@ -1,9 +1,8 @@
 import re
-from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
 from datetime import datetime
+
+from bs4 import BeautifulSoup
+from common import dates, endoflife, http
 
 """Fetches versions from release notes of each minor version on docs.couchbase.com.
 

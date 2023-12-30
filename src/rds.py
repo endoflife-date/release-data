@@ -1,8 +1,7 @@
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 """Fetches Amazon RDS versions from the version management pages on AWS docs.
 
