@@ -17,9 +17,10 @@ select = [
   "N", # pep8-naming
   "PIE", # flake8-pie
   "PGH", # pygrep-hooks
-  "SLF", # flake8-self
   "RET", # flake8-return
   "RUF100", # unused noqa (yesqa)
+  "SLF", # flake8-self
+  "SIM", # flake8-simplify
   "T10", # flake8-debugger
   "UP", # pyupgrade
   "W", # pycodestyle warnings

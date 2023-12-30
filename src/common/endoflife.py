@@ -59,7 +59,7 @@ class ProductFrontmatter:
 
         if "auto" in self.data:
             for config in self.data["auto"]:
-                if method in config.keys():
+                if method in config:
                     configs.append(AutoConfig(method, config))
                 else:
                     logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
@@ -154,7 +154,7 @@ def list_products(method: str, products_filter: str = None) -> list[str]:
         with open(product_file) as f:
             data = frontmatter.load(f)
             if "auto" in data:
-                matching_configs = list(filter(lambda config: method in config.keys(), data["auto"]))
+                matching_configs = list(filter(lambda config: method in config, data["auto"]))
                 if len(matching_configs) > 0:
                     products.append(product_name)
 

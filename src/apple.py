@@ -55,7 +55,7 @@ print("::group::apple")
 soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
 print("::endgroup::")
 
-for product_name in VERSION_PATTERNS.keys():
+for product_name in VERSION_PATTERNS:
     product = endoflife.Product(product_name)
     print(f"::group::{product.name}")
 
