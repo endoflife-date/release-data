@@ -21,7 +21,7 @@ for detail_id in [f"detail{row['id']}" for row in sles_header_rows]:
     for row in minor_versions_table.find_all("tr")[1:]:
         # For each minor release there is an FCS date, general support end date and LTSS end date
         cells = row.find_all("td")
-        version = cells[0].text.strip("SUSE Linux Enterprise Server ").replace(' SP', '.')
+        version = cells[0].text.replace("SUSE Linux Enterprise Server ", '').replace(' SP', '.')
         date_str = cells[1].text
 
         try:

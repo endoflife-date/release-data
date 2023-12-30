@@ -137,10 +137,10 @@ class Product:
         return f"<{self.name}>"
 
 
-def list_products(method, products_filter=None) -> dict[str, list[dict]]:
+def list_products(method, products_filter=None) -> list[str]:
     """Return a list of products that are using the same given update method.
     """
-    products_with_method = {}
+    products = []
 
     for product_file in glob(f"{PRODUCTS_PATH}/*.md"):
         product_name = os.path.splitext(os.path.basename(product_file))[0]
@@ -150,11 +150,8 @@ def list_products(method, products_filter=None) -> dict[str, list[dict]]:
         with open(product_file) as f:
             data = frontmatter.load(f)
             if "auto" in data:
-                configs = list(filter(
-                    lambda config: method in config.keys(),
-                    data["auto"]
-                ))
-                if len(configs) > 0:
-                    products_with_method[product_name] = configs
+                matching_configs = list(filter(lambda config: method in config.keys(), data["auto"]))
+                if len(matching_configs) > 0:
+                    products.append(product_name)
 
-    return products_with_method
+    return products

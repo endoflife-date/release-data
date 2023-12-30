@@ -23,8 +23,8 @@ def get_latest_minor_versions(versions):
 
     # For each group, find the version with the highest patch version
     latest_versions = []
-    for major_minor, group in version_groups.items():
-        latest_patch = max(group, key=lambda version: int(version[2]))
+    for version_group in version_groups.values():
+        latest_patch = max(version_group, key=lambda v: int(v[2]))
         latest_versions.append('.'.join(latest_patch))
 
     return latest_versions
