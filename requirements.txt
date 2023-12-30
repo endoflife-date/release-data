@@ -3,7 +3,7 @@ deepdiff==6.7.1 # used in update.py
 html5lib==1.1 # used in conjunction with beautifulsoup4
 mwparserfromhell==0.6.5 # used in unrealircd.py
 packaging==23.2 # used in latest.py
-pre-commit==3.6.0 # used to check code before commit
+pre-commit==3.5.0 # used to check code before commit
 python-frontmatter==1.0.1 # used in endoflife.py to parse products YAML frontmatters
 python-liquid==1.10.2 # used in endoflife.py to render version templates
 requests==2.31.0 # used in http.py to make HTTP requests simpler
