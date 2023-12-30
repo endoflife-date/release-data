@@ -45,8 +45,7 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     for fmt in formats:
         try:
             date = datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
-            date = date.astimezone(timezone.utc) if to_utc else date
-            return date
+            return date.astimezone(timezone.utc) if to_utc else date
         except ValueError:
             pass
 
