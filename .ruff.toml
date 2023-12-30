@@ -1,5 +1,6 @@
 select = [
   "ANN", # flake8-annotations
+  "ASYNC", # flake8-async
   "B", # flake8-bugbear
   "C90", # mccabe
   "E", # pycodestyle errors
