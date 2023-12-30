@@ -17,6 +17,7 @@ select = [
   "N", # pep8-naming
   "PIE", # flake8-pie
   "PGH", # pygrep-hooks
+  "RET", # flake8-return
   "RUF100", # unused noqa (yesqa)
   "T10", # flake8-debugger
   "UP", # pyupgrade

@@ -32,10 +32,10 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
         if next_max_retries == 0:
             logging.error(f"Got ChunkedEncodingError while fetching {urls} ({e}), giving up")
             raise e  # So that the function does not get stuck in an infinite loop.
-        else:
-            # We could wait a bit before retrying, but it's not clear if it would help.
-            logging.warning(f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
-            return fetch_urls(urls, data, headers, next_max_retries, backoff_factor, timeout)
+
+        # We could wait a bit before retrying, but it's not clear if it would help.
+        logging.warning(f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
+        return fetch_urls(urls, data, headers, next_max_retries, backoff_factor, timeout)
 
 
 def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,

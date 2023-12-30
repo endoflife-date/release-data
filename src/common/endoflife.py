@@ -30,11 +30,12 @@ class AutoConfig:
         regexes = regexes if isinstance(regexes, list) else [regexes]
         self.version_patterns = [re.compile(regex) for regex in regexes]
 
-    def first_match(self, version: str) -> re.Match:
+    def first_match(self, version: str) -> re.Match | None:
         for pattern in self.version_patterns:
             match = pattern.match(version)
             if match:
                 return match
+        return None
 
     def render(self, match: re.Match) -> str:
         return self.version_template.render(**match.groupdict())
@@ -65,10 +66,11 @@ class ProductFrontmatter:
 
         return configs
 
-    def get_release_date(self, release_cycle: str) -> datetime:
+    def get_release_date(self, release_cycle: str) -> datetime | None:
         for release in self.data["releases"]:
             if release["releaseCycle"] == release_cycle:
                 return release["releaseDate"]
+        return None
 
 
 class Product:
