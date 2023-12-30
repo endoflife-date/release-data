@@ -5,7 +5,7 @@ from common import dates, endoflife, http
 METHOD = "npm"
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
+for product_name in endoflife.list_products(METHOD, p_filter):
     product = endoflife.Product(product_name)
     print(f"::group::{product.name}")
 

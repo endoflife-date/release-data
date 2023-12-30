@@ -1,4 +1,5 @@
 select = [
+  "B", # flake8-bugbear
   "C90", # mccabe
   "E", # pycodestyle errors
   "F", # pyflakes errors
