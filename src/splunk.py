@@ -42,10 +42,10 @@ all_versions = list(map(lambda option: option.attrs['value'], soup.select("selec
 latest_minor_versions = get_latest_minor_versions(all_versions)
 latest_minor_versions_urls = [f"https://docs.splunk.com/Documentation/Splunk/{v}/ReleaseNotes/MeetSplunk" for v in latest_minor_versions]
 for response in http.fetch_urls(latest_minor_versions_urls):
-    for (version, date_str) in VERSION_DATE_PATTERN.findall(response.text):
-        version = f"{version}.0" if len(version.split(".")) == 2 else version  # convert x.y to x.y.0
+    for (version_str, date_str) in VERSION_DATE_PATTERN.findall(response.text):
+        version_str = f"{version_str}.0" if len(version_str.split(".")) == 2 else version_str  # convert x.y to x.y.0
         date = dates.parse_date(date_str)
-        product.declare_version(version, date)
+        product.declare_version(version_str, date)
 
 product.write()
 print("::endgroup::")

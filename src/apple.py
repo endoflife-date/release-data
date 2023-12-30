@@ -36,16 +36,16 @@ VERSION_PATTERNS = {
     ],
     "ios": [
         re.compile(r"iOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"iOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
-        re.compile(r"iPhone\s+v?(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
+        re.compile(r"iOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
+        re.compile(r"iPhone\s+v?(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
     ],
     "ipados": [
         re.compile(r"iPadOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"iPadOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
+        re.compile(r"iPadOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
     ],
     "watchos": [
         re.compile(r"watchOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"watchOS\s+(?P<version>\d+(?:)(?:\.\d+)+)", re.MULTILINE),
+        re.compile(r"watchOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
     ],
 }
 
