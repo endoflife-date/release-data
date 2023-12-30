@@ -2,6 +2,7 @@ select = [
   "ANN", # flake8-annotations
   "ASYNC", # flake8-async
   "B", # flake8-bugbear
+  "BLE", # flake8-blind-except
   "C90", # mccabe
   "E", # pycodestyle errors
   "F", # pyflakes errors
