@@ -15,6 +15,7 @@ select = [
   "I", # isort
   "ISC", # flake8-implicit-str-concat
   "N", # pep8-naming
+  "PIE", # flake8-pie
   "PGH", # pygrep-hooks
   "RUF100", # unused noqa (yesqa)
   "T10", # flake8-debugger
