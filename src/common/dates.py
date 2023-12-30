@@ -50,7 +50,8 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
         except ValueError:
             pass
 
-    raise ValueError(f"'{text}' could not be parsed as a date with any of the formats: {str(formats)}")
+    msg = f"'{text}' could not be parsed as a date with any of the formats: {str(formats)}"
+    raise ValueError(msg)
 
 
 def date(year: int, month: int, day: int) -> datetime:

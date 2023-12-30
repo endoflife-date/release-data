@@ -114,7 +114,8 @@ class Product:
 
     def replace_version(self, version: str, date: datetime) -> None:
         if version not in self.versions:
-            raise ValueError(f"version {version} cannot be replaced as it does not exist for {self.name}")
+            msg = f"version {version} cannot be replaced as it does not exist for {self.name}"
+            raise ValueError(msg)
 
         logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) in {self.name}")
         self.versions[version] = date
