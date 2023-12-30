@@ -4,113 +4,99 @@ import os
 import subprocess
 import sys
 import time
-from base64 import b64encode
 from pathlib import Path
 
 from deepdiff import DeepDiff
 
-
-def github_output(name: str, value: str) -> None:
-    if "GITHUB_OUTPUT" not in os.environ:
-        logging.debug(f"GITHUB_OUTPUT does not exist, but would have written: {name}={value.strip()}")
-        return
-
-    if "\n" in value:
-        # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
-        delimiter = b64encode(os.urandom(16)).decode()
-        value = f"{delimiter}\n{value}\n{delimiter}"
-        command = f"{name}<<{value}"
-    else:
-        command = f"{name}={value}"
-
-    with open(os.environ["GITHUB_OUTPUT"], 'a') as github_output_var:  # NOQA: PTH123
-        print(command, file=github_output_var)
-        logging.debug(f"Wrote to GITHUB_OUTPUT: {name}={value.strip()}")
-
-
-def add_summary_line(line: str) -> None:
-    if "GITHUB_STEP_SUMMARY" not in os.environ:
-        logging.debug(f"GITHUB_STEP_SUMMARY does not exist, but would have written: {line}")
-        return
-
-    with open(os.environ["GITHUB_STEP_SUMMARY"], 'a') as github_step_summary:  # NOQA: PTH123
-        print(line, file=github_step_summary)
-
+from src.common.gha import GitHubOutput, GitHubStepSummary
 
 SRC_DIR = Path('src')
 DATA_DIR = Path('releases')
 
-logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 
-# Run scripts
-scripts = sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')])
-some_script_failed = False
+def run_scripts(summary: GitHubStepSummary) -> bool:
+    summary.println("## Script execution summary\n")
+    summary.println("| Name | Duration | Succeeded |")
+    summary.println("|------|----------|-----------|")
 
-add_summary_line("## Script execution summary\n")
-add_summary_line("| Name | Duration | Succeeded |")
-add_summary_line("|------|----------|-----------|")
-for script in scripts:
-    logging.info(f"start running {script}")
+    scripts = sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')])
+    failure = False
+    for script in scripts:
+        logging.info(f"start running {script}")
 
-    start = time.perf_counter()
-    child = subprocess.run([sys.executable, script])  # timeout handled in subscripts
-    elapsed_seconds = time.perf_counter() - start
+        start = time.perf_counter()
+        child = subprocess.run([sys.executable, script])  # timeout handled in subscripts
+        elapsed_seconds = time.perf_counter() - start
 
-    if child.returncode != 0:
-        some_script_failed = True
-        add_summary_line(f"| {script} | {elapsed_seconds:.2f}s | ❌ |")
-        logging.error(f"Error while running {script} after {elapsed_seconds:.2f}s, update will only be partial")
-    else:
-        logging.info(f"Finished running {script}, took {elapsed_seconds:.2f}s")
-        add_summary_line(f"| {script} | {elapsed_seconds:.2f}s | ✅ |")
+        if child.returncode != 0:
+            failure = True
+            summary.println(f"| {script} | {elapsed_seconds:.2f}s | ❌ |")
+            logging.error(f"Error while running {script} after {elapsed_seconds:.2f}s, update will only be partial")
+        else:
+            logging.info(f"Finished running {script}, took {elapsed_seconds:.2f}s")
+            summary.println(f"| {script} | {elapsed_seconds:.2f}s | ✅ |")
 
-# Generate commit message
-subprocess.run('git add --all', timeout=10, check=True, shell=True)  # to also get new files in git diff
-git_diff = subprocess.run('git diff --name-only --staged', capture_output=True, timeout=10, check=True, shell=True)
-updated_files = [Path(file) for file in git_diff.stdout.decode('utf-8').split('\n')]
-updated_product_files = sorted([file for file in updated_files if file.parent == DATA_DIR])
-logging.info(f"Updated product files: {[file.name for file in updated_product_files]}")
+    summary.println("")
+    return failure
 
-add_summary_line("## Update summary\n")
-if updated_product_files:
-    # get modified files content
-    new_files_content = {}
-    for path in updated_product_files:
-        with path.open() as file:
-            new_files_content[path] = json.load(file)
 
-    # get original files content
-    old_files_content = {}
-    subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
+def get_updated_products() -> list[Path]:
+    subprocess.run('git add --all', timeout=10, check=True, shell=True)  # to also get new files in git diff
+    git_diff = subprocess.run('git diff --name-only --staged', capture_output=True, timeout=10, check=True, shell=True)
+    updated_files = [Path(file) for file in git_diff.stdout.decode('utf-8').split('\n')]
+    return sorted([file for file in updated_files if file.parent == DATA_DIR])
+
+
+def load_products_json(updated_product_files: list[Path]) -> dict[Path, dict]:
+    files_content = {}
+
     for path in updated_product_files:
         if path.exists():
             with path.open() as file:
-                old_files_content[path] = json.load(file)
-        else:  # new file
-            old_files_content[path] = {}
-    subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
+                files_content[path] = json.load(file)
+        else:  # new or deleted file
+            files_content[path] = {}
 
-    # Generate commit message
-    product_names = ', '.join([path.stem for path in updated_product_files])
-    commit_message = f"🤖: {product_names}\n\n"
-    add_summary_line(f"Updated {len(updated_product_files)} products: {product_names}.")
+    return files_content
 
-    for path in updated_product_files:
-        add_summary_line(f"### {path.stem}\n")
-        commit_message += f"{path.stem}:\n"
 
-        diff = DeepDiff(old_files_content[path], new_files_content[path], ignore_order=True)
-        for line in diff.pretty().split('\n'):
-            add_summary_line(f"- {line}")
-            commit_message += f"- {line}\n"
-            logging.info(f"{path.stem}: {line}")
+def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Path, dict], summary: GitHubStepSummary) -> None:
+    product_names = ', '.join([path.stem for path in old_content])
+    summary.println(f"Updated {len(old_content)} products: {product_names}.\n")
 
-        commit_message += "\n"
-        add_summary_line("")
+    commit_message = GitHubOutput('commit_message')
+    with commit_message:
+        commit_message.println(f"🤖: {product_names}\n")
 
-    github_output('commit_message', commit_message)
+        for path in old_content:
+            product_name = path.stem
+            summary.println(f"### {product_name}\n")
+            commit_message.println(f"{product_name}:")
 
-else:
-    add_summary_line("No update")
+            diff = DeepDiff(old_content[path], new_content[path], ignore_order=True)
+            for line in diff.pretty().split('\n'):
+                summary.println(f"- {line}")
+                commit_message.println(f"- {line}")
+                logging.info(f"{product_name}: {line}")
+
+            commit_message.println("")
+            summary.println("")
+
+
+logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
+step_summary = GitHubStepSummary()
+with step_summary:
+    some_script_failed = run_scripts(step_summary)
+    updated_products = get_updated_products()
+
+    step_summary.println("## Update summary\n")
+    if updated_products:
+        new_files_content = load_products_json(updated_products)
+        subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
+        old_files_content = load_products_json(updated_products)
+        subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
+        generate_commit_message(old_files_content, new_files_content, step_summary)
+    else:
+        step_summary.println("No update")
 
 sys.exit(1 if some_script_failed else 0)

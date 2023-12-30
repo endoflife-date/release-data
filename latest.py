@@ -2,7 +2,6 @@ import argparse
 import datetime
 import json
 import logging
-import os
 import re
 from pathlib import Path
 
@@ -11,6 +10,8 @@ from packaging.version import InvalidVersion, Version
 from ruamel.yaml import YAML
 from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
+
+from src.common.gha import GitHubOutput
 
 """
 Updates the `release`, `latest` and `latestReleaseDate` property in automatically updated pages
@@ -21,14 +22,15 @@ This is written in Python because the only package that supports writing back YA
 
 
 class ReleaseCycle:
-    def __init__(self, data: dict) -> None:
+    def __init__(self, product_name: str, data: dict) -> None:
+        self.product_name = product_name
         self.data = data
         self.name = data["releaseCycle"]
         self.matched = False
         self.updated = False
 
     def update_with(self, version: str, date: datetime.date) -> None:
-        logging.debug(f"will try to update {self.name} with {version} ({date})")
+        logging.debug(f"will try to update {self} with {version} ({date})")
         self.matched = True
         self.__update_release_date(version, date)
         self.__update_latest(version, date)
@@ -57,7 +59,7 @@ class ReleaseCycle:
     def __update_release_date(self, version: str, date: datetime.date) -> None:
         release_date = self.data.get("releaseDate", None)
         if release_date and release_date > date:
-            logging.info(f"{self.name} release date updated from {release_date} to {date} ({version})")
+            logging.info(f"{self} release date updated from {release_date} to {date} ({version})")
             self.data["releaseDate"] = date
             self.updated = True
 
@@ -67,20 +69,20 @@ class ReleaseCycle:
 
         update_detected = False
         if not old_latest:
-            logging.info(f"{self.name} latest date updated to {version} ({date}) (no prior latest version)")
+            logging.info(f"{self} latest date updated to {version} ({date}) (no prior latest version)")
             update_detected = True
 
         elif old_latest == version and old_latest_date != date:
-            logging.info(f"{self.name} latest date updated from {old_latest_date} to {date}")
+            logging.info(f"{self} latest date updated from {old_latest_date} to {date}")
             update_detected = True
 
         else:
             try:  # Do our best attempt at comparing the version numbers
                 if Version(old_latest) < Version(version):
-                    logging.info(f"{self.name} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
+                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
                     update_detected = True
             except InvalidVersion:
-                logging.debug(f"could not not be compare {self.name} with {version}, skipping")
+                logging.debug(f"could not not be compare {self} with {version}, skipping")
 
         if update_detected:
             self.data["latest"] = version
@@ -88,7 +90,7 @@ class ReleaseCycle:
             self.updated = True
 
     def __str__(self) -> str:
-        return self.name
+        return self.product_name + '#' + self.name
 
 
 class Product:
@@ -110,7 +112,7 @@ class Product:
         with self.versions_path.open() as versions_file:
             self.versions = json.loads(versions_file.read())
 
-        self.releases = [ReleaseCycle(release) for release in self.data["releases"]]
+        self.releases = [ReleaseCycle(name, release) for release in self.data["releases"]]
         self.updated = False
         self.unmatched_versions = {}
 
@@ -118,7 +120,7 @@ class Product:
         for release in self.releases:
             latest = release.latest()
             if release.matched and latest not in self.versions:
-                logging.info(f"latest version {latest} for {release.name} not found in {self.versions_path}")
+                logging.info(f"latest version {latest} for {release} not found in {self.versions_path}")
 
     def process_version(self, version: str, date_str: str) -> None:
         date = datetime.date.fromisoformat(date_str)
@@ -147,14 +149,7 @@ class Product:
             product_file.write("\n")
 
 
-def github_output(message: str) -> None:
-    logging.debug(f"GITHUB_OUTPUT += {message.strip()}")
-    if os.getenv("GITHUB_OUTPUT"):
-        with open(os.getenv("GITHUB_OUTPUT"), 'a') as f:  # NOQA: PTH123
-            f.write(message)
-
-
-def update_product(name: str, product_dir: Path, releases_dir: Path) -> None:
+def update_product(name: str, product_dir: Path, releases_dir: Path, output: GitHubOutput) -> None:
     versions_path = releases_dir / f"{name}.json"
     if not versions_path.exists():
         logging.debug(f"Skipping {name}, {versions_path} does not exist")
@@ -169,14 +164,14 @@ def update_product(name: str, product_dir: Path, releases_dir: Path) -> None:
         logging.info(f"Updating {product.product_path}")
         product.write()
 
-    # Print all unmatched versions released in the last 30 days
+    # List all unmatched versions released in the last 30 days
     if len(product.unmatched_versions) != 0:
         for version, date in product.unmatched_versions.items():
             today = datetime.datetime.now(tz=datetime.timezone.utc).date()
             days_since_release = (today - date).days
             if days_since_release < 30:
                 logging.warning(f"{name}:{version} ({date}) not included")
-                github_output(f"{name}:{version} ({date})\n")
+                output.println(f"{name}:{version} ({date})")
 
 
 if __name__ == "__main__":
@@ -196,13 +191,11 @@ if __name__ == "__main__":
     # Example of dumping with aliases: https://github.com/endoflife-date/endoflife.date/pull/4368.
     RoundTripRepresenter.ignore_aliases = lambda x, y: True # NOQA: ARG005
 
-    # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
-    github_output("warning<<$EOF\n")
-
     products_dir = Path(args.product_dir)
     product_names = [args.product] if args.product else [p.stem for p in products_dir.glob("*.md")]
-    for product_name in product_names:
-        logging.debug(f"Processing {product_name}")
-        update_product(product_name, products_dir, Path(args.data_dir))
 
-    github_output("$EOF")
+    github_output = GitHubOutput("warning")
+    with github_output:
+        for product_name in product_names:
+            logging.debug(f"Processing {product_name}")
+            update_product(product_name, products_dir, Path(args.data_dir), github_output)
