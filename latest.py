@@ -9,6 +9,7 @@ from pathlib import Path
 import frontmatter
 from packaging.version import InvalidVersion, Version
 from ruamel.yaml import YAML
+from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
 
 """
@@ -190,6 +191,10 @@ if __name__ == "__main__":
 
     # Force YAML to format version numbers as strings, see https://stackoverflow.com/a/71329221/368328.
     Resolver.add_implicit_resolver("tag:yaml.org,2002:string", re.compile(r"\d+(\.\d+){0,3}", re.X), list(".0123456789"))
+
+    # Force ruamel to never use aliases when dumping, see https://stackoverflow.com/a/64717341/374236.
+    # Example of dumping with aliases: https://github.com/endoflife-date/endoflife.date/pull/4368.
+    RoundTripRepresenter.ignore_aliases = lambda x, y: True # NOQA: ARG005
 
     # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
     github_output("warning<<$EOF\n")
