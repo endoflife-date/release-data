@@ -35,7 +35,7 @@ print(f"::group::{product.name}")
 main = http.fetch_url("https://docs.splunk.com/Documentation/Splunk")
 soup = BeautifulSoup(main.text, features="html5lib")
 
-all_versions = list(map(lambda option: option.attrs['value'], soup.select("select#version-select > option")))
+all_versions = [option.attrs['value'] for option in soup.select("select#version-select > option")]
 
 # Latest minor release notes contains release notes for all previous minor versions.
 # For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
