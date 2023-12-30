@@ -1,6 +1,7 @@
 select = [
   "A", # flake8-builtins
   "ANN", # flake8-annotations
+  "ARG", # flake8-unused-arguments
   "ASYNC", # flake8-async
   "B", # flake8-bugbear
   "BLE", # flake8-blind-except
