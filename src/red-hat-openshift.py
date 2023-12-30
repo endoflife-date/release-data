@@ -1,6 +1,6 @@
 import re
-from common import dates
-from common import endoflife
+
+from common import dates, endoflife
 from common.git import Git
 
 """Fetches Red Hat OpenShift versions from the documentation's git repository"""

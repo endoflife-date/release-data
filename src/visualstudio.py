@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 # There is no build history for versions 2015 and below.
 # This is not a big deal because there was no version for those release in a very long time.

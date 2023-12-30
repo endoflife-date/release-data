@@ -1,6 +1,4 @@
-from common import dates
-from common import endoflife
-from common import http
+from common import dates, endoflife, http
 
 """Fetch Nutanix products versions from https://portal.nutanix.com/api/v1."""
 

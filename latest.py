@@ -1,15 +1,16 @@
 import argparse
-import logging
-import frontmatter
+import datetime
 import json
+import logging
 import os
 import re
-import datetime
+from os.path import exists
 from pathlib import Path
+
+import frontmatter
+from packaging.version import InvalidVersion, Version
 from ruamel.yaml import YAML
 from ruamel.yaml.resolver import Resolver
-from packaging.version import Version, InvalidVersion
-from os.path import exists
 
 """
 Updates the `release`, `latest` and `latestReleaseDate` property in automatically updated pages

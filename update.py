@@ -5,8 +5,9 @@ import subprocess
 import sys
 import time
 from base64 import b64encode
-from deepdiff import DeepDiff
 from pathlib import Path
+
+from deepdiff import DeepDiff
 
 
 def github_output(name, value):

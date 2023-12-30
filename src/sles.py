@@ -1,8 +1,7 @@
 import logging
+
 from bs4 import BeautifulSoup
-from common import dates
-from common import endoflife
-from common import http
+from common import dates, endoflife, http
 
 product = endoflife.Product("sles")
 print(f"::group::{product.name}")

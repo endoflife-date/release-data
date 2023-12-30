@@ -1,8 +1,7 @@
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 MILESTONE_PATTERN = re.compile(r'COS \d+ LTS')
 VERSION_PATTERN = re.compile(r"^(cos-\d+-\d+-\d+-\d+)")

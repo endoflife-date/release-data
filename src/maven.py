@@ -1,7 +1,7 @@
 import datetime
 import sys
-from common import http
-from common import endoflife
+
+from common import endoflife, http
 
 METHOD = "maven"
 

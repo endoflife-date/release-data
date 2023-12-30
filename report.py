@@ -1,7 +1,8 @@
-import frontmatter
 import sys
 import time
 from glob import glob
+
+import frontmatter
 
 products = {}
 count = 0

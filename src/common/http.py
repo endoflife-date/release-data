@@ -1,5 +1,6 @@
 import logging
 from concurrent.futures import as_completed
+
 from requests import Response
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ChunkedEncodingError

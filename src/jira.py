@@ -1,6 +1,5 @@
+from common import dates, endoflife
 from requests_html import HTMLSession
-from common import dates
-from common import endoflife
 
 """Fetches Jira versions from www.atlassian.com.
 

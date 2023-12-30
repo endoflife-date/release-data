@@ -1,6 +1,4 @@
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http
 
 MAIN_URL = "https://www.php.net/releases/index.php?json&max=-1"
 

@@ -1,6 +1,7 @@
 select = [
   "E", # pycodestyle errors
   "F", # pyflakes errors
+  "I", # isort
   "ISC", # flake8-implicit-str-concat
   "PGH", # pygrep-hooks
   "RUF100", # unused noqa (yesqa)
