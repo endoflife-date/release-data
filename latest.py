@@ -117,7 +117,7 @@ class Product:
     def check_latest(self) -> None:
         for release in self.releases:
             latest = release.latest()
-            if release.matched and latest not in self.versions.keys():
+            if release.matched and latest not in self.versions:
                 logging.info(f"latest version {latest} for {release.name} not found in {self.versions_path}")
 
     def process_version(self, version: str, date_str: str) -> None:
