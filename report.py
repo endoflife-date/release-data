@@ -1,15 +1,15 @@
 import sys
 import time
-from glob import glob
+from pathlib import Path
 
 import frontmatter
 
 products = {}
 count = 0
 count_auto = 0
-products_dir = sys.argv[1] if len(sys.argv) > 1 else 'website/products/'
-for product_file in sorted(glob(f'{products_dir}/*.md')):
-    with open(product_file) as f:
+products_dir = Path(sys.argv[1] if len(sys.argv) > 1 else 'website/products/')
+for product_file in sorted(products_dir.glob('*.md')):
+    with product_file.open() as f:
         data = frontmatter.load(f)
         count += 1
         title = data['title']

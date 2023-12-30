@@ -22,7 +22,7 @@ for branch in git.list_branches("refs/heads/enterprise-[4-9]*"):
     if not release_notes_file.exists():
         continue
 
-    with open(release_notes_file, "rb") as f:
+    with release_notes_file.open("rb") as f:
         content = f.read().decode("utf-8")
         for (version, date_str) in VERSION_AND_DATE_PATTERN.findall(content):
             product.declare_version(version, dates.parse_date(date_str))

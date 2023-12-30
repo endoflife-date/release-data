@@ -18,6 +18,7 @@ select = [
   "N", # pep8-naming
   "PIE", # flake8-pie
   "PGH", # pygrep-hooks
+  "PTH", # flake8-use-pathlib
   "RET", # flake8-return
   "RUF100", # unused noqa (yesqa)
   "SLF", # flake8-self
