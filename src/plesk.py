@@ -9,7 +9,7 @@ there is no entry for GA of version 18.0.18 and older."""
 product = endoflife.Product("plesk")
 print(f"::group::{product.name}")
 response = http.fetch_url("https://docs.plesk.com/release-notes/obsidian/change-log")
-soup =  BeautifulSoup(response.text, features="html5lib")
+soup = BeautifulSoup(response.text, features="html5lib")
 
 for release in soup.find_all("div", class_="changelog-entry--obsidian"):
     version = release.h2.text.strip()

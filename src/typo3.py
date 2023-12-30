@@ -8,7 +8,7 @@ for v in data:
         continue
 
     version = v["version"]
-    date = dates.parse_datetime(v["date"], to_utc=False) # utc kept for now for backwards compatibility
+    date = dates.parse_datetime(v["date"], to_utc=False)  # utc kept for now for backwards compatibility
     product.declare_version(version, date)
 
 product.write()

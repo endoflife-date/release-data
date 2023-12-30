@@ -102,7 +102,7 @@ class Product:
             if self.versions[version] != date:
                 logging.warning(f"overwriting version {version} ({self.versions[version]} -> {date}) for {self.name}")
             else:
-                return # already declared
+                return  # already declared
 
         logging.info(f"adding version {version} ({date}) to {self.name}")
         self.versions[version] = date
