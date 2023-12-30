@@ -130,7 +130,7 @@ class Product:
         with open(self.versions_path, "w") as f:
             f.write(json.dumps(dict(
                 # sort by date then version (desc)
-                sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
+                sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True),
             ), indent=2))
 
     def __repr__(self) -> str:

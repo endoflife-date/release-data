@@ -16,7 +16,7 @@ URLS = [
     "https://helpx.adobe.com/coldfusion/kb/coldfusion-2016-updates.html",
     "https://helpx.adobe.com/coldfusion/kb/coldfusion-2018-updates.html",
     "https://helpx.adobe.com/coldfusion/kb/coldfusion-2021-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2023-updates.html"
+    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2023-updates.html",
 ]
 
 VERSION_AND_DATE_PATTERN = re.compile(r"Release Date[,|:]? (.*?)\).*?Build Number: (.*?)$",
