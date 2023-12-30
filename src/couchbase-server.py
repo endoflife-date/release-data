@@ -1,5 +1,4 @@
 import re
-from datetime import datetime
 
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http
@@ -13,10 +12,10 @@ Moreover dates are not accurate (only month and year are provided), so they are 
 URLS = "https://docs.couchbase.com/server"
 VERSION_AND_DATE_PATTERN = re.compile(r"^Release (?P<version>\d+\.\d+(\.\d+)?) \((?P<date>.+)\)$")
 MANUAL_VERSIONS = {
-    "6.0.0": datetime(2018, 10, 31),  # https://www.couchbase.com/blog/announcing-couchbase-6-0/
-    "6.0.1": datetime(2019, 2, 15),  # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
-    "6.6.0": datetime(2020, 8, 12),  # https://www.couchbase.com/blog/whats-new-and-improved-in-couchbase-server-6-6/
-    "7.2.0": datetime(2023, 6, 1),  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
+    "6.0.0": dates.date(2018, 10, 31),  # https://www.couchbase.com/blog/announcing-couchbase-6-0/
+    "6.0.1": dates.date(2019, 2, 15),  # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
+    "6.6.0": dates.date(2020, 8, 12),  # https://www.couchbase.com/blog/whats-new-and-improved-in-couchbase-server-6-6/
+    "7.2.0": dates.date(2023, 6, 1),  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
 }
 
 product = endoflife.Product("couchbase-server")

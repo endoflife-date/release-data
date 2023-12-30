@@ -172,7 +172,8 @@ def update_product(name: str, product_dir: Path, releases_dir: Path) -> None:
     # Print all unmatched versions released in the last 30 days
     if len(product.unmatched_versions) != 0:
         for version, date in product.unmatched_versions.items():
-            days_since_release = (datetime.date.today() - date).days
+            today = datetime.datetime.now(tz=datetime.timezone.utc).date()
+            days_since_release = (today - date).days
             if days_since_release < 30:
                 logging.warning(f"{name}:{version} ({date}) not included")
                 github_output(f"{name}:{version} ({date})\n")

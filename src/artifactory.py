@@ -1,4 +1,3 @@
-import datetime
 
 from common import dates, endoflife
 from requests_html import HTMLSession
@@ -21,7 +20,7 @@ for row in r.html.find('.informaltable tbody tr'):
 
 # 7.29.9 release date is wrong on https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life.
 # Sent a mail to jfrog-help-center-feedback@jfrog.com to fix it, but in the meantime...
-product.replace_version('7.29.9', datetime.datetime(2022, 1, 11))
+product.replace_version('7.29.9', dates.date(2022, 1, 11))
 
 product.write()
 print("::endgroup::")

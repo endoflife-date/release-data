@@ -44,10 +44,20 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     text = text.strip().replace(", ", " ").replace(". ", " ").replace("(", "").replace(")", "")
     for fmt in formats:
         try:
-            date = datetime.strptime(text, fmt)
+            date = datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
             date = date.astimezone(timezone.utc) if to_utc else date
             return date
         except ValueError:
             pass
 
     raise ValueError(f"'{text}' could not be parsed as a date with any of the formats: {str(formats)}")
+
+
+def date(year: int, month: int, day: int) -> datetime:
+    """Create a datetime object with the given year, month and day, at midnight."""
+    return datetime(year, month, day, tzinfo=timezone.utc)
+
+
+def today() -> datetime:
+    """Create a datetime object with today's date, at midnight."""
+    return datetime.now(tz=timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)

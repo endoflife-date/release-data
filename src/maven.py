@@ -1,5 +1,5 @@
-import datetime
 import sys
+from datetime import datetime, timezone
 
 from common import endoflife, http
 
@@ -23,7 +23,7 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                 version_match = config.first_match(row["v"])
                 if version_match:
                     version = config.render(version_match)
-                    date = datetime.datetime.utcfromtimestamp(row["timestamp"] / 1000)
+                    date = datetime.fromtimestamp(row["timestamp"] / 1000, tz=timezone.utc)
                     product.declare_version(version, date)
 
             start += 100

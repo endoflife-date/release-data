@@ -1,5 +1,4 @@
 import re
-from datetime import datetime
 
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http
@@ -24,12 +23,12 @@ VERSION_AND_DATE_PATTERN = re.compile(r"Release Date[,|:]? (.*?)\).*?Build Numbe
 
 # .0 release dates are not available in the release notes.
 FIXED_VERSIONS = {
-    "10.0.0": datetime(2012, 5, 15),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_10
-    "11.0.0": datetime(2014, 4, 29),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_11
-    "2016.0.0": datetime(2016, 2, 16),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_(2016_Release)
-    "2018.0.0": datetime(2018, 7, 12),  # https://coldfusion.adobe.com/2018/07/new-coldfusion-release-adds-performance-monitoring-toolset-for-measuring-monitoring-and-managing-high-performing-web-apps/
-    "2021.0.0": datetime(2020, 11, 11),  # https://community.adobe.com/t5/coldfusion-discussions/introducing-adobe-coldfusion-2021-release/m-p/11585468
-    "2023.0.0": datetime(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
+    "10.0.0": dates.date(2012, 5, 15),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_10
+    "11.0.0": dates.date(2014, 4, 29),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_11
+    "2016.0.0": dates.date(2016, 2, 16),  # https://en.wikipedia.org/wiki/Adobe_ColdFusion#Adobe_ColdFusion_(2016_Release)
+    "2018.0.0": dates.date(2018, 7, 12),  # https://coldfusion.adobe.com/2018/07/new-coldfusion-release-adds-performance-monitoring-toolset-for-measuring-monitoring-and-managing-high-performing-web-apps/
+    "2021.0.0": dates.date(2020, 11, 11),  # https://community.adobe.com/t5/coldfusion-discussions/introducing-adobe-coldfusion-2021-release/m-p/11585468
+    "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
 product = endoflife.Product("coldfusion")
