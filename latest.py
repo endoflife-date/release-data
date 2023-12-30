@@ -21,22 +21,22 @@ This is written in Python because the only package that supports writing back YA
 
 
 class ReleaseCycle:
-    def __init__(self, data):
+    def __init__(self, data: dict) -> None:
         self.data = data
         self.name = data["releaseCycle"]
         self.matched = False
         self.updated = False
 
-    def update_with(self, version, date):
+    def update_with(self, version: str, date: datetime.date) -> None:
         logging.debug(f"will try to update {self.name} with {version} ({date})")
         self.matched = True
         self.__update_release_date(version, date)
         self.__update_latest(version, date)
 
-    def latest(self):
+    def latest(self) -> str | None:
         return self.data.get("latest", None)
 
-    def includes(self, version):
+    def includes(self, version: str) -> bool:
         """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
         or releases that include a dot just after the release cycle (4.1.*)
         This is important to avoid edge cases like a 4.10.x release being marked under the 4.1 release cycle."""
@@ -54,14 +54,14 @@ class ReleaseCycle:
             or char_after_prefix.isalpha()  # build number: prefix = 1.1.0, r = 1.1.0r (ex. openssl)
         )
 
-    def __update_release_date(self, version, date):
+    def __update_release_date(self, version: str, date: datetime.date) -> None:
         release_date = self.data.get("releaseDate", None)
         if release_date and release_date > date:
             logging.info(f"{self.name} release date updated from {release_date} to {date} ({version})")
             self.data["releaseDate"] = date
             self.updated = True
 
-    def __update_latest(self, version, date):
+    def __update_latest(self, version: str, date: datetime.date) -> None:
         old_latest = self.data.get("latest", None)
         old_latest_date = self.data.get("latestReleaseDate", None)
 
@@ -87,12 +87,12 @@ class ReleaseCycle:
             self.data["latestReleaseDate"] = date
             self.updated = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
 class Product:
-    def __init__(self, name: str, product_dir: Path, versions_dir: Path):
+    def __init__(self, name: str, product_dir: Path, versions_dir: Path) -> None:
         self.name = name
         self.product_path = product_dir / f"{name}.md"
         self.versions_path = versions_dir / f"{name}.json"
@@ -114,13 +114,13 @@ class Product:
         self.updated = False
         self.unmatched_versions = {}
 
-    def check_latest(self):
+    def check_latest(self) -> None:
         for release in self.releases:
             latest = release.latest()
             if release.matched and latest not in self.versions.keys():
                 logging.info(f"latest version {latest} for {release.name} not found in {self.versions_path}")
 
-    def process_version(self, version: str, date_str: str):
+    def process_version(self, version: str, date_str: str) -> None:
         date = datetime.date.fromisoformat(date_str)
 
         version_matched = False
@@ -133,7 +133,7 @@ class Product:
         if not version_matched:
             self.unmatched_versions[version] = date
 
-    def write(self):
+    def write(self) -> None:
         with open(self.product_path, "w") as product_file:
             product_file.truncate()
             product_file.write("---\n")
@@ -147,14 +147,14 @@ class Product:
             product_file.write("\n")
 
 
-def github_output(message):
+def github_output(message: str) -> None:
     logging.debug(f"GITHUB_OUTPUT += {message.strip()}")
     if os.getenv("GITHUB_OUTPUT"):
         with open(os.getenv("GITHUB_OUTPUT"), 'a') as f:
             f.write(message)
 
 
-def update_product(name, product_dir, releases_dir):
+def update_product(name: str, product_dir: Path, releases_dir: Path) -> None:
     versions_path = releases_dir / f"{name}.json"
     if not exists(versions_path):
         logging.debug(f"Skipping {name}, {versions_path} does not exist")

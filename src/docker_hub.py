@@ -9,7 +9,7 @@ Unfortunately images creation date cannot be retrieved, so we had to use the tag
 METHOD = "docker_hub"
 
 
-def fetch_releases(product, config, url):
+def fetch_releases(product: endoflife.Product, config: endoflife.AutoConfig, url: str) -> None:
     data = http.fetch_url(url).json()
 
     for result in data["results"]:

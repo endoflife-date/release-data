@@ -1,3 +1,4 @@
+import datetime
 import re
 
 from bs4 import BeautifulSoup
@@ -7,7 +8,7 @@ MILESTONE_PATTERN = re.compile(r'COS \d+ LTS')
 VERSION_PATTERN = re.compile(r"^(cos-\d+-\d+-\d+-\d+)")
 
 
-def parse_date(date_text):
+def parse_date(date_text: str) -> datetime:
     date_text = date_text.strip().replace('Date: ', '')
     date_text = re.sub(r'Sep[a-zA-Z]+', 'Sep', date_text)
     return dates.parse_date(date_text)

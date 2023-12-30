@@ -6,7 +6,7 @@ from common import dates, endoflife, http
 VERSION_DATE_PATTERN = re.compile(r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\.", re.MULTILINE)
 
 
-def get_latest_minor_versions(versions):
+def get_latest_minor_versions(versions: list[str]) -> list[str]:
     versions_split = [v.split('.') for v in versions]
 
     # Group versions by major and minor version

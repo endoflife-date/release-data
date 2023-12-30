@@ -21,7 +21,7 @@ VERSIONS_PATH = os.environ.get("VERSIONS_PATH", "releases")
 
 
 class AutoConfig:
-    def __init__(self, method: str, config: dict):
+    def __init__(self, method: str, config: dict) -> None:
         self.method = method
         self.url = config[method]
         self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
@@ -41,7 +41,7 @@ class AutoConfig:
 
 
 class ProductFrontmatter:
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name: str = name
         self.path: str = f"{PRODUCTS_PATH}/{name}.md"
 
@@ -72,13 +72,13 @@ class ProductFrontmatter:
 
 
 class Product:
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name: str = name
         self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
         self.versions = {}
 
     @staticmethod
-    def from_file(name: str):
+    def from_file(name: str) -> "Product":
         product = Product(name)
 
         if not os.path.isfile(product.versions_path):
@@ -137,7 +137,7 @@ class Product:
         return f"<{self.name}>"
 
 
-def list_products(method, products_filter=None) -> list[str]:
+def list_products(method: str, products_filter: str = None) -> list[str]:
     """Return a list of products that are using the same given update method.
     """
     products = []

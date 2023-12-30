@@ -1,4 +1,5 @@
 select = [
+  "ANN", # flake8-annotations
   "B", # flake8-bugbear
   "C90", # mccabe
   "E", # pycodestyle errors
@@ -13,5 +14,6 @@ select = [
   "YTT", # flake8-2020
 ]
 extend-ignore = [
+  "ANN101", # Missing type annotation for self in method
   "E501", # Line too long
 ]
