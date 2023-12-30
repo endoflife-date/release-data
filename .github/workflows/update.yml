@@ -77,6 +77,6 @@ jobs:
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
 
       # we still want to easily know if something went wrong
-      - name: Set job status
+      - name: Restore update.py failure
         if: steps.update_data.outcome != 'success'
         run: exit 1
