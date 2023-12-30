@@ -1,4 +1,5 @@
 select = [
+  "C90", # mccabe
   "E", # pycodestyle errors
   "F", # pyflakes errors
   "I", # isort
