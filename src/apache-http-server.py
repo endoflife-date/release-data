@@ -27,7 +27,7 @@ for branch in git.list_branches("refs/heads/?.?.x"):
     if not release_notes_file.exists():
         continue
 
-    with open(release_notes_file, "rb") as f:
+    with release_notes_file.open("rb") as f:
         release_notes = f.read().decode("utf-8", errors="ignore")
 
     for pattern in VERSION_AND_DATE_PATTERNS:

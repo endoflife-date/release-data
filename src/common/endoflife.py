@@ -3,7 +3,7 @@ import logging
 import os
 import re
 from datetime import datetime, timezone
-from glob import glob
+from pathlib import Path
 
 import frontmatter
 from liquid import Template
@@ -16,8 +16,8 @@ DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+
 DEFAULT_VERSION_PATTERN = re.compile(DEFAULT_VERSION_REGEX)
 DEFAULT_VERSION_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{% endif %}{% endif %}{% endif %}"
 
-PRODUCTS_PATH = os.environ.get("PRODUCTS_PATH", "website/products")
-VERSIONS_PATH = os.environ.get("VERSIONS_PATH", "releases")
+PRODUCTS_PATH = Path(os.environ.get("PRODUCTS_PATH", "website/products"))
+VERSIONS_PATH = Path(os.environ.get("VERSIONS_PATH", "releases"))
 
 
 class AutoConfig:
@@ -44,11 +44,11 @@ class AutoConfig:
 class ProductFrontmatter:
     def __init__(self, name: str) -> None:
         self.name: str = name
-        self.path: str = f"{PRODUCTS_PATH}/{name}.md"
+        self.path: Path = PRODUCTS_PATH / f"{name}.md"
 
         self.data = None
-        if os.path.isfile(self.path):
-            with open(self.path) as f:
+        if self.path.is_file():
+            with self.path.open() as f:
                 self.data = frontmatter.load(f)
                 logging.info(f"loaded product data for {self.name} from {self.path}")
         else:
@@ -76,15 +76,15 @@ class ProductFrontmatter:
 class Product:
     def __init__(self, name: str) -> None:
         self.name: str = name
-        self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
+        self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
         self.versions = {}
 
     @staticmethod
     def from_file(name: str) -> "Product":
         product = Product(name)
 
-        if not os.path.isfile(product.versions_path):
-            with open(product.versions_path) as f:
+        if product.versions_path.is_file():
+            with product.versions_path.open() as f:
                 for version, date in json.load(f).items():
                     date_obj = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
                     product.versions[version] = date_obj
@@ -131,7 +131,7 @@ class Product:
 
     def write(self) -> None:
         versions = {version: date.strftime("%Y-%m-%d") for version, date in self.versions.items()}
-        with open(self.versions_path, "w") as f:
+        with self.versions_path.open("w") as f:
             f.write(json.dumps(dict(
                 # sort by date then version (desc)
                 sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True),
@@ -146,12 +146,12 @@ def list_products(method: str, products_filter: str = None) -> list[str]:
     """
     products = []
 
-    for product_file in glob(f"{PRODUCTS_PATH}/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
+    for product_file in PRODUCTS_PATH.glob("*.md"):
+        product_name = product_file.stem
         if products_filter and product_name != products_filter:
             continue
 
-        with open(product_file) as f:
+        with product_file.open() as f:
             data = frontmatter.load(f)
             if "auto" in data:
                 matching_configs = list(filter(lambda config: method in config, data["auto"]))

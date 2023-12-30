@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import re
-from os.path import exists
 from pathlib import Path
 
 import frontmatter
@@ -97,7 +96,7 @@ class Product:
         self.product_path = product_dir / f"{name}.md"
         self.versions_path = versions_dir / f"{name}.json"
 
-        with open(self.product_path) as product_file:
+        with self.product_path.open() as product_file:
             # First read the frontmatter of the product file.
             yaml = YAML()
             yaml.preserve_quotes = True
@@ -107,7 +106,7 @@ class Product:
             product_file.seek(0)
             _, self.content = frontmatter.parse(product_file.read())
 
-        with open(self.versions_path) as versions_file:
+        with self.versions_path.open() as versions_file:
             self.versions = json.loads(versions_file.read())
 
         self.releases = [ReleaseCycle(release) for release in self.data["releases"]]
@@ -134,7 +133,7 @@ class Product:
             self.unmatched_versions[version] = date
 
     def write(self) -> None:
-        with open(self.product_path, "w") as product_file:
+        with self.product_path.open("w") as product_file:
             product_file.truncate()
             product_file.write("---\n")
 
@@ -150,13 +149,13 @@ class Product:
 def github_output(message: str) -> None:
     logging.debug(f"GITHUB_OUTPUT += {message.strip()}")
     if os.getenv("GITHUB_OUTPUT"):
-        with open(os.getenv("GITHUB_OUTPUT"), 'a') as f:
+        with open(os.getenv("GITHUB_OUTPUT"), 'a') as f:  # NOQA: PTH123
             f.write(message)
 
 
 def update_product(name: str, product_dir: Path, releases_dir: Path) -> None:
     versions_path = releases_dir / f"{name}.json"
-    if not exists(versions_path):
+    if not versions_path.exists():
         logging.debug(f"Skipping {name}, {versions_path} does not exist")
         return
 

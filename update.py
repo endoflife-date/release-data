@@ -23,7 +23,7 @@ def github_output(name: str, value: str) -> None:
     else:
         command = f"{name}={value}"
 
-    with open(os.environ["GITHUB_OUTPUT"], 'a') as github_output_var:
+    with open(os.environ["GITHUB_OUTPUT"], 'a') as github_output_var:  # NOQA: PTH123
         print(command, file=github_output_var)
         logging.debug(f"Wrote to GITHUB_OUTPUT: {name}={value.strip()}")
 
@@ -33,17 +33,17 @@ def add_summary_line(line: str) -> None:
         logging.debug(f"GITHUB_STEP_SUMMARY does not exist, but would have written: {line}")
         return
 
-    with open(os.environ["GITHUB_STEP_SUMMARY"], 'a') as github_step_summary:
+    with open(os.environ["GITHUB_STEP_SUMMARY"], 'a') as github_step_summary:  # NOQA: PTH123
         print(line, file=github_step_summary)
 
 
-SRC_DIR = 'src'
-DATA_DIR = 'releases'
+SRC_DIR = Path('src')
+DATA_DIR = Path('releases')
 
 logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 
 # Run scripts
-scripts = sorted([os.path.join(SRC_DIR, file) for file in os.listdir(SRC_DIR) if file.endswith('.py')])
+scripts = sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')])
 some_script_failed = False
 
 add_summary_line("## Script execution summary\n")
@@ -53,7 +53,7 @@ for script in scripts:
     logging.info(f"start running {script}")
 
     start = time.perf_counter()
-    child = subprocess.run([sys.executable, script], timeout=300)
+    child = subprocess.run([sys.executable, script])  # timeout handled in subscripts
     elapsed_seconds = time.perf_counter() - start
 
     if child.returncode != 0:
@@ -67,34 +67,35 @@ for script in scripts:
 # Generate commit message
 subprocess.run('git add --all', timeout=10, check=True, shell=True)  # to also get new files in git diff
 git_diff = subprocess.run('git diff --name-only --staged', capture_output=True, timeout=10, check=True, shell=True)
-updated_files = sorted([Path(file) for file in git_diff.stdout.decode('utf-8').split('\n') if file.startswith(DATA_DIR)])
-logging.info(f"Updated files: {updated_files}")
+updated_files = [Path(file) for file in git_diff.stdout.decode('utf-8').split('\n')]
+updated_product_files = sorted([file for file in updated_files if file.parent == DATA_DIR])
+logging.info(f"Updated product files: {[file.name for file in updated_product_files]}")
 
 add_summary_line("## Update summary\n")
-if updated_files:
+if updated_product_files:
     # get modified files content
     new_files_content = {}
-    for path in updated_files:
-        with open(path) as file:
+    for path in updated_product_files:
+        with path.open() as file:
             new_files_content[path] = json.load(file)
 
     # get original files content
     old_files_content = {}
     subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
-    for path in updated_files:
+    for path in updated_product_files:
         if path.exists():
-            with open(path) as file:
+            with path.open() as file:
                 old_files_content[path] = json.load(file)
         else:  # new file
             old_files_content[path] = {}
     subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
 
     # Generate commit message
-    product_names = ', '.join([path.stem for path in updated_files])
+    product_names = ', '.join([path.stem for path in updated_product_files])
     commit_message = f"🤖: {product_names}\n\n"
-    add_summary_line(f"Updated {len(updated_files)} products: {product_names}.")
+    add_summary_line(f"Updated {len(updated_product_files)} products: {product_names}.")
 
-    for path in updated_files:
+    for path in updated_product_files:
         add_summary_line(f"### {path.stem}\n")
         commit_message += f"{path.stem}:\n"
 
