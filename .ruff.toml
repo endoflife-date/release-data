@@ -9,7 +9,8 @@ select = [
   "COM", # flake8-commas
   "DTZ", # flake8-commas
   "E", # pycodestyle errors
-  "EM", # pycodestyle errors
+  "EM", # flake8-errmsg
+  "EXE", # flake8-executable
   "F", # pyflakes errors
   "I", # isort
   "ISC", # flake8-implicit-str-concat
