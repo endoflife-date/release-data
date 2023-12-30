@@ -38,6 +38,6 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
             return fetch_urls(urls, data, headers, next_max_retries, backoff_factor, timeout)
 
 
-def fetch_url(url, data: any = None, headers: dict[str, str] = None,
+def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,
               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Response:
     return fetch_urls([url], data, headers, max_retries, backoff_factor, timeout)[0]

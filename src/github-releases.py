@@ -13,7 +13,7 @@ Note: GraphQL API and GitHub CLI are used because it's simpler: no need to manag
 METHOD = "github_releases"
 
 
-def fetch_releases(repo_id):
+def fetch_releases(repo_id: str) -> list[dict]:
     logging.info(f"fetching {repo_id} GitHub releases")
     (owner, repo) = repo_id.split('/')
     child = subprocess.run("""gh api graphql --paginate -f query='

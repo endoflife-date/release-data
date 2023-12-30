@@ -10,7 +10,7 @@ from pathlib import Path
 from deepdiff import DeepDiff
 
 
-def github_output(name, value):
+def github_output(name: str, value: str) -> None:
     if "GITHUB_OUTPUT" not in os.environ:
         logging.debug(f"GITHUB_OUTPUT does not exist, but would have written: {name}={value.strip()}")
         return
@@ -28,7 +28,7 @@ def github_output(name, value):
         logging.debug(f"Wrote to GITHUB_OUTPUT: {name}={value.strip()}")
 
 
-def add_summary_line(line):
+def add_summary_line(line: str) -> None:
     if "GITHUB_STEP_SUMMARY" not in os.environ:
         logging.debug(f"GITHUB_STEP_SUMMARY does not exist, but would have written: {line}")
         return

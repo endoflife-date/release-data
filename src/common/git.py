@@ -8,7 +8,7 @@ class Git:
     """Git cli wrapper
     """
 
-    def __init__(self, url: str):
+    def __init__(self, url: str) -> None:
         self.url: str = url
         self.repo_dir: Path = Path(f"~/.cache/git/{sha1(url.encode()).hexdigest()}").expanduser()
 
@@ -22,7 +22,7 @@ class Git:
         except ChildProcessError as ex:
             raise RuntimeError(f"Failed to run '{cmd}': {ex}") from ex
 
-    def setup(self, bare: bool = False):
+    def setup(self, bare: bool = False) -> None:
         """Creates the repository path and runs:
         git init
         git remote add origin $url
@@ -34,7 +34,7 @@ class Git:
             self._run(f"remote add origin {self.url}")
 
     # See https://stackoverflow.com/a/65746233/374236
-    def list_tags(self):
+    def list_tags(self) -> list[tuple[str, str]]:
         """Fetch and return tags matching the given`pattern`"""
         # See https://stackoverflow.com/a/65746233/374236
         self._run("config --local extensions.partialClone true")
@@ -44,7 +44,7 @@ class Git:
         tags_with_date = self._run("tag --list --format='%(refname:strip=2) %(creatordate:short)'")
         return [tag_with_date.split(" ") for tag_with_date in tags_with_date]
 
-    def list_branches(self, pattern: str):
+    def list_branches(self, pattern: str) -> list[str]:
         """Uses ls-remote to fetch the branch names
         `pattern` uses fnmatch style globbing
         """
@@ -56,7 +56,7 @@ class Git:
 
         return [line.split("\t")[1][11:] for line in lines if "\t" in line]
 
-    def checkout(self, branch: str, file_list: list[str] = None):
+    def checkout(self, branch: str, file_list: list[str] = None) -> None:
         """Checks out a branch
         If `file_list` is given, sparse-checkout is used to save bandwidth
         and only download the given files
