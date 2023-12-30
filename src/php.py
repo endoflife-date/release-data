@@ -7,8 +7,7 @@ print(f"::group::{product.name}")
 
 # Fetch major versions
 latest_by_major = http.fetch_url(MAIN_URL).json()
-major_versions = [major for major in latest_by_major]
-major_version_urls = [f"{MAIN_URL}&version={major_version}" for major_version in major_versions]
+major_version_urls = [f"{MAIN_URL}&version={major_version}" for major_version in latest_by_major]
 
 # Fetch all versions for major versions
 for major_versions_response in http.fetch_urls(major_version_urls):
