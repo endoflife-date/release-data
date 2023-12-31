@@ -10,7 +10,6 @@ URLS = [
 ]
 
 product = endoflife.Product("visualstudio")
-print(f"::group::{product.name}")
 for response in http.fetch_urls(URLS):
     soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -34,4 +33,3 @@ for response in http.fetch_urls(URLS):
                 product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

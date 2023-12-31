@@ -10,7 +10,6 @@ from common import dates, endoflife, http
 BASE_URL = "https://unity.com/releases/editor/qa/lts-releases"
 
 product = endoflife.Product("unity")
-print(f"::group::{product.name}")
 next_page_url = BASE_URL
 
 # Do not try to fetch multiple pages in parallel: it is raising a lot of errors and make the overall process slower.
@@ -27,4 +26,3 @@ while next_page_url:
     next_page_url = BASE_URL + next_link.attrs['href'] if next_link else None
 
 product.write()
-print("::endgroup::")

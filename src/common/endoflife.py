@@ -8,7 +8,8 @@ from pathlib import Path
 import frontmatter
 from liquid import Template
 
-logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
+# Do not update the format: it's also used to declare groups in the GitHub Actions logs.
+logging.basicConfig(format="%(message)s", level=logging.INFO)
 
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
 # Major version must be >= 1.
@@ -78,6 +79,7 @@ class Product:
         self.name: str = name
         self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
         self.versions = {}
+        logging.info(f"::group::{self}")
 
     @staticmethod
     def from_file(name: str) -> "Product":
@@ -88,9 +90,9 @@ class Product:
                 for version, date in json.load(f).items():
                     date_obj = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
                     product.versions[version] = date_obj
-            logging.info(f"loaded versions data for {product.name} from {product.versions_path}")
+            logging.info(f"loaded versions data for {product} from {product.versions_path}")
         else:
-            logging.warning(f"no versions data found for {product.name} at {product.versions_path}")
+            logging.warning(f"no versions data found for {product} at {product.versions_path}")
 
         return product
 
@@ -103,11 +105,11 @@ class Product:
     def declare_version(self, version: str, date: datetime) -> None:
         if version in self.versions:
             if self.versions[version] != date:
-                logging.warning(f"overwriting version {version} ({self.versions[version]} -> {date}) for {self.name}")
+                logging.warning(f"overwriting version {version} ({self.versions[version]} -> {date}) for {self}")
             else:
                 return  # already declared
 
-        logging.info(f"adding version {version} ({date}) to {self.name}")
+        logging.info(f"adding version {version} ({date}) to {self}")
         self.versions[version] = date
 
     def declare_versions(self, dates_by_version: dict[str, datetime]) -> None:
@@ -116,18 +118,18 @@ class Product:
 
     def replace_version(self, version: str, date: datetime) -> None:
         if version not in self.versions:
-            msg = f"version {version} cannot be replaced as it does not exist for {self.name}"
+            msg = f"version {version} cannot be replaced as it does not exist for {self}"
             raise ValueError(msg)
 
-        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) in {self.name}")
+        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) in {self}")
         self.versions[version] = date
 
     def remove_version(self, version: str) -> None:
         if not self.has_version(version):
-            logging.warning(f"version {version} cannot be removed as it does not exist for {self.name}")
+            logging.warning(f"version {version} cannot be removed as it does not exist for {self}")
             return
 
-        logging.info(f"removing version {version} ({self.versions.pop(version)}) from {self.name}")
+        logging.info(f"removing version {version} ({self.versions.pop(version)}) from {self}")
 
     def write(self) -> None:
         versions = {version: date.strftime("%Y-%m-%d") for version, date in self.versions.items()}
@@ -136,9 +138,10 @@ class Product:
                 # sort by date then version (desc)
                 sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True),
             ), indent=2))
+        logging.info("::endgroup::")
 
     def __repr__(self) -> str:
-        return f"<{self.name}>"
+        return self.name
 
 
 def list_products(method: str, products_filter: str = None) -> list[str]:

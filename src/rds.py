@@ -16,7 +16,6 @@ PRODUCTS = {
 VERSION_REGEX = re.compile(r"(?P<version>\d+(?:\.\d+)*)", flags=re.IGNORECASE)  # https://regex101.com/r/BY1vwV/1
 
 for product_name, url in PRODUCTS.items():
-    print(f"::group::{product_name}")
     product = endoflife.Product(product_name)
     response = http.fetch_url(url)
     soup = BeautifulSoup(response.text, features="html5lib")
@@ -34,4 +33,3 @@ for product_name, url in PRODUCTS.items():
                 product.declare_version(version, date)
 
     product.write()
-    print("::endgroup::")

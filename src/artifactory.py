@@ -6,7 +6,6 @@ from requests_html import HTMLSession
 needed to render the page."""
 
 product = endoflife.Product("artifactory")
-print(f"::group::{product.name}")
 r = HTMLSession().get("https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life")
 r.html.render(sleep=2, scrolldown=5)
 
@@ -23,4 +22,3 @@ for row in r.html.find('.informaltable tbody tr'):
 product.replace_version('7.29.9', dates.date(2022, 1, 11))
 
 product.write()
-print("::endgroup::")

@@ -3,7 +3,6 @@ from common import dates, endoflife, http
 MAIN_URL = "https://www.php.net/releases/index.php?json&max=-1"
 
 product = endoflife.Product("php")
-print(f"::group::{product.name}")
 
 # Fetch major versions
 latest_by_major = http.fetch_url(MAIN_URL).json()
@@ -18,4 +17,3 @@ for major_versions_response in http.fetch_urls(major_version_urls):
             product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

@@ -11,7 +11,6 @@ A few of the older versions, such as 'Satellite 6.1 GA Release (Build 6.1.1)', w
 VERSION_PATTERN = re.compile(r"^Satellite (?P<version>\d+\.\d+\.\d+([.-]\d+)?) ([Uu]pdate|[Rr]elease)$")
 
 product = endoflife.Product("redhat-satellite")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://access.redhat.com/articles/1365633")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -27,4 +26,3 @@ for table in soup.findAll("tbody"):
             product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

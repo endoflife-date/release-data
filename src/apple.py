@@ -51,14 +51,12 @@ VERSION_PATTERNS = {
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
-print("::group::apple")
+logging.info("::group::apple")
 soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
-print("::endgroup::")
+logging.info("::endgroup::")
 
 for product_name in VERSION_PATTERNS:
     product = endoflife.Product(product_name)
-    print(f"::group::{product.name}")
-
     for soup in soups:
         versions_table = soup.find(id="tableWraper")
         versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
@@ -85,4 +83,3 @@ for product_name in VERSION_PATTERNS:
                         logging.info(f"ignoring version {version} ({date}) for {product.name}")
 
     product.write()
-    print("::endgroup::")

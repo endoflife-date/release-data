@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from common import dates, endoflife, http
 
 product = endoflife.Product("graalvm")
-print(f"::group::{product.name}")
 release_calendar = http.fetch_url("https://www.graalvm.org/release-calendar/")
 release_calendar_soup = BeautifulSoup(release_calendar.text, features="html5lib")
 
@@ -17,4 +16,3 @@ for tr in release_calendar_soup.findAll("table")[1].find("tbody").findAll("tr"):
         product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

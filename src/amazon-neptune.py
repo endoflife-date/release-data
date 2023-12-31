@@ -9,7 +9,6 @@ RSS_URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
 VERSION_PATTERN = re.compile(r"^Engine version (?P<version>[0-9R.]+)$")
 
 product = endoflife.Product("amazon-neptune")
-print(f"::group::{product.name}")
 rss_response = http.fetch_url(RSS_URL)
 rss = xml.dom.minidom.parseString(rss_response.text)
 
@@ -22,4 +21,3 @@ for entry in rss.getElementsByTagName("item"):
         product.declare_version(version_match['version'], dates.parse_datetime(date_str))
 
 product.write()
-print("::endgroup::")

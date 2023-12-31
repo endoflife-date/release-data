@@ -8,7 +8,6 @@ from common.git import Git
 VERSION_AND_DATE_PATTERN = re.compile(r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$", re.MULTILINE)
 
 product = endoflife.Product("red-hat-openshift")
-print(f"::group::{product.name}")
 git = Git("https://github.com/openshift/openshift-docs.git")
 git.setup()
 
@@ -28,4 +27,3 @@ for branch in git.list_branches("refs/heads/enterprise-[4-9]*"):
             product.declare_version(version, dates.parse_date(date_str))
 
 product.write()
-print("::endgroup::")

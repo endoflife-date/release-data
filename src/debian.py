@@ -42,7 +42,6 @@ def extract_point_versions(p: endoflife.Product, repo_dir: Path) -> None:
 
 
 product = endoflife.Product("debian")
-print(f"::group::{product.name}")
 git = Git("https://salsa.debian.org/webmaster-team/webwml.git")
 git.setup()
 git.checkout("master", file_list=["english/News"])
@@ -51,4 +50,3 @@ extract_major_versions(product, git.repo_dir)
 extract_point_versions(product, git.repo_dir)
 
 product.write()
-print("::endgroup::")

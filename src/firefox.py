@@ -9,7 +9,6 @@ from common import dates, endoflife, http
 Versions lower than 10.0 are ignored because too difficult to parse."""
 
 product = endoflife.Product("firefox")
-print(f"::group::{product.name}")
 releases_page = http.fetch_url("https://www.mozilla.org/en-US/firefox/releases/")
 releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
 releases_list = releases_soup.find_all("ol", class_="c-release-list")
@@ -30,4 +29,3 @@ for release_notes in http.fetch_urls(release_notes_urls):
     # versions < 10.0 are ignored
 
 product.write()
-print("::endgroup::")

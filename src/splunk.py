@@ -31,7 +31,6 @@ def get_latest_minor_versions(versions: list[str]) -> list[str]:
 
 
 product = endoflife.Product("splunk")
-print(f"::group::{product.name}")
 main = http.fetch_url("https://docs.splunk.com/Documentation/Splunk")
 soup = BeautifulSoup(main.text, features="html5lib")
 
@@ -48,4 +47,3 @@ for response in http.fetch_urls(latest_minor_versions_urls):
         product.declare_version(version_str, date)
 
 product.write()
-print("::endgroup::")

@@ -1,7 +1,6 @@
 from common import dates, endoflife, http
 
 product = endoflife.Product("typo3")
-print(f"::group::{product.name}")
 data = http.fetch_url("https://get.typo3.org/api/v1/release/").json()
 for v in data:
     if v['type'] == 'development':
@@ -12,4 +11,3 @@ for v in data:
     product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")
