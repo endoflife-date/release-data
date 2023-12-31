@@ -44,8 +44,14 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     text = text.strip().replace(", ", " ").replace(". ", " ").replace("(", "").replace(")", "")
     for fmt in formats:
         try:
-            date = datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
-            return date.astimezone(timezone.utc) if to_utc else date
+            dt = datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
+
+            if to_utc:
+                dt = dt.astimezone(timezone.utc)
+            elif dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+
+            return dt
         except ValueError:
             pass
 

@@ -73,7 +73,7 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
             summary.println(f"### {product_name}\n")
             commit_message.println(f"{product_name}:")
 
-            diff = DeepDiff(old_content[path], new_content[path], ignore_order=True)
+            diff = DeepDiff(old_content[path], new_content[path], ignore_order=True, verbose_level=2)
             for line in diff.pretty().split('\n'):
                 summary.println(f"- {line}")
                 commit_message.println(f"- {line}")

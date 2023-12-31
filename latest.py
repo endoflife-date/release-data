@@ -22,8 +22,8 @@ This is written in Python because the only package that supports writing back YA
 
 
 class ReleaseCycle:
-    def __init__(self, product_name: str, data: dict) -> None:
-        self.product_name = product_name
+    def __init__(self, product: "Product", data: dict) -> None:
+        self.product = product.name
         self.data = data
         self.name = data["releaseCycle"]
         self.matched = False
@@ -90,14 +90,14 @@ class ReleaseCycle:
             self.updated = True
 
     def __str__(self) -> str:
-        return self.product_name + '#' + self.name
+        return self.product + '#' + self.name
 
 
 class Product:
     def __init__(self, name: str, product_dir: Path, versions_dir: Path) -> None:
         self.name = name
         self.product_path = product_dir / f"{name}.md"
-        self.versions_path = versions_dir / f"{name}.json"
+        self.release_data_path = versions_dir / f"{name}.json"
 
         with self.product_path.open() as product_file:
             # First read the frontmatter of the product file.
@@ -109,31 +109,32 @@ class Product:
             product_file.seek(0)
             _, self.content = frontmatter.parse(product_file.read())
 
-        with self.versions_path.open() as versions_file:
-            self.versions = json.loads(versions_file.read())
+        with self.release_data_path.open() as release_data_file:
+            self.release_data = json.loads(release_data_file.read())
 
-        self.releases = [ReleaseCycle(name, release) for release in self.data["releases"]]
+        self.releases = [ReleaseCycle(self, release) for release in self.data["releases"]]
         self.updated = False
         self.unmatched_versions = {}
 
     def check_latest(self) -> None:
         for release in self.releases:
             latest = release.latest()
-            if release.matched and latest not in self.versions:
-                logging.info(f"latest version {latest} for {release} not found in {self.versions_path}")
+            if release.matched and latest not in self.release_data["versions"]:
+                logging.info(f"latest version {latest} for {release} not found in {self.release_data_path}")
 
-    def process_version(self, version: str, date_str: str) -> None:
-        date = datetime.date.fromisoformat(date_str)
+    def process_version(self, version_data: dict) -> None:
+        name = version_data["name"]
+        date = datetime.date.fromisoformat(version_data["date"])
 
         version_matched = False
         for release in self.releases:
-            if release.includes(version):
+            if release.includes(name):
                 version_matched = True
-                release.update_with(version, date)
+                release.update_with(name, date)
                 self.updated = self.updated or release.updated
 
         if not version_matched:
-            self.unmatched_versions[version] = date
+            self.unmatched_versions[name] = date
 
     def write(self) -> None:
         with self.product_path.open("w") as product_file:
@@ -156,8 +157,8 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
         return
 
     product = Product(name, product_dir, releases_dir)
-    for version, date_str in product.versions.items():
-        product.process_version(version, date_str)
+    for version_data in product.release_data["versions"].values():
+        product.process_version(version_data)
     product.check_latest()
 
     if product.updated:
