@@ -28,40 +28,41 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache
-          # The cache is reset on the first build of every week this way.
-          # Change the -1 part if you need to force reset the cache
+          # The cache is reset on the first build of every week this way. If you wish to reset the cache manually,
+          # you can do it on https://github.com/endoflife-date/release-data/actions/caches or by updating
+          # the last part of the key below.
           key: "${{ steps.current-time.outputs.formattedTime }}-2"
 
-      - uses: actions/checkout@v4
-        name: Clone self repository
+      - name: Clone self repository
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      - uses: actions/checkout@v4
-        id: clone_same_branch
-        name: Clone website (Same Branch)
-        continue-on-error: true
+      - name: Clone website repository
+        uses: actions/checkout@v4
         with:
           repository: endoflife-date/endoflife.date
           path: website
           submodules: false
-          ref: ${{github.ref_name}}
+          fetch-depth: 0 # fetch all history for all branches and tags, needed for next step
 
-      - uses: actions/checkout@v4
-        name: Clone website (Main)
-        if: steps.clone_same_branch.outcome != 'success'
-        with:
-          repository: endoflife-date/endoflife.date
-          path: website
-          submodules: false
+      # This is useful for testing changes that require updates on both release-data and website repositories.
+      # This step must never fail because in most case the branch will not exist on the website repository.
+      - name: Checkout the same branch on website
+        run: |
+          cd website
+          git checkout --progress --force -B ${{ github.ref_name }} refs/remotes/origin/${{ github.ref_name }} || true
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-      - run: pip install -r requirements.txt
 
-      - name: Update data
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Update release data
         id: update_data
         env:
           PYPPETEER_HOME: /home/runner/.cache/pyppeteer # Add chromium downloaded by pyppeteer to the cache.
