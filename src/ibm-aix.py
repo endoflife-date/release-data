@@ -7,7 +7,6 @@ URLS = [
 ]
 
 product = endoflife.Product("ibm-aix")
-print(f"::group::{product.name}")
 for page in http.fetch_urls(URLS):
     page_soup = BeautifulSoup(page.text, features="html5lib")
 
@@ -19,4 +18,3 @@ for page in http.fetch_urls(URLS):
             product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

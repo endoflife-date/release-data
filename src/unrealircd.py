@@ -6,7 +6,6 @@ from common import dates, endoflife, http
 DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 product = endoflife.Product("unrealircd")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://www.unrealircd.org/docwiki/index.php?title=History_of_UnrealIRCd_releases&action=raw")
 wikicode = mwparserfromhell.parse(response.text)
 
@@ -22,4 +21,3 @@ for tr in wikicode.ifilter_tags(matches=lambda node: node.tag == "tr"):
         product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

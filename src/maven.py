@@ -8,8 +8,6 @@ METHOD = "maven"
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name in endoflife.list_products(METHOD, p_filter):
     product = endoflife.Product(product_name)
-    print(f"::group::{product.name}")
-
     product_frontmatter = endoflife.ProductFrontmatter(product.name)
     for config in product_frontmatter.get_auto_configs(METHOD):
         start = 0
@@ -31,4 +29,3 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                 break
 
     product.write()
-    print("::endgroup::")

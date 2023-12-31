@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from common import dates, endoflife, http
 
 product = endoflife.Product("sles")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://www.suse.com/lifecycle")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -31,4 +30,3 @@ for detail_id in [f"detail{row['id']}" for row in sles_header_rows]:
             logging.info(f"Ignoring {version}: date '{date_str}' could not be parsed")
 
 product.write()
-print("::endgroup::")

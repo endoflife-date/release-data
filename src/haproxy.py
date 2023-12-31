@@ -7,7 +7,6 @@ CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
 DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1
 
 product = endoflife.Product("haproxy")
-print(f"::group::{product.name}")
 # First, get all minor releases from the download page
 download = http.fetch_url('https://www.haproxy.org/download/')
 download_soup = BeautifulSoup(download.text, features="html5lib")
@@ -31,4 +30,3 @@ for changelog in http.fetch_urls(changelog_urls):
             product.declare_version(version, dates.date(int(year), int(month), int(day)))
 
 product.write()
-print("::endgroup::")

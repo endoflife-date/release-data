@@ -11,7 +11,6 @@ ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IG
 VERSION_PATTERN = re.compile(r"Looker\s+(?P<version>\d+\.\d+)", re.IGNORECASE)
 
 product = endoflife.Product("looker")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://cloud.google.com/feeds/looker-release-notes.xml")
 rss = xml.dom.minidom.parseString(response.text)
 
@@ -33,4 +32,3 @@ for item in rss.getElementsByTagName("entry"):
     product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

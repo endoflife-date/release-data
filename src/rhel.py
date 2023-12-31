@@ -7,7 +7,6 @@ from common import dates, endoflife, http
 VERSION_PATTERN = re.compile(r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?")
 
 product = endoflife.Product("redhat")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://access.redhat.com/articles/3078")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -26,4 +25,3 @@ for tr in soup.findAll("tr"):
     product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

@@ -16,7 +16,6 @@ VERSION_AND_DATE_PATTERNS = [
 ]
 
 product = endoflife.Product("apache-http-server")
-print(f"::group::{product.name}")
 git = Git("https://github.com/apache/httpd.git")
 git.setup()
 
@@ -35,4 +34,3 @@ for branch in git.list_branches("refs/heads/?.?.x"):
             product.declare_version(version, dates.parse_date(date_str))
 
 product.write()
-print("::endgroup::")

@@ -13,7 +13,6 @@ them though. Note that this would also be unnecessary if it was possible to disa
 release dates updates in the latest.py script."""
 
 product = endoflife.Product("aws-lambda")
-print(f"::group::{product.name}")
 old_product = endoflife.Product.from_file(product.name)
 product_frontmatter = endoflife.ProductFrontmatter(product.name)
 response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
@@ -38,4 +37,3 @@ for table in soup.find_all("table"):
         product.declare_version(identifier, date)
 
 product.write()
-print("::endgroup::")

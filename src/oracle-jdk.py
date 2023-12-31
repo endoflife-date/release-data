@@ -6,7 +6,6 @@ from requests_html import HTMLSession
 This script is using requests-html because the page needs JavaScript to render correctly."""
 
 product = endoflife.Product("oracle-jdk")
-print(f"::group::{product.name}")
 r = HTMLSession().get('https://www.java.com/releases/')
 r.html.render(sleep=1, scrolldown=3)
 
@@ -22,4 +21,3 @@ for row in r.html.find('#released tr'):
 
 product.remove_version('1.0_alpha')  # the only version we don't want, a regex is not needed
 product.write()
-print("::endgroup::")

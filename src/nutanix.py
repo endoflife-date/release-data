@@ -9,7 +9,6 @@ PRODUCTS = {
 }
 
 for product_name, url in PRODUCTS.items():
-    print(f"::group::{product_name}")
     product = endoflife.Product(product_name)
 
     data = http.fetch_url(url).json()
@@ -20,4 +19,3 @@ for product_name, url in PRODUCTS.items():
             product.declare_version(version, date)
 
     product.write()
-    print("::endgroup::")

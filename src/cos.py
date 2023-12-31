@@ -15,7 +15,6 @@ def parse_date(date_text: str) -> datetime:
 
 
 product = endoflife.Product("cos")
-print(f"::group::{product.name}")
 main = http.fetch_url("https://cloud.google.com/container-optimized-os/docs/release-notes/")
 main_soup = BeautifulSoup(main.text, features="html5lib")
 milestones = [cell.text.split(' ')[1] for cell in main_soup.find_all('td', string=MILESTONE_PATTERN)]
@@ -44,4 +43,3 @@ for milestone in http.fetch_urls(milestones_urls):
             product.declare_version(version_match.group(1), date)
 
 product.write()
-print("::endgroup::")

@@ -7,7 +7,6 @@ Only 18.0.20.3 and later will be picked up, as the format of the change log for 
 there is no entry for GA of version 18.0.18 and older."""
 
 product = endoflife.Product("plesk")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://docs.plesk.com/release-notes/obsidian/change-log")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -24,4 +23,3 @@ for release in soup.find_all("div", class_="changelog-entry--obsidian"):
     product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

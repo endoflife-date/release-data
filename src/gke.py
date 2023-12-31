@@ -14,7 +14,6 @@ URL_BY_PRODUCT = {
 
 for product_name, url in URL_BY_PRODUCT.items():
     product = endoflife.Product(product_name)
-    print(f"::group::{product.name}")
     relnotes = http.fetch_url(url)
     relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 
@@ -29,4 +28,3 @@ for product_name, url in URL_BY_PRODUCT.items():
                         product.declare_version(version, date)
 
     product.write()
-    print("::endgroup::")

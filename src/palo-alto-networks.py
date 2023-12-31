@@ -1,3 +1,4 @@
+import logging
 import re
 
 from bs4 import BeautifulSoup
@@ -10,15 +11,13 @@ IDENTIFIERS_BY_PRODUCT = {
 }
 
 # all products are on the same page, it's faster to fetch it only once
-print("::group::palo-alto-networks")
+logging.info("::group::palo-alto-networks")
 response = http.fetch_url("https://www.paloaltonetworks.com/services/support/end-of-life-announcements/end-of-life-summary")
 soup = BeautifulSoup(response.text, features="html5lib")
-print("::endgroup::")
+logging.info("::endgroup::")
 
 for product_name, identifier in IDENTIFIERS_BY_PRODUCT.items():
-    print(f"::group::{product_name}")
     product = endoflife.Product(product_name)
-
     table = soup.find(id=identifier)
     for tr in table.findAll("tr")[3:]:
         td_list = tr.findAll("td")
@@ -37,4 +36,3 @@ for product_name, identifier in IDENTIFIERS_BY_PRODUCT.items():
         product.declare_version(version, date)
 
     product.write()
-    print("::endgroup::")

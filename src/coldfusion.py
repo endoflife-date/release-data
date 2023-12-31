@@ -32,8 +32,6 @@ FIXED_VERSIONS = {
 }
 
 product = endoflife.Product("coldfusion")
-print(f"::group::{product.name}")
-
 for changelog in http.fetch_urls(URLS):
     changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
 
@@ -46,4 +44,3 @@ for changelog in http.fetch_urls(URLS):
 
 product.declare_versions(FIXED_VERSIONS)
 product.write()
-print("::endgroup::")

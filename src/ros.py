@@ -7,7 +7,6 @@ from common import dates, endoflife, http
 VERSION_PATTERN = re.compile(r"^ROS (?P<name>(\w| )+)")
 
 product = endoflife.Product("ros")
-print(f"::group::{product.name}")
 response = http.fetch_url("https://wiki.ros.org/Distributions")
 soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -29,4 +28,3 @@ for tr in soup.findAll("tr"):
         product.declare_version(version, date)
 
 product.write()
-print("::endgroup::")

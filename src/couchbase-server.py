@@ -19,7 +19,6 @@ MANUAL_VERSIONS = {
 }
 
 product = endoflife.Product("couchbase-server")
-print(f"::group::{product.name}")
 main = http.fetch_url(f"{URLS}/current/install/install-intro.html")
 main_soup = BeautifulSoup(main.text, features="html5lib")
 
@@ -39,4 +38,3 @@ for minor_version in http.fetch_urls(minor_version_urls):
 
 product.declare_versions(MANUAL_VERSIONS)
 product.write()
-print("::endgroup::")

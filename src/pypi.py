@@ -7,8 +7,6 @@ METHOD = "pypi"
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name in endoflife.list_products(METHOD, p_filter):
     product = endoflife.Product(product_name)
-    print(f"::group::{product.name}")
-
     product_frontmatter = endoflife.ProductFrontmatter(product.name)
     for config in product_frontmatter.get_auto_configs(METHOD):
         data = http.fetch_url(f"https://pypi.org/pypi/{config.url}/json").json()
@@ -23,4 +21,3 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                 product.declare_version(version, date)
 
     product.write()
-    print("::endgroup::")
