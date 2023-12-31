@@ -1,40 +1,156 @@
 {
-  "python3.12": "2023-12-14",
-  "java21": "2023-11-17",
-  "nodejs20.x": "2023-11-15",
-  "provided.al2023": "2023-11-10",
-  "python3.11": "2023-07-27",
-  "ruby3.2": "2023-06-07",
-  "java17": "2023-04-27",
-  "python3.10": "2023-04-18",
-  "nodejs18.x": "2022-11-18",
-  "dotnet7": "2022-11-15",
-  "nodejs16.x": "2022-05-12",
-  "dotnet6": "2022-02-24",
-  "python3.9": "2021-08-16",
-  "nodejs14.x": "2021-02-03",
-  "dotnet5.0": "2020-12-02",
-  "provided.al2": "2020-08-12",
-  "java8.al2": "2020-08-12",
-  "dotnetcore3.1": "2020-03-31",
-  "ruby2.7": "2020-02-19",
-  "python3.8": "2019-11-18",
-  "nodejs12.x": "2019-11-18",
-  "java11": "2019-11-18",
-  "nodejs10.x": "2019-05-15",
-  "ruby2.5": "2018-11-29",
-  "provided": "2018-11-29",
-  "python3.7": "2018-11-19",
-  "dotnetcore2.1": "2018-07-09",
-  "nodejs8.10": "2018-04-02",
-  "go1.x": "2018-01-15",
-  "dotnetcore2.0": "2018-01-15",
-  "nodejs4.3-edge": "2017-07-17",
-  "python3.6": "2017-04-18",
-  "nodejs6.10": "2017-03-22",
-  "dotnetcore1.0": "2016-12-01",
-  "nodejs4.3": "2016-04-07",
-  "python2.7": "2015-10-08",
-  "java8": "2015-06-15",
-  "nodejs": "2014-11-13"
+  "versions": {
+    "python3.12": {
+      "name": "python3.12",
+      "date": "2023-12-14"
+    },
+    "java21": {
+      "name": "java21",
+      "date": "2023-11-17"
+    },
+    "nodejs20.x": {
+      "name": "nodejs20.x",
+      "date": "2023-11-15"
+    },
+    "provided.al2023": {
+      "name": "provided.al2023",
+      "date": "2023-11-10"
+    },
+    "python3.11": {
+      "name": "python3.11",
+      "date": "2023-07-27"
+    },
+    "ruby3.2": {
+      "name": "ruby3.2",
+      "date": "2023-06-07"
+    },
+    "java17": {
+      "name": "java17",
+      "date": "2023-04-27"
+    },
+    "python3.10": {
+      "name": "python3.10",
+      "date": "2023-04-18"
+    },
+    "nodejs18.x": {
+      "name": "nodejs18.x",
+      "date": "2022-11-18"
+    },
+    "dotnet7": {
+      "name": "dotnet7",
+      "date": "2022-11-15"
+    },
+    "nodejs16.x": {
+      "name": "nodejs16.x",
+      "date": "2022-05-12"
+    },
+    "dotnet6": {
+      "name": "dotnet6",
+      "date": "2022-02-24"
+    },
+    "python3.9": {
+      "name": "python3.9",
+      "date": "2021-08-16"
+    },
+    "nodejs14.x": {
+      "name": "nodejs14.x",
+      "date": "2021-02-03"
+    },
+    "dotnet5.0": {
+      "name": "dotnet5.0",
+      "date": "2020-12-02"
+    },
+    "provided.al2": {
+      "name": "provided.al2",
+      "date": "2020-08-12"
+    },
+    "java8.al2": {
+      "name": "java8.al2",
+      "date": "2020-08-12"
+    },
+    "dotnetcore3.1": {
+      "name": "dotnetcore3.1",
+      "date": "2020-03-31"
+    },
+    "ruby2.7": {
+      "name": "ruby2.7",
+      "date": "2020-02-19"
+    },
+    "python3.8": {
+      "name": "python3.8",
+      "date": "2019-11-18"
+    },
+    "nodejs12.x": {
+      "name": "nodejs12.x",
+      "date": "2019-11-18"
+    },
+    "java11": {
+      "name": "java11",
+      "date": "2019-11-18"
+    },
+    "nodejs10.x": {
+      "name": "nodejs10.x",
+      "date": "2019-05-15"
+    },
+    "ruby2.5": {
+      "name": "ruby2.5",
+      "date": "2018-11-29"
+    },
+    "provided": {
+      "name": "provided",
+      "date": "2018-11-29"
+    },
+    "python3.7": {
+      "name": "python3.7",
+      "date": "2018-11-19"
+    },
+    "dotnetcore2.1": {
+      "name": "dotnetcore2.1",
+      "date": "2018-07-09"
+    },
+    "nodejs8.10": {
+      "name": "nodejs8.10",
+      "date": "2018-04-02"
+    },
+    "go1.x": {
+      "name": "go1.x",
+      "date": "2018-01-15"
+    },
+    "dotnetcore2.0": {
+      "name": "dotnetcore2.0",
+      "date": "2018-01-15"
+    },
+    "nodejs4.3-edge": {
+      "name": "nodejs4.3-edge",
+      "date": "2017-07-17"
+    },
+    "python3.6": {
+      "name": "python3.6",
+      "date": "2017-04-18"
+    },
+    "nodejs6.10": {
+      "name": "nodejs6.10",
+      "date": "2017-03-22"
+    },
+    "dotnetcore1.0": {
+      "name": "dotnetcore1.0",
+      "date": "2016-12-01"
+    },
+    "nodejs4.3": {
+      "name": "nodejs4.3",
+      "date": "2016-04-07"
+    },
+    "python2.7": {
+      "name": "python2.7",
+      "date": "2015-10-08"
+    },
+    "java8": {
+      "name": "java8",
+      "date": "2015-06-15"
+    },
+    "nodejs": {
+      "name": "nodejs",
+      "date": "2014-11-13"
+    }
+  }
 }
