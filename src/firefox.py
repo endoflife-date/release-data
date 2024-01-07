@@ -2,13 +2,13 @@ import re
 import urllib.parse
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/.
 
 Versions lower than 10.0 are ignored because too difficult to parse."""
 
-product = endoflife.Product("firefox")
+product = releasedata.Product("firefox")
 releases_page = http.fetch_url("https://www.mozilla.org/en-US/firefox/releases/")
 releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
 releases_list = releases_soup.find_all("ol", class_="c-release-list")

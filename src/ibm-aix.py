@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 URLS = [
     "https://web.archive.org/web/20210123024247/https://www.ibm.com/support/pages/aix-support-lifecycle-information",
     "https://www.ibm.com/support/pages/aix-support-lifecycle-information",
 ]
 
-product = endoflife.Product("ibm-aix")
+product = releasedata.Product("ibm-aix")
 for page in http.fetch_urls(URLS):
     page_soup = BeautifulSoup(page.text, features="html5lib")
 

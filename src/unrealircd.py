@@ -1,11 +1,11 @@
 import re
 
 import mwparserfromhell
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
 
-product = endoflife.Product("unrealircd")
+product = releasedata.Product("unrealircd")
 response = http.fetch_url("https://www.unrealircd.org/docwiki/index.php?title=History_of_UnrealIRCd_releases&action=raw")
 wikicode = mwparserfromhell.parse(response.text)
 

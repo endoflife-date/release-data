@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches Amazon RDS versions from the version management pages on AWS docs.
 
@@ -16,7 +16,7 @@ PRODUCTS = {
 VERSION_REGEX = re.compile(r"(?P<version>\d+(?:\.\d+)*)", flags=re.IGNORECASE)  # https://regex101.com/r/BY1vwV/1
 
 for product_name, url in PRODUCTS.items():
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     response = http.fetch_url(url)
     soup = BeautifulSoup(response.text, features="html5lib")
 

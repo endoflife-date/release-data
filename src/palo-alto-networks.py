@@ -2,7 +2,7 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 IDENTIFIERS_BY_PRODUCT = {
     "pan-os": "pan-os-panorama",
@@ -17,7 +17,7 @@ soup = BeautifulSoup(response.text, features="html5lib")
 logging.info("::endgroup::")
 
 for product_name, identifier in IDENTIFIERS_BY_PRODUCT.items():
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     table = soup.find(id=identifier)
     for tr in table.findAll("tr")[3:]:
         td_list = tr.findAll("td")

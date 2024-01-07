@@ -1,12 +1,12 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 # https://regex101.com/r/877ibq/1
 VERSION_PATTERN = re.compile(r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?")
 
-product = endoflife.Product("redhat")
+product = releasedata.Product("redhat")
 response = http.fetch_url("https://access.redhat.com/articles/3078")
 soup = BeautifulSoup(response.text, features="html5lib")
 

@@ -1,12 +1,12 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
 DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1
 
-product = endoflife.Product("haproxy")
+product = releasedata.Product("haproxy")
 # First, get all minor releases from the download page
 download = http.fetch_url('https://www.haproxy.org/download/')
 download_soup = BeautifulSoup(download.text, features="html5lib")

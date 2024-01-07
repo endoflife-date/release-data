@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 # https://regex101.com/r/zPxBqT/1
 VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
@@ -13,7 +13,7 @@ URL_BY_PRODUCT = {
 }
 
 for product_name, url in URL_BY_PRODUCT.items():
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     relnotes = http.fetch_url(url)
     relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 

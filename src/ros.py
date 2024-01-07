@@ -1,12 +1,12 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 # https://regex101.com/r/c1ribd/1
 VERSION_PATTERN = re.compile(r"^ROS (?P<name>(\w| )+)")
 
-product = endoflife.Product("ros")
+product = releasedata.Product("ros")
 response = http.fetch_url("https://wiki.ros.org/Distributions")
 soup = BeautifulSoup(response.text, features="html5lib")
 

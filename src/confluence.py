@@ -1,11 +1,11 @@
-from common import dates, endoflife
+from common import dates, releasedata
 from requests_html import HTMLSession
 
 """Fetches Confluence versions from www.atlassian.com.
 
 Note that requests_html is used because JavaScript is needed to render the page."""
 
-product = endoflife.Product("confluence")
+product = releasedata.Product("confluence")
 r = HTMLSession().get("https://www.atlassian.com/software/confluence/download-archives")
 r.html.render(sleep=1, scrolldown=3)
 

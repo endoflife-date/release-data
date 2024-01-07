@@ -1,6 +1,6 @@
 import sys
 
-from common import dates, endoflife
+from common import dates, endoflife, releasedata
 from common.git import Git
 
 """Fetches versions from tags in a git repository. This replace the old update.rb script."""
@@ -9,7 +9,7 @@ METHOD = 'git'
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name in endoflife.list_products(METHOD, p_filter):
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     product_frontmatter = endoflife.ProductFrontmatter(product.name)
     for config in product_frontmatter.get_auto_configs(METHOD):
         git = Git(config.url)

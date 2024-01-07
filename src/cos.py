@@ -2,7 +2,7 @@ import datetime
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 MILESTONE_PATTERN = re.compile(r'COS \d+ LTS')
 VERSION_PATTERN = re.compile(r"^(cos-\d+-\d+-\d+-\d+)")
@@ -14,7 +14,7 @@ def parse_date(date_text: str) -> datetime:
     return dates.parse_date(date_text)
 
 
-product = endoflife.Product("cos")
+product = releasedata.Product("cos")
 main = http.fetch_url("https://cloud.google.com/container-optimized-os/docs/release-notes/")
 main_soup = BeautifulSoup(main.text, features="html5lib")
 milestones = [cell.text.split(' ')[1] for cell in main_soup.find_all('td', string=MILESTONE_PATTERN)]

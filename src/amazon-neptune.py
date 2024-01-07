@@ -1,14 +1,14 @@
 import re
 import xml.dom.minidom
 
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 
 RSS_URL = "https://docs.aws.amazon.com/neptune/latest/userguide/rssupdates.rss"
 VERSION_PATTERN = re.compile(r"^Engine version (?P<version>[0-9R.]+)$")
 
-product = endoflife.Product("amazon-neptune")
+product = releasedata.Product("amazon-neptune")
 rss_response = http.fetch_url(RSS_URL)
 rss = xml.dom.minidom.parseString(rss_response.text)
 

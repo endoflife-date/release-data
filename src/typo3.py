@@ -1,6 +1,6 @@
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
-product = endoflife.Product("typo3")
+product = releasedata.Product("typo3")
 data = http.fetch_url("https://get.typo3.org/api/v1/release/").json()
 for v in data:
     if v['type'] == 'development':

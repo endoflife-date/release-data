@@ -1,4 +1,4 @@
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetch Nutanix products versions from https://portal.nutanix.com/api/v1."""
 
@@ -9,7 +9,7 @@ PRODUCTS = {
 }
 
 for product_name, url in PRODUCTS.items():
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
 
     data = http.fetch_url(url).json()
     for version_data in data["contents"]:

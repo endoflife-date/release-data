@@ -1,6 +1,6 @@
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
-product = endoflife.Product("rockylinux")
+product = releasedata.Product("rockylinux")
 response = http.fetch_url("https://raw.githubusercontent.com/rocky-linux/wiki.rockylinux.org/development/docs/include/releng/version_table.md")
 
 for line in response.text.strip().split('\n'):

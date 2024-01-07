@@ -1,6 +1,6 @@
 import re
 
-from common import dates, endoflife
+from common import dates, releasedata
 from common.git import Git
 
 """Fetches Apache HTTP Server versions and release date from its git repository
@@ -15,7 +15,7 @@ VERSION_AND_DATE_PATTERNS = [
     re.compile(r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*Tagged and [rR]olled\s(?:on\s)?(?P<date>\w+\.?\s\d\d?,\s\d{4})"),
 ]
 
-product = endoflife.Product("apache-http-server")
+product = releasedata.Product("apache-http-server")
 git = Git("https://github.com/apache/httpd.git")
 git.setup()
 

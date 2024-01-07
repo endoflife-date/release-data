@@ -1,13 +1,13 @@
 import re
 
-from common import dates, endoflife
+from common import dates, releasedata
 from common.git import Git
 
 """Fetches Red Hat OpenShift versions from the documentation's git repository"""
 
 VERSION_AND_DATE_PATTERN = re.compile(r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$", re.MULTILINE)
 
-product = endoflife.Product("red-hat-openshift")
+product = releasedata.Product("red-hat-openshift")
 git = Git("https://github.com/openshift/openshift-docs.git")
 git.setup()
 

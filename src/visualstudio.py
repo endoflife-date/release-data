@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 # There is no build history for versions 2015 and below.
 # This is not a big deal because there was no version for those release in a very long time.
@@ -9,7 +9,7 @@ URLS = [
     "https://learn.microsoft.com/en-us/visualstudio/releases/2022/release-history",
 ]
 
-product = endoflife.Product("visualstudio")
+product = releasedata.Product("visualstudio")
 for response in http.fetch_urls(URLS):
     soup = BeautifulSoup(response.text, features="html5lib")
 

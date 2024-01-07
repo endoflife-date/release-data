@@ -1,11 +1,11 @@
-from common import dates, endoflife
+from common import dates, releasedata
 from requests_html import HTMLSession
 
 """Fetches Jira versions from www.atlassian.com.
 
 Note that requests_html is used because JavaScript is needed to render the page."""
 
-product = endoflife.Product("jira")
+product = releasedata.Product("jira")
 r = HTMLSession().get("https://www.atlassian.com/software/jira/update")
 r.html.render(sleep=1, scrolldown=3)
 
