@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 # Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there,
 # so this automation is only partial.
@@ -9,7 +9,7 @@ from common import dates, endoflife, http
 
 BASE_URL = "https://unity.com/releases/editor/qa/lts-releases"
 
-product = endoflife.Product("unity")
+product = releasedata.Product("unity")
 next_page_url = BASE_URL
 
 # Do not try to fetch multiple pages in parallel: it is raising a lot of errors and make the overall process slower.

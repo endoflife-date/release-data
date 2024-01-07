@@ -1,6 +1,6 @@
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 """Fetches AWS lambda runtimes from https://docs.aws.amazon.com.
 
@@ -12,8 +12,8 @@ If one day release dates are available in the AWS documentation, it would be bet
 them though. Note that this would also be unnecessary if it was possible to disable release/latest
 release dates updates in the latest.py script."""
 
-product = endoflife.Product("aws-lambda")
-old_product = endoflife.Product.from_file(product.name)
+product = releasedata.Product("aws-lambda")
+old_product = releasedata.Product.from_file(product.name)
 product_frontmatter = endoflife.ProductFrontmatter(product.name)
 response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
 soup = BeautifulSoup(response.text, features="html5lib")

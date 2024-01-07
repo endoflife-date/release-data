@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches Satellite versions from access.redhat.com.
 
@@ -10,7 +10,7 @@ A few of the older versions, such as 'Satellite 6.1 GA Release (Build 6.1.1)', w
 # https://regex101.com/r/m8aWXG/1
 VERSION_PATTERN = re.compile(r"^Satellite (?P<version>\d+\.\d+\.\d+([.-]\d+)?) ([Uu]pdate|[Rr]elease)$")
 
-product = endoflife.Product("redhat-satellite")
+product = releasedata.Product("redhat-satellite")
 response = http.fetch_url("https://access.redhat.com/articles/1365633")
 soup = BeautifulSoup(response.text, features="html5lib")
 

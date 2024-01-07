@@ -1,8 +1,8 @@
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 MAIN_URL = "https://www.php.net/releases/index.php?json&max=-1"
 
-product = endoflife.Product("php")
+product = releasedata.Product("php")
 
 # Fetch major versions
 latest_by_major = http.fetch_url(MAIN_URL).json()

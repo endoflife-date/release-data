@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
-product = endoflife.Product("graalvm")
+product = releasedata.Product("graalvm")
 release_calendar = http.fetch_url("https://www.graalvm.org/release-calendar/")
 release_calendar_soup = BeautifulSoup(release_calendar.text, features="html5lib")
 

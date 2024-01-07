@@ -1,13 +1,13 @@
 import sys
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 METHOD = 'distrowatch'
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product_name in endoflife.list_products(METHOD, p_filter):
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     product_frontmatter = endoflife.ProductFrontmatter(product.name)
     for config in product_frontmatter.get_auto_configs(METHOD):
         response = http.fetch_url(f"https://distrowatch.com/index.php?distribution={config.url}")

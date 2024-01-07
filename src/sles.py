@@ -1,9 +1,9 @@
 import logging
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
-product = endoflife.Product("sles")
+product = releasedata.Product("sles")
 response = http.fetch_url("https://www.suse.com/lifecycle")
 soup = BeautifulSoup(response.text, features="html5lib")
 

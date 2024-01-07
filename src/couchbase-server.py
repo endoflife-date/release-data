@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches versions from release notes of each minor version on docs.couchbase.com.
 
@@ -18,7 +18,7 @@ MANUAL_VERSIONS = {
     "7.2.0": dates.date(2023, 6, 1),  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
 }
 
-product = endoflife.Product("couchbase-server")
+product = releasedata.Product("couchbase-server")
 main = http.fetch_url(f"{URLS}/current/install/install-intro.html")
 main_soup = BeautifulSoup(main.text, features="html5lib")
 

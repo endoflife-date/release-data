@@ -1,11 +1,11 @@
 
-from common import dates, endoflife
+from common import dates, releasedata
 from requests_html import HTMLSession
 
 """Fetches Artifactory versions from https://jfrog.com, using requests_html because JavaScript is
 needed to render the page."""
 
-product = endoflife.Product("artifactory")
+product = releasedata.Product("artifactory")
 r = HTMLSession().get("https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life")
 r.html.render(sleep=2, scrolldown=5)
 

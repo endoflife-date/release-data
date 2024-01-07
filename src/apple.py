@@ -2,7 +2,7 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches and parses version and release date information from Apple's support website for macOS,
 iOS, iPadOS, and watchOS. While all URLs are fetched once for performance reasons, the actual
@@ -56,7 +56,7 @@ soups = [BeautifulSoup(response.text, features="html5lib") for response in http.
 logging.info("::endgroup::")
 
 for product_name in VERSION_PATTERNS:
-    product = endoflife.Product(product_name)
+    product = releasedata.Product(product_name)
     for soup in soups:
         versions_table = soup.find(id="tableWraper")
         versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")

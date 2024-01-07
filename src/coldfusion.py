@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetches versions from Adobe ColdFusion release notes on helpx.adobe.com.
 
@@ -31,7 +31,7 @@ FIXED_VERSIONS = {
     "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
-product = endoflife.Product("coldfusion")
+product = releasedata.Product("coldfusion")
 for changelog in http.fetch_urls(URLS):
     changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
 

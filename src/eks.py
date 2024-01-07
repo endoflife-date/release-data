@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, endoflife, http, releasedata
 
 """Fetches EKS versions from AWS docs.
 Now that AWS no longer publishes docs on GitHub, we use the Web Archive to still get the older versions."""
@@ -13,7 +13,7 @@ URLS = [
     "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
 ]
 
-product = endoflife.Product("eks")
+product = releasedata.Product("eks")
 for version_list in http.fetch_urls(URLS):
     version_list_soup = BeautifulSoup(version_list.text, features="html5lib")
     for tr in version_list_soup.select("#main-col-body")[0].findAll("tr"):

@@ -1,11 +1,11 @@
-from common import dates, endoflife
+from common import dates, releasedata
 from requests_html import HTMLSession
 
 """Fetch Java versions from https://www.java.com/releases/.
 
 This script is using requests-html because the page needs JavaScript to render correctly."""
 
-product = endoflife.Product("oracle-jdk")
+product = releasedata.Product("oracle-jdk")
 r = HTMLSession().get('https://www.java.com/releases/')
 r.html.render(sleep=1, scrolldown=3)
 

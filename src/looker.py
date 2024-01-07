@@ -2,7 +2,7 @@ import re
 import xml.dom.minidom
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 """Fetch Looker versions from the Google Cloud release notes RSS feed.
 """
@@ -10,7 +10,7 @@ from common import dates, endoflife, http
 ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IGNORECASE)
 VERSION_PATTERN = re.compile(r"Looker\s+(?P<version>\d+\.\d+)", re.IGNORECASE)
 
-product = endoflife.Product("looker")
+product = releasedata.Product("looker")
 response = http.fetch_url("https://cloud.google.com/feeds/looker-release-notes.xml")
 rss = xml.dom.minidom.parseString(response.text)
 

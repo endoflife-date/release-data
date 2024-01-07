@@ -1,7 +1,7 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
+from common import dates, http, releasedata
 
 VERSION_DATE_PATTERN = re.compile(r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\.", re.MULTILINE)
 
@@ -30,7 +30,7 @@ def get_latest_minor_versions(versions: list[str]) -> list[str]:
     return latest_versions
 
 
-product = endoflife.Product("splunk")
+product = releasedata.Product("splunk")
 main = http.fetch_url("https://docs.splunk.com/Documentation/Splunk")
 soup = BeautifulSoup(main.text, features="html5lib")
 
