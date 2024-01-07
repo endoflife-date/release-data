@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2023-12-28, 212 of the 279 products tracked by endoflife.date have automatically tracked releases:
+As of 2024-01-07, 213 of the 281 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                              | Auto | Method          |
 |-----------------------------------------------|----------------------------------------------------------------------------------------|------|-----------------|
@@ -65,6 +65,7 @@ As of 2023-12-28, 212 of the 279 products tracked by endoflife.date have automat
 | Apple macOS                                   | [`/macos`](https://endoflife.date/macos)                                               | ✔️   | custom          |
 | Apple Watch                                   | [`/apple-watch`](https://endoflife.date/apple-watch)                                   | ❌    | n/a             |
 | Apple watchOS                                 | [`/watchos`](https://endoflife.date/watchos)                                           | ✔️   | custom          |
+| ArangoDB                                      | [`/arangodb`](https://endoflife.date/arangodb)                                         | ✔️   | git             |
 | Argo CD                                       | [`/argo-cd`](https://endoflife.date/argo-cd)                                           | ✔️   | git             |
 | Artifactory                                   | [`/artifactory`](https://endoflife.date/artifactory)                                   | ✔️   | custom          |
 | AWS Lambda                                    | [`/aws-lambda`](https://endoflife.date/aws-lambda)                                     | ✔️   | custom          |
@@ -214,6 +215,7 @@ As of 2023-12-28, 212 of the 279 products tracked by endoflife.date have automat
 | openSUSE                                      | [`/opensuse`](https://endoflife.date/opensuse)                                         | ❌    | n/a             |
 | OpenWrt                                       | [`/openwrt`](https://endoflife.date/openwrt)                                           | ✔️   | git             |
 | OpenZFS                                       | [`/openzfs`](https://endoflife.date/openzfs)                                           | ✔️   | git             |
+| Oracle APEX                                   | [`/oracle-apex`](https://endoflife.date/oracle-apex)                                   | ❌    | n/a             |
 | Oracle Database                               | [`/oracle-database`](https://endoflife.date/oracle-database)                           | ❌    | n/a             |
 | Oracle JDK                                    | [`/oracle-jdk`](https://endoflife.date/oracle-jdk)                                     | ✔️   | custom          |
 | Oracle Linux                                  | [`/oracle-linux`](https://endoflife.date/oracle-linux)                                 | ✔️   | distrowatch     |
