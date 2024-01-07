@@ -62,8 +62,9 @@ class ProductFrontmatter:
             for config in self.data["auto"]:
                 if method in config:
                     configs.append(AutoConfig(method, config))
-                else:
-                    logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
+
+        if len(configs) > 0 and len(configs) != len(self.data["auto"]):
+            logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
 
         return configs
 
@@ -167,8 +168,7 @@ class Product:
 
 
 def list_products(method: str, products_filter: str = None) -> list[str]:
-    """Return a list of products that are using the same given update method.
-    """
+    """Return a list of products that are using the same given update method."""
     products = []
 
     for product_file in PRODUCTS_PATH.glob("*.md"):
@@ -176,11 +176,8 @@ def list_products(method: str, products_filter: str = None) -> list[str]:
         if products_filter and product_name != products_filter:
             continue
 
-        with product_file.open() as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                matching_configs = list(filter(lambda config: method in config, data["auto"]))
-                if len(matching_configs) > 0:
-                    products.append(product_name)
+        product = ProductFrontmatter(product_name)
+        if len(product.get_auto_configs(method)) > 0:
+            products.append(product_name)
 
     return products
