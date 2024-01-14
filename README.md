@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2024-01-07, 213 of the 281 products tracked by endoflife.date have automatically tracked releases:
+As of 2024-01-14, 216 of the 286 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                              | Auto | Method          |
 |-----------------------------------------------|----------------------------------------------------------------------------------------|------|-----------------|
@@ -163,12 +163,14 @@ As of 2024-01-07, 213 of the 281 products tracked by endoflife.date have automat
 | Linux Mint                                    | [`/linuxmint`](https://endoflife.date/linuxmint)                                       | ❌    | n/a             |
 | Logstash                                      | [`/logstash`](https://endoflife.date/logstash)                                         | ✔️   | git             |
 | Looker                                        | [`/looker`](https://endoflife.date/looker)                                             | ✔️   | custom          |
+| Lua                                           | [`/lua`](https://endoflife.date/lua)                                                   | ❌    | n/a             |
 | Mageia                                        | [`/mageia`](https://endoflife.date/mageia)                                             | ✔️   | distrowatch     |
 | Magento                                       | [`/magento`](https://endoflife.date/magento)                                           | ✔️   | git             |
 | MariaDB                                       | [`/mariadb`](https://endoflife.date/mariadb)                                           | ✔️   | git             |
 | Mastodon                                      | [`/mastodon`](https://endoflife.date/mastodon)                                         | ✔️   | git             |
 | Mattermost                                    | [`/mattermost`](https://endoflife.date/mattermost)                                     | ✔️   | git             |
 | MediaWiki                                     | [`/mediawiki`](https://endoflife.date/mediawiki)                                       | ✔️   | git             |
+| Meilisearch                                   | [`/meilisearch`](https://endoflife.date/meilisearch)                                   | ✔️   | git             |
 | Memcached                                     | [`/memcached`](https://endoflife.date/memcached)                                       | ✔️   | git             |
 | Micronaut Framework                           | [`/micronaut`](https://endoflife.date/micronaut)                                       | ✔️   | git             |
 | Microsoft .NET                                | [`/dotnet`](https://endoflife.date/dotnet)                                             | ✔️   | git             |
@@ -186,6 +188,7 @@ As of 2024-01-07, 213 of the 281 products tracked by endoflife.date have automat
 | Microsoft Windows Server                      | [`/windows-server`](https://endoflife.date/windows-server)                             | ❌    | n/a             |
 | MongoDB Server                                | [`/mongodb`](https://endoflife.date/mongodb)                                           | ✔️   | git             |
 | Moodle                                        | [`/moodle`](https://endoflife.date/moodle)                                             | ✔️   | git             |
+| Motorola Mobility                             | [`/motorola-mobility`](https://endoflife.date/motorola-mobility)                       | ❌    | n/a             |
 | Mule Runtime                                  | [`/mulesoft-runtime`](https://endoflife.date/mulesoft-runtime)                         | ❌    | n/a             |
 | MX Linux                                      | [`/mxlinux`](https://endoflife.date/mxlinux)                                           | ✔️   | distrowatch     |
 | MySQL                                         | [`/mysql`](https://endoflife.date/mysql)                                               | ✔️   | git             |
@@ -215,11 +218,13 @@ As of 2024-01-07, 213 of the 281 products tracked by endoflife.date have automat
 | openSUSE                                      | [`/opensuse`](https://endoflife.date/opensuse)                                         | ❌    | n/a             |
 | OpenWrt                                       | [`/openwrt`](https://endoflife.date/openwrt)                                           | ✔️   | git             |
 | OpenZFS                                       | [`/openzfs`](https://endoflife.date/openzfs)                                           | ✔️   | git             |
+| OPNsense                                      | [`/opnsense`](https://endoflife.date/opnsense)                                         | ✔️   | git             |
 | Oracle APEX                                   | [`/oracle-apex`](https://endoflife.date/oracle-apex)                                   | ❌    | n/a             |
 | Oracle Database                               | [`/oracle-database`](https://endoflife.date/oracle-database)                           | ❌    | n/a             |
 | Oracle JDK                                    | [`/oracle-jdk`](https://endoflife.date/oracle-jdk)                                     | ✔️   | custom          |
 | Oracle Linux                                  | [`/oracle-linux`](https://endoflife.date/oracle-linux)                                 | ✔️   | distrowatch     |
 | Oracle Solaris                                | [`/oracle-solaris`](https://endoflife.date/oracle-solaris)                             | ❌    | n/a             |
+| oVirt                                         | [`/ovirt`](https://endoflife.date/ovirt)                                               | ✔️   | git             |
 | Palo Alto Networks Cortex XDR agent           | [`/cortex-xdr`](https://endoflife.date/cortex-xdr)                                     | ❌    | n/a             |
 | Palo Alto Networks GlobalProtect App          | [`/pangp`](https://endoflife.date/pangp)                                               | ❌    | n/a             |
 | Palo Alto Networks PAN-OS                     | [`/panos`](https://endoflife.date/panos)                                               | ❌    | n/a             |
