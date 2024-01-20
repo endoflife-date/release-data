@@ -25,15 +25,24 @@ class AutoConfig:
         self.url = config[method]
         self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
 
-        regexes = config.get("regex", DEFAULT_VERSION_REGEX)
-        regexes = regexes if isinstance(regexes, list) else [regexes]
-        self.version_patterns = [re.compile(regex) for regex in regexes]
+        regexes_include = config.get("regex", DEFAULT_VERSION_REGEX)
+        regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
+        self.include_version_patterns = [re.compile(r) for r in regexes_include]
+
+        regexes_exclude = config.get("regex_exclude", [])
+        regexes_exclude = regexes_exclude if isinstance(regexes_exclude, list) else [regexes_exclude]
+        self.exclude_version_patterns = [re.compile(r) for r in regexes_exclude]
 
     def first_match(self, version: str) -> re.Match | None:
-        for pattern in self.version_patterns:
-            match = pattern.match(version)
+        for exclude_pattern in self.exclude_version_patterns:
+            if exclude_pattern.match(version):
+                return None
+
+        for include_pattern in self.include_version_patterns:
+            match = include_pattern.match(version)
             if match:
                 return match
+
         return None
 
     def render(self, match: re.Match) -> str:
