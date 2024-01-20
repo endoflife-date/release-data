@@ -112,12 +112,20 @@ class Product:
             product_file.seek(0)
             _, self.content = frontmatter.parse(product_file.read())
 
-        with self.release_data_path.open() as release_data_file:
-            self.release_data = json.loads(release_data_file.read())
+        if self.release_data_path.exists():
+            with self.release_data_path.open() as release_data_file:
+                self.release_data = json.loads(release_data_file.read())
+        else:
+            self.release_data = None
 
         self.releases = [ReleaseCycle(self, release) for release in self.data["releases"]]
         self.updated = False
         self.unmatched_versions = {}
+
+    # Placeholder function for mass-upgrading the structure of the product files.
+    def upgrade_structure(self) -> None:
+        logging.debug(f"upgrading {self.name} structure")
+        # Do not forget to set self.updated to True
 
     def check_latest(self) -> None:
         for release in self.releases:
@@ -154,15 +162,13 @@ class Product:
 
 
 def update_product(name: str, product_dir: Path, releases_dir: Path, output: GitHubOutput) -> None:
-    versions_path = releases_dir / f"{name}.json"
-    if not versions_path.exists():
-        logging.debug(f"Skipping {name}, {versions_path} does not exist")
-        return
-
     product = Product(name, product_dir, releases_dir)
-    for version_data in product.release_data["versions"].values():
-        product.process_version(version_data)
-    product.check_latest()
+    product.upgrade_structure()
+
+    if product.release_data:
+        for version_data in product.release_data["versions"].values():
+            product.process_version(version_data)
+        product.check_latest()
 
     if product.updated:
         logging.info(f"Updating {product.product_path}")
@@ -200,6 +206,6 @@ if __name__ == "__main__":
 
     github_output = GitHubOutput("warning")
     with github_output:
-        for product_name in product_names:
+        for product_name in sorted(product_names):
             logging.debug(f"Processing {product_name}")
             update_product(product_name, products_dir, Path(args.data_dir), github_output)
