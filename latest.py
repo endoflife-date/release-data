@@ -81,8 +81,11 @@ class ReleaseCycle:
                 if Version(old_latest) < Version(version):
                     logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
                     update_detected = True
-            except InvalidVersion:
-                logging.debug(f"could not not be compare {self} with {version}, skipping")
+            except InvalidVersion: # If we can't compare the version numbers, compare the dates
+                logging.debug(f"could not compare {old_latest} with {version} for {self}, comparing dates instead")
+                if old_latest_date < date:
+                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
+                    update_detected = True
 
         if update_detected:
             self.data["latest"] = version
