@@ -7,9 +7,6 @@ from pathlib import Path
 import frontmatter
 from liquid import Template
 
-# Do not update the format: it's also used to declare groups in the GitHub Actions logs.
-logging.basicConfig(format="%(message)s", level=logging.INFO)
-
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
 # Major version must be >= 1.
 DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
