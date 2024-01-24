@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
 URLS = [
-    "https://web.archive.org/web/20210123024247/https://www.ibm.com/support/pages/aix-support-lifecycle-information",
+    # Disable, it causes too many timeouts / errors
+    # "https://web.archive.org/web/20210123024247/https://www.ibm.com/support/pages/aix-support-lifecycle-information",
     "https://www.ibm.com/support/pages/aix-support-lifecycle-information",
 ]
 
