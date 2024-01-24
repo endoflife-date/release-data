@@ -8,7 +8,7 @@ from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0'
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0'
 
 
 def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None,

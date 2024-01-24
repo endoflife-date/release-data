@@ -4,6 +4,9 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Do not update the format: it's also used to declare groups in the GitHub Actions logs.
+logging.basicConfig(format="%(message)s", level=logging.INFO)
+
 VERSIONS_PATH = Path(os.environ.get("VERSIONS_PATH", "releases"))
 
 
