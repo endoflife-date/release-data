@@ -33,7 +33,7 @@ def run_scripts(summary: GitHubStepSummary) -> bool:
             summary.println(f"| {script} | {elapsed_seconds:.2f}s | ❌ |")
             logging.error(f"Error while running {script} after {elapsed_seconds:.2f}s, update will only be partial")
         else:
-            logging.info(f"Finished running {script}, took {elapsed_seconds:.2f}s")
+            logging.info(f"Ran {script}, took {elapsed_seconds:.2f}s")
             summary.println(f"| {script} | {elapsed_seconds:.2f}s | ✅ |")
 
     summary.println("")

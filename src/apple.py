@@ -75,10 +75,8 @@ for product_name in VERSION_PATTERNS:
             date = dates.parse_date(date_str)
             for version_pattern in VERSION_PATTERNS[product.name]:
                 for version in version_pattern.findall(version_text):
-                    if not product.has_version(version):
+                    if not product.has_version(version) or product.get_version(version).date() > date:
                         product.declare_version(version, date)
-                    elif product.get_version_date(version) > date:
-                        product.replace_version(version, date)
                     else:
                         logging.info(f"ignoring version {version} ({date}) for {product.name}")
 
