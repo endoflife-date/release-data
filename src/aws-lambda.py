@@ -30,7 +30,7 @@ for table in soup.find_all("table"):
 
         date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
         if date is None:
-            date = old_product.get_version_date(identifier)  # else use the previously found date
+            date = old_product.get_version(identifier).date()  # else use the previously found date
         if date is None:
             date = dates.today()  # else use today's date
 
