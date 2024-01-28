@@ -5,7 +5,7 @@ product = releasedata.Product("graalvm")
 release_calendar = http.fetch_url("https://www.graalvm.org/release-calendar/")
 release_calendar_soup = BeautifulSoup(release_calendar.text, features="html5lib")
 
-for tr in release_calendar_soup.findAll("table")[1].find("tbody").findAll("tr"):
+for tr in release_calendar_soup.find("h2", id="previous-releases").find_next("table").find("tbody").findAll("tr"):
     cells = tr.findAll("td")
     date = dates.parse_date(cells[0].get_text())
 
