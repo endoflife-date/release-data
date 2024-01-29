@@ -74,10 +74,11 @@ for product_name in VERSION_PATTERNS:
             date_str = date_match.group(0).replace("Sept ", "Sep ")
             date = dates.parse_date(date_str)
             for version_pattern in VERSION_PATTERNS[product.name]:
-                for version in version_pattern.findall(version_text):
-                    if not product.has_version(version) or product.get_version(version).date() > date:
-                        product.declare_version(version, date)
+                for version_str in version_pattern.findall(version_text):
+                    version = product.get_version(version_str)
+                    if not version or version.date() > date:
+                        product.declare_version(version_str, date)
                     else:
-                        logging.info(f"ignoring version {version} ({date}) for {product.name}")
+                        logging.info(f"ignoring version {version_str} ({date}) for {product.name}")
 
     product.write()

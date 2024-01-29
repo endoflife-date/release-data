@@ -57,9 +57,6 @@ class Product:
 
         return product
 
-    def has_version(self, version: str) -> bool:
-        return version in self.versions
-
     def get_version(self, version: str) -> ProductVersion:
         return self.versions[version] if version in self.versions else None
 
@@ -76,7 +73,7 @@ class Product:
             self.declare_version(version, date)
 
     def remove_version(self, version: str) -> None:
-        if not self.has_version(version):
+        if not self.get_version(version):
             logging.warning(f"version {version} cannot be removed as it does not exist for {self}")
             return
 
