@@ -25,7 +25,7 @@ jobs:
           format: YYYY-ww # 2022-01 to 2022-52 for eg
 
       - name: Cache fetched repositories
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache
           # The cache is reset on the first build of every week this way. If you wish to reset the cache manually,
