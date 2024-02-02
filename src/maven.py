@@ -6,10 +6,9 @@ from common import endoflife, http, releasedata
 METHOD = "maven"
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product_name in endoflife.list_products(METHOD, p_filter):
-    product = releasedata.Product(product_name)
-    product_frontmatter = endoflife.ProductFrontmatter(product.name)
-    for config in product_frontmatter.get_auto_configs(METHOD):
+for product in endoflife.list_products(METHOD, p_filter):
+    product_data = releasedata.Product(product.name)
+    for config in product.get_auto_configs(METHOD):
         start = 0
         group_id, artifact_id = config.url.split("/")
 
@@ -22,10 +21,10 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                 if version_match:
                     version = config.render(version_match)
                     date = datetime.fromtimestamp(row["timestamp"] / 1000, tz=timezone.utc)
-                    product.declare_version(version, date)
+                    product_data.declare_version(version, date)
 
             start += 100
             if data["response"]["numFound"] <= start:
                 break
 
-    product.write()
+    product_data.write()

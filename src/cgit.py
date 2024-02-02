@@ -9,11 +9,10 @@ Ideally we would want to use the git repository directly, but cgit-managed repos
 METHOD = "cgit"
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product_name in endoflife.list_products(METHOD, p_filter):
-    product = releasedata.Product(product_name)
-    product_frontmatter = endoflife.ProductFrontmatter(product.name)
-    for auto_config in product_frontmatter.get_auto_configs(METHOD):
-        response = http.fetch_url(auto_config.url + '/refs/tags')
+for product in endoflife.list_products(METHOD, p_filter):
+    product_data = releasedata.Product(product.name)
+    for config in product.get_auto_configs(METHOD):
+        response = http.fetch_url(config.url + '/refs/tags')
         soup = BeautifulSoup(response.text, features="html5lib")
 
         for table in soup.find_all("table", class_="list"):
@@ -23,7 +22,7 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                     continue
 
                 version_str = columns[0].text.strip()
-                version_match = auto_config.first_match(version_str)
+                version_match = config.first_match(version_str)
                 if not version_match:
                     continue
 
@@ -32,8 +31,8 @@ for product_name in endoflife.list_products(METHOD, p_filter):
                 if not datetime_str:
                     continue
 
-                version = auto_config.render(version_match)
+                version = config.render(version_match)
                 date = dates.parse_datetime(datetime_str)
-                product.declare_version(version, date)
+                product_data.declare_version(version, date)
 
-    product.write()
+    product_data.write()

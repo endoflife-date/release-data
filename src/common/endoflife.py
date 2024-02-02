@@ -68,7 +68,8 @@ class ProductFrontmatter:
                     configs.append(AutoConfig(method, config))
 
         if len(configs) > 0 and len(configs) != len(self.data["auto"]):
-            logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
+            message = f"mixed auto-update methods declared for {self.name}, this is not yet supported"
+            raise ValueError(message)
 
         return configs
 
@@ -79,7 +80,7 @@ class ProductFrontmatter:
         return None
 
 
-def list_products(method: str, products_filter: str = None) -> list[str]:
+def list_products(method: str, products_filter: str = None) -> list[ProductFrontmatter]:
     """Return a list of products that are using the same given update method."""
     products = []
 
@@ -89,7 +90,8 @@ def list_products(method: str, products_filter: str = None) -> list[str]:
             continue
 
         product = ProductFrontmatter(product_name)
-        if len(product.get_auto_configs(method)) > 0:
-            products.append(product_name)
+        configs = product.get_auto_configs(method)
+        if len(configs) > 0:
+            products.append(product)
 
     return products
