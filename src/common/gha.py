@@ -32,8 +32,8 @@ class GitHubStepSummary:
     def __init__(self) -> None:
         self.value = ""
 
-    def __enter__(self) -> None:
-        return None
+    def __enter__(self) -> "GitHubStepSummary":
+        return self
 
     def println(self, value: str) -> None:
         self.value += value + "\n"

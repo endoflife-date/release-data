@@ -14,30 +14,39 @@ SRC_DIR = Path('src')
 DATA_DIR = Path('releases')
 
 
-def run_scripts(summary: GitHubStepSummary) -> bool:
-    summary.println("## Script execution summary\n")
-    summary.println("| Name | Duration | Succeeded |")
-    summary.println("|------|----------|-----------|")
+class ScriptResult:
+    def __init__(self, path: Path, duration: float, success: bool) -> None:
+        self.name = path.stem
+        self.duration = duration
+        self.success = success
 
-    scripts = sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')])
-    failure = False
-    for script in scripts:
+    def __lt__(self, other: "ScriptResult") -> bool:
+        return self.duration < other.duration or self.name < other.name
+
+
+def run_scripts(summary: GitHubStepSummary) -> bool:
+    results = []
+
+    for script in sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')]):
         logging.info(f"start running {script}")
 
         start = time.perf_counter()
         child = subprocess.run([sys.executable, script])  # timeout handled in subscripts
         elapsed_seconds = time.perf_counter() - start
 
-        if child.returncode != 0:
-            failure = True
-            summary.println(f"| {script} | {elapsed_seconds:.2f}s | ❌ |")
-            logging.error(f"Error while running {script} after {elapsed_seconds:.2f}s, update will only be partial")
-        else:
-            logging.info(f"Ran {script}, took {elapsed_seconds:.2f}s")
-            summary.println(f"| {script} | {elapsed_seconds:.2f}s | ✅ |")
+        result = ScriptResult(script, elapsed_seconds, child.returncode == 0)
+        log_level = logging.ERROR if not result.success else logging.INFO
+        logging.log(log_level, f"ran {script}, took {elapsed_seconds:.2f}s (success={result.success})")
+        results.append(result)
 
+    summary.println("## Script execution summary\n")
+    summary.println("| Name | Duration | Succeeded |")
+    summary.println("|------|----------|-----------|")
+    for result in sorted(results, reverse=True):
+        summary.println(f"| {result.name} | {result.duration:.2f}s | {'✅' if result.success else '❌'} |")
     summary.println("")
-    return failure
+
+    return not all(result.success for result in results)
 
 
 def get_updated_products() -> list[Path]:
@@ -84,8 +93,7 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
 
 
 logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
-step_summary = GitHubStepSummary()
-with step_summary:
+with GitHubStepSummary() as step_summary:
     some_script_failed = run_scripts(step_summary)
     updated_products = get_updated_products()
 
