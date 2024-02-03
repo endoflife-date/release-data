@@ -31,16 +31,15 @@ FIXED_VERSIONS = {
     "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
-product = releasedata.Product("coldfusion")
-for changelog in http.fetch_urls(URLS):
-    changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
+with releasedata.ProductData("coldfusion") as product_data:
+    for changelog in http.fetch_urls(URLS):
+        changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
 
-    for p in changelog_soup.findAll("div", class_="text"):
-        version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
-        for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
-            date = dates.parse_date(date_str)
-            version = version_str.strip().replace(",", ".")  # 11,0,0,289974 -> 11.0.0.289974
-            product.declare_version(version, date)
+        for p in changelog_soup.findAll("div", class_="text"):
+            version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
+            for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
+                date = dates.parse_date(date_str)
+                version = version_str.strip().replace(",", ".")  # 11,0,0,289974 -> 11.0.0.289974
+                product_data.declare_version(version, date)
 
-product.declare_versions(FIXED_VERSIONS)
-product.write()
+    product_data.declare_versions(FIXED_VERSIONS)

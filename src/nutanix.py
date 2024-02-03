@@ -9,13 +9,10 @@ PRODUCTS = {
 }
 
 for product_name, url in PRODUCTS.items():
-    product = releasedata.Product(product_name)
-
-    data = http.fetch_url(url).json()
-    for version_data in data["contents"]:
-        if 'GENERAL_AVAILABILITY' in version_data:
-            version = version_data["version"]
-            date = dates.parse_datetime(version_data["GENERAL_AVAILABILITY"])
-            product.declare_version(version, date)
-
-    product.write()
+    with releasedata.ProductData(product_name) as product_data:
+        data = http.fetch_url(url).json()
+        for version_data in data["contents"]:
+            if 'GENERAL_AVAILABILITY' in version_data:
+                version = version_data["version"]
+                date = dates.parse_datetime(version_data["GENERAL_AVAILABILITY"])
+                product_data.declare_version(version, date)

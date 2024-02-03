@@ -56,29 +56,27 @@ soups = [BeautifulSoup(response.text, features="html5lib") for response in http.
 logging.info("::endgroup::")
 
 for product_name in VERSION_PATTERNS:
-    product = releasedata.Product(product_name)
-    for soup in soups:
-        versions_table = soup.find(id="tableWraper")
-        versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
+    with releasedata.ProductData(product_name) as product_data:
+        for soup in soups:
+            versions_table = soup.find(id="tableWraper")
+            versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
 
-        for row in versions_table.findAll("tr")[1:]:
-            cells = row.findAll("td")
-            version_text = cells[0].get_text().strip()
-            date_text = cells[2].get_text().strip()
+            for row in versions_table.findAll("tr")[1:]:
+                cells = row.findAll("td")
+                version_text = cells[0].get_text().strip()
+                date_text = cells[2].get_text().strip()
 
-            date_match = DATE_PATTERN.search(date_text)
-            if not date_match:
-                logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
-                continue
+                date_match = DATE_PATTERN.search(date_text)
+                if not date_match:
+                    logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
+                    continue
 
-            date_str = date_match.group(0).replace("Sept ", "Sep ")
-            date = dates.parse_date(date_str)
-            for version_pattern in VERSION_PATTERNS[product.name]:
-                for version_str in version_pattern.findall(version_text):
-                    version = product.get_version(version_str)
-                    if not version or version.date() > date:
-                        product.declare_version(version_str, date)
-                    else:
-                        logging.info(f"ignoring version {version_str} ({date}) for {product.name}")
-
-    product.write()
+                date_str = date_match.group(0).replace("Sept ", "Sep ")
+                date = dates.parse_date(date_str)
+                for version_pattern in VERSION_PATTERNS[product_data.name]:
+                    for version_str in version_pattern.findall(version_text):
+                        version = product_data.get_version(version_str)
+                        if not version or version.date() > date:
+                            product_data.declare_version(version_str, date)
+                        else:
+                            logging.info(f"ignoring version {version_str} ({date}) for {product_data.name}")

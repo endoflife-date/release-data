@@ -12,28 +12,26 @@ If one day release dates are available in the AWS documentation, it would be bet
 them though. Note that this would also be unnecessary if it was possible to disable release/latest
 release dates updates in the latest.py script."""
 
-product = releasedata.Product("aws-lambda")
-old_product = releasedata.Product.from_file(product.name)
-product_frontmatter = endoflife.ProductFrontmatter(product.name)
-response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
-soup = BeautifulSoup(response.text, features="html5lib")
+with releasedata.ProductData("aws-lambda") as product_data:
+    old_product_data = releasedata.ProductData.from_file(product_data.name)
+    product_frontmatter = endoflife.ProductFrontmatter(product_data.name)
+    response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
+    soup = BeautifulSoup(response.text, features="html5lib")
 
-for table in soup.find_all("table"):
-    headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[1].find_all("th")]
-    if "identifier" not in headers:
-        continue
+    for table in soup.find_all("table"):
+        headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[1].find_all("th")]
+        if "identifier" not in headers:
+            continue
 
-    identifier_index = headers.index("identifier")
-    for row in table.find("tbody").find_all("tr"):
-        cells = row.find_all("td")
-        identifier = cells[identifier_index].get_text().strip()
+        identifier_index = headers.index("identifier")
+        for row in table.find("tbody").find_all("tr"):
+            cells = row.find_all("td")
+            identifier = cells[identifier_index].get_text().strip()
 
-        date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
-        if date is None:
-            date = old_product.get_version(identifier).date()  # else use the previously found date
-        if date is None:
-            date = dates.today()  # else use today's date
+            date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
+            if date is None:
+                date = old_product_data.get_version(identifier).date()  # else use the previously found date
+            if date is None:
+                date = dates.today()  # else use today's date
 
-        product.declare_version(identifier, date)
-
-product.write()
+            product_data.declare_version(identifier, date)
