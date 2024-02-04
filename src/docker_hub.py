@@ -9,7 +9,7 @@ Unfortunately images creation date cannot be retrieved, so we had to use the tag
 METHOD = "docker_hub"
 
 
-def fetch_releases(p: releasedata.Product, c: endoflife.AutoConfig, url: str) -> None:
+def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str) -> None:
     data = http.fetch_url(url).json()
 
     for result in data["results"]:
@@ -24,7 +24,6 @@ def fetch_releases(p: releasedata.Product, c: endoflife.AutoConfig, url: str) ->
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 for product in endoflife.list_products(METHOD, p_filter):
-    product_data = releasedata.Product(product.name)
-    for config in product.get_auto_configs(METHOD):
-        fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
-    product_data.write()
+    with releasedata.ProductData(product.name) as product_data:
+        for config in product.get_auto_configs(METHOD):
+            fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")

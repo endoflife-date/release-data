@@ -3,6 +3,8 @@ import logging
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+from types import TracebackType
+from typing import Optional, Type
 
 # Do not update the format: it's also used to declare groups in the GitHub Actions logs.
 logging.basicConfig(format="%(message)s", level=logging.INFO)
@@ -10,13 +12,16 @@ logging.basicConfig(format="%(message)s", level=logging.INFO)
 VERSIONS_PATH = Path(os.environ.get("VERSIONS_PATH", "releases"))
 
 
+class ProductUpdateError(Exception):
+    """Custom exceptions raised when unexpected errors occur during product updates."""
+
 class ProductVersion:
-    def __init__(self, product: "Product", data: dict) -> None:
+    def __init__(self, product: "ProductData", data: dict) -> None:
         self.product = str(product)
         self.data = data
 
     @staticmethod
-    def of(product: "Product", name: str, date: datetime) -> "ProductVersion":
+    def of(product: "ProductData", name: str, date: datetime) -> "ProductVersion":
         return ProductVersion(product, {
             "name": name,
             "date": date.strftime("%Y-%m-%d"),
@@ -35,16 +40,37 @@ class ProductVersion:
         return f"{self.product}#{self.name()} ({self.date()})"
 
 
-class Product:
+class ProductData:
     def __init__(self, name: str) -> None:
         self.name: str = name
         self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
         self.versions: dict[str, ProductVersion] = {}
+
+    def __enter__(self) -> "ProductData":
         logging.info(f"::group::{self}")
+        return self
+
+    def __exit__(self, exc_type: Optional[Type[BaseException]], exc_value: Optional[BaseException],
+                 exc_traceback: Optional[TracebackType]) -> None:
+        try:
+            if exc_value:
+                message = f"an unexpected error occurred while updating {self} data"
+                logging.error(message, exc_info=exc_value)
+                raise ProductUpdateError(message) from exc_value
+
+            logging.info("updating %s data",self)
+            # sort by date then version (desc)
+            ordered_versions = sorted(self.versions.values(), key=lambda v: (v.date(), v.name()), reverse=True)
+            with self.versions_path.open("w") as f:
+                f.write(json.dumps({
+                    "versions": {version.name(): version.data for version in ordered_versions},
+                }, indent=2))
+        finally:
+            logging.info("::endgroup::")
 
     @staticmethod
-    def from_file(name: str) -> "Product":
-        product = Product(name)
+    def from_file(name: str) -> "ProductData":
+        product = ProductData(name)
 
         if product.versions_path.is_file():
             with product.versions_path.open() as f:
@@ -78,15 +104,6 @@ class Product:
             return
 
         logging.info(f"removing version {version} ({self.versions.pop(version)}) from {self}")
-
-    def write(self) -> None:
-        # sort by date then version (desc)
-        ordered_versions = sorted(self.versions.values(), key=lambda v: (v.date(), v.name()), reverse=True)
-        with self.versions_path.open("w") as f:
-            f.write(json.dumps({
-                "versions": {version.name(): version.data for version in ordered_versions},
-            }, indent=2))
-        logging.info("::endgroup::")
 
     def __repr__(self) -> str:
         return self.name

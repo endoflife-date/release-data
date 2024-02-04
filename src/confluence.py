@@ -5,13 +5,11 @@ from requests_html import HTMLSession
 
 Note that requests_html is used because JavaScript is needed to render the page."""
 
-product = releasedata.Product("confluence")
-r = HTMLSession().get("https://www.atlassian.com/software/confluence/download-archives")
-r.html.render(sleep=1, scrolldown=3)
+with releasedata.ProductData("confluence") as product_data:
+    r = HTMLSession().get("https://www.atlassian.com/software/confluence/download-archives")
+    r.html.render(sleep=1, scrolldown=3)
 
-for version_block in r.html.find('.versions-list'):
-    version = version_block.find('a.product-versions', first=True).attrs['data-version']
-    date = dates.parse_date(version_block.find('.release-date', first=True).text)
-    product.declare_version(version, date)
-
-product.write()
+    for version_block in r.html.find('.versions-list'):
+        version = version_block.find('a.product-versions', first=True).attrs['data-version']
+        date = dates.parse_date(version_block.find('.release-date', first=True).text)
+        product_data.declare_version(version, date)

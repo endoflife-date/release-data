@@ -9,20 +9,17 @@ from common import dates, http, releasedata
 
 BASE_URL = "https://unity.com/releases/editor/qa/lts-releases"
 
-product = releasedata.Product("unity")
 next_page_url = BASE_URL
+with releasedata.ProductData("unity") as product_data:
+    # Do not try to fetch multiple pages in parallel: it is raising a lot of errors and make the overall process slower.
+    while next_page_url:
+        response = http.fetch_url(next_page_url)
+        soup = BeautifulSoup(response.text, features="html5lib")
 
-# Do not try to fetch multiple pages in parallel: it is raising a lot of errors and make the overall process slower.
-while next_page_url:
-    response = http.fetch_url(next_page_url)
-    soup = BeautifulSoup(response.text, features="html5lib")
+        for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
+            version = release.find('h4').find('span').text
+            date = dates.parse_datetime(release.find('time').attrs['datetime'])
+            product_data.declare_version(version, date)
 
-    for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
-        version = release.find('h4').find('span').text
-        date = dates.parse_datetime(release.find('time').attrs['datetime'])
-        product.declare_version(version, date)
-
-    next_link = soup.find('a', {"rel": "next"})
-    next_page_url = BASE_URL + next_link.attrs['href'] if next_link else None
-
-product.write()
+        next_link = soup.find('a', {"rel": "next"})
+        next_page_url = BASE_URL + next_link.attrs['href'] if next_link else None
