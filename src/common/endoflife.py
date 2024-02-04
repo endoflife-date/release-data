@@ -84,7 +84,7 @@ def list_products(method: str, products_filter: str = None) -> list[ProductFront
     """Return a list of products that are using the same given update method."""
     products = []
 
-    for product_file in PRODUCTS_PATH.glob("*.md"):
+    for product_file in sorted(PRODUCTS_PATH.glob("*.md")):
         product_name = product_file.stem
         if products_filter and product_name != products_filter:
             continue
