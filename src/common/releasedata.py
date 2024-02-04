@@ -15,13 +15,14 @@ VERSIONS_PATH = Path(os.environ.get("VERSIONS_PATH", "releases"))
 class ProductUpdateError(Exception):
     """Custom exceptions raised when unexpected errors occur during product updates."""
 
+
 class ProductVersion:
-    def __init__(self, product: "ProductData", data: dict) -> None:
-        self.product = str(product)
+    def __init__(self, product: str, data: dict) -> None:
+        self.product = product
         self.data = data
 
     @staticmethod
-    def of(product: "ProductData", name: str, date: datetime) -> "ProductVersion":
+    def of(product: str, name: str, date: datetime) -> "ProductVersion":
         return ProductVersion(product, {
             "name": name,
             "date": date.strftime("%Y-%m-%d"),
@@ -36,18 +37,38 @@ class ProductVersion:
     def replace_date(self, date: datetime) -> None:
         self.data["date"] = date.strftime("%Y-%m-%d")
 
+    def copy(self) -> "ProductVersion":
+        return ProductVersion(self.product, self.data.copy())
+
     def __repr__(self) -> str:
         return f"{self.product}#{self.name()} ({self.date()})"
 
 
 class ProductData:
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, cumulative_update: bool = False) -> None:
         self.name: str = name
+        self.cumulative_update: bool = cumulative_update
         self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
         self.versions: dict[str, ProductVersion] = {}
+        self.previous_versions: dict[str, ProductVersion] = {}
 
     def __enter__(self) -> "ProductData":
         logging.info(f"::group::{self}")
+
+        if self.versions_path.is_file():
+            with self.versions_path.open() as f:
+                for json_version in json.load(f)["versions"].values():
+                    version = ProductVersion(self.name, json_version)
+                    self.previous_versions[version.name()] = version
+            logging.info(f"loaded previous versions data for {self} from {self.versions_path}")
+        else:
+            logging.info(f"no previous versions data found for {self} at {self.versions_path}")
+
+        if self.cumulative_update:
+            logging.info(f"cumulative update is enabled for {self}, will reuse previous versions data")
+            for name, version in self.previous_versions.items():
+                self.versions[name] = version.copy()
+
         return self
 
     def __exit__(self, exc_type: Optional[Type[BaseException]], exc_value: Optional[BaseException],
@@ -68,23 +89,11 @@ class ProductData:
         finally:
             logging.info("::endgroup::")
 
-    @staticmethod
-    def from_file(name: str) -> "ProductData":
-        product = ProductData(name)
-
-        if product.versions_path.is_file():
-            with product.versions_path.open() as f:
-                for json_version in json.load(f)["versions"].values():
-                    version = ProductVersion(product, json_version)
-                    product.versions[version.name()] = version
-            logging.info(f"loaded versions data for {product} from {product.versions_path}")
-        else:
-            logging.warning(f"no versions data found for {product} at {product.versions_path}")
-
-        return product
-
     def get_version(self, version: str) -> ProductVersion:
         return self.versions[version] if version in self.versions else None
+
+    def get_previous_version(self, version: str) -> ProductVersion:
+        return self.previous_versions[version] if version in self.previous_versions else None
 
     def declare_version(self, version: str, date: datetime) -> None:
         if version in self.versions and self.versions[version].date() != date:

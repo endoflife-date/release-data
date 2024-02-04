@@ -13,7 +13,6 @@ them though. Note that this would also be unnecessary if it was possible to disa
 release dates updates in the latest.py script."""
 
 with releasedata.ProductData("aws-lambda") as product_data:
-    old_product_data = releasedata.ProductData.from_file(product_data.name)
     product_frontmatter = endoflife.ProductFrontmatter(product_data.name)
     response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
     soup = BeautifulSoup(response.text, features="html5lib")
@@ -30,7 +29,7 @@ with releasedata.ProductData("aws-lambda") as product_data:
 
             date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
             if date is None:
-                date = old_product_data.get_version(identifier).date()  # else use the previously found date
+                date = product_data.get_previous_version(identifier).date()  # else use the previously found date
             if date is None:
                 date = dates.today()  # else use today's date
 
