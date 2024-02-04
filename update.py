@@ -21,7 +21,7 @@ class ScriptResult:
         self.success = success
 
     def __lt__(self, other: "ScriptResult") -> bool:
-        return self.duration < other.duration or self.name < other.name
+        return self.duration < other.duration
 
 
 def run_scripts(summary: GitHubStepSummary) -> bool:
