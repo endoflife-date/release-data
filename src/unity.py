@@ -1,25 +1,27 @@
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
-# Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there,
-# so this automation is only partial.
-#
-# This script iterates over all pages of the Unity LTS releases page, which is paginated.
-# It keeps fetching the next page until there is no next page link.
+"""Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there, so this automation
+is only partial.
 
-BASE_URL = "https://unity.com/releases/editor/qa/lts-releases"
+This script is cumulative, only the first page is fetched (e.g. the first ten versions). This is because:
+- it is too long to fetch all (at least 30s, usually more than a minute),
+- this generates too many requests to the unity.com servers,
+- fetching multiple pages in parallel is raising a lot of errors and makes the overall process slower (this was tested
+  during https://github.com/endoflife-date/release-data/pull/194),
+- and anyway oldest versions are never updated.
 
-next_page_url = BASE_URL
-with releasedata.ProductData("unity") as product_data:
-    # Do not try to fetch multiple pages in parallel: it is raising a lot of errors and make the overall process slower.
-    while next_page_url:
-        response = http.fetch_url(next_page_url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+Note that it was assumed that:
+- the script is ran regularly enough to keep the versions up to date (once a day or week looks enough),
+- there is never more than 10 new LTS versions at a time.
 
-        for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
-            version = release.find('h4').find('span').text
-            date = dates.parse_datetime(release.find('time').attrs['datetime'])
-            product_data.declare_version(version, date)
+The script will need to be updated if someday those conditions are not met."""
 
-        next_link = soup.find('a', {"rel": "next"})
-        next_page_url = BASE_URL + next_link.attrs['href'] if next_link else None
+with releasedata.ProductData("unity", cumulative_update=True) as product_data:
+    response = http.fetch_url("https://unity.com/releases/editor/qa/lts-releases")
+    soup = BeautifulSoup(response.text, features="html5lib")
+
+    for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
+        version = release.find('h4').find('span').text
+        date = dates.parse_datetime(release.find('time').attrs['datetime'])
+        product_data.declare_version(version, date)
