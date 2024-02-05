@@ -29,7 +29,18 @@ class ReleaseCycle:
         self.matched = False
         self.updated = False
 
-    def update_with(self, version: str, date: datetime.date) -> None:
+    def update_with(self, release: dict) -> None:
+        for key, value in release.items():
+            if isinstance(value, str) and re.fullmatch(r'^\d{4}-\d{2}-\d{2}$', value):
+                value = datetime.date.fromisoformat(value)
+
+            old_value = self.data.get(key, None)
+            if old_value != value:
+                logging.info(f"{self} {key} updated from {old_value} to {value}")
+                self.data[key] = value
+                self.updated = True
+
+    def update_with_version(self, version: str, date: datetime.date) -> None:
         logging.debug(f"will try to update {self} with {version} ({date})")
         self.matched = True
         self.__update_release_date(version, date)
@@ -120,6 +131,7 @@ class Product:
 
         self.releases = [ReleaseCycle(self, release) for release in self.data["releases"]]
         self.updated = False
+        self.unmatched_releases = []
         self.unmatched_versions = {}
 
     # Placeholder function for mass-upgrading the structure of the product files.
@@ -133,6 +145,19 @@ class Product:
             if release.matched and latest not in self.release_data["versions"]:
                 logging.info(f"latest version {latest} for {release} not found in {self.release_data_path}")
 
+    def process_release(self, release_data: dict) -> None:
+        name = release_data.pop("name")  # name must not appear in updates
+
+        release_matched = False
+        for release in self.releases:
+            if release.name == name:
+                release_matched = True
+                release.update_with(release_data)
+                self.updated = self.updated or release.updated
+
+        if not release_matched:
+            self.unmatched_releases.append(name)
+
     def process_version(self, version_data: dict) -> None:
         name = version_data["name"]
         date = datetime.date.fromisoformat(version_data["date"])
@@ -141,7 +166,7 @@ class Product:
         for release in self.releases:
             if release.includes(name):
                 version_matched = True
-                release.update_with(name, date)
+                release.update_with_version(name, date)
                 self.updated = self.updated or release.updated
 
         if not version_matched:
@@ -166,7 +191,9 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
     product.upgrade_structure()
 
     if product.release_data:
-        for version_data in product.release_data["versions"].values():
+        for release_data in product.release_data.get("releases", {}).values():
+            product.process_release(release_data)
+        for version_data in product.release_data.get("versions", {}).values():
             product.process_version(version_data)
         product.check_latest()
 
@@ -182,6 +209,11 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
             if days_since_release < 30:
                 logging.warning(f"{name}:{version} ({date}) not included")
                 output.println(f"{name}:{version} ({date})")
+
+    if len(product.unmatched_releases) != 0:
+        for release in product.unmatched_releases:
+            logging.warning(f"{name}:{release} not included")
+            output.println(f"{name}:{release}")
 
 
 if __name__ == "__main__":
