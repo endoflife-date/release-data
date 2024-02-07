@@ -62,12 +62,12 @@ class ProductFrontmatter:
     def get_auto_configs(self, method: str) -> list[AutoConfig]:
         configs = []
 
-        if "auto" in self.data:
-            for config in self.data["auto"]:
-                if method in config:
-                    configs.append(AutoConfig(method, config))
+        all_configs = self.data.get("auto", {}).get("methods", [])
+        for config in all_configs:
+            if method in config:
+                configs.append(AutoConfig(method, config))
 
-        if len(configs) > 0 and len(configs) != len(self.data["auto"]):
+        if len(configs) > 0 and len(configs) != len(all_configs):
             message = f"mixed auto-update methods declared for {self.name}, this is not yet supported"
             raise ValueError(message)
 
