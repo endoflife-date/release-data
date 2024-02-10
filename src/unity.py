@@ -17,7 +17,7 @@ Note that it was assumed that:
 
 The script will need to be updated if someday those conditions are not met."""
 
-with releasedata.ProductData("unity", cumulative_update=True) as product_data:
+with releasedata.ProductData("unity") as product_data:
     response = http.fetch_url("https://unity.com/releases/editor/qa/lts-releases")
     soup = BeautifulSoup(response.text, features="html5lib")
 

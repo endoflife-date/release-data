@@ -20,7 +20,7 @@ The script will need to be updated if someday those conditions are not met."""
 
 MAX_VERSIONS_LIMIT = 50
 
-with releasedata.ProductData("firefox", cumulative_update=True) as product_data:
+with releasedata.ProductData("firefox") as product_data:
     releases_page = http.fetch_url("https://www.mozilla.org/en-US/firefox/releases/")
     releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
     releases_list = releases_soup.find_all("ol", class_="c-release-list")

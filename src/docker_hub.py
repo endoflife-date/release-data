@@ -23,7 +23,7 @@ def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product in endoflife.list_products(METHOD, p_filter):
-    with releasedata.ProductData(product.name) as product_data:
-        for config in product.get_auto_configs(METHOD):
-            fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
