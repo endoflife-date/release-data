@@ -1,3 +1,4 @@
+import itertools
 import logging
 import os
 import re
@@ -17,10 +18,13 @@ PRODUCTS_PATH = Path(os.environ.get("PRODUCTS_PATH", "website/products"))
 
 
 class AutoConfig:
-    def __init__(self, method: str, config: dict) -> None:
-        self.method = method
-        self.url = config[method]
+    def __init__(self, product: str, config: dict) -> None:
+        self.product = product
+        self.method = next(key for key in config if key not in ("template", "regex", "regex_exclude"))
+        self.url = config[self.method]
         self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
+
+        self.script = f"{self.url}.py" if self.method == "custom" else f"{self.method}.py"
 
         regexes_include = config.get("regex", DEFAULT_VERSION_REGEX)
         regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
@@ -45,6 +49,9 @@ class AutoConfig:
     def render(self, match: re.Match) -> str:
         return self.version_template.render(**match.groupdict())
 
+    def __repr__(self) -> str:
+        return f"{self.product}#{self.method}({self.url})"
+
 
 class ProductFrontmatter:
     def __init__(self, name: str) -> None:
@@ -59,17 +66,23 @@ class ProductFrontmatter:
         else:
             logging.warning(f"no product data found for {self.name} at {self.path}")
 
-    def get_auto_configs(self, method: str) -> list[AutoConfig]:
+    def has_auto_configs(self) -> bool:
+        return self.data and "methods" in self.data.get("auto", {})
+
+    def is_auto_update_cumulative(self) -> bool:
+        return self.data.get("auto", {}).get("cumulative", False)
+
+    def auto_configs(self, method_filter: str = None, url_filter: str = None) -> list[AutoConfig]:
         configs = []
 
-        all_configs = self.data.get("auto", {}).get("methods", [])
-        for config in all_configs:
-            if method in config:
-                configs.append(AutoConfig(method, config))
+        configs_data = self.data.get("auto", {}).get("methods", [])
+        for config_data in configs_data:
+            config = AutoConfig(self.name, config_data)
+            if ((method_filter and config.method != method_filter)
+                or (url_filter and config.url != url_filter)):
+                continue
 
-        if len(configs) > 0 and len(configs) != len(all_configs):
-            message = f"mixed auto-update methods declared for {self.name}, this is not yet supported"
-            raise ValueError(message)
+            configs.append(config)
 
         return configs
 
@@ -80,7 +93,7 @@ class ProductFrontmatter:
         return None
 
 
-def list_products(method: str, products_filter: str = None) -> list[ProductFrontmatter]:
+def list_products(products_filter: str = None) -> list[ProductFrontmatter]:
     """Return a list of products that are using the same given update method."""
     products = []
 
@@ -89,9 +102,12 @@ def list_products(method: str, products_filter: str = None) -> list[ProductFront
         if products_filter and product_name != products_filter:
             continue
 
-        product = ProductFrontmatter(product_name)
-        configs = product.get_auto_configs(method)
-        if len(configs) > 0:
-            products.append(product)
+        products.append(ProductFrontmatter(product_name))
 
     return products
+
+
+def list_configs(products_filter: str = None, methods_filter: str = None, urls_filter: str = None) -> list[AutoConfig]:
+    products = list_products(products_filter)
+    configs_by_product = [p.auto_configs(methods_filter, urls_filter) for p in products]
+    return list(itertools.chain.from_iterable(configs_by_product))  # flatten the list of lists

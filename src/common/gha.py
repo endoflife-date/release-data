@@ -45,3 +45,14 @@ class GitHubStepSummary:
         if var_exists:
             with open(os.environ["GITHUB_STEP_SUMMARY"], 'a') as github_step_summary:  # NOQA: PTH123
                 print(self.value, file=github_step_summary)
+
+
+class GitHubGroup:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def __enter__(self) -> None:
+        logging.info(f"::group::{self.name}")
+
+    def __exit__(self, exc_type: any, exc_value: any, traceback: any) -> None:
+        logging.info("::endgroup::")

@@ -29,8 +29,6 @@ with releasedata.ProductData("aws-lambda") as product_data:
 
             date = product_frontmatter.get_release_date(identifier)  # use the product releaseDate if available
             if date is None:
-                date = product_data.get_previous_version(identifier).date()  # else use the previously found date
-            if date is None:
                 date = dates.today()  # else use today's date
 
             product_data.declare_version(identifier, date)

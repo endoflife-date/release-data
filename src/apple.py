@@ -51,10 +51,7 @@ VERSION_PATTERNS = {
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
-logging.info("::group::apple")
 soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
-logging.info("::endgroup::")
-
 for product_name in VERSION_PATTERNS:
     with releasedata.ProductData(product_name) as product_data:
         for soup in soups:

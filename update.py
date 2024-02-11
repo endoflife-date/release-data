@@ -1,6 +1,5 @@
 import json
 import logging
-import os
 import subprocess
 import sys
 import time
@@ -8,45 +7,106 @@ from pathlib import Path
 
 from deepdiff import DeepDiff
 
-from src.common.gha import GitHubOutput, GitHubStepSummary
+from src.common.endoflife import AutoConfig, ProductFrontmatter, list_products
+from src.common.gha import GitHubGroup, GitHubOutput, GitHubStepSummary
 
 SRC_DIR = Path('src')
 DATA_DIR = Path('releases')
 
 
-class ScriptResult:
-    def __init__(self, path: Path, duration: float, success: bool) -> None:
-        self.name = path.stem
-        self.duration = duration
-        self.success = success
+class ScriptExecutionSummary:
+    def __init__(self) -> None:
+        self.success_by_product = {}
+        self.success_by_script = {}
+        self.durations_by_product = {}
+        self.durations_by_script = {}
+        self.scripts_by_product = {}
+        self.products_by_script = {}
 
-    def __lt__(self, other: "ScriptResult") -> bool:
-        return self.duration < other.duration
+    def register(self, script: str, product: str, duration: float, success: bool) -> None:
+        self.success_by_product[product] = self.success_by_product.get(product, True) and success
+        self.success_by_script[script] = self.success_by_script.get(script, True) and success
+        self.durations_by_product[product] = self.durations_by_product.get(product, 0) + duration
+        self.durations_by_script[script] = self.durations_by_script.get(script, 0) + duration
+        self.scripts_by_product[product] = self.scripts_by_product.get(product, []) + [script]
+        self.products_by_script[script] = self.products_by_script.get(script, []) + [product]
+
+    def print_summary(self, summary: GitHubStepSummary, min_duration: float = 3) -> None:
+        summary.println("## Script execution summary\n")
+        summary.println(f"\nExecutions below {min_duration} seconds are hidden except in case of failure.\n")
+        summary.println("### By products\n")
+        summary.println("| Name | Duration | Scripts | Succeeded |")
+        summary.println("|------|----------|---------|-----------|")
+        for product, duration in sorted(self.durations_by_product.items(), key=lambda x: x[1], reverse=True):
+            if duration >= min_duration or not self.success_by_product[product]:
+                scripts = ', '.join(self.scripts_by_product[product])
+                success = '✅' if self.success_by_product[product] else '❌'
+                summary.println(f"| {product} | {duration:.2f}s | {scripts} | {success} |")
+
+        summary.println("\n### By scripts\n")
+        summary.println("| Name | Duration | #Products | Succeeded |")
+        summary.println("|------|----------|-----------|-----------|")
+        for script, duration in sorted(self.durations_by_script.items(), key=lambda x: x[1], reverse=True):
+            if duration >= min_duration or not self.products_by_script[script]:
+                product_count = len(self.products_by_script[script])
+                success = '✅' if self.success_by_script[script] else '❌'
+                summary.println(f"| {script} | {duration:.2f}s | {product_count} | {success} |")
+
+        summary.println("")
+
+    def any_failure(self) -> bool:
+        return not all(self.success_by_product.values())
 
 
-def run_scripts(summary: GitHubStepSummary) -> bool:
-    results = []
+def __delete_data(product: ProductFrontmatter) -> None:
+    release_data_path = DATA_DIR / f"{product.name}.json"
+    if not release_data_path.exists() or product.is_auto_update_cumulative():
+        return
 
-    for script in sorted([SRC_DIR / file for file in os.listdir(SRC_DIR) if file.endswith('.py')]):
-        logging.info(f"start running {script}")
+    release_data_path.unlink()
+    logging.info(f"deleted {release_data_path} before running scripts")
 
-        start = time.perf_counter()
-        child = subprocess.run([sys.executable, script])  # timeout handled in subscripts
-        elapsed_seconds = time.perf_counter() - start
 
-        result = ScriptResult(script, elapsed_seconds, child.returncode == 0)
-        log_level = logging.ERROR if not result.success else logging.INFO
-        logging.log(log_level, f"ran {script}, took {elapsed_seconds:.2f}s (success={result.success})")
-        results.append(result)
+def __revert_data(product: ProductFrontmatter) -> None:
+    release_data_path = DATA_DIR / f"{product.name}.json"
+    subprocess.run(f'git checkout HEAD -- {release_data_path}', timeout=10, check=True, shell=True)
+    logging.warning(f"reverted changes in {release_data_path}")
 
-    summary.println("## Script execution summary\n")
-    summary.println("| Name | Duration | Succeeded |")
-    summary.println("|------|----------|-----------|")
-    for result in sorted(results, reverse=True):
-        summary.println(f"| {result.name} | {result.duration:.2f}s | {'✅' if result.success else '❌'} |")
-    summary.println("")
 
-    return not all(result.success for result in results)
+def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: ScriptExecutionSummary) -> bool:
+    script = SRC_DIR / config.script
+
+    logging.info(f"start running {script} for {config}")
+    start = time.perf_counter()
+    # timeout is handled in child scripts
+    child = subprocess.run([sys.executable, script, config.product, str(config.url)])
+    success = child.returncode == 0
+    elapsed_seconds = time.perf_counter() - start
+
+    summary.register(script.stem, product.name, elapsed_seconds, success)
+    logging.log(logging.ERROR if not success else logging.INFO,
+                f"ran {script} for {config}, took {elapsed_seconds:.2f}s (success={success})")
+
+    return success
+
+
+def run_scripts(summary: GitHubStepSummary, product_filter: str) -> bool:
+    exec_summary = ScriptExecutionSummary()
+
+    for product in list_products(product_filter):
+        if not product.has_auto_configs():
+            continue
+
+        with GitHubGroup(product.name):
+            __delete_data(product)
+            for config in product.auto_configs():
+                success = __run_script(product, config, exec_summary)
+                if not success:
+                    __revert_data(product)
+                    break  # stop running scripts for this product
+
+    exec_summary.print_summary(summary)
+    return exec_summary.any_failure()
 
 
 def get_updated_products() -> list[Path]:
@@ -92,9 +152,10 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
             summary.println("")
 
 
-logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
+logging.basicConfig(format="%(message)s", level=logging.INFO)
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
 with GitHubStepSummary() as step_summary:
-    some_script_failed = run_scripts(step_summary)
+    some_script_failed = run_scripts(step_summary, p_filter)
     updated_products = get_updated_products()
 
     step_summary.println("## Update summary\n")

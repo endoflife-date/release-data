@@ -43,17 +43,17 @@ query($endCursor: String) {
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product in endoflife.list_products(METHOD, p_filter):
-    with releasedata.ProductData(product.name) as product_data:
-        for config in product.get_auto_configs(METHOD):
-            for page in fetch_releases(config.url):
-                releases = [edge['node'] for edge in (page['data']['repository']['releases']['edges'])]
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        for page in fetch_releases(config.url):
+            releases = [edge['node'] for edge in (page['data']['repository']['releases']['edges'])]
 
-                for release in releases:
-                    if not release['isPrerelease']:
-                        version_str = release['name']
-                        version_match = config.first_match(version_str)
-                        if version_match:
-                            version = config.render(version_match)
-                            date = dates.parse_datetime(release['publishedAt'])
-                            product_data.declare_version(version, date)
+            for release in releases:
+                if not release['isPrerelease']:
+                    version_str = release['name']
+                    version_match = config.first_match(version_str)
+                    if version_match:
+                        version = config.render(version_match)
+                        date = dates.parse_datetime(release['publishedAt'])
+                        product_data.declare_version(version, date)
