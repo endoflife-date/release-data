@@ -8,6 +8,12 @@ from common import dates, endoflife, http, releasedata
 This script works based on a definition provided in the product's frontmatter to locate the table and extract the
 necessary information. Available configuration options are:
 
+- regex: A regular expression used to match release based on their names (aka releaseCycle).
+  Releases not matching this expression are ignored. Default value is defined in endoflife.py (DEFAULT_VERSION_REGEX).
+- regex_exclude: A regular expression used to exclude matching releases based on their names  (aka releaseCycle).
+  Releases matching this expression are ignored, even if they match the above regex. This is empty by default.
+- template: A liquid template used to render the release name. The template is rendered using the matched groups from
+  the regex. Default value is defined in endoflife.py (DEFAULT_VERSION_TEMPLATE).
 - selector: A CSS selector used to locate one or more tables in the page.
 - headers_selector: A CSS selector used to locate the table's headers (column names).
 - rows_selector: A CSS selector used to locate the table's rows.
@@ -42,7 +48,11 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                     continue
 
                 release_cycle = cells[index_by_target["releaseCycle"]].get_text().strip()
-                release = product_data.get_release(release_cycle)
+                release_cycle_match = config.first_match(release_cycle)
+                if not release_cycle_match:
+                    continue
+
+                release = product_data.get_release(config.render(release_cycle_match))
                 for target, index in index_by_target.items():
                     value_str = cells[index].get_text().strip()
 
