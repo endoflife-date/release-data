@@ -18,19 +18,20 @@ PRODUCTS_PATH = Path(os.environ.get("PRODUCTS_PATH", "website/products"))
 
 
 class AutoConfig:
-    def __init__(self, product: str, config: dict) -> None:
+    def __init__(self, product: str, data: dict) -> None:
         self.product = product
-        self.method = next(key for key in config if key not in ("template", "regex", "regex_exclude"))
-        self.url = config[self.method]
-        self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
+        self.data = data
+        self.method = next(key for key in data if key not in ("template", "regex", "regex_exclude"))
+        self.url = data[self.method]
+        self.version_template = Template(data.get("template", DEFAULT_VERSION_TEMPLATE))
 
         self.script = f"{self.url}.py" if self.method == "custom" else f"{self.method}.py"
 
-        regexes_include = config.get("regex", DEFAULT_VERSION_REGEX)
+        regexes_include = data.get("regex", DEFAULT_VERSION_REGEX)
         regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
         self.include_version_patterns = [re.compile(r) for r in regexes_include]
 
-        regexes_exclude = config.get("regex_exclude", [])
+        regexes_exclude = data.get("regex_exclude", [])
         regexes_exclude = regexes_exclude if isinstance(regexes_exclude, list) else [regexes_exclude]
         self.exclude_version_patterns = [re.compile(r) for r in regexes_exclude]
 
