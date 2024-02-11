@@ -28,11 +28,17 @@ class ProductRelease:
     def name(self) -> str:
         return self.data["name"]
 
+    def set_release_date(self, new_value: datetime) -> None:
+        self.set_field("releaseDate", new_value)
+
     def set_support(self, new_value: datetime | bool) -> None:
         self.set_field("support", new_value)
 
     def set_eol(self, new_value: datetime | bool) -> None:
         self.set_field("eol", new_value)
+
+    def set_extended_support(self, new_value: datetime | bool) -> None:
+        self.set_field("extendedSupport", new_value)
 
     def set_field(self, field: str, new_value: any) -> None:
         new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, datetime) else new_value
