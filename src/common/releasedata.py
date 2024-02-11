@@ -16,6 +16,38 @@ class ProductUpdateError(Exception):
     """Custom exceptions raised when unexpected errors occur during product updates."""
 
 
+class ProductRelease:
+    def __init__(self, product: str, data: dict = None) -> None:
+        self.product = product
+        self.data = data if data else {}
+
+    @staticmethod
+    def of(product: str, name: str) -> "ProductRelease":
+        return ProductRelease(product, { "name": name })
+
+    def name(self) -> str:
+        return self.data["name"]
+
+    def set_support(self, new_value: datetime | bool) -> None:
+        self.set_field("support", new_value)
+
+    def set_eol(self, new_value: datetime | bool) -> None:
+        self.set_field("eol", new_value)
+
+    def set_field(self, field: str, new_value: any) -> None:
+        new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, datetime) else new_value
+        old_value = self.data.get(field, None)
+        if old_value != new_value:
+            self.data[field] = new_value
+            if old_value:
+                logging.info(f"updated '{field}' in {self} from {old_value} to {new_value}")
+            else:
+                logging.info(f"set '{field}' in {self} to {new_value}")
+
+    def __repr__(self) -> str:
+        return f"{self.product}#{self.name()}"
+
+
 class ProductVersion:
     def __init__(self, product: str, data: dict) -> None:
         self.product = product
@@ -45,6 +77,7 @@ class ProductData:
     def __init__(self, name: str) -> None:
         self.name: str = name
         self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
+        self.releases = {}
         self.versions: dict[str, ProductVersion] = {}
 
     def __enter__(self) -> "ProductData":
@@ -67,12 +100,20 @@ class ProductData:
             raise ProductUpdateError(message) from exc_value
 
         logging.info("updating %s data",self.versions_path)
-        # sort by date then version (desc)
+        ordered_releases = sorted(self.releases.values(), key=lambda v: v.name(), reverse=True)
         ordered_versions = sorted(self.versions.values(), key=lambda v: (v.date(), v.name()), reverse=True)
         with self.versions_path.open("w") as f:
             f.write(json.dumps({
+                "releases": {release.name(): release.data for release in ordered_releases},
                 "versions": {version.name(): version.data for version in ordered_versions},
             }, indent=2))
+
+    def get_release(self, release: str) -> ProductRelease:
+        if release not in self.releases:
+            logging.info(f"adding release {release} to {self}")
+            self.releases[release] = ProductRelease.of(self.name, release)
+
+        return self.releases[release]
 
     def get_version(self, version: str) -> ProductVersion:
         return self.versions[version] if version in self.versions else None

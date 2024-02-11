@@ -33,7 +33,7 @@ class ScriptExecutionSummary:
 
     def print_summary(self, summary: GitHubStepSummary, min_duration: float = 3) -> None:
         summary.println("## Script execution summary\n")
-        summary.println(f"\nExecutions below {min_duration} seconds are hidden except in case of failure.\n")
+        summary.println(f"Executions below {min_duration} seconds are hidden except in case of failure.\n")
         summary.println("### By products\n")
         summary.println("| Name | Duration | Scripts | Succeeded |")
         summary.println("|------|----------|---------|-----------|")

@@ -86,8 +86,14 @@ class ProductFrontmatter:
 
         return configs
 
+    def get_releases(self) -> list[dict]:
+        return self.data.get("releases", [])
+
+    def get_release_names(self) -> list[str]:
+        return [release["releaseCycle"] for release in self.get_releases()]
+
     def get_release_date(self, release_cycle: str) -> datetime | None:
-        for release in self.data["releases"]:
+        for release in self.get_releases():
             if release["releaseCycle"] == release_cycle:
                 return release["releaseDate"]
         return None
