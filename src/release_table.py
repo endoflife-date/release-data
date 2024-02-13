@@ -33,32 +33,37 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
     with releasedata.ProductData(config.product) as product_data:
         response = http.fetch_url(config.url)
         soup = BeautifulSoup(response.text, features="html5lib")
+        table = soup.select_one(config.data["selector"])
 
-        for table in soup.select(config.data["selector"]):
-            headers = [th.get_text().strip().lower() for th in table.select(config.data["headers_selector"])]
+        if not table:
+            message = f"No table found for {config.product} with selector {config.data['selector']}"
+            raise ValueError(message)
 
-            index_by_target = {}
-            for target, column in config.data["mapping"].items():
-                index_by_target[target] = headers.index(str(column).lower())
+        index_by_target = {}
+        headers = [th.get_text().strip().lower() for th in table.select(config.data["headers_selector"])]
+        for target, column in config.data["mapping"].items():
+            index_by_target[target] = headers.index(str(column).lower())
 
-            min_column_count = max(index_by_target.values()) + 1
-            for row in table.select(config.data["rows_selector"]):
-                cells = row.findAll("td")
-                if len(cells) < min_column_count:
-                    continue
+        min_column_count = max(index_by_target.values()) + 1
+        release_cycle_index = index_by_target.pop("releaseCycle")
+        for row in table.select(config.data["rows_selector"]):
+            cells = row.findAll("td")
+            if len(cells) < min_column_count:
+                continue
 
-                release_cycle = cells[index_by_target["releaseCycle"]].get_text().strip()
-                release_cycle_match = config.first_match(release_cycle)
-                if not release_cycle_match:
-                    continue
+            release_cycle = cells[release_cycle_index].get_text().strip()
+            release_cycle_match = config.first_match(release_cycle)
+            if not release_cycle_match:
+                continue
 
-                release = product_data.get_release(config.render(release_cycle_match))
-                for target, index in index_by_target.items():
-                    value_str = cells[index].get_text().strip()
+            release = product_data.get_release(config.render(release_cycle_match))
+            release.set_field("releaseCycle", release.name())
+            for target, index in index_by_target.items():
+                value_str = cells[index].get_text().strip()
 
-                    try:
-                        value = dates.parse_date(value_str)
-                    except ValueError:
-                        value = value_str
+                try:
+                    value = dates.parse_date(value_str)
+                except ValueError:
+                    value = value_str
 
-                    release.set_field(target, value)
+                release.set_field(target, value)
