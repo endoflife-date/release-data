@@ -43,16 +43,10 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     # so that we don't have to deal with some special cases in formats
     text = (
         text.strip()
-        .replace("th, ", " ")  # November 10th, 2015 -> November 10, 2015
-        .replace("st, ", " ")  # March 31st, 2015 -> March 31, 2015
-        .replace("Augu ", "August ")  # 17 Augu 2023 -> 17 August 2023 - revert after st replacement
-        .replace("augu ", "August ")  # 17 Augu 2023 -> 17 august 2023 - revert after st replacement
-        .replace("rd, ", " ")  # March 3rd, 2015 -> March 3, 2015
         .replace(", ", " ")  # November 10, 2015 -> November 10 2015
         .replace(". ", " ")  # November 10. 2015 -> November 10 2015
         .replace("(", "")  # (November 10 2015) -> November 10 2015)
         .replace(")", "")  # (November 10 2015) -> (November 10 2015
-        .replace("*", "")  # November 10 2015* -> November 10 2015
     )
     for fmt in formats:
         try:
