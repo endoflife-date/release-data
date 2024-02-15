@@ -83,7 +83,7 @@
     "nodejs4.3-edge": {
       "name": "nodejs4.3-edge",
       "support": "2020-03-05",
-      "eol": "2019-04-30"
+      "eol": "2020-04-30"
     },
     "nodejs4.3": {
       "name": "nodejs4.3",
