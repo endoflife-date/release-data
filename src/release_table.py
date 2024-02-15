@@ -32,7 +32,8 @@ METHOD = "release_table"
 
 
 class Field:
-    SUPPORTED_TYPES = ["date", "string"]
+    SUPPORTED_TYPES = ["date", "month_year_date", "string"]
+    DATE_TYPES = ["date", "month_year_date"]
     DATE_FIELDS = ["releaseDate", "support", "eol", "extendedSupport"]
     DEFAULT_REGEX = r"^(?P<value>.+)$"
     DEFAULT_TEMPLATE = "{{value}}"
@@ -55,7 +56,7 @@ class Field:
         self.column_index = columns.index(self.column)
 
         self.type = definition.get("type", "string")
-        if self.name in self.DATE_FIELDS:
+        if self.name in self.DATE_FIELDS and self.type not in self.DATE_TYPES:
             self.type = "date"  # override type for known date fields
         elif self.type not in self.SUPPORTED_TYPES:
             msg = f"unsupported type: {self.type} for field {self.name}"
@@ -87,6 +88,8 @@ class Field:
             str_value = self.template.render(**match.groupdict()) if self.template else raw_value
             if self.type == "date":
                 return dates.parse_date(str_value)
+            if self.type == "month_year_date":
+                return dates.parse_month_year_date(str_value)
             return str_value
 
         if self.name == "releaseCycle":
