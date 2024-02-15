@@ -131,7 +131,7 @@ class Product:
 
         self.releases = [ReleaseCycle(self, release) for release in self.data["releases"]]
         self.updated = False
-        self.unmatched_releases = []
+        self.unmatched_releases = {}
         self.unmatched_versions = {}
 
     # Placeholder function for mass-upgrading the structure of the product files.
@@ -156,7 +156,12 @@ class Product:
                 self.updated = self.updated or release.updated
 
         if not release_matched:
-            self.unmatched_releases.append(name)
+            # get the first available date in the release data
+            date_str = (release_data.get("extendedSupport", None)
+                        or release_data.get("eol", None)
+                        or release_data.get("support", None)
+                        or release_data.get("releaseDate", None))
+            self.unmatched_releases[name] = datetime.date.fromisoformat(str(date_str)) if date_str else None
 
     def process_version(self, version_data: dict) -> None:
         name = version_data["name"]
@@ -203,16 +208,29 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
         product.write()
 
     # List all unmatched versions released in the last 30 days
-    if len(product.unmatched_versions) != 0:
-        for version, date in product.unmatched_versions.items():
-            today = datetime.datetime.now(tz=datetime.timezone.utc).date()
-            days_since_release = (today - date).days
-            if days_since_release < 30:
-                logging.warning(f"{name}:{version} ({date}) not included")
-                output.println(f"{name}:{version} ({date})")
+    today = datetime.datetime.now(tz=datetime.timezone.utc).date()
+    __raise_alert_for_unmatched_versions(name, output, product, today, 30)
+    __raise_alert_for_unmatched_releases(name, output, product, today, 30)
 
-    if len(product.unmatched_releases) != 0:
-        for release in product.unmatched_releases:
+
+def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, product: Product, today: datetime.date,
+                                         suppress_alert_threshold_days: int) -> None:
+    if len(product.unmatched_versions) == 0:
+        return
+
+    for version, date in product.unmatched_versions.items():
+        if (today - date).days < suppress_alert_threshold_days:
+            logging.warning(f"{name}:{version} ({date}) not included")
+            output.println(f"{name}:{version} ({date})")
+
+
+def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, product: Product, today: datetime.date,
+                                         suppress_alert_threshold_days: int) -> None:
+    if len(product.unmatched_releases) == 0:
+        return
+
+    for release, date in product.unmatched_versions.items():
+        if not date or (today - date).days < suppress_alert_threshold_days:
             logging.warning(f"{name}:{release} not included")
             output.println(f"{name}:{release}")
 
