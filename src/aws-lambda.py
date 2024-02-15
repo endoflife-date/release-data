@@ -1,10 +1,9 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches AWS lambda runtimes with their support / EOL dates from https://docs.aws.amazon.com."""
 
 with releasedata.ProductData("aws-lambda") as product_data:
-    product_frontmatter = endoflife.ProductFrontmatter(product_data.name)
     response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
     soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -27,9 +26,15 @@ with releasedata.ProductData("aws-lambda") as product_data:
         for row in table.find("tbody").find_all("tr"):
             cells = row.find_all("td")
             identifier = cells[identifier_index].get_text().strip()
+
             deprecation_date_str = cells[deprecation_date_index].get_text().strip()
             deprecation_date = dates.parse_date(deprecation_date_str) if deprecation_date_str else None
-            block_function_update_str = cells[block_function_update_index].get_text().strip()
+
+            if identifier == "nodejs4.3-edge":
+                # there is a mistake in the data: block function update date cannot be before the deprecation date
+                block_function_update_str = "2020-04-30"
+            else:
+                block_function_update_str = cells[block_function_update_index].get_text().strip()
             block_function_update = dates.parse_date(block_function_update_str) if block_function_update_str else None
 
             release = product_data.get_release(identifier)
