@@ -58,6 +58,13 @@ class ScriptExecutionSummary:
         return not all(self.success_by_product.values())
 
 
+def install_playwright() -> None:
+    with GitHubGroup("Install Playwright"):
+        logging.info("Installing Playwright")
+        subprocess.run('playwright install chromium', timeout=120, check=True, shell=True)
+        logging.info("Playwright installed")
+
+
 def __delete_data(product: ProductFrontmatter) -> None:
     release_data_path = DATA_DIR / f"{product.name}.json"
     if not release_data_path.exists() or product.is_auto_update_cumulative():
@@ -154,7 +161,10 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
 
 logging.basicConfig(format="%(message)s", level=logging.INFO)
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+
+
 with GitHubStepSummary() as step_summary:
+    install_playwright()
     some_script_failed = run_scripts(step_summary, p_filter)
     updated_products = get_updated_products()
 

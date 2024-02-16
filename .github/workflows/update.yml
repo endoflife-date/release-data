@@ -65,7 +65,6 @@ jobs:
       - name: Update release data
         id: update_data
         env:
-          PYPPETEER_HOME: /home/runner/.cache/pyppeteer # Add chromium downloaded by pyppeteer to the cache.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true # commit even if the data was not fully updated
         run: python update.py
