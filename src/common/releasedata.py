@@ -89,12 +89,16 @@ class ProductData:
     def __enter__(self) -> "ProductData":
         if self.versions_path.is_file():
             with self.versions_path.open() as f:
-                for json_version in json.load(f)["versions"].values():
+                json_data = json.load(f)
+                for json_version in json_data.get("versions", {}).values():
                     version = ProductVersion(self.name, json_version)
                     self.versions[version.name()] = version
-            logging.info(f"loaded versions data for {self} from {self.versions_path}")
+                for json_release in json_data.get("releases", {}).values():
+                    release = ProductRelease(self.name, json_release)
+                    self.releases[release.name()] = release
+            logging.info(f"loaded data for {self} from {self.versions_path}")
         else:
-            logging.info(f"no versions data found for {self} at {self.versions_path}")
+            logging.info(f"no data found for {self} at {self.versions_path}")
 
         return self
 
@@ -104,6 +108,11 @@ class ProductData:
             message = f"an unexpected error occurred while updating {self} data"
             logging.error(message, exc_info=exc_value)
             raise ProductUpdateError(message) from exc_value
+
+        if not self.versions and not self.releases:
+            message = f"product data are empty after updating {self}"
+            logging.error(message)
+            raise ProductUpdateError(message)
 
         logging.info("updating %s data",self.versions_path)
         ordered_releases = sorted(self.releases.values(), key=lambda v: v.name(), reverse=True)
