@@ -1,6 +1,7 @@
 import logging
 from concurrent.futures import as_completed
 
+from playwright.sync_api import sync_playwright
 from requests import Response
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ChunkedEncodingError
@@ -41,3 +42,17 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
 def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,
               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Response:
     return fetch_urls([url], data, headers, max_retries, backoff_factor, timeout)[0]
+
+
+# This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
+def fetch_javascript_url(url: str) -> str:
+    logging.info(f"Fetching {url}")
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        try:
+            page = browser.new_page()
+            page.goto(url, wait_until='networkidle')
+            logging.info(f"Fetched {url}")
+            return page.content()
+        finally:
+            browser.close()
