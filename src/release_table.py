@@ -31,8 +31,8 @@ Supported CSS selectors are defined by BeautifulSoup and documented on its websi
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors."""
 
 METHOD = "release_table"
-SUPPORTED_TYPES = ["date", "month_year_date", "string"]
-DATE_TYPES = ["date", "month_year_date"]
+SUPPORTED_TYPES = ["date", "string"]
+DATE_TYPES = ["date"]
 DATE_FIELDS = ["releaseDate", "support", "eol", "extendedSupport"]
 DEFAULT_REGEX = r"^(?P<value>.+)$"
 DEFAULT_TEMPLATE = "{{value}}"
@@ -81,9 +81,10 @@ class Field:
 
             str_value = self.template.render(**match.groupdict()) if self.template else raw_value
             if self.type == "date":
-                return dates.parse_date(str_value)
-            if self.type == "month_year_date":
-                return dates.parse_month_year_date(str_value)
+                try:
+                    return dates.parse_date(str_value)
+                except ValueError:
+                    return dates.parse_month_year_date(str_value)
             return str_value
 
         if self.name == "releaseCycle":
