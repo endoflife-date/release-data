@@ -1,8 +1,9 @@
+import logging
 import re
 import sys
 from datetime import datetime
 
-from bs4 import BeautifulSoup, PageElement
+from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 from liquid import Template
 
@@ -11,58 +12,53 @@ from liquid import Template
 This script works based on a definition provided in the product's frontmatter to locate the table and extract the
 necessary information. Available configuration options are:
 
-- regex: A regular expression used to match release based on their names (aka releaseCycle).
-  Releases not matching this expression are ignored. Default value is defined in endoflife.py (DEFAULT_VERSION_REGEX).
-- regex_exclude: A regular expression used to exclude matching releases based on their names  (aka releaseCycle).
-  Releases matching this expression are ignored, even if they match the above regex. This is empty by default.
-- template: A liquid template used to render the release name. The template is rendered using the matched groups from
-  the regex. Default value is defined in endoflife.py (DEFAULT_VERSION_TEMPLATE).
 - selector: A CSS selector used to locate one or more tables in the page.
 - headers_selector: A CSS selector used to locate the table's headers (column names).
 - rows_selector: A CSS selector used to locate the table's rows.
-- mapping: A dictionary that maps release fields to the table's columns names. All identifiers are case-insensitive.
+- fields: A dictionary that maps release fields to the table's columns. Field definition include:
+    - column (mandatory): The name of the column in the table. This is case-insensitive.
+    - type (mandatory, default = string): The type of the field. Supported types are listed in SUPPORTED_TYPES. If the
+      field is one of the known date fields (DATE_FIELDS), the type is automatically set to 'date' if not provided.
+    - regex (mandatory, default = [DEFAULT_REGEX]): A regular expression, or a list of regular expressions, used to
+      validate allowed values. Note that default value for the releaseCycle field is not DEFAULT_REGEX, but
+      DEFAULT_RELEASE_REGEX.
+    - regex_exclude (mandatory, default = []): A regular expression, or a list of regular expressions, used to exclude
+      values even if they match any regular expression in 'regex'.
+    - template (mandatory, default = DEFAULT_TEMPLATE): A liquid template used to clean up the value using the matched
+      groups from a 'regex'.
 
 Supported CSS selectors are defined by BeautifulSoup and documented on its website. For more information, see
-https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors.
-
-Column data types are auto-detected. The currently supported types are 'date' (parsed using the dates module) and
-string."""
+https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors."""
 
 METHOD = "release_table"
+SUPPORTED_TYPES = ["date", "month_year_date", "string"]
+DATE_TYPES = ["date", "month_year_date"]
+DATE_FIELDS = ["releaseDate", "support", "eol", "extendedSupport"]
+DEFAULT_REGEX = r"^(?P<value>.+)$"
+DEFAULT_TEMPLATE = "{{value}}"
+DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)*)$"
 
 
 class Field:
-    SUPPORTED_TYPES = ["date", "month_year_date", "string"]
-    DATE_TYPES = ["date", "month_year_date"]
-    DATE_FIELDS = ["releaseDate", "support", "eol", "extendedSupport"]
-    DEFAULT_REGEX = r"^(?P<value>.+)$"
-    DEFAULT_TEMPLATE = "{{value}}"
-    DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)?)$"
-
-    def __init__(self, name: str, definition: str | dict, columns: list[str]) -> None:
+    def __init__(self, name: str, definition: str | dict) -> None:
         if isinstance(definition, str):
             definition = {"column": definition}
 
         self.name = name
         if self.name == "releaseCycle":
             definition["type"] = "string"
-            definition["regex"] = definition.get("regex", [self.DEFAULT_RELEASE_REGEX])
-            definition["template"] = definition.get("template", self.DEFAULT_TEMPLATE)
+            definition["regex"] = definition.get("regex", [DEFAULT_RELEASE_REGEX])
+            definition["template"] = definition.get("template", DEFAULT_TEMPLATE)
 
         self.column = definition["column"].lower()
-        if self.column not in columns:
-            msg = f"column {self.column} not found in {columns}"
-            raise ValueError(msg)
-        self.column_index = columns.index(self.column)
-
         self.type = definition.get("type", "string")
-        if self.name in self.DATE_FIELDS and self.type not in self.DATE_TYPES:
+        if self.name in DATE_FIELDS and self.type not in DATE_TYPES:
             self.type = "date"  # override type for known date fields
-        elif self.type not in self.SUPPORTED_TYPES:
+        elif self.type not in SUPPORTED_TYPES:
             msg = f"unsupported type: {self.type} for field {self.name}"
             raise ValueError(msg)
 
-        regex = definition.get("regex", [self.DEFAULT_REGEX])
+        regex = definition.get("regex", [DEFAULT_REGEX])
         regex = regex if isinstance(regex, list) else [regex]
         self.include_version_patterns = [re.compile(r, re.MULTILINE) for r in regex]
 
@@ -70,12 +66,10 @@ class Field:
         exclude_regex = exclude_regex if isinstance(exclude_regex, list) else [exclude_regex]
         self.exclude_version_patterns = [re.compile(r, re.MULTILINE) for r in exclude_regex]
 
-        self.template = Template(definition.get("template", self.DEFAULT_TEMPLATE)) \
+        self.template = Template(definition.get("template", DEFAULT_TEMPLATE)) \
             if "template" in definition or regex else None
 
-    def extract_from(self, cells: list[PageElement]) -> str | datetime | None:
-        raw_value = cells[self.column_index].get_text(strip=True)
-
+    def extract_from(self, raw_value: str) -> str | datetime | None:
         for exclude_pattern in self.exclude_version_patterns:
             if exclude_pattern.match(raw_value):
                 return None
@@ -95,8 +89,11 @@ class Field:
         if self.name == "releaseCycle":
             return None  # skipping entire rows is allowed
 
-        msg = f"{raw_value} is not matching any regex in {self.include_version_patterns}"
+        msg = f"field {self}'s value {raw_value} does not matching any regex in {self.include_version_patterns}"
         raise ValueError(msg)
+
+    def __repr__(self) -> str:
+        return f"{self.name}({self.column})"
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
@@ -105,26 +102,33 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
     with releasedata.ProductData(config.product) as product_data:
         response = http.fetch_url(config.url)
         soup = BeautifulSoup(response.text, features="html5lib")
-        table = soup.select_one(config.data["selector"])
 
-        if not table:
-            message = f"No table found for {config.product} with selector {config.data['selector']}"
-            raise ValueError(message)
+        release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
+        fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
+        for table in soup.select(config.data["selector"]):
+            headers = [th.get_text().strip().lower() for th in table.select(config.data["headers_selector"])]
 
-        headers = [th.get_text().strip().lower() for th in table.select(config.data["headers_selector"])]
-        release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"), headers)
-        fields = [Field(name, definition, headers) for name, definition in config.data["fields"].items()]
-        min_column_count = max([f.column_index for f in fields] + [release_cycle_field.column_index]) + 1
+            try:
+                fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
+                for field in fields:
+                    fields_index[field.name] = headers.index(field.column)
+                min_column_count = max(fields_index.values()) + 1
 
-        for row in table.select(config.data["rows_selector"]):
-            row_cells = row.findAll("td")
-            if len(row_cells) < min_column_count:
-                continue
+                for row in table.select(config.data["rows_selector"]):
+                    cells = [cell.get_text().strip() for cell in row.findAll("td")]
+                    if len(cells) < min_column_count:
+                        logging.info(f"skipping row {cells}: not enough columns")
+                        continue
 
-            release_cycle = release_cycle_field.extract_from(row_cells)
-            if not release_cycle:
-                continue
+                    raw_release_cycle = cells[fields_index[release_cycle_field.name]]
+                    release_cycle = release_cycle_field.extract_from(raw_release_cycle)
+                    if not release_cycle:
+                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_cycle}'")
+                        continue
 
-            release = product_data.get_release(release_cycle)
-            for field in fields:
-                release.set_field(field.name, field.extract_from(row_cells))
+                    release = product_data.get_release(release_cycle)
+                    for field in fields:
+                        raw_field = cells[fields_index[field.name]]
+                        release.set_field(field.name, field.extract_from(raw_field))
+            except ValueError as e:
+                logging.info(f"skipping table with headers {headers}: {e}")
