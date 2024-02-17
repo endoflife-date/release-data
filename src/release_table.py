@@ -123,12 +123,17 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                     raw_release_cycle = cells[fields_index[release_cycle_field.name]]
                     release_cycle = release_cycle_field.extract_from(raw_release_cycle)
                     if not release_cycle:
-                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_cycle}'")
+                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_cycle}', "
+                                     f"should match any of {release_cycle_field.include_version_patterns} "
+                                     f"and not match any of {release_cycle_field.exclude_version_patterns}")
                         continue
 
                     release = product_data.get_release(release_cycle)
                     for field in fields:
                         raw_field = cells[fields_index[field.name]]
-                        release.set_field(field.name, field.extract_from(raw_field))
+                        try:
+                            release.set_field(field.name, field.extract_from(raw_field))
+                        except ValueError as e:
+                            logging.info(f"skipping cell {raw_field} for {release}: {e}")
             except ValueError as e:
                 logging.info(f"skipping table with headers {headers}: {e}")
