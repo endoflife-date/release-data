@@ -85,6 +85,7 @@ class ProductData:
         self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
         self.releases = {}
         self.versions: dict[str, ProductVersion] = {}
+        self.updated = False
 
     def __enter__(self) -> "ProductData":
         if self.versions_path.is_file():
@@ -109,8 +110,8 @@ class ProductData:
             logging.error(message, exc_info=exc_value)
             raise ProductUpdateError(message) from exc_value
 
-        if not self.versions and not self.releases:
-            message = f"product data are empty after updating {self}"
+        if not self.updated:
+            message = f"no update detected for {self}"
             logging.error(message)
             raise ProductUpdateError(message)
 
@@ -128,12 +129,14 @@ class ProductData:
             logging.info(f"adding release {release} to {self}")
             self.releases[release] = ProductRelease.of(self.name, release)
 
+        self.updated = True
         return self.releases[release]
 
     def get_version(self, version: str) -> ProductVersion:
         return self.versions[version] if version in self.versions else None
 
     def declare_version(self, version: str, date: datetime) -> None:
+        self.updated = True
         if version in self.versions and self.versions[version].date() != date:
             logging.info(f"overwriting {version} ({self.get_version(version).date()} -> {date}) for {self}")
             self.versions[version].replace_date(date)
