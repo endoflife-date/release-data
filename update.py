@@ -76,7 +76,8 @@ def __delete_data(product: ProductFrontmatter) -> None:
 
 def __revert_data(product: ProductFrontmatter) -> None:
     release_data_path = DATA_DIR / f"{product.name}.json"
-    subprocess.run(f'git checkout HEAD -- {release_data_path}', timeout=10, check=True, shell=True)
+    # check=False because the command fails if the file did not exist before
+    subprocess.run(f'git checkout HEAD -- {release_data_path}', timeout=10, check=False, shell=True)
     logging.warning(f"reverted changes in {release_data_path}")
 
 
