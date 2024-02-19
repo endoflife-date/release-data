@@ -20,6 +20,7 @@ def parse_date(text: str, formats: list[str] = frozenset([
 def parse_month_year_date(text: str, formats: list[str] = frozenset([
     "%B %Y",  # January 2020
     "%b %Y",  # Jan 2020
+    "%Y-%m",  # 2020-01
 ])) -> datetime:
     """Parse a given text representing a partial date using a list of formats,
     adjusting it to the last day of the month.

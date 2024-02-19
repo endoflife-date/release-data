@@ -90,7 +90,7 @@ class Field:
         if self.name == "releaseCycle":
             return None  # skipping entire rows is allowed
 
-        msg = f"field {self}'s value {raw_value} does not matching any regex in {self.include_version_patterns}"
+        msg = f"field {self}'s value '{raw_value}' does not match any regex in {self.include_version_patterns}"
         raise ValueError(msg)
 
     def __repr__(self) -> str:
@@ -121,20 +121,25 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                         logging.info(f"skipping row {cells}: not enough columns")
                         continue
 
-                    raw_release_cycle = cells[fields_index[release_cycle_field.name]]
-                    release_cycle = release_cycle_field.extract_from(raw_release_cycle)
-                    if not release_cycle:
-                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_cycle}', "
-                                     f"should match any of {release_cycle_field.include_version_patterns} "
-                                     f"and not match any of {release_cycle_field.exclude_version_patterns}")
+                    raw_release_name = cells[fields_index[release_cycle_field.name]]
+                    release_name = release_cycle_field.extract_from(raw_release_name)
+                    if not release_name:
+                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
+                                     f"should match one of {release_cycle_field.include_version_patterns} "
+                                     f"and not match all of {release_cycle_field.exclude_version_patterns}")
                         continue
 
-                    release = product_data.get_release(release_cycle)
+                    release = product_data.get_release(release_name)
                     for field in fields:
                         raw_field = cells[fields_index[field.name]]
                         try:
                             release.set_field(field.name, field.extract_from(raw_field))
                         except ValueError as e:
                             logging.info(f"skipping cell {raw_field} for {release}: {e}")
+
+                    if config.data.get("ignore_empty_releases", False) and release.is_empty():
+                        logging.info(f"removing empty release '{release}'")
+                        product_data.remove_release(release_name)
+
             except ValueError as e:
                 logging.info(f"skipping table with headers {headers}: {e}")
