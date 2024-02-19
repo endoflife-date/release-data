@@ -50,6 +50,9 @@ class ProductRelease:
             else:
                 logging.info(f"set '{field}' in {self} to {new_value}")
 
+    def is_empty(self) -> bool:
+        return len(self.data) == 1  # only the name is set
+
     def __repr__(self) -> str:
         return f"{self.product}#{self.name()}"
 
@@ -132,6 +135,13 @@ class ProductData:
         self.updated = True
         return self.releases[release]
 
+    def remove_release(self, release: str) -> None:
+        if release not in self.releases:
+            logging.warning(f"release {release} cannot be removed as it does not exist for {self}")
+            return
+
+        logging.info(f"removing release {release} ({self.releases.pop(release)}) from {self}")
+
     def get_version(self, version: str) -> ProductVersion:
         return self.versions[version] if version in self.versions else None
 
@@ -149,7 +159,7 @@ class ProductData:
             self.declare_version(version, date)
 
     def remove_version(self, version: str) -> None:
-        if not self.get_version(version):
+        if version not in self.versions:
             logging.warning(f"version {version} cannot be removed as it does not exist for {self}")
             return
 
