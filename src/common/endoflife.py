@@ -29,11 +29,11 @@ class AutoConfig:
 
         regexes_include = data.get("regex", DEFAULT_VERSION_REGEX)
         regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
-        self.include_version_patterns = [re.compile(r) for r in regexes_include]
+        self.include_version_patterns = [re.compile(r, re.MULTILINE) for r in regexes_include]
 
         regexes_exclude = data.get("regex_exclude", [])
         regexes_exclude = regexes_exclude if isinstance(regexes_exclude, list) else [regexes_exclude]
-        self.exclude_version_patterns = [re.compile(r) for r in regexes_exclude]
+        self.exclude_version_patterns = [re.compile(r, re.MULTILINE) for r in regexes_exclude]
 
     def first_match(self, version: str) -> re.Match | None:
         for exclude_pattern in self.exclude_version_patterns:

@@ -5,6 +5,7 @@ from playwright.sync_api import sync_playwright
 from requests import Response
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ChunkedEncodingError
+from requests_cache import CachedSession
 from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
@@ -13,11 +14,13 @@ USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/1
 
 
 def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None,
-               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> list[Response]:
+               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30,
+               cache: bool = False) -> list[Response]:
     logging.info(f"Fetching {urls}")
 
     try:
-        with FuturesSession() as session:
+        underlying_session = CachedSession('/tmp/http_cache', backend='filesystem') if cache else None
+        with FuturesSession(session=underlying_session) as session:
             adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
             session.mount('http://', adapter)
             session.mount('https://', adapter)
