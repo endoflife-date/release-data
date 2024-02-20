@@ -1,12 +1,11 @@
 import logging
 import re
+import sys
 
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
-"""Fetches and parses version and release date information from Apple's support website for macOS,
-iOS, iPadOS, and watchOS. While all URLs are fetched once for performance reasons, the actual
-parsing for each product is done in a separate loop for having easier-to-read logs."""
+"""Fetches and parses version and release date information from Apple's support website."""
 
 URLS = [
     "https://support.apple.com/en-us/HT201222",  # latest
@@ -22,38 +21,16 @@ URLS = [
     "http://web.archive.org/web/20230204234533_/https://support.apple.com/en-us/HT1263",  # 2005-2007
 ]
 
-# If you are changing these, please use
-# https://gist.githubusercontent.com/captn3m0/e7cb1f4fc3c07a5da0296ebda2b33e15/raw/5747e42ad611ec9ffdb7a2d1c0e3946bb87ab6d7/apple.txt
-# as your corpus to validate your changes
-VERSION_PATTERNS = {
-    "macos": [
-        # This covers Sierra and beyond
-        re.compile(r"^macOS[\D]+(?P<version>\d+(?:\.\d+)*)", re.MULTILINE),
-        # This covers Mavericks - El Capitan
-        re.compile(r"OS\s+X\s[\w\s]+\sv?(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
-        # This covers even older versions (OS X)
-        re.compile(r"^Mac\s+OS\s+X\s[\w\s]+\sv?(?P<version>\d{2}(?:\.\d+)+)", re.MULTILINE),
-    ],
-    "ios": [
-        re.compile(r"iOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"iOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
-        re.compile(r"iPhone\s+v?(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
-    ],
-    "ipados": [
-        re.compile(r"iPadOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"iPadOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
-    ],
-    "watchos": [
-        re.compile(r"watchOS\s+(?P<version>\d+)", re.MULTILINE),
-        re.compile(r"watchOS\s+(?P<version>\d+(?:\.\d+)+)", re.MULTILINE),
-    ],
-}
-
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
+METHOD = 'apple'
 
-soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
-for product_name in VERSION_PATTERNS:
-    with releasedata.ProductData(product_name) as product_data:
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        # URLs are cached to avoid rate limiting by support.apple.com.
+        soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS, cache=True)]
+
         for soup in soups:
             versions_table = soup.find(id="tableWraper")
             versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
@@ -70,7 +47,7 @@ for product_name in VERSION_PATTERNS:
 
                 date_str = date_match.group(0).replace("Sept ", "Sep ")
                 date = dates.parse_date(date_str)
-                for version_pattern in VERSION_PATTERNS[product_data.name]:
+                for version_pattern in config.include_version_patterns:
                     for version_str in version_pattern.findall(version_text):
                         version = product_data.get_version(version_str)
                         if not version or version.date() > date:
