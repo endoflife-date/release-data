@@ -87,6 +87,12 @@ class ProductFrontmatter:
 
         return configs
 
+    def get_title(self) -> str:
+        return self.data["title"]
+
+    def get_permalink(self) -> str:
+        return self.data["permalink"]
+
     def get_releases(self) -> list[dict]:
         return self.data.get("releases", [])
 
