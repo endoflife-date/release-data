@@ -175,6 +175,11 @@
       "support": "2019-06-27",
       "eol": "2019-07-30"
     },
+    "dotnet8": {
+      "name": "dotnet8",
+      "support": true,
+      "eol": false
+    },
     "dotnet7": {
       "name": "dotnet7",
       "support": "2024-05-14",
