@@ -161,7 +161,8 @@ class Product:
                         or release_data.get("eol", None)
                         or release_data.get("support", None)
                         or release_data.get("releaseDate", None))
-            self.unmatched_releases[name] = datetime.date.fromisoformat(str(date_str)) if date_str else None
+
+            self.unmatched_releases[name] = datetime.date.fromisoformat(str(date_str)) if isinstance(date_str, str) else None
 
     def process_version(self, version_data: dict) -> None:
         name = version_data["name"]
@@ -229,8 +230,8 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
     if len(product.unmatched_releases) == 0:
         return
 
-    for release, date in product.unmatched_versions.items():
-        if not date or (today - date).days < suppress_alert_threshold_days:
+    for release, date in product.unmatched_releases.items():
+        if (not date) or ((today - date).days < suppress_alert_threshold_days):
             logging.warning(f"{name}:{release} not included")
             output.println(f"{name}:{release}")
 
