@@ -12,6 +12,7 @@ def parse_date(text: str, formats: list[str] = frozenset([
     "%d-%B-%Y",  # 1-January-2020
     "%Y-%m-%d",  # 2020-01-01
     "%m/%d/%Y",  # 01/25/2020
+    "%Y/%m/%d",  # 2020/01/25
 ])) -> datetime:
     """Parse a given text representing a date using a list of formats.
     """
