@@ -15,11 +15,11 @@ with releasedata.ProductData("cockroachdb") as product_data:
             if len(columns) <= 3:
                 continue
 
-            version_match = VERSION_REGEX.search(columns[0].text.strip())
-            if not version_match:
+            release_version_match = VERSION_REGEX.search(columns[0].text.strip())
+            if not release_version_match:
                 continue
 
-            release_version = version_match.group("version")
+            release_version = release_version_match.group("version")
             release = product_data.get_release(release_version)
             release.set_release_date(dates.parse_date(columns[1].text))
             release.set_support(dates.parse_date(columns[2].text))
@@ -31,6 +31,13 @@ with releasedata.ProductData("cockroachdb") as product_data:
 
             content = release_soup.find(class_="post-content")
             for version in content.find_all("h2"):
+                if "-" in version.text: # skip alpha, beta, etc.
+                    continue
+
+                version_match = VERSION_REGEX.search(version.text)
+                if not version_match:
+                    continue
+
                 if not version.find_next("p").text.startswith("Release Date"):
                     continue
 
@@ -38,4 +45,4 @@ with releasedata.ProductData("cockroachdb") as product_data:
                 if len(version_release_date) == 0:
                     continue
 
-                product_data.declare_version(version.text, dates.parse_date(version_release_date))
+                product_data.declare_version(version_match.group("version"), dates.parse_date(version_release_date))
