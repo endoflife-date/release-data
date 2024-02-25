@@ -73,6 +73,7 @@ As of 2024-02-22, 223 of the 292 products tracked by endoflife.date have automat
 | Citrix Virtual Apps and Desktops              | [`/citrix-vad`](https://endoflife.date/citrix-vad)                                     | ❌    |                                |
 | CKEditor                                      | [`/ckeditor`](https://endoflife.date/ckeditor)                                         | ❌    |                                |
 | ClamAV                                        | [`/clamav`](https://endoflife.date/clamav)                                             | ✔️   | git                            |
+| CockroachDB                                   | [`/cockroachdb`](https://endoflife.date/cockroachdb)                                   | ✔️   | custom                         |
 | Adobe ColdFusion                              | [`/coldfusion`](https://endoflife.date/coldfusion)                                     | ✔️   | custom                         |
 | Composer                                      | [`/composer`](https://endoflife.date/composer)                                         | ✔️   | git                            |
 | Confluence                                    | [`/confluence`](https://endoflife.date/confluence)                                     | ✔️   | atlassian_eol, custom          |
