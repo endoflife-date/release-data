@@ -12,9 +12,9 @@ from liquid import Template
 This script works based on a definition provided in the product's frontmatter to locate the table and extract the
 necessary information. Available configuration options are:
 
-- selector: A CSS selector used to locate one or more tables in the page.
-- headers_selector: A CSS selector used to locate the table's headers (column names).
-- rows_selector: A CSS selector used to locate the table's rows.
+- selector (mandatory, no default): A CSS selector used to locate one or more tables in the page.
+- header_selector (mandatory, default = thead tr): A CSS selector used to locate the table's header row.
+- rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
     - column (mandatory): The name of the column in the table. This is case-insensitive.
     - type (mandatory, default = string): The type of the field. Supported types are listed in SUPPORTED_TYPES. If the
@@ -107,7 +107,12 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
         release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
         fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
         for table in soup.select(config.data["selector"]):
-            headers = [th.get_text().strip().lower() for th in table.select(config.data["headers_selector"])]
+            header_row = table.select_one(config.data.get("header_selector", "thead tr"))
+            if not header_row:
+                logging.info(f"skipping table with attributes {table.attrs}: no header row found")
+                continue
+
+            headers = [th.get_text().strip().lower() for th in header_row.select("td, th")]
 
             try:
                 fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
@@ -115,8 +120,8 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                     fields_index[field.name] = headers.index(field.column)
                 min_column_count = max(fields_index.values()) + 1
 
-                for row in table.select(config.data["rows_selector"]):
-                    cells = [cell.get_text().strip() for cell in row.findAll("td")]
+                for row in table.select(config.data.get("rows_selector", "tbody tr")):
+                    cells = [cell.get_text().strip() for cell in row.select("td, th")]
                     if len(cells) < min_column_count:
                         logging.info(f"skipping row {cells}: not enough columns")
                         continue
