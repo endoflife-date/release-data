@@ -1,5 +1,46 @@
 {
-  "releases": {},
+  "releases": {
+    "1.20": {
+      "name": "1.20",
+      "eol": "2024-07-31",
+      "supportedKubernetesVersions": "1.25 - 1.29"
+    },
+    "1.19": {
+      "name": "1.19",
+      "eol": "2024-03-31",
+      "supportedKubernetesVersions": "1.25 - 1.28"
+    },
+    "1.18": {
+      "name": "1.18",
+      "eol": "2024-01-04",
+      "supportedKubernetesVersions": "1.24 - 1.27"
+    },
+    "1.17": {
+      "name": "1.17",
+      "eol": "2023-10-27",
+      "supportedKubernetesVersions": "1.23 - 1.26"
+    },
+    "1.16": {
+      "name": "1.16",
+      "eol": "2023-07-25",
+      "supportedKubernetesVersions": "1.22 - 1.25"
+    },
+    "1.15": {
+      "name": "1.15",
+      "eol": "2023-04-04",
+      "supportedKubernetesVersions": "1.22 - 1.25"
+    },
+    "1.14": {
+      "name": "1.14",
+      "eol": "2022-12-27",
+      "supportedKubernetesVersions": "1.21 - 1.24"
+    },
+    "1.13": {
+      "name": "1.13",
+      "eol": "2022-10-12",
+      "supportedKubernetesVersions": "1.20 - 1.23"
+    }
+  },
   "versions": {
     "1.20.3": {
       "name": "1.20.3",
