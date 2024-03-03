@@ -2,6 +2,7 @@ import logging
 import re
 import sys
 from datetime import datetime
+from re import Match
 
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
@@ -17,8 +18,12 @@ necessary information. Available configuration options are:
 - rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
     - column (mandatory): The name of the column in the table. This is case-insensitive.
-    - type (mandatory, default = string): The type of the field. Supported types are listed in SUPPORTED_TYPES. If the
-      field is one of the known date fields (DATE_FIELDS), the type is automatically set to 'date' if not provided.
+    - type (mandatory, default = string): The type of the field. Supported types are:
+      - string: The raw string value.
+      - date  : A full or year-month date (supported patterns available in common.dates).
+      - range : Convert a comma-separated list of values into a range, only keeping the first and last value.
+                For example, "1.0, 1.1, 1.2" becomes "1.0 - 1.2".
+      If the field is one of the known date fields, the type is automatically set to 'date' if not provided.
     - regex (mandatory, default = [DEFAULT_REGEX]): A regular expression, or a list of regular expressions, used to
       validate allowed values. Note that default value for the releaseCycle field is not DEFAULT_REGEX, but
       DEFAULT_RELEASE_REGEX.
@@ -31,13 +36,13 @@ Supported CSS selectors are defined by BeautifulSoup and documented on its websi
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors."""
 
 METHOD = "release_table"
-SUPPORTED_TYPES = ["date", "string"]
+SUPPORTED_TYPES = ["date", "string", "range"]
 DATE_TYPES = ["date"]
 DATE_FIELDS = ["releaseDate", "lts", "support", "eol", "extendedSupport"]
 DEFAULT_REGEX = r"^(?P<value>.+)$"
 DEFAULT_TEMPLATE = "{{value}}"
 DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)*)$"
-
+RANGE_LIST_SEPARATOR_PATTERN = re.compile(r"\s*,\s*")
 
 class Field:
     def __init__(self, name: str, definition: str | dict) -> None:
@@ -79,19 +84,28 @@ class Field:
             if not match:
                 continue
 
-            str_value = self.template.render(**match.groupdict()) if self.template else raw_value
-            if self.type == "date":
-                try:
-                    return dates.parse_date(str_value)
-                except ValueError:
-                    return dates.parse_month_year_date(str_value)
-            return str_value
+            return self.__process_value(match, raw_value)
 
         if self.name == "releaseCycle":
             return None  # skipping entire rows is allowed
 
         msg = f"field {self}'s value '{raw_value}' does not match any regex in {self.include_version_patterns}"
         raise ValueError(msg)
+
+    def __process_value(self, match: Match[str], raw_value: str) -> str | datetime:
+        str_value = self.template.render(**match.groupdict()) if self.template else raw_value
+
+        if self.type == "date":
+            try:
+                return dates.parse_date(str_value)
+            except ValueError:
+                return dates.parse_month_year_date(str_value)
+
+        elif self.type == "range":
+            items = RANGE_LIST_SEPARATOR_PATTERN.split(str_value)
+            return f"{items[0]} - {items[-1]}" if len(items) > 1 else str_value
+
+        return str_value
 
     def __repr__(self) -> str:
         return f"{self.name}({self.column})"
