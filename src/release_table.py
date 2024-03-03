@@ -43,6 +43,8 @@ DEFAULT_REGEX = r"^(?P<value>.+)$"
 DEFAULT_TEMPLATE = "{{value}}"
 DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)*)$"
 RANGE_LIST_SEPARATOR_PATTERN = re.compile(r"\s*,\s*")
+TODAY = dates.today()
+
 
 class Field:
     def __init__(self, name: str, definition: str | dict) -> None:
@@ -118,15 +120,20 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
         response = http.fetch_url(config.url)
         soup = BeautifulSoup(response.text, features="html5lib")
 
+        ignore_empty_releases = config.data.get("ignore_empty_releases", False)
+        header_row_selector = config.data.get("header_selector", "thead tr")
+        rows_selector = config.data.get("rows_selector", "tbody tr")
+        cells_selector = "td, th"
         release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
         fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
+
         for table in soup.select(config.data["selector"]):
-            header_row = table.select_one(config.data.get("header_selector", "thead tr"))
+            header_row = table.select_one(header_row_selector)
             if not header_row:
                 logging.info(f"skipping table with attributes {table.attrs}: no header row found")
                 continue
 
-            headers = [th.get_text().strip().lower() for th in header_row.select("td, th")]
+            headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
 
             try:
                 fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
@@ -134,8 +141,8 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                     fields_index[field.name] = headers.index(field.column)
                 min_column_count = max(fields_index.values()) + 1
 
-                for row in table.select(config.data.get("rows_selector", "tbody tr")):
-                    cells = [cell.get_text().strip() for cell in row.select("td, th")]
+                for row in table.select(rows_selector):
+                    cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
                     if len(cells) < min_column_count:
                         logging.info(f"skipping row {cells}: not enough columns")
                         continue
@@ -156,9 +163,14 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                         except ValueError as e:
                             logging.info(f"skipping cell {raw_field} for {release}: {e}")
 
-                    if config.data.get("ignore_empty_releases", False) and release.is_empty():
+                    if ignore_empty_releases and release.is_empty():
                         logging.info(f"removing empty release '{release}'")
                         product_data.remove_release(release_name)
+
+                    if release.is_released_after(TODAY):
+                        logging.info(f"removing future release '{release}'")
+                        product_data.remove_release(release_name)
+
 
             except ValueError as e:
                 logging.info(f"skipping table with headers {headers}: {e}")

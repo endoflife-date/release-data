@@ -31,6 +31,12 @@ class ProductRelease:
     def set_release_date(self, new_value: datetime) -> None:
         self.set_field("releaseDate", new_value)
 
+    def get_release_date(self) -> datetime | None:
+        if "releaseDate" not in self.data:
+            return None
+
+        return datetime.strptime(self.data["releaseDate"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+
     def set_support(self, new_value: datetime | bool) -> None:
         self.set_field("support", new_value)
 
@@ -52,6 +58,10 @@ class ProductRelease:
 
     def is_empty(self) -> bool:
         return len(self.data) == 1  # only the name is set
+
+    def is_released_after(self, date: datetime) -> bool:
+        release_date = self.get_release_date()
+        return release_date and release_date > date
 
     def __repr__(self) -> str:
         return f"{self.product}#{self.name()}"
