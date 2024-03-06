@@ -22,8 +22,10 @@ if response.status_code == 200:
     releases = {}
     for h2_element in h2_elements:
         version_id = h2_element.get('id')
-        release_date = get_release_date(version_id)
-        releases[version_id] = release_date
+        # Check if the version contains "-rc", if it does, skip it
+        if "-rc" not in version_id:
+            release_date = get_release_date(version_id)
+            releases[version_id] = release_date
     
     print(json.dumps(releases, indent=4, sort_keys=True))
 else:
