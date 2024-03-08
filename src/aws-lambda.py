@@ -1,3 +1,5 @@
+import logging
+
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
@@ -10,8 +12,8 @@ with releasedata.ProductData("aws-lambda") as product_data:
     for table in soup.find_all("table"):
         table_name = table.find("thead").find_all("tr")[0].find("th").get_text().strip().lower()
         if table_name != "supported runtimes" and table_name != "deprecated runtimes":
-            message = f"unexpected table '{table_name}'"
-            raise ValueError(message)
+            logging.warning(f"unexpected table '{table_name}', skipping")
+            continue
 
         headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[1].find_all("th")]
         if "identifier" not in headers or "deprecation date" not in headers or "block function update" not in headers:
