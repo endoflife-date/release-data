@@ -1,5 +1,79 @@
 {
-  "releases": {},
+  "releases": {
+    "3.9": {
+      "name": "3.9",
+      "releaseDate": "2021-07-26",
+      "extendedSupport": "2023-07-31"
+    },
+    "3.8": {
+      "name": "3.8",
+      "releaseDate": "2019-10-01",
+      "extendedSupport": "2022-07-31"
+    },
+    "3.7": {
+      "name": "3.7",
+      "releaseDate": "2017-11-28",
+      "extendedSupport": "2020-09-30"
+    },
+    "3.6": {
+      "name": "3.6",
+      "releaseDate": "2015-12-22",
+      "extendedSupport": "2018-05-31"
+    },
+    "3.5": {
+      "name": "3.5",
+      "releaseDate": "2015-03-11",
+      "extendedSupport": "2016-10-31"
+    },
+    "3.4": {
+      "name": "3.4",
+      "releaseDate": "2014-10-21",
+      "extendedSupport": "2015-10-31"
+    },
+    "3.3": {
+      "name": "3.3",
+      "releaseDate": "2014-04-02",
+      "extendedSupport": "2015-03-31"
+    },
+    "3.2": {
+      "name": "3.2",
+      "releaseDate": "2013-10-23",
+      "extendedSupport": "2014-10-31"
+    },
+    "3.13": {
+      "name": "3.13",
+      "releaseDate": "2024-02-22",
+      "eol": "2025-03-01",
+      "extendedSupport": "2025-09-01"
+    },
+    "3.12": {
+      "name": "3.12",
+      "releaseDate": "2023-06-02",
+      "eol": "2024-06-30",
+      "extendedSupport": "2024-12-31"
+    },
+    "3.11": {
+      "name": "3.11",
+      "releaseDate": "2022-09-28",
+      "eol": "2023-12-31",
+      "extendedSupport": "2024-07-31"
+    },
+    "3.10": {
+      "name": "3.10",
+      "releaseDate": "2022-05-03",
+      "extendedSupport": "2023-12-31"
+    },
+    "3.1": {
+      "name": "3.1",
+      "releaseDate": "2013-05-01",
+      "extendedSupport": "2014-04-30"
+    },
+    "3.0": {
+      "name": "3.0",
+      "releaseDate": "2012-11-19",
+      "extendedSupport": "2013-11-30"
+    }
+  },
   "versions": {
     "3.13.0": {
       "name": "3.13.0",
