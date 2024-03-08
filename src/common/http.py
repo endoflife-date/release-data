@@ -48,13 +48,16 @@ def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,
 
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
-def fetch_javascript_url(url: str) -> str:
+def fetch_javascript_url(url: str, click_selector: str = None) -> str:
     logging.info(f"Fetching {url}")
     with sync_playwright() as p:
         browser = p.chromium.launch()
         try:
             page = browser.new_page()
             page.goto(url, wait_until='networkidle')
+            if click_selector:
+                logging.info(f"Clicked on {click_selector}")
+                page.click(click_selector)
             logging.info(f"Fetched {url}")
             return page.content()
         finally:

@@ -18,6 +18,8 @@ necessary information. Available configuration options are:
 - header_selector (mandatory, default = thead tr): A CSS selector used to locate the table's header row.
 - rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
 - render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
+- render_javascript_click_selector (optional, default = None): A playwright selector used to click on an element after
+  the JavaScript rendering.
 - ignore_empty_releases (optional, default = false): A boolean value indicating whether to ignore releases with no
   fields except the name.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
@@ -122,6 +124,7 @@ m_filter = sys.argv[2] if len(sys.argv) > 2 else None
 for config in endoflife.list_configs(p_filter, METHOD, m_filter):
     with releasedata.ProductData(config.product) as product_data:
         render_javascript = config.data.get("render_javascript", False)
+        render_javascript_click_selector = config.data.get("render_javascript_click_selector", None)
         ignore_empty_releases = config.data.get("ignore_empty_releases", False)
         header_row_selector = config.data.get("header_selector", "thead tr")
         rows_selector = config.data.get("rows_selector", "tbody tr")
@@ -129,7 +132,10 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
         release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
         fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
-        response_text = http.fetch_javascript_url(config.url) if render_javascript else http.fetch_url(config.url).text
+        if render_javascript:
+            response_text = http.fetch_javascript_url(config.url, click_selector=render_javascript_click_selector)
+        else:
+            response_text = http.fetch_url(config.url).text
         soup = BeautifulSoup(response_text, features="html5lib")
 
         for table in soup.select(config.data["selector"]):
@@ -139,6 +145,7 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                 continue
 
             headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
+            logging.info(f"processing table with headers {headers}")
 
             try:
                 fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
