@@ -17,7 +17,7 @@ Common Release Data for various projects in a consumable format. Current format 
 
 ## Currently Updated
 
-As of 2024-03-09, 229 of the 293 products tracked by endoflife.date have automatically tracked releases:
+As of 2024-03-11, 233 of the 298 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                              | Auto | Method(s)                      |
 |-----------------------------------------------|----------------------------------------------------------------------------------------|------|--------------------------------|
@@ -70,13 +70,16 @@ As of 2024-03-09, 229 of the 293 products tracked by endoflife.date have automat
 | CentOS                                        | [`/centos`](https://endoflife.date/centos)                                             | ❌    |                                |
 | cert-manager                                  | [`/cert-manager`](https://endoflife.date/cert-manager)                                 | ✔️   | git                            |
 | CFEngine                                      | [`/cfengine`](https://endoflife.date/cfengine)                                         | ✔️   | git                            |
+| Chef Infra Server                             | [`/chef-infra-server`](https://endoflife.date/chef-infra-server)                       | ✔️   | custom                         |
 | Citrix Virtual Apps and Desktops              | [`/citrix-vad`](https://endoflife.date/citrix-vad)                                     | ❌    |                                |
 | CKEditor                                      | [`/ckeditor`](https://endoflife.date/ckeditor)                                         | ❌    |                                |
 | ClamAV                                        | [`/clamav`](https://endoflife.date/clamav)                                             | ✔️   | git                            |
+| CockroachDB                                   | [`/cockroachdb`](https://endoflife.date/cockroachdb)                                   | ✔️   | git, release_table             |
 | Adobe ColdFusion                              | [`/coldfusion`](https://endoflife.date/coldfusion)                                     | ✔️   | custom                         |
 | Composer                                      | [`/composer`](https://endoflife.date/composer)                                         | ✔️   | git                            |
 | Confluence                                    | [`/confluence`](https://endoflife.date/confluence)                                     | ✔️   | atlassian_eol, custom          |
 | Hashicorp Consul                              | [`/consul`](https://endoflife.date/consul)                                             | ✔️   | git                            |
+| containerd                                    | [`/containerd`](https://endoflife.date/containerd)                                     | ✔️   | git, release_table             |
 | Contao                                        | [`/contao`](https://endoflife.date/contao)                                             | ✔️   | git                            |
 | Google Container-Optimized OS (COS)           | [`/cos`](https://endoflife.date/cos)                                                   | ✔️   | custom                         |
 | Couchbase Server                              | [`/couchbase-server`](https://endoflife.date/couchbase-server)                         | ✔️   | custom, release_table          |
@@ -115,6 +118,7 @@ As of 2024-03-09, 229 of the 293 products tracked by endoflife.date have automat
 | GitLab                                        | [`/gitlab`](https://endoflife.date/gitlab)                                             | ✔️   | git                            |
 | Google Kubernetes Engine                      | [`/google-kubernetes-engine`](https://endoflife.date/google-kubernetes-engine)         | ✔️   | custom                         |
 | Go                                            | [`/go`](https://endoflife.date/go)                                                     | ✔️   | git                            |
+| GoAccess                                      | [`/goaccess`](https://endoflife.date/goaccess)                                         | ✔️   | git                            |
 | Godot                                         | [`/godot`](https://endoflife.date/godot)                                               | ✔️   | git                            |
 | Google Nexus                                  | [`/google-nexus`](https://endoflife.date/google-nexus)                                 | ❌    |                                |
 | Gorilla Toolkit                               | [`/gorilla`](https://endoflife.date/gorilla)                                           | ❌    |                                |
@@ -170,6 +174,7 @@ As of 2024-03-09, 229 of the 293 products tracked by endoflife.date have automat
 | Magento                                       | [`/magento`](https://endoflife.date/magento)                                           | ✔️   | git                            |
 | MariaDB                                       | [`/mariadb`](https://endoflife.date/mariadb)                                           | ✔️   | git                            |
 | Mastodon                                      | [`/mastodon`](https://endoflife.date/mastodon)                                         | ✔️   | git                            |
+| Matomo                                        | [`/matomo`](https://endoflife.date/matomo)                                             | ✔️   | git                            |
 | Mattermost                                    | [`/mattermost`](https://endoflife.date/mattermost)                                     | ✔️   | git, release_table             |
 | MediaWiki                                     | [`/mediawiki`](https://endoflife.date/mediawiki)                                       | ✔️   | git, release_table             |
 | Meilisearch                                   | [`/meilisearch`](https://endoflife.date/meilisearch)                                   | ✔️   | git                            |
@@ -290,7 +295,7 @@ As of 2024-03-09, 229 of the 293 products tracked by endoflife.date have automat
 | UnrealIRCd                                    | [`/unrealircd`](https://endoflife.date/unrealircd)                                     | ✔️   | custom, release_table          |
 | Varnish                                       | [`/varnish`](https://endoflife.date/varnish)                                           | ✔️   | git, release_table             |
 | Veeam Backup & Replication                    | [`/veeam-backup-and-replication`](https://endoflife.date/veeam-backup-and-replication) | ✔️   | custom                         |
-| Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                 | ✔️   | release_table                  |
+| Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                 | ❌    |                                |
 | Microsoft Visual Studio                       | [`/visual-studio`](https://endoflife.date/visual-studio)                               | ✔️   | custom                         |
 | VMware Cloud Foundation                       | [`/vmware-cloud-foundation`](https://endoflife.date/vmware-cloud-foundation)           | ❌    |                                |
 | VMware ESXi                                   | [`/esxi`](https://endoflife.date/esxi)                                                 | ❌    |                                |
