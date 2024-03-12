@@ -1,32 +1,23 @@
-import requests
 from bs4 import BeautifulSoup
-import json
+from common import dates, http, releasedata
+from common.git import Git
 
-def get_release_date(version: str) -> str:
-    url = f"https://github.com/chef/chef/releases/tag/v{version}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        date_element = soup.find("relative-time", class_="no-wrap")
-        if date_element:
-            return date_element["datetime"][:10]
-    return "N/A"
+"""Fetch released versions from docs.chef.io and retrieve their date from GitHub.
+docs.chef.io needs to be scraped because not all tagged versions are actually released.
 
-url = "https://docs.chef.io/release_notes_client/"
-response = requests.get(url)
+More context on https://github.com/endoflife-date/endoflife.date/pull/4425#discussion_r1447932411.
+"""
 
-if response.status_code == 200:
-    soup = BeautifulSoup(response.text, 'html.parser')
-    h2_elements = soup.find_all('h2', text=lambda text: "Chef Infra Client" in text)
-    
-    releases = {}
-    for h2_element in h2_elements:
-        version_id = h2_element.get('id')
-        # Check if the version contains "-rc", if it does, skip it
-        if "-rc" not in version_id:
-            release_date = get_release_date(version_id)
-            releases[version_id] = release_date
-    
-    print(json.dumps(releases, indent=4, sort_keys=True))
-else:
-    print(f"Failed to fetch data from the website. Status code: {response.status_code}")
+with releasedata.ProductData("chef-infra-client") as product_data:
+    rn_response = http.fetch_url("https://docs.chef.io/release_notes_client/")
+    rn_soup = BeautifulSoup(rn_response.text, features="html5lib")
+    released_versions = [h2.get('id') for h2 in rn_soup.find_all('h2', id=True) if h2.get('id')]
+
+    git = Git("https://github.com/chef/chef.git")
+    git.setup(bare=True)
+
+    versions = git.list_tags()
+    for version, date_str in versions:
+        if version in released_versions:
+            date = dates.parse_date(date_str)
+            product_data.declare_version(version, date)
