@@ -1,5 +1,10 @@
 {
   "releases": {
+    "1.21": {
+      "name": "1.21",
+      "eol": "2024-12-31",
+      "supportedKubernetesVersions": "1.26 - 1.29"
+    },
     "1.20": {
       "name": "1.20",
       "eol": "2024-07-31",
