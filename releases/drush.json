@@ -1,5 +1,45 @@
 {
-  "releases": {},
+  "releases": {
+    "9": {
+      "name": "9",
+      "supportedPhpVersions": "5.6+",
+      "eol": "2020-05-31"
+    },
+    "8": {
+      "name": "8",
+      "supportedPhpVersions": "5.4.5+",
+      "eol": "2025-01-31"
+    },
+    "7": {
+      "name": "7",
+      "supportedPhpVersions": "5.3.0+",
+      "eol": "2017-07-31"
+    },
+    "6": {
+      "name": "6",
+      "supportedPhpVersions": "5.3.0+",
+      "eol": "2015-12-31"
+    },
+    "5": {
+      "name": "5",
+      "supportedPhpVersions": "5.2.0+",
+      "eol": "2015-05-31"
+    },
+    "12": {
+      "name": "12",
+      "supportedPhpVersions": "8.1+"
+    },
+    "11": {
+      "name": "11",
+      "supportedPhpVersions": "7.4+",
+      "eol": "2023-11-30"
+    },
+    "10": {
+      "name": "10",
+      "supportedPhpVersions": "7.1+ (not 8)",
+      "eol": "2022-01-31"
+    }
+  },
   "versions": {
     "12.4.4": {
       "name": "12.4.4",
