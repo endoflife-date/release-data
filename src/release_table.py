@@ -23,7 +23,7 @@ necessary information. Available configuration options are:
 - ignore_empty_releases (optional, default = false): A boolean value indicating whether to ignore releases with no
   fields except the name.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
-    - column (mandatory): The name of the column in the table. This is case-insensitive.
+    - column (mandatory): The name or index (starts at 1) of the column in the table.
     - type (mandatory, default = string): The type of the field. Supported types are:
       - string: The raw string value.
       - date  : A full or year-month date (supported patterns available in common.dates).
@@ -37,6 +37,20 @@ necessary information. Available configuration options are:
       values even if they match any regular expression in 'regex'.
     - template (mandatory, default = DEFAULT_TEMPLATE): A liquid template used to clean up the value using the matched
       groups from a 'regex'.
+
+Note that defining the column attribute directly instead of its full definition is allowed when
+there the column name or index is the only attribute. For example, this:
+```
+fields:
+  releaseCycle:
+    column: "End of life"
+```
+
+can be replaced with this:
+```
+fields:
+  releaseCycle: "End of life"
+```
 
 Supported CSS selectors are defined by BeautifulSoup and documented on its website. For more information, see
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors."""
@@ -54,7 +68,9 @@ TODAY = dates.today()
 
 class Field:
     def __init__(self, name: str, definition: str | dict) -> None:
-        if isinstance(definition, str):
+        # Directly specifying the column name or index instead of its full definition is allowed.
+        # In this case we must convert it to a full definition.
+        if isinstance(definition, (str, int)):
             definition = {"column": definition}
 
         self.name = name
@@ -63,7 +79,12 @@ class Field:
             definition["regex"] = definition.get("regex", [DEFAULT_RELEASE_REGEX])
             definition["template"] = definition.get("template", DEFAULT_TEMPLATE)
 
-        self.column = definition["column"].lower()
+        self.is_index = isinstance(definition["column"], int)
+        if self.is_index:
+            self.column = definition["column"] - 1  # convert to 0-based index
+        else:
+            self.column = definition["column"].lower()
+
         self.type = definition.get("type", "string")
         if self.name in DATE_FIELDS and self.type not in DATE_TYPES:
             self.type = "date"  # override type for known date fields
@@ -150,7 +171,7 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
             try:
                 fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
                 for field in fields:
-                    fields_index[field.name] = headers.index(field.column)
+                    fields_index[field.name] = field.column if field.is_index else headers.index(field.column)
                 min_column_count = max(fields_index.values()) + 1
 
                 for row in table.select(rows_selector):
@@ -182,7 +203,6 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                     if release.is_released_after(TODAY):
                         logging.info(f"removing future release '{release}'")
                         product_data.remove_release(release_name)
-
 
             except ValueError as e:
                 logging.info(f"skipping table with headers {headers}: {e}")
