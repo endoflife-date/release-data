@@ -37,14 +37,14 @@ class ProductRelease:
 
         return datetime.strptime(self.data["releaseDate"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
 
-    def set_support(self, new_value: datetime | bool) -> None:
-        self.set_field("support", new_value)
+    def set_eoas(self, new_value: datetime | bool) -> None:
+        self.set_field("eoas", new_value)
 
     def set_eol(self, new_value: datetime | bool) -> None:
         self.set_field("eol", new_value)
 
-    def set_extended_support(self, new_value: datetime | bool) -> None:
-        self.set_field("extendedSupport", new_value)
+    def set_eoes(self, new_value: datetime | bool) -> None:
+        self.set_field("eoes", new_value)
 
     def set_field(self, field: str, new_value: any) -> None:
         new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, datetime) else new_value

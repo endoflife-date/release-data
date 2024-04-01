@@ -2,19 +2,19 @@
   "releases": {
     "9": {
       "name": "9",
-      "support": "2023-08-08",
+      "eoas": "2023-08-08",
       "eol": "2024-02-06",
       "supportedPhpVersions": "8.0 - 8.2"
     },
     "11": {
       "name": "11",
-      "support": "2025-09-03",
+      "eoas": "2025-09-03",
       "eol": "2026-03-12",
       "supportedPhpVersions": "8.2 - 8.3"
     },
     "10": {
       "name": "10",
-      "support": "2024-08-06",
+      "eoas": "2024-08-06",
       "eol": "2025-02-04",
       "supportedPhpVersions": "8.1 - 8.3"
     }

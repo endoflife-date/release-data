@@ -40,7 +40,7 @@ with releasedata.ProductData("aws-lambda") as product_data:
             block_function_update = dates.parse_date(block_function_update_str) if block_function_update_str else None
 
             release = product_data.get_release(identifier)
-            # if no date is available, use True for supported runtimes and False for deprecated ones
-            release.set_support(deprecation_date if deprecation_date else is_supported_table)
+            # if no date is available, use False for supported runtimes and True for deprecated ones
+            release.set_eoas(deprecation_date if deprecation_date else not is_supported_table)
             # if no date is available, use False for supported runtimes and True for deprecated ones
             release.set_eol(block_function_update if block_function_update else not is_supported_table)
