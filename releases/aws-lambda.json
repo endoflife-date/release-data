@@ -2,197 +2,197 @@
   "releases": {
     "ruby3.2": {
       "name": "ruby3.2",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "ruby2.7": {
       "name": "ruby2.7",
-      "support": "2023-12-07",
+      "eoas": "2023-12-07",
       "eol": "2024-02-08"
     },
     "ruby2.5": {
       "name": "ruby2.5",
-      "support": "2021-07-30",
+      "eoas": "2021-07-30",
       "eol": "2022-03-31"
     },
     "python3.9": {
       "name": "python3.9",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "python3.8": {
       "name": "python3.8",
-      "support": "2024-10-14",
+      "eoas": "2024-10-14",
       "eol": "2025-01-07"
     },
     "python3.7": {
       "name": "python3.7",
-      "support": "2023-12-04",
+      "eoas": "2023-12-04",
       "eol": "2024-02-08"
     },
     "python3.6": {
       "name": "python3.6",
-      "support": "2022-07-18",
+      "eoas": "2022-07-18",
       "eol": "2022-08-29"
     },
     "python3.12": {
       "name": "python3.12",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "python3.11": {
       "name": "python3.11",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "python3.10": {
       "name": "python3.10",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "python2.7": {
       "name": "python2.7",
-      "support": "2021-07-15",
+      "eoas": "2021-07-15",
       "eol": "2022-05-30"
     },
     "provided.al2023": {
       "name": "provided.al2023",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "provided.al2": {
       "name": "provided.al2",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "provided": {
       "name": "provided",
-      "support": "2024-01-08",
+      "eoas": "2024-01-08",
       "eol": "2024-03-12"
     },
     "nodejs8.10": {
       "name": "nodejs8.10",
-      "support": "2020-03-06",
+      "eoas": "2020-03-06",
       "eol": "2020-03-06"
     },
     "nodejs6.10": {
       "name": "nodejs6.10",
-      "support": "2019-08-12",
+      "eoas": "2019-08-12",
       "eol": true
     },
     "nodejs4.3-edge": {
       "name": "nodejs4.3-edge",
-      "support": "2020-03-05",
+      "eoas": "2020-03-05",
       "eol": "2020-04-30"
     },
     "nodejs4.3": {
       "name": "nodejs4.3",
-      "support": "2020-03-05",
+      "eoas": "2020-03-05",
       "eol": "2020-03-05"
     },
     "nodejs20.x": {
       "name": "nodejs20.x",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "nodejs18.x": {
       "name": "nodejs18.x",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "nodejs16.x": {
       "name": "nodejs16.x",
-      "support": "2024-06-12",
+      "eoas": "2024-06-12",
       "eol": "2024-08-15"
     },
     "nodejs14.x": {
       "name": "nodejs14.x",
-      "support": "2023-12-04",
+      "eoas": "2023-12-04",
       "eol": "2024-02-08"
     },
     "nodejs12.x": {
       "name": "nodejs12.x",
-      "support": "2023-03-31",
+      "eoas": "2023-03-31",
       "eol": "2023-04-30"
     },
     "nodejs10.x": {
       "name": "nodejs10.x",
-      "support": "2021-07-30",
+      "eoas": "2021-07-30",
       "eol": "2022-02-14"
     },
     "nodejs": {
       "name": "nodejs",
-      "support": false,
+      "eoas": true,
       "eol": "2016-10-31"
     },
     "java8.al2": {
       "name": "java8.al2",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "java8": {
       "name": "java8",
-      "support": "2024-01-08",
+      "eoas": "2024-01-08",
       "eol": "2024-03-12"
     },
     "java21": {
       "name": "java21",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "java17": {
       "name": "java17",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "java11": {
       "name": "java11",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "go1.x": {
       "name": "go1.x",
-      "support": "2024-01-08",
+      "eoas": "2024-01-08",
       "eol": "2024-03-12"
     },
     "dotnetcore3.1": {
       "name": "dotnetcore3.1",
-      "support": "2023-04-03",
+      "eoas": "2023-04-03",
       "eol": "2023-05-03"
     },
     "dotnetcore2.1": {
       "name": "dotnetcore2.1",
-      "support": "2022-01-05",
+      "eoas": "2022-01-05",
       "eol": "2022-04-13"
     },
     "dotnetcore2.0": {
       "name": "dotnetcore2.0",
-      "support": "2019-05-30",
+      "eoas": "2019-05-30",
       "eol": "2019-05-30"
     },
     "dotnetcore1.0": {
       "name": "dotnetcore1.0",
-      "support": "2019-06-27",
+      "eoas": "2019-06-27",
       "eol": "2019-07-30"
     },
     "dotnet8": {
       "name": "dotnet8",
-      "support": true,
+      "eoas": false,
       "eol": false
     },
     "dotnet7": {
       "name": "dotnet7",
-      "support": "2024-05-14",
+      "eoas": "2024-05-14",
       "eol": false
     },
     "dotnet6": {
       "name": "dotnet6",
-      "support": "2024-11-12",
+      "eoas": "2024-11-12",
       "eol": "2025-02-11"
     },
     "dotnet5.0": {
       "name": "dotnet5.0",
-      "support": "2022-05-10",
+      "eoas": "2022-05-10",
       "eol": true
     }
   },

@@ -4,25 +4,25 @@
       "name": "6.1",
       "releaseDate": "2023-11-16",
       "eol": "2025-08-31",
-      "extendedSupport": "2026-12-31"
+      "eoes": "2026-12-31"
     },
     "6.0": {
       "name": "6.0",
       "releaseDate": "2022-11-16",
       "eol": "2024-08-31",
-      "extendedSupport": "2025-12-31"
+      "eoes": "2025-12-31"
     },
     "5.3": {
       "name": "5.3",
       "releaseDate": "2020-10-27",
       "eol": "2024-08-31",
-      "extendedSupport": "2026-12-31"
+      "eoes": "2026-12-31"
     },
     "5.2": {
       "name": "5.2",
       "releaseDate": "2019-09-30",
       "eol": "2021-12-31",
-      "extendedSupport": "2023-12-31"
+      "eoes": "2023-12-31"
     }
   },
   "versions": {
