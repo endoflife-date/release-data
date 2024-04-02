@@ -5,7 +5,7 @@ from common import dates, http, releasedata
 needed to render the page."""
 
 with releasedata.ProductData("artifactory") as product_data:
-    content = http.fetch_javascript_url('https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life')
+    content = http.fetch_javascript_url('https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life', wait_until = 'networkidle')
     soup = BeautifulSoup(content, 'html.parser')
 
     for row in soup.select('.informaltable tbody tr'):
