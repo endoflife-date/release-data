@@ -38,7 +38,8 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
             raise e  # So that the function does not get stuck in an infinite loop.
 
         # We could wait a bit before retrying, but it's not clear if it would help.
-        logging.warning(f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
+        logging.warning(
+            f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
         return fetch_urls(urls, data, headers, next_max_retries, backoff_factor, timeout)
 
 
@@ -48,13 +49,13 @@ def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,
 
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
-def fetch_javascript_url(url: str, click_selector: str = None) -> str:
-    logging.info(f"Fetching {url}")
+def fetch_javascript_url(url: str, click_selector: str = None, wait_until: str = None) -> str:
+    logging.info(f"Fetching {url} with JavaScript (click_selector = {click_selector}, wait_until = {wait_until})")
     with sync_playwright() as p:
         browser = p.chromium.launch()
         try:
             page = browser.new_page()
-            page.goto(url, wait_until='networkidle')
+            page.goto(url, wait_until=wait_until)
             if click_selector:
                 logging.info(f"Clicked on {click_selector}")
                 page.click(click_selector)

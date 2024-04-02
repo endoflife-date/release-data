@@ -19,7 +19,9 @@ necessary information. Available configuration options are:
 - rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
 - render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
 - render_javascript_click_selector (optional, default = None): A playwright selector used to click on an element after
-  the JavaScript rendering.
+  the JavaScript rendering. Only use when render_javascript is true.
+- render_javascript_wait_until (optional, default = None): Argument to pass to Playwright, one of "commit",
+  "domcontentloaded", "load", or "networkidle". Only use when render_javascript is true and if the script fails without it.
 - ignore_empty_releases (optional, default = false): A boolean value indicating whether to ignore releases with no
   fields except the name.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
@@ -146,6 +148,7 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
     with releasedata.ProductData(config.product) as product_data:
         render_javascript = config.data.get("render_javascript", False)
         render_javascript_click_selector = config.data.get("render_javascript_click_selector", None)
+        render_javascript_wait_until = config.data.get("render_javascript_wait_until", None)
         ignore_empty_releases = config.data.get("ignore_empty_releases", False)
         header_row_selector = config.data.get("header_selector", "thead tr")
         rows_selector = config.data.get("rows_selector", "tbody tr")
@@ -154,7 +157,8 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
         fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
         if render_javascript:
-            response_text = http.fetch_javascript_url(config.url, click_selector=render_javascript_click_selector)
+            response_text = http.fetch_javascript_url(config.url, click_selector=render_javascript_click_selector,
+                                                      wait_until=render_javascript_wait_until)
         else:
             response_text = http.fetch_url(config.url).text
         soup = BeautifulSoup(response_text, features="html5lib")

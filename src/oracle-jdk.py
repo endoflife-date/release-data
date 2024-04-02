@@ -6,7 +6,7 @@ from common import dates, http, releasedata
 This script is using requests-html because the page needs JavaScript to render correctly."""
 
 with releasedata.ProductData("oracle-jdk") as product_data:
-    content = http.fetch_javascript_url('https://www.java.com/releases/')
+    content = http.fetch_javascript_url('https://www.java.com/releases/', wait_until='networkidle')
     soup = BeautifulSoup(content, 'html.parser')
 
     previous_date = None
