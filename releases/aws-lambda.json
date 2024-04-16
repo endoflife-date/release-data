@@ -113,7 +113,7 @@
     "nodejs14.x": {
       "name": "nodejs14.x",
       "eoas": "2023-12-04",
-      "eol": "2024-02-08"
+      "eol": "2025-02-28"
     },
     "nodejs12.x": {
       "name": "nodejs12.x",

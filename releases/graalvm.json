@@ -1,6 +1,10 @@
 {
   "releases": {},
   "versions": {
+    "jdk-22.0.1": {
+      "name": "jdk-22.0.1",
+      "date": "2024-04-16"
+    },
     "jdk-22": {
       "name": "jdk-22",
       "date": "2024-03-19"
