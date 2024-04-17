@@ -1,5 +1,12 @@
 {
   "releases": {
+    "8": {
+      "name": "8",
+      "minAngularVersion": "v16",
+      "maxAngularVersion": "v17.x",
+      "supportedReactVersions": "v17+",
+      "supportedVueVersions": "v3.0.6+"
+    },
     "7": {
       "name": "7",
       "minAngularVersion": "v14",
@@ -34,6 +41,14 @@
     }
   },
   "versions": {
+    "8.0.0": {
+      "name": "8.0.0",
+      "date": "2024-04-17"
+    },
+    "7.8.5": {
+      "name": "7.8.5",
+      "date": "2024-04-17"
+    },
     "7.8.4": {
       "name": "7.8.4",
       "date": "2024-04-10"
