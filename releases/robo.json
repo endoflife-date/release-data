@@ -1,8 +1,12 @@
 {
   "releases": {
+    "5": {
+      "name": "5",
+      "supportedPHPVersions": "8.2 - 8.3"
+    },
     "4": {
       "name": "4",
-      "supportedPHPVersions": "8.0 - 8.1"
+      "supportedPHPVersions": "8.0 - 8.3"
     },
     "3": {
       "name": "3",
