@@ -7,7 +7,7 @@ playwright==1.43.0 # used by a few scripts to parse html
 pre-commit==3.5.0 # used to check code before commit
 python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmatters
 python-liquid==1.12.1 # used in endoflife.py to render version templates
-requests==2.31.0 # used in http.py to make HTTP requests simpler
+requests==2.32.2 # used in http.py to make HTTP requests simpler
 requests-futures==1.0.1 # used in http.py to be able to make async HTTP requests
 requests-cache==1.2.0 # used in http.py to be able to cache HTTP requests
 ruamel.yaml==0.18.6 # used in latest.py
