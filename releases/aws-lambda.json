@@ -188,7 +188,7 @@
     "dotnet7": {
       "name": "dotnet7",
       "eoas": "2024-05-14",
-      "eol": false
+      "eol": true
     },
     "dotnet6": {
       "name": "dotnet6",
