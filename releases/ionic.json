@@ -3,7 +3,7 @@
     "8": {
       "name": "8",
       "minAngularVersion": "v16",
-      "maxAngularVersion": "v17.x",
+      "maxAngularVersion": "v18.x",
       "supportedReactVersions": "v17+",
       "supportedVueVersions": "v3.0.6+"
     },
