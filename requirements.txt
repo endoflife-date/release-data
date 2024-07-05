@@ -9,7 +9,7 @@ python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmat
 python-liquid==1.12.1 # used in endoflife.py to render version templates
 requests==2.32.3 # used in http.py to make HTTP requests simpler
 requests-futures==1.0.1 # used in http.py to be able to make async HTTP requests
-requests-cache==1.2.0 # used in http.py to be able to cache HTTP requests
+requests-cache==1.2.1 # used in http.py to be able to cache HTTP requests
 ruamel.yaml==0.18.6 # used in latest.py
 ruamel.yaml.clib==0.2.8 # used in latest.py
 soupsieve==2.5 # used in conjunction with beautifulsoup4
