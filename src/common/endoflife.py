@@ -115,7 +115,10 @@ def list_products(products_filter: str = None) -> list[ProductFrontmatter]:
         if products_filter and product_name != products_filter:
             continue
 
-        products.append(ProductFrontmatter(product_name))
+        try:
+            products.append(ProductFrontmatter(product_name))
+        except Exception as e:
+            logging.exception(f"failed to load product data for {product_name}: {e}")
 
     return products
 
