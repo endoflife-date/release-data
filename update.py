@@ -106,12 +106,16 @@ def run_scripts(summary: GitHubStepSummary, product_filter: str) -> bool:
             continue
 
         with GitHubGroup(product.name):
-            __delete_data(product)
-            for config in product.auto_configs():
-                success = __run_script(product, config, exec_summary)
-                if not success:
-                    __revert_data(product)
-                    break  # stop running scripts for this product
+            try:
+                __delete_data(product)
+                for config in product.auto_configs():
+                    success = __run_script(product, config, exec_summary)
+                    if not success:
+                        __revert_data(product)
+                        break  # stop running scripts for this product
+
+            except BaseException:
+                logging.exception(f"Skipping {product.name}, there was an error while running its scripts")
 
     exec_summary.print_summary(summary)
     return exec_summary.any_failure()
