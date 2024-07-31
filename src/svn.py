@@ -13,9 +13,9 @@ with releasedata.ProductData("svn") as product_data:
     relnotes = http.fetch_url(URL)
     relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 
-    ul = relnotes_soup.find('h2').find_next('ul')
-    for li in ul.find_all('li'):
-        b = li.find_next('b') # b contains the version
+    ul = relnotes_soup.find("h2").find_next("ul")
+    for li in ul.find_all("li"):
+        b = li.find_next("b") # b contains the version
         if (version := VERSION_PATTERN.match(b.text)) is not None:
             # version found
             version = version.group(1)
