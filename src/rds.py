@@ -12,6 +12,7 @@ in the third column (usually named 'RDS release date').
 PRODUCTS = {
     "amazon-rds-mysql": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Concepts.VersionMgmt.html",
     "amazon-rds-postgresql": "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-release-calendar.html",
+    "amazon-rds-mariadb": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MariaDB.Concepts.VersionMgmt.html",
 }
 VERSION_REGEX = re.compile(r"(?P<version>\d+(?:\.\d+)*)", flags=re.IGNORECASE)  # https://regex101.com/r/BY1vwV/1
 
