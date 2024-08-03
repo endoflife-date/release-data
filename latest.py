@@ -36,14 +36,14 @@ class ReleaseCycle:
 
             old_value = self.data.get(key, None)
             if old_value != value:
-                logging.info(f"{self} {key} updated from {old_value} to {value}")
+                logging.info(f"{self} {key} updated from {old_value} to {value} using release data")
                 self.data[key] = value
                 self.updated = True
 
     def update_with_version(self, version: str, date: datetime.date) -> None:
         logging.debug(f"will try to update {self} with {version} ({date})")
         self.matched = True
-        self.__update_release_date(version, date)
+        self.__update_release_date(date)
         self.__update_latest(version, date)
 
     def latest(self) -> str | None:
@@ -67,10 +67,10 @@ class ReleaseCycle:
             or char_after_prefix.isalpha()  # build number: prefix = 1.1.0, r = 1.1.0r (ex. openssl)
         )
 
-    def __update_release_date(self, version: str, date: datetime.date) -> None:
+    def __update_release_date(self, date: datetime.date) -> None:
         release_date = self.data.get("releaseDate", None)
         if release_date and release_date > date:
-            logging.info(f"{self} release date updated from {release_date} to {date} ({version})")
+            logging.info(f"{self} releaseDate updated from {release_date} to {date} using version data")
             self.data["releaseDate"] = date
             self.updated = True
 
@@ -80,22 +80,22 @@ class ReleaseCycle:
 
         update_detected = False
         if not old_latest:
-            logging.info(f"{self} latest date updated to {version} ({date}) (no prior latest version)")
+            logging.info(f"{self} latest set to {version} ({date}) using version data")
             update_detected = True
 
         elif old_latest == version and old_latest_date != date:
-            logging.info(f"{self} latest date updated from {old_latest_date} to {date}")
+            logging.info(f"{self} latestReleaseDate updated from {old_latest_date} to {date} using version data")
             update_detected = True
 
         else:
             try:  # Do our best attempt at comparing the version numbers
                 if Version(old_latest) < Version(version):
-                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
+                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date}) using version data")
                     update_detected = True
             except InvalidVersion: # If we can't compare the version numbers, compare the dates
                 logging.debug(f"could not compare {old_latest} with {version} for {self}, comparing dates instead")
                 if old_latest_date < date:
-                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date})")
+                    logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date}) using version data")
                     update_detected = True
 
         if update_detected:
@@ -198,10 +198,13 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
     product.upgrade_structure()
 
     if product.release_data:
-        for release_data in product.release_data.get("releases", {}).values():
-            product.process_release(release_data)
         for version_data in product.release_data.get("versions", {}).values():
             product.process_version(version_data)
+
+        # Do not move: release data has priority over version data.
+        for release_data in product.release_data.get("releases", {}).values():
+            product.process_release(release_data)
+
         product.check_latest()
 
     if product.updated:
