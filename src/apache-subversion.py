@@ -9,7 +9,7 @@ VERSION_PATTERN = re.compile(r"^(?:Subversion\s)(\d.\d+\.\d+$)")
 DATE_PATTERN = re.compile(r"^(?:\s\()(\w+,\s\d{1,2}\s\w+\s\d{4})")
 URL = "https://subversion.apache.org/docs/release-notes/release-history.html"
 
-with releasedata.ProductData("svn") as product_data:
+with releasedata.ProductData("apache-subversion") as product_data:
     relnotes = http.fetch_url(URL)
     relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 
@@ -22,5 +22,5 @@ with releasedata.ProductData("svn") as product_data:
             if (remaining_part := b.next_sibling) is not None:
                 if (date := DATE_PATTERN.match(remaining_part)) is not None:
                     # date found
-                    date = dates.parse_date(date.group(1))  
+                    date = dates.parse_date(date.group(1))
                     product_data.declare_version(version, date)
