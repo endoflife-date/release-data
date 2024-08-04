@@ -1,26 +1,33 @@
+import logging
 import re
 
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
-# https://regex101.com/r/CwvyT3/2 only non beta versions
-VERSION_PATTERN = re.compile(r"^(?:Subversion\s)(\d.\d+\.\d+$)")
-# https://regex101.com/r/GsimYd/1
-DATE_PATTERN = re.compile(r"^(?:\s\()(\w+,\s\d{1,2}\s\w+\s\d{4})")
-URL = "https://subversion.apache.org/docs/release-notes/release-history.html"
+# https://regex101.com/r/k4i7EO/1 only non beta versions
+VERSION_PATTERN = re.compile(r"^Subversion\s(?P<version>[1-9]\d*.\d+\.\d+)$")
+# https://regex101.com/r/GsimYd/2
+DATE_PATTERN = re.compile(r"^\((?P<date>\w+,\s\d{1,2}\s\w+\s\d{4})")
 
 with releasedata.ProductData("apache-subversion") as product_data:
-    relnotes = http.fetch_url(URL)
+    relnotes = http.fetch_url("https://subversion.apache.org/docs/release-notes/release-history.html")
     relnotes_soup = BeautifulSoup(relnotes.text, features="html5lib")
 
     ul = relnotes_soup.find("h2").find_next("ul")
     for li in ul.find_all("li"):
         b = li.find_next("b") # b contains the version
-        if (version := VERSION_PATTERN.match(b.text)) is not None:
-            # version found
-            version = version.group(1)
-            if (remaining_part := b.next_sibling) is not None:
-                if (date := DATE_PATTERN.match(remaining_part)) is not None:
-                    # date found
-                    date = dates.parse_date(date.group(1))
-                    product_data.declare_version(version, date)
+        version_text = b.get_text(strip=True)
+        version_match = VERSION_PATTERN.match(version_text)
+        if not version_match:
+            logging.info(f"Skipping {version_text}, does not match version regex")
+            continue
+
+        remaining_part_str = b.next_sibling.get_text(strip=True)
+        date_match = DATE_PATTERN.match(remaining_part_str)
+        if not date_match:
+            logging.info(f"Skipping {version_text}, no matching date in '{remaining_part_str}'")
+            continue
+
+        version = version_match.group("version")
+        date = dates.parse_date(date_match.group("date"))
+        product_data.declare_version(version, date)
