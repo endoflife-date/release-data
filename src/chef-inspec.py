@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
-from common.git import Git
+from common import dates, github, http, releasedata
 
 """Fetch released versions from docs.chef.io and retrieve their date from GitHub.
 docs.chef.io needs to be scraped because not all tagged versions are actually released.
@@ -13,12 +12,8 @@ with releasedata.ProductData("chef-inspec") as product_data:
     rn_soup = BeautifulSoup(rn_response.text, features="html5lib")
     released_versions = [h2.get('id') for h2 in rn_soup.find_all('h2', id=True) if h2.get('id')]
 
-    git = Git("https://github.com/inspec/inspec.git")
-    git.setup(bare=True)
-
-    versions = git.list_tags()
-    for version, date_str in versions:
-        sanitized_version = version.replace("v", "")
+    for release in github.fetch_releases("inspec/inspec"):
+        sanitized_version = release.tag_name.replace("v", "")
         if sanitized_version in released_versions:
-            date = dates.parse_date(date_str)
+            date = dates.parse_datetime(release.published_at)
             product_data.declare_version(sanitized_version, date)
