@@ -9,11 +9,11 @@ More context on https://github.com/endoflife-date/endoflife.date/pull/4425#discu
 """
 
 with releasedata.ProductData("chef-infra-client") as product_data:
-    rn_response = http.fetch_url("https://docs.chef.io/release_notes_server/")
+    rn_response = http.fetch_url("https://docs.chef.io/release_notes_client/")
     rn_soup = BeautifulSoup(rn_response.text, features="html5lib")
     released_versions = [h2.get('id') for h2 in rn_soup.find_all('h2', id=True) if h2.get('id')]
 
-    git = Git("https://github.com/chef/chef-server.git")
+    git = Git("https://github.com/chef/chef.git")
     git.setup(bare=True)
 
     versions = git.list_tags()
