@@ -43,6 +43,7 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     "%Y-%m-%d %H:%M:%S %z",      # 2023-05-01 08:32:34 +0900
     "%Y-%m-%dT%H:%M:%S%z",       # 2023-05-01T08:32:34+0900
     "%Y-%m-%dT%H:%M:%S.%f%z",    # 2023-05-01T08:32:34.123456Z
+    "%Y/%m/%d %H:%M:%S",         # 2023/05/01 08:32:34
     "%a %d %b %Y %H:%M:%S %Z",   # Wed, 01 Jan 2020 00:00:00 GMT
 ]), to_utc: bool = True) -> datetime:
     """Parse a given text representing a datetime using a list of formats,
