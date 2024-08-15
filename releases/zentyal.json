@@ -1,0 +1,53 @@
+{
+  "releases": {
+    "8": {
+      "name": "8",
+      "releaseDate": "2024-02-29",
+      "eoes": "2027-04-30",
+      "ubuntuVersion": "22.04"
+    },
+    "7": {
+      "name": "7",
+      "releaseDate": "2021-01-31",
+      "eoes": "2025-04-30",
+      "ubuntuVersion": "20.04"
+    },
+    "6": {
+      "name": "6",
+      "releaseDate": "2018-11-30",
+      "eoes": "2023-04-30",
+      "ubuntuVersion": "18.04"
+    },
+    "5": {
+      "name": "5",
+      "releaseDate": "2016-11-30",
+      "eoes": "2021-04-30",
+      "ubuntuVersion": "16.04"
+    },
+    "4": {
+      "name": "4",
+      "releaseDate": "2014-10-31",
+      "eoes": "2019-04-30",
+      "ubuntuVersion": "14.04"
+    },
+    "3.2": {
+      "name": "3.2",
+      "releaseDate": "2013-09-30",
+      "eoes": "2018-03-31",
+      "ubuntuVersion": "12.04"
+    },
+    "3.0": {
+      "name": "3.0",
+      "releaseDate": "2012-09-30",
+      "eoes": "2015-09-30",
+      "ubuntuVersion": "12.04"
+    },
+    "2.2": {
+      "name": "2.2",
+      "releaseDate": "2011-09-30",
+      "eoes": "2014-09-30",
+      "ubuntuVersion": "10.04"
+    }
+  },
+  "versions": {}
+}
