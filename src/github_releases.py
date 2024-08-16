@@ -18,7 +18,7 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
             if release.is_prerelease:
                 continue
 
-            version_str = release.name
+            version_str = release.tag_name
             version_match = config.first_match(version_str)
             if version_match:
                 version = config.render(version_match)
