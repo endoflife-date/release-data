@@ -5,7 +5,10 @@ from common.git import Git
 
 """Fetches Red Hat OpenShift versions from the documentation's git repository"""
 
-VERSION_AND_DATE_PATTERN = re.compile(r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$", re.MULTILINE)
+VERSION_AND_DATE_PATTERN = re.compile(
+    r"{product-title}\s(?P<version>\d+\.\d+\.\d+).*\n+Issued:\s(?P<date>\d{4}-\d\d-\d\d)$",
+    re.MULTILINE,
+)
 
 with releasedata.ProductData("red-hat-openshift") as product_data:
     git = Git("https://github.com/openshift/openshift-docs.git")
@@ -23,5 +26,5 @@ with releasedata.ProductData("red-hat-openshift") as product_data:
 
         with release_notes_file.open("rb") as f:
             content = f.read().decode("utf-8")
-            for (version, date_str) in VERSION_AND_DATE_PATTERN.findall(content):
+            for version, date_str in VERSION_AND_DATE_PATTERN.findall(content):
                 product_data.declare_version(version, dates.parse_date(date_str))
