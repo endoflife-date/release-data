@@ -102,8 +102,8 @@
     },
     "nodejs18.x": {
       "name": "nodejs18.x",
-      "eoas": false,
-      "eol": false
+      "eoas": "2025-07-31",
+      "eol": "2025-10-01"
     },
     "nodejs16.x": {
       "name": "nodejs16.x",
