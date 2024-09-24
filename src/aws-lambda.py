@@ -30,14 +30,20 @@ with releasedata.ProductData("aws-lambda") as product_data:
             identifier = cells[identifier_index].get_text().strip()
 
             deprecation_date_str = cells[deprecation_date_index].get_text().strip()
-            deprecation_date = dates.parse_date(deprecation_date_str) if deprecation_date_str else None
+            try:
+                deprecation_date = dates.parse_date(deprecation_date_str)
+            except ValueError:
+                deprecation_date = None
 
             if identifier == "nodejs4.3-edge":
                 # there is a mistake in the data: block function update date cannot be before the deprecation date
                 block_function_update_str = "2020-04-30"
             else:
                 block_function_update_str = cells[block_function_update_index].get_text().strip()
-            block_function_update = dates.parse_date(block_function_update_str) if block_function_update_str else None
+            try:
+                block_function_update = dates.parse_date(block_function_update_str)
+            except ValueError:
+                block_function_update = None
 
             release = product_data.get_release(identifier)
             # if no date is available, use False for supported runtimes and True for deprecated ones
