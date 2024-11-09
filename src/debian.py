@@ -1,12 +1,13 @@
-from common import dates
-from common import endoflife
-from common.git import Git
+from pathlib import Path
 from subprocess import run
+
+from common import dates, releasedata
+from common.git import Git
 
 """Fetch Debian versions by parsing news in www.debian.org source repository."""
 
 
-def extract_major_versions(product, repo_dir):
+def extract_major_versions(p: releasedata.ProductData, repo_dir: Path) -> None:
     child = run(
         f"grep -RhE -A 1 '<define-tag pagetitle>Debian [0-9]+.+</q> released' {repo_dir}/english/News "
         f"| cut -d '<' -f 2 "
@@ -21,11 +22,11 @@ def extract_major_versions(product, repo_dir):
             version = line.split(" ")[1]
             is_release_line = False
         else:
-            product.declare_version(version, dates.parse_date(line))
+            p.declare_version(version, dates.parse_date(line))
             is_release_line = True
 
 
-def extract_point_versions(product, repo_dir):
+def extract_point_versions(p: releasedata.ProductData, repo_dir: Path) -> None:
     child = run(
         f"grep -Rh -B 10 '<define-tag revision>' {repo_dir}/english/News "
         "| grep -Eo '(release_date>(.*)<|revision>(.*)<)' "
@@ -37,17 +38,13 @@ def extract_point_versions(product, repo_dir):
 
     for line in child.stdout.decode("utf-8").strip().split("\n"):
         (date, version) = line.split(' ')
-        product.declare_version(version, dates.parse_date(date))
+        p.declare_version(version, dates.parse_date(date))
 
 
-product = endoflife.Product("debian")
-print(f"::group::{product.name}")
-git = Git("https://salsa.debian.org/webmaster-team/webwml.git")
-git.setup()
-git.checkout("master", file_list=["english/News"])
+with releasedata.ProductData("debian") as product_data:
+    git = Git("https://salsa.debian.org/webmaster-team/webwml.git")
+    git.setup()
+    git.checkout("master", file_list=["english/News"])
 
-extract_major_versions(product, git.repo_dir)
-extract_point_versions(product, git.repo_dir)
-
-product.write()
-print("::endgroup::")
+    extract_major_versions(product_data, git.repo_dir)
+    extract_point_versions(product_data, git.repo_dir)

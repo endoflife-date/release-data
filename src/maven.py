@@ -1,59 +1,28 @@
-import datetime
-import re
 import sys
-from common import http
-from common import endoflife
+from datetime import datetime, timezone
+
+from common import endoflife, http, releasedata
 
 METHOD = "maven"
 
-
-# TODO: Add support for custom regexes
-# Hasn't been needed yet, so only write if we need it
-def valid_version(version):
-    if re.match(endoflife.DEFAULT_VERSION_REGEX, version):
-        return True
-    return False
-
-
-def fetch_json(group_id, artifact_id, start):
-    url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&rows=100&wt=json&start={start}"
-    response = http.fetch_url(url)
-    return response.json()
-
-
-def fetch_releases(package_identifier):
-    releases = {}
-    start = 0
-    group_id, artifact_id = package_identifier.split("/")
-
-    while True:
-        data = fetch_json(group_id, artifact_id, start)
-
-        for row in data["response"]["docs"]:
-            version = row["v"]
-            if valid_version(version):
-                date = datetime.datetime.utcfromtimestamp(row["timestamp"] / 1000).strftime("%Y-%m-%d")
-                releases[version] = date
-                print(f"{version}: {date}")
-
-        start += 100
-        if data["response"]["numFound"] <= start:
-            break
-
-    return releases
-
-
-def update_product(product_name, configs):
-    versions = {}
-
-    for config in configs:
-        versions = versions | fetch_releases(config[METHOD])
-
-    endoflife.write_releases(product_name, versions)
-
-
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product}")
-    update_product(product, configs)
-    print("::endgroup::")
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        start = 0
+        group_id, artifact_id = config.url.split("/")
+
+        while True:
+            url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&wt=json&start={start}&rows=100"
+            data = http.fetch_url(url).json()
+
+            for row in data["response"]["docs"]:
+                version_match = config.first_match(row["v"])
+                if version_match:
+                    version = config.render(version_match)
+                    date = datetime.fromtimestamp(row["timestamp"] / 1000, tz=timezone.utc)
+                    product_data.declare_version(version, date)
+
+            start += 100
+            if data["response"]["numFound"] <= start:
+                break

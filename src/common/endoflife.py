@@ -1,12 +1,12 @@
-import frontmatter
-import json
+import itertools
 import logging
 import os
-import regex as re  # Python re module does not support identically named groups (as used in the mariadb product)
+import re
 from datetime import datetime
-from glob import glob
+from pathlib import Path
+
+import frontmatter
 from liquid import Template
-logging.basicConfig(format=logging.BASIC_FORMAT, level=logging.INFO)
 
 # Handle versions having at least 2 digits (ex. 1.2) and at most 4 digits (ex. 1.2.3.4), with an optional leading "v".
 # Major version must be >= 1.
@@ -14,141 +14,116 @@ DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+
 DEFAULT_VERSION_PATTERN = re.compile(DEFAULT_VERSION_REGEX)
 DEFAULT_VERSION_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{% endif %}{% endif %}{% endif %}"
 
-PRODUCTS_PATH = os.environ.get("PRODUCTS_PATH", "website/products")
-VERSIONS_PATH = os.environ.get("VERSIONS_PATH", "releases")
+PRODUCTS_PATH = Path(os.environ.get("PRODUCTS_PATH", "website/products"))
 
 
 class AutoConfig:
-    def __init__(self, method: str, config: dict):
-        self.method = method
-        self.url = config[method]
-        self.version_template = Template(config.get("template", DEFAULT_VERSION_TEMPLATE))
+    def __init__(self, product: str, data: dict) -> None:
+        self.product = product
+        self.data = data
+        self.method = next(key for key in data if key not in ("template", "regex", "regex_exclude"))
+        self.url = data[self.method]
+        self.version_template = Template(data.get("template", DEFAULT_VERSION_TEMPLATE))
 
-        regexes = config.get("regex", DEFAULT_VERSION_REGEX)
-        regexes = regexes if isinstance(regexes, list) else [regexes]
-        regexes = [regex.replace("(?<", "(?P<") for regex in regexes]  # convert ruby to python regex
-        self.version_patterns = [re.compile(regex) for regex in regexes]
+        self.script = f"{self.url}.py" if self.method == "custom" else f"{self.method}.py"
 
-    def first_match(self, version: str) -> re.Match:
-        for pattern in self.version_patterns:
-            match = pattern.match(version)
+        regexes_include = data.get("regex", DEFAULT_VERSION_REGEX)
+        regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
+        self.include_version_patterns = [re.compile(r, re.MULTILINE) for r in regexes_include]
+
+        regexes_exclude = data.get("regex_exclude", [])
+        regexes_exclude = regexes_exclude if isinstance(regexes_exclude, list) else [regexes_exclude]
+        self.exclude_version_patterns = [re.compile(r, re.MULTILINE) for r in regexes_exclude]
+
+    def first_match(self, version: str) -> re.Match | None:
+        for exclude_pattern in self.exclude_version_patterns:
+            if exclude_pattern.match(version):
+                return None
+
+        for include_pattern in self.include_version_patterns:
+            match = include_pattern.match(version)
             if match:
                 return match
+
+        return None
 
     def render(self, match: re.Match) -> str:
         return self.version_template.render(**match.groupdict())
 
+    def __repr__(self) -> str:
+        return f"{self.product}#{self.method}({self.url})"
 
-class Product:
-    """Model an endoflife.date product.
-    """
 
-    def __init__(self, name: str, load_product_data: bool = False):
+class ProductFrontmatter:
+    def __init__(self, name: str) -> None:
         self.name: str = name
-        self.versions = {}
-        self.versions_path: str = f"{VERSIONS_PATH}/{name}.json"
-        self.product_path: str = f"{PRODUCTS_PATH}/{name}.md"
+        self.path: Path = PRODUCTS_PATH / f"{name}.md"
 
-        if load_product_data:
-            if os.path.isfile(self.product_path):
-                with open(self.product_path) as f:
-                    self.product_data = frontmatter.load(f)
-                    logging.info(f"loaded product data for {self.name} from {self.product_path}")
-            else:
-                logging.warning(f"no product data found for {self.name} at {self.product_path}")
-                self.product_data = None
+        self.data = None
+        if self.path.is_file():
+            with self.path.open() as f:
+                self.data = frontmatter.load(f)
+                logging.info(f"loaded product data for {self.name} from {self.path}")
+        else:
+            logging.warning(f"no product data found for {self.name} at {self.path}")
 
-    def get_auto_configs(self, method: str) -> list[AutoConfig]:
+    def has_auto_configs(self) -> bool:
+        return self.data and "methods" in self.data.get("auto", {})
+
+    def is_auto_update_cumulative(self) -> bool:
+        return self.data.get("auto", {}).get("cumulative", False)
+
+    def auto_configs(self, method_filter: str = None, url_filter: str = None) -> list[AutoConfig]:
         configs = []
 
-        if "auto" in self.product_data:
-            for config in self.product_data["auto"]:
-                if method in config.keys():
-                    configs.append(AutoConfig(method, config))
-                else:
-                    logging.error(f"mixed auto-update methods declared for {self.name}, this is not yet supported")
+        configs_data = self.data.get("auto", {}).get("methods", [])
+        for config_data in configs_data:
+            config = AutoConfig(self.name, config_data)
+            if ((method_filter and config.method != method_filter)
+                or (url_filter and config.url != url_filter)):
+                continue
+
+            configs.append(config)
 
         return configs
 
-    def has_version(self, version: str) -> bool:
-        return version in self.versions
+    def get_title(self) -> str:
+        return self.data["title"]
 
-    def get_version_date(self, version: str) -> datetime:
-        return self.versions[version] if version in self.versions else None
+    def get_permalink(self) -> str:
+        return self.data["permalink"]
 
-    def declare_version(self, version: str, date: datetime) -> None:
-        if version in self.versions:
-            if self.versions[version] != date:
-                logging.warning(f"overwriting version {version} ({self.versions[version]} -> {date}) for {self.name}")
-            else:
-                return # already declared
+    def get_releases(self) -> list[dict]:
+        return self.data.get("releases", [])
 
-        logging.info(f"adding version {version} ({date}) to {self.name}")
-        self.versions[version] = date
+    def get_release_names(self) -> list[str]:
+        return [release["releaseCycle"] for release in self.get_releases()]
 
-    def declare_versions(self, dates_by_version: dict[str, datetime]) -> None:
-        for (version, date) in dates_by_version.items():
-            self.declare_version(version, date)
-
-    def replace_version(self, version: str, date: datetime) -> None:
-        if version not in self.versions:
-            raise ValueError(f"version {version} cannot be replaced as it does not exist for {self.name}")
-
-        logging.info(f"replacing version {version} ({self.versions[version]} -> {date}) in {self.name}")
-        self.versions[version] = date
-
-    def remove_version(self, version: str) -> None:
-        if not self.has_version(version):
-            logging.warning(f"version {version} cannot be removed as it does not exist for {self.name}")
-            return
-
-        logging.info(f"removing version {version} ({self.versions.pop(version)}) from {self.name}")
-
-    def write(self) -> None:
-        versions = {version: date.strftime("%Y-%m-%d") for version, date in self.versions.items()}
-        with open(self.versions_path, "w") as f:
-            f.write(json.dumps(dict(
-                # sort by date then version (desc)
-                sorted(versions.items(), key=lambda x: (x[1], x[0]), reverse=True)
-            ), indent=2))
-
-    def __repr__(self) -> str:
-        return f"<{self.name}>"
+    def get_release_date(self, release_cycle: str) -> datetime | None:
+        for release in self.get_releases():
+            if release["releaseCycle"] == release_cycle:
+                return release["releaseDate"]
+        return None
 
 
-def load_product(product_name) -> frontmatter.Post:
-    """Load the product's file frontmatter.
-    """
-    with open(f"{PRODUCTS_PATH}/{product_name}.md") as f:
-        return frontmatter.load(f)
+def list_products(products_filter: str = None) -> list[ProductFrontmatter]:
+    """Return a list of products that are using the same given update method."""
+    products = []
 
-
-def list_products(method, products_filter=None) -> dict[str, list[dict]]:
-    """Return a list of products that are using the same given update method.
-    """
-    products_with_method = {}
-
-    for product_file in glob(f"{PRODUCTS_PATH}/*.md"):
-        product_name = os.path.splitext(os.path.basename(product_file))[0]
+    for product_file in sorted(PRODUCTS_PATH.glob("*.md")):
+        product_name = product_file.stem
         if products_filter and product_name != products_filter:
             continue
 
-        with open(product_file) as f:
-            data = frontmatter.load(f)
-            if "auto" in data:
-                configs = list(filter(
-                    lambda config: method in config.keys(),
-                    data["auto"]
-                ))
-                if len(configs) > 0:
-                    products_with_method[product_name] = configs
+        try:
+            products.append(ProductFrontmatter(product_name))
+        except Exception as e:
+            logging.exception(f"failed to load product data for {product_name}: {e}")
 
-    return products_with_method
+    return products
 
 
-def write_releases(product, releases, pathname="releases") -> None:
-    with open(f"{pathname}/{product}.json", "w") as f:
-        f.write(json.dumps(dict(
-            # sort by date then version (desc)
-            sorted(releases.items(), key=lambda x: (x[1], x[0]), reverse=True)
-        ), indent=2))
+def list_configs(products_filter: str = None, methods_filter: str = None, urls_filter: str = None) -> list[AutoConfig]:
+    products = list_products(products_filter)
+    configs_by_product = [p.auto_configs(methods_filter, urls_filter) for p in products]
+    return list(itertools.chain.from_iterable(configs_by_product))  # flatten the list of lists

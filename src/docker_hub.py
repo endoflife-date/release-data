@@ -1,7 +1,6 @@
 import sys
-from common import dates
-from common import endoflife
-from common import http
+
+from common import dates, endoflife, http, releasedata
 
 """Fetches releases from the Docker Hub API.
 
@@ -10,27 +9,21 @@ Unfortunately images creation date cannot be retrieved, so we had to use the tag
 METHOD = "docker_hub"
 
 
-def fetch_releases(product, config, url):
+def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str) -> None:
     data = http.fetch_url(url).json()
 
     for result in data["results"]:
         version_str = result["name"]
-        if config.first_match(version_str):
+        if c.first_match(version_str):
             date = dates.parse_datetime(result["tag_last_pushed"])
-            product.declare_version(version_str, date)
+            p.declare_version(version_str, date)
 
     if data["next"]:
-        fetch_releases(product, config, data["next"])
+        fetch_releases(p, c, data["next"])
 
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product_name}")
-    product = endoflife.Product(product_name, load_product_data=True)
-
-    for config in product.get_auto_configs(METHOD):
-        url = f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1"
-        fetch_releases(product, config, url)
-
-    product.write()
-    print("::endgroup::")
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")

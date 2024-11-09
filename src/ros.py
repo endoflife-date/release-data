@@ -1,37 +1,28 @@
-import datetime
 import re
+
 from bs4 import BeautifulSoup
-from common import http
-from common import endoflife
+from common import dates, http, releasedata
 
-URL = "https://wiki.ros.org/Distributions"
 # https://regex101.com/r/c1ribd/1
-regex = r"^ROS (?P<name>(\w| )+)"
+VERSION_PATTERN = re.compile(r"^ROS (?P<name>(\w| )+)")
 
-print("::group::ros")
-response = http.fetch_url(URL)
-soup = BeautifulSoup(response.text, features="html5lib")
+with releasedata.ProductData("ros") as product_data:
+    response = http.fetch_url("https://wiki.ros.org/Distributions")
+    soup = BeautifulSoup(response.text, features="html5lib")
 
-versions = {}
-for tr in soup.findAll("tr"):
-    td_list = tr.findAll("td")
-    if len(td_list) > 0:
-        version = td_list[0].get_text()
+    for tr in soup.findAll("tr"):
+        td_list = tr.findAll("td")
+        if len(td_list) == 0:
+            continue
 
-        m = re.match(regex, version.strip())
-        if m:
+        version_str = td_list[0].get_text().strip()
+        if VERSION_PATTERN.match(version_str):
+            # Get the "code" (such as noetic) instead of the display name (such as Noetic Ninjemys)
             version = td_list[0].findAll("a")[0]["href"][1:]
             try:
-                date = datetime.datetime.strptime(
-                    td_list[1].get_text().strip(), "%B %d, %Y"
-                )
-            # The date is a suffix (May 23rd, 2020)
-            except ValueError:
+                date = dates.parse_date(td_list[1].get_text())
+            except ValueError:  # The day has a suffix (such as May 23rd, 2020)
                 x = td_list[1].get_text().split(",")
-                date = datetime.datetime.strptime(x[0][:-2] + x[1], "%B %d %Y")
-            abs_date = date.strftime("%Y-%m-%d")
-            versions[version] = abs_date
-            print(f"{version}: {abs_date}")
+                date = dates.parse_date(x[0][:-2] + x[1])
 
-endoflife.write_releases('ros', versions)
-print("::endgroup::")
+            product_data.declare_version(version, date)

@@ -1,33 +1,10 @@
-import re
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http, releasedata
 
-URL = "https://raw.githubusercontent.com/rocky-linux/wiki.rockylinux.org/development/docs/include/releng/version_table.md"
-
-
-def parse_date(date_str):
-    date_str = date_str.replace(',', '').strip()
-    return dates.parse_date(date_str).strftime("%Y-%m-%d")
-
-
-def parse_markdown_table(table_text):
-    lines = table_text.strip().split('\n')
-    versions = {}
-
-    for line in lines:
+with releasedata.ProductData("rockylinux") as product_data:
+    response = http.fetch_url("https://raw.githubusercontent.com/rocky-linux/wiki.rockylinux.org/development/docs/include/releng/version_table.md")
+    for line in response.text.strip().split('\n'):
         items = line.split('|')
-        if len(items) >=5 and re.match(endoflife.DEFAULT_VERSION_REGEX, items[1].strip()):
+        if len(items) >= 5 and endoflife.DEFAULT_VERSION_PATTERN.match(items[1].strip()):
             version = items[1].strip()
-            date = parse_date(items[3])
-            print(f"{version}: {date}")
-            versions[version] = date
-
-    return versions
-
-
-print("::group::rockylinux")
-response = http.fetch_url(URL)
-versions = parse_markdown_table(response.text)
-endoflife.write_releases('rockylinux', versions)
-print("::endgroup::")
+            date = dates.parse_date(items[3])
+            product_data.declare_version(version, date)

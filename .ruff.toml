@@ -1,13 +1,34 @@
 select = [
+  "A", # flake8-builtins
+  "ANN", # flake8-annotations
+  "ARG", # flake8-unused-arguments
+  "ASYNC", # flake8-async
+  "B", # flake8-bugbear
+  "BLE", # flake8-blind-except
+  "C4", # flake8-comprehensions
+  "C90", # mccabe
+  "COM", # flake8-commas
+  "DTZ", # flake8-commas
   "E", # pycodestyle errors
+  "EM", # flake8-errmsg
+  "EXE", # flake8-executable
   "F", # pyflakes errors
+  "I", # isort
   "ISC", # flake8-implicit-str-concat
+  "N", # pep8-naming
+  "PIE", # flake8-pie
   "PGH", # pygrep-hooks
+  "PTH", # flake8-use-pathlib
+  "RET", # flake8-return
   "RUF100", # unused noqa (yesqa)
+  "SLF", # flake8-self
+  "SIM", # flake8-simplify
+  "T10", # flake8-debugger
   "UP", # pyupgrade
   "W", # pycodestyle warnings
   "YTT", # flake8-2020
 ]
 extend-ignore = [
+  "ANN101", # Missing type annotation for self in method
   "E501", # Line too long
 ]

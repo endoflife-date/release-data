@@ -1,6 +1,6 @@
 import re
-from common import dates
-from common import endoflife
+
+from common import dates, releasedata
 from common.git import Git
 
 """Fetches Apache HTTP Server versions and release date from its git repository
@@ -15,24 +15,20 @@ VERSION_AND_DATE_PATTERNS = [
     re.compile(r"\s+(?P<version>\d+\.\d+\.\d+)\s*:.*Tagged and [rR]olled\s(?:on\s)?(?P<date>\w+\.?\s\d\d?,\s\d{4})"),
 ]
 
-product = endoflife.Product("apache-http-server")
-print(f"::group::{product.name}")
-git = Git("https://github.com/apache/httpd.git")
-git.setup()
+with releasedata.ProductData("apache-http-server") as product_data:
+    git = Git("https://github.com/apache/httpd.git")
+    git.setup()
 
-for branch in git.list_branches("refs/heads/?.?.x"):
-    git.checkout(branch, file_list=["STATUS"])
+    for branch in git.list_branches("refs/heads/?.?.x"):
+        git.checkout(branch, file_list=["STATUS"])
 
-    release_notes_file = git.repo_dir / "STATUS"
-    if not release_notes_file.exists():
-        continue
+        release_notes_file = git.repo_dir / "STATUS"
+        if not release_notes_file.exists():
+            continue
 
-    with open(release_notes_file, "rb") as f:
-        release_notes = f.read().decode("utf-8", errors="ignore")
+        with release_notes_file.open("rb") as f:
+            release_notes = f.read().decode("utf-8", errors="ignore")
 
-    for pattern in VERSION_AND_DATE_PATTERNS:
-        for (version, date_str) in pattern.findall(release_notes):
-            product.declare_version(version, dates.parse_date(date_str))
-
-product.write()
-print("::endgroup::")
+        for pattern in VERSION_AND_DATE_PATTERNS:
+            for (version, date_str) in pattern.findall(release_notes):
+                product_data.declare_version(version, dates.parse_date(date_str))

@@ -1,8 +1,7 @@
 import sys
+
 from bs4 import BeautifulSoup
-from common import http
-from common import dates
-from common import endoflife
+from common import dates, endoflife, http, releasedata
 
 """Fetches versions from repositories managed with cgit, such as the Linux kernel repository.
 Ideally we would want to use the git repository directly, but cgit-managed repositories don't support partial clone."""
@@ -10,12 +9,10 @@ Ideally we would want to use the git repository directly, but cgit-managed repos
 METHOD = "cgit"
 
 p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
-    print(f"::group::{product_name}")
-    product = endoflife.Product(product_name, load_product_data=True)
-
-    for auto_config in product.get_auto_configs(METHOD):
-        response = http.fetch_url(auto_config.url + '/refs/tags')
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url + '/refs/tags')
         soup = BeautifulSoup(response.text, features="html5lib")
 
         for table in soup.find_all("table", class_="list"):
@@ -25,7 +22,7 @@ for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
                     continue
 
                 version_str = columns[0].text.strip()
-                version_match = auto_config.first_match(version_str)
+                version_match = config.first_match(version_str)
                 if not version_match:
                     continue
 
@@ -34,9 +31,6 @@ for product_name, configs in endoflife.list_products(METHOD, p_filter).items():
                 if not datetime_str:
                     continue
 
-                version = auto_config.render(version_match)
+                version = config.render(version_match)
                 date = dates.parse_datetime(datetime_str)
-                product.declare_version(version, date)
-
-    product.write()
-    print("::endgroup::")
+                product_data.declare_version(version, date)

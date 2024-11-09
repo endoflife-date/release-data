@@ -1,20 +1,11 @@
-import json
-from common import http
-from common import endoflife
+from common import dates, http, releasedata
 
-PRODUCT = "typo3"
-URL = "https://get.typo3.org/api/v1/release/"
+with releasedata.ProductData("typo3") as product_data:
+    data = http.fetch_url("https://get.typo3.org/api/v1/release/").json()
+    for v in data:
+        if v['type'] == 'development':
+            continue
 
-print(f"::group::{PRODUCT}")
-versions = {}
-
-response = http.fetch_url(URL)
-data = json.loads(response.text)
-for v in data:
-    if v['type'] != 'development':
-        date = v["date"][0:10]
-        versions[v["version"]] = date
-        print(f"{v['version']}: {date}")
-
-endoflife.write_releases(PRODUCT, versions)
-print("::endgroup::")
+        version = v["version"]
+        date = dates.parse_datetime(v["date"], to_utc=False)  # utc kept for now for backwards compatibility
+        product_data.declare_version(version, date)
