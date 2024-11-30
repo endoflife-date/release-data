@@ -101,7 +101,10 @@ def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: Scrip
 def run_scripts(summary: GitHubStepSummary, product_filter: str) -> bool:
     exec_summary = ScriptExecutionSummary()
 
-    for product in list_products(product_filter):
+    with GitHubGroup("Load Product Data"):
+        product_list = list_products(product_filter)
+
+    for product in product_list:
         if not product.has_auto_configs():
             continue
 
