@@ -40,6 +40,11 @@
       "eoas": "2022-07-18",
       "eol": "2022-08-29"
     },
+    "python3.13": {
+      "name": "python3.13",
+      "eoas": false,
+      "eol": false
+    },
     "python3.12": {
       "name": "python3.12",
       "eoas": false,
@@ -94,6 +99,11 @@
       "name": "nodejs4.3",
       "eoas": "2020-03-05",
       "eol": "2020-03-05"
+    },
+    "nodejs22.x": {
+      "name": "nodejs22.x",
+      "eoas": false,
+      "eol": false
     },
     "nodejs20.x": {
       "name": "nodejs20.x",
