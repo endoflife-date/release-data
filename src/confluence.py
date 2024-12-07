@@ -6,7 +6,7 @@ from common import dates, http, releasedata
 Note that requests_html is used because JavaScript is needed to render the page."""
 
 with releasedata.ProductData("confluence") as product_data:
-    content = http.fetch_javascript_url("https://www.atlassian.com/software/confluence/download-archives")
+    content = http.fetch_javascript_url("https://www.atlassian.com/software/confluence/download-archives", wait_until="networkidle")
     soup = BeautifulSoup(content, 'html.parser')
 
     for version_block in soup.select('.versions-list'):
