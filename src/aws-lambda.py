@@ -9,18 +9,13 @@ with releasedata.ProductData("aws-lambda") as product_data:
     response = http.fetch_url("https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html")
     soup = BeautifulSoup(response.text, features="html5lib")
 
-    for table in soup.find_all("table"):
-        table_name = table.find("thead").find_all("tr")[0].find("th").get_text().strip().lower()
-        if table_name != "supported runtimes" and table_name != "deprecated runtimes":
-            logging.warning(f"unexpected table '{table_name}', skipping")
+    for i, table in enumerate(soup.find_all("table")):
+        headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[0].find_all("th")]
+        if "identifier" not in headers or "deprecation date" not in headers or "block function update" not in headers:
+            logging.info(f"table with header '{headers}' does not contain all the expected headers")
             continue
 
-        headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[1].find_all("th")]
-        if "identifier" not in headers or "deprecation date" not in headers or "block function update" not in headers:
-            message = f"table '{table_name}' does not contain the expected headers"
-            raise ValueError(message)
-
-        is_supported_table = table_name == "supported runtimes"
+        is_supported_table = i == 0  # first table is for supported runtimes, second for deprecated ones
         identifier_index = headers.index("identifier")
         deprecation_date_index = headers.index("deprecation date")
         block_function_update_index = headers.index("block function update")
