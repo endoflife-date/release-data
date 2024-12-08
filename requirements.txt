@@ -2,7 +2,7 @@ beautifulsoup4==4.12.3 # used by a lot of scripts to parse html
 deepdiff==8.0.1 # used in update.py
 html5lib==1.1 # used in conjunction with beautifulsoup4
 mwparserfromhell==0.6.6 # used in unrealircd.py
-packaging==24.1 # used in latest.py
+packaging==24.2 # used in latest.py
 playwright==1.49.0 # used by a few scripts to parse html
 pre-commit==3.5.0 # used to check code before commit
 python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmatters
