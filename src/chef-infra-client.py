@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 from common.git import Git
-
+import logging
 """Fetch released versions from docs.chef.io and retrieve their date from GitHub.
 docs.chef.io needs to be scraped because not all tagged versions are actually released.
 
@@ -18,6 +18,10 @@ with releasedata.ProductData("chef-infra-client") as product_data:
 
     versions = git.list_tags()
     for version, date_str in versions:
+        if version.startswith("v"):
+            version = version[1:]
         if version in released_versions:
             date = dates.parse_date(date_str)
             product_data.declare_version(version, date)
+        else:
+            logging.warning(f"Version found on website, not on git repo: {version}")
