@@ -10,7 +10,7 @@
       "name": "11",
       "eoas": "2025-09-03",
       "eol": "2026-03-12",
-      "supportedPhpVersions": "8.2 - 8.3"
+      "supportedPhpVersions": "8.2 - 8.4"
     },
     "10": {
       "name": "10",
