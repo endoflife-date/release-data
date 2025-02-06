@@ -3,16 +3,11 @@ import re
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
-"""Fetches Amazon EKS versions from the version management pages on AWS docs."""
+"""Fetches Amazon Kafka versions from the version management pages on AWS docs."""
 
 PRODUCTS = {
-    "aws-eks": [
-        "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html",
-        "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
-        # 1.19.eks.1
-        "https://web.archive.org/web/20221007150452/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
-        # + 1.20
-        "https://web.archive.org/web/20230521061347/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
+    "amazon-msk": [
+        "https://docs.aws.amazon.com/msk/latest/developerguide/supported-kafka-versions.html",
     ]
 }
 
@@ -45,19 +40,16 @@ for product_name, urls in PRODUCTS.items():
             for table in soup.find_all("table"):
                 index = 0
                 version_column = None
-                platform_version_column = None
                 release_date_column = None
                 eoas_date_column = None
                 eoes_date_column = None
 
                 for row in table.find_all("th"):
-                    if containsOneOf(row.text, ["Kubernetes version"]):
+                    if containsOneOf(row.text, ["Apache Kafka version"]):
                         version_column = index
-                    if containsOneOf(row.text, ["EKS platform version", "Amazon EKS platform version"]):
-                        platform_version_column = index
-                    if containsOneOf(row.text, ["Amazon EKS release", "Release date"]):
+                    if containsOneOf(row.text, ["MSK release date"]):
                         release_date_column = index
-                    if containsOneOf(row.text, ["End of standard support"]):
+                    if containsOneOf(row.text, ["End of support date"]):
                         eoas_date_column = index
                     if containsOneOf(row.text, ["End of extended support"]):
                         eoes_date_column = index
@@ -73,10 +65,6 @@ for product_name, urls in PRODUCTS.items():
                         columns[version_column].text.strip())
                     if version_match:
                         version = version_match.group("version")
-                        if platform_version_column is not None:
-                            platform_version = columns[platform_version_column].text.strip(
-                            )
-                            version += "-"+platform_version
 
                         releases = product_data.get_release(version)
 

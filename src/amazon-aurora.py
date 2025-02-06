@@ -6,8 +6,8 @@ from common import dates, http, releasedata
 """Fetches Amazon Aurora versions from the version management pages on AWS docs."""
 
 PRODUCTS = {
-    "aws-aurora-mysql": ["https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"],
-    "aws-aurora-postgresql": ["https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"],
+    "amazon-aurora-mysql": ["https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.release-calendars.html"],
+    "amazon-aurora-postgresql": ["https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/aurorapostgresql-release-calendar.html"],
 }
 
 VERSION_REGEX = re.compile(r"(?P<version>\d+(?:\.\d+)*)", flags=re.IGNORECASE)
