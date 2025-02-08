@@ -35,6 +35,7 @@ with releasedata.ProductData("splunk") as product_data:
     soup = BeautifulSoup(main.text, features="html5lib")
 
     all_versions = [option.attrs['value'] for option in soup.select("select#version-select > option")]
+    all_versions = [v for v in all_versions if v != "DataMonitoringAppPreview"]
 
     # Latest minor release notes contains release notes for all previous minor versions.
     # For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
