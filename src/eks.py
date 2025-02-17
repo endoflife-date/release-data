@@ -27,7 +27,7 @@ with releasedata.ProductData("eks") as product_data:
 
             k8s_version_match = endoflife.DEFAULT_VERSION_PATTERN.match(k8s_version)
             if k8s_version_match:
-                date = dates.parse_date(date_str)
+                date = dates.parse_date_or_month_year_date(date_str)
                 # K8S patch version is not kept to match versions on https://github.com/aws/eks-distro/tags.
                 version = f"{k8s_version_match.group('major')}.{k8s_version_match.group('minor')}-{eks_version.replace('.', '-')}"
                 product_data.declare_version(version, date)

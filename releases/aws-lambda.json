@@ -2,18 +2,18 @@
   "releases": {
     "ruby3.3": {
       "name": "ruby3.3",
-      "eoas": false,
-      "eol": false
+      "eoas": "2027-03-31",
+      "eol": "2027-05-31"
     },
     "ruby3.2": {
       "name": "ruby3.2",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-03-31",
+      "eol": "2026-05-31"
     },
     "ruby2.7": {
       "name": "ruby2.7",
       "eoas": "2023-12-07",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "ruby2.5": {
       "name": "ruby2.5",
@@ -22,18 +22,18 @@
     },
     "python3.9": {
       "name": "python3.9",
-      "eoas": false,
-      "eol": false
+      "eoas": "2025-11-03",
+      "eol": "2026-01-08"
     },
     "python3.8": {
       "name": "python3.8",
       "eoas": "2024-10-14",
-      "eol": "2025-03-31"
+      "eol": "2025-11-01"
     },
     "python3.7": {
       "name": "python3.7",
       "eoas": "2023-12-04",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "python3.6": {
       "name": "python3.6",
@@ -42,23 +42,23 @@
     },
     "python3.13": {
       "name": "python3.13",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "python3.12": {
       "name": "python3.12",
-      "eoas": false,
-      "eol": false
+      "eoas": "2028-10-31",
+      "eol": "2029-01-10"
     },
     "python3.11": {
       "name": "python3.11",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "python3.10": {
       "name": "python3.10",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "python2.7": {
       "name": "python2.7",
@@ -67,18 +67,18 @@
     },
     "provided.al2023": {
       "name": "provided.al2023",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "provided.al2": {
       "name": "provided.al2",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "provided": {
       "name": "provided",
       "eoas": "2024-01-08",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "nodejs8.10": {
       "name": "nodejs8.10",
@@ -102,28 +102,28 @@
     },
     "nodejs22.x": {
       "name": "nodejs22.x",
-      "eoas": false,
-      "eol": false
+      "eoas": "2027-04-30",
+      "eol": "2027-07-01"
     },
     "nodejs20.x": {
       "name": "nodejs20.x",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-04-30",
+      "eol": "2026-07-01"
     },
     "nodejs18.x": {
       "name": "nodejs18.x",
-      "eoas": "2025-07-31",
-      "eol": "2025-10-01"
+      "eoas": "2025-09-01",
+      "eol": "2025-11-01"
     },
     "nodejs16.x": {
       "name": "nodejs16.x",
       "eoas": "2024-06-12",
-      "eol": "2025-03-31"
+      "eol": "2025-11-01"
     },
     "nodejs14.x": {
       "name": "nodejs14.x",
       "eoas": "2023-12-04",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "nodejs12.x": {
       "name": "nodejs12.x",
@@ -142,33 +142,33 @@
     },
     "java8.al2": {
       "name": "java8.al2",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "java8": {
       "name": "java8",
       "eoas": "2024-01-08",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "java21": {
       "name": "java21",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "java17": {
       "name": "java17",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "java11": {
       "name": "java11",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-06-30",
+      "eol": "2026-08-31"
     },
     "go1.x": {
       "name": "go1.x",
       "eoas": "2024-01-08",
-      "eol": "2025-02-28"
+      "eol": "2025-11-01"
     },
     "dotnetcore3.1": {
       "name": "dotnetcore3.1",
@@ -192,8 +192,8 @@
     },
     "dotnet8": {
       "name": "dotnet8",
-      "eoas": false,
-      "eol": false
+      "eoas": "2026-11-10",
+      "eol": "2027-01-11"
     },
     "dotnet7": {
       "name": "dotnet7",
@@ -203,7 +203,7 @@
     "dotnet6": {
       "name": "dotnet6",
       "eoas": "2024-12-20",
-      "eol": "2025-03-31"
+      "eol": "2025-11-01"
     },
     "dotnet5.0": {
       "name": "dotnet5.0",

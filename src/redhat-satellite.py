@@ -22,5 +22,7 @@ with releasedata.ProductData("redhat-satellite") as product_data:
             version_match = VERSION_PATTERN.match(version_str)
             if version_match:
                 version = version_match["version"].replace('-', '.')  # a.b.c-d => a.b.c.d
-                date = dates.parse_date(td_list[1].get_text().strip())
+                date_str = td_list[1].get_text().strip()
+                date_str = '2024-12-04' if date_str == '2024-12-041' else date_str  # there is a typo for 6.15.5
+                date = dates.parse_date(date_str)
                 product_data.declare_version(version, date)
