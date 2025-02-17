@@ -36,6 +36,15 @@ def parse_month_year_date(text: str, formats: list[str] = frozenset([
     return date.replace(day=last_day)
 
 
+def parse_date_or_month_year_date(text: str) -> datetime:
+    """Parse a given text representing a date or a partial date using the default list of formats.
+    """
+    try:
+        return parse_date(text)
+    except ValueError:
+        return parse_month_year_date(text)
+
+
 def parse_datetime(text: str, formats: list[str] = frozenset([
     "%Y-%m-%d %H:%M:%S",         # 2023-05-01 08:32:34
     "%Y-%m-%dT%H:%M:%S",         # 2023-05-01T08:32:34
