@@ -190,6 +190,11 @@
       "eoas": "2019-06-27",
       "eol": "2019-07-30"
     },
+    "dotnet9": {
+      "name": "dotnet9",
+      "eoas": false,
+      "eol": false
+    },
     "dotnet8": {
       "name": "dotnet8",
       "eoas": "2026-11-10",
