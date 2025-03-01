@@ -1,0 +1,244 @@
+{
+  "releases": {
+    "Surface Studio 2+": {
+      "name": "Surface Studio 2+",
+      "releaseDate": "2022-10-25",
+      "eol": "2028-10-02"
+    },
+    "Surface Studio 2": {
+      "name": "Surface Studio 2",
+      "releaseDate": "2018-10-02",
+      "eol": "2024-10-02"
+    },
+    "Surface Studio (1st gen)": {
+      "name": "Surface Studio (1st gen)",
+      "releaseDate": "2016-12-15",
+      "eol": "2021-11-13"
+    },
+    "Surface RT": {
+      "name": "Surface RT",
+      "releaseDate": "2012-10-26",
+      "eol": "2017-04-11"
+    },
+    "Surface Pro X Wi-Fi": {
+      "name": "Surface Pro X Wi-Fi",
+      "releaseDate": "2021-10-05",
+      "eol": "2027-10-05"
+    },
+    "Surface Pro X SQ2": {
+      "name": "Surface Pro X SQ2",
+      "releaseDate": "2020-10-13",
+      "eol": "2025-08-10"
+    },
+    "Surface Pro X SQ1": {
+      "name": "Surface Pro X SQ1",
+      "releaseDate": "2019-11-05",
+      "eol": "2025-08-10"
+    },
+    "Surface Pro LTE (5th gen) (Model 1807)": {
+      "name": "Surface Pro LTE (5th gen) (Model 1807)",
+      "releaseDate": "2017-12-01",
+      "eol": "2024-01-15"
+    },
+    "Surface Pro 9": {
+      "name": "Surface Pro 9",
+      "releaseDate": "2022-10-25",
+      "eol": "2028-10-25"
+    },
+    "Surface Pro 8": {
+      "name": "Surface Pro 8",
+      "releaseDate": "2021-10-05",
+      "eol": "2027-10-05"
+    },
+    "Surface Pro 7+": {
+      "name": "Surface Pro 7+",
+      "releaseDate": "2021-01-15",
+      "eol": "2027-01-15"
+    },
+    "Surface Pro 7": {
+      "name": "Surface Pro 7",
+      "releaseDate": "2019-10-22",
+      "eol": "2025-10-30"
+    },
+    "Surface Pro 6": {
+      "name": "Surface Pro 6",
+      "releaseDate": "2018-10-16",
+      "eol": "2023-06-30"
+    },
+    "Surface Pro 4": {
+      "name": "Surface Pro 4",
+      "releaseDate": "2015-10-26",
+      "eol": "2021-11-13"
+    },
+    "Surface Pro 3": {
+      "name": "Surface Pro 3",
+      "releaseDate": "2014-06-20",
+      "eol": "2021-11-13"
+    },
+    "Surface Pro 2": {
+      "name": "Surface Pro 2",
+      "releaseDate": "2013-10-22",
+      "eol": "2018-04-10"
+    },
+    "Surface Pro 11th Edition, Snapdragon processor": {
+      "name": "Surface Pro 11th Edition, Snapdragon processor",
+      "releaseDate": "2024-06-18",
+      "eol": "2030-09-10"
+    },
+    "Surface Pro 11th Edition, Intel processor": {
+      "name": "Surface Pro 11th Edition, Intel processor",
+      "releaseDate": "2025-02-18",
+      "eol": "2031-02-18"
+    },
+    "Surface Pro 11th Edition 5G": {
+      "name": "Surface Pro 11th Edition 5G",
+      "releaseDate": "2024-09-03",
+      "eol": "2030-09-26"
+    },
+    "Surface Pro 10 with 5G": {
+      "name": "Surface Pro 10 with 5G",
+      "releaseDate": "2024-10-11",
+      "eol": "2030-10-11"
+    },
+    "Surface Pro 10 for Business": {
+      "name": "Surface Pro 10 for Business",
+      "releaseDate": "2024-04-09",
+      "eol": "2030-04-09"
+    },
+    "Surface Pro (5th gen)": {
+      "name": "Surface Pro (5th gen)",
+      "releaseDate": "2017-06-15",
+      "eol": "2024-01-15"
+    },
+    "Surface Pro": {
+      "name": "Surface Pro",
+      "releaseDate": "2013-02-09",
+      "eol": "2017-04-11"
+    },
+    "Surface Laptop Studio 2": {
+      "name": "Surface Laptop Studio 2",
+      "releaseDate": "2023-10-03",
+      "eol": "2029-10-03"
+    },
+    "Surface Laptop Studio": {
+      "name": "Surface Laptop Studio",
+      "releaseDate": "2021-10-05",
+      "eol": "2027-10-05"
+    },
+    "Surface Laptop SE": {
+      "name": "Surface Laptop SE",
+      "releaseDate": "2022-01-11",
+      "eol": "2028-01-11"
+    },
+    "Surface Laptop Go 3": {
+      "name": "Surface Laptop Go 3",
+      "releaseDate": "2023-10-03",
+      "eol": "2029-10-03"
+    },
+    "Surface Laptop Go 2": {
+      "name": "Surface Laptop Go 2",
+      "releaseDate": "2022-06-07",
+      "eol": "2028-06-07"
+    },
+    "Surface Laptop Go": {
+      "name": "Surface Laptop Go",
+      "releaseDate": "2020-10-13",
+      "eol": "2024-10-13"
+    },
+    "Surface Laptop 7th Edition, Snapdragon processor": {
+      "name": "Surface Laptop 7th Edition, Snapdragon processor",
+      "releaseDate": "2024-06-18",
+      "eol": "2030-09-10"
+    },
+    "Surface Laptop 7th Edition, Intel processor": {
+      "name": "Surface Laptop 7th Edition, Intel processor",
+      "eol": "2031-02-18"
+    },
+    "Surface Laptop 6 for Business": {
+      "name": "Surface Laptop 6 for Business",
+      "releaseDate": "2024-04-09",
+      "eol": "2030-04-09"
+    },
+    "Surface Laptop 5": {
+      "name": "Surface Laptop 5",
+      "releaseDate": "2022-10-25",
+      "eol": "2028-10-25"
+    },
+    "Surface Laptop 4": {
+      "name": "Surface Laptop 4",
+      "releaseDate": "2021-04-15",
+      "eol": "2027-04-15"
+    },
+    "Surface Laptop 3": {
+      "name": "Surface Laptop 3",
+      "releaseDate": "2019-10-22",
+      "eol": "2024-07-30"
+    },
+    "Surface Laptop 2": {
+      "name": "Surface Laptop 2",
+      "releaseDate": "2018-10-16",
+      "eol": "2022-12-27"
+    },
+    "Surface Laptop (1st gen)": {
+      "name": "Surface Laptop (1st gen)",
+      "releaseDate": "2017-06-14",
+      "eol": "2021-11-13"
+    },
+    "Surface Go with LTE Advanced": {
+      "name": "Surface Go with LTE Advanced",
+      "releaseDate": "2018-11-20",
+      "eol": "2022-11-20"
+    },
+    "Surface Go 4": {
+      "name": "Surface Go 4",
+      "releaseDate": "2023-09-21",
+      "eol": "2029-09-21"
+    },
+    "Surface Go 3": {
+      "name": "Surface Go 3",
+      "releaseDate": "2021-10-05",
+      "eol": "2027-10-05"
+    },
+    "Surface Go 2": {
+      "name": "Surface Go 2",
+      "releaseDate": "2020-05-06",
+      "eol": "2024-12-30"
+    },
+    "Surface Go": {
+      "name": "Surface Go",
+      "releaseDate": "2018-08-02",
+      "eol": "2022-08-02"
+    },
+    "Surface Book with Performance Base": {
+      "name": "Surface Book with Performance Base",
+      "releaseDate": "2016-11-10",
+      "eol": "2021-11-13"
+    },
+    "Surface Book 3": {
+      "name": "Surface Book 3",
+      "releaseDate": "2020-05-26",
+      "eol": "2025-04-01"
+    },
+    "Surface Book 2": {
+      "name": "Surface Book 2",
+      "releaseDate": "2017-11-17",
+      "eol": "2023-06-30"
+    },
+    "Surface Book": {
+      "name": "Surface Book",
+      "releaseDate": "2015-10-26",
+      "eol": "2021-11-13"
+    },
+    "Surface 3": {
+      "name": "Surface 3",
+      "releaseDate": "2015-05-05",
+      "eol": "2021-11-13"
+    },
+    "Surface 2": {
+      "name": "Surface 2",
+      "releaseDate": "2013-10-22",
+      "eol": "2018-04-10"
+    }
+  },
+  "versions": {}
+}
