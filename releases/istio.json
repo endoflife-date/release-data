@@ -2,7 +2,7 @@
   "releases": {
     "1.25": {
       "name": "1.25",
-      "eol": "2025-11-30",
+      "eol": "2025-12-31",
       "supportedKubernetesVersions": "1.29 - 1.32"
     },
     "1.24": {
