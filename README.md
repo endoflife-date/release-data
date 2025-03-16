@@ -1,19 +1,22 @@
 # release-data
 
-Common Release Data for various projects in a consumable format. Current format is:
+Common Release Data for various projects in a consistent and easy-to-parse format. The format is as follows:
 
-* `filename` matches the corresponding filename in the products/ directory in endoflife.date repository.
+* `filename` matches the corresponding filename in the
+  [products/](https://github.com/endoflife-date/endoflife.date/tree/master/products) directory
+  in the endoflife.date repository.
 * Top-level keys are version strings.
-* Non-stable versions are not included (nightly, beta, RC etc)
-* Values are release dates in YYYY-MM-DD format
-* Wherever possible, dates are as per the release-timezone.
+* Non-stable versions are not included (nightly, beta, RC, etc.)
+* Values are release dates in the YYYY-MM-DD format
+* Wherever possible, dates are as per the release's timezone.
 
 ## Guiding Principles
 
 * Scripts that update this information should be stand-alone and simple.
-* Code should not rely on existing data, and built it from scratch. (In case upstream information changes, we should reflect this change)
+* Code should not rely on existing data; instead it should build the project's release data from scratch.
+  (In case the upstream information changes, we should reflect that change.)
 * It should be easy to add a new script in any language.
-* Run everything on GitHub Actions.
+* Everything should run on GitHub Actions.
 
 ## Currently Updated
 
