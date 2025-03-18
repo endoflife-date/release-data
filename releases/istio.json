@@ -12,12 +12,12 @@
     },
     "1.23": {
       "name": "1.23",
-      "eol": "2025-05-31",
+      "eol": "2025-04-16",
       "supportedKubernetesVersions": "1.27 - 1.30"
     },
     "1.22": {
       "name": "1.22",
-      "eol": "2025-01-31",
+      "eol": "2025-01-22",
       "supportedKubernetesVersions": "1.27 - 1.30"
     },
     "1.21": {
