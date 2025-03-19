@@ -137,7 +137,7 @@
     },
     "nodejs": {
       "name": "nodejs",
-      "eoas": true,
+      "eoas": "2016-08-30",
       "eol": "2016-10-31"
     },
     "java8.al2": {
