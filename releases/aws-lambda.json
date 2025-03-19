@@ -88,7 +88,7 @@
     "nodejs6.10": {
       "name": "nodejs6.10",
       "eoas": "2019-08-12",
-      "eol": true
+      "eol": "2019-08-12"
     },
     "nodejs4.3-edge": {
       "name": "nodejs4.3-edge",
