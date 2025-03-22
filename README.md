@@ -74,6 +74,7 @@ As of 2025-02-08, 282 of the 355 products tracked by endoflife.date have automat
 | Elastic Beats                                 | [`/beats`](https://endoflife.date/beats)                                                               | ✔️   | git                            |
 | Bellsoft Liberica JDK                         | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica)                                       | ✔️   | github_releases                |
 | BIG-IP                                        | [`/big-ip`](https://endoflife.date/big-ip)                                                             | ❌    |                                |
+| Bitbucket                                     | [`/bitbucket`](https://endoflife.date/bitbucket)                                                       | ✔️   | atlassian_eol, custom          |
 | Blender                                       | [`/blender`](https://endoflife.date/blender)                                                           | ✔️   | git                            |
 | Bootstrap                                     | [`/bootstrap`](https://endoflife.date/bootstrap)                                                       | ✔️   | git                            |
 | Bun                                           | [`/bun`](https://endoflife.date/bun)                                                                   | ✔️   | git                            |
