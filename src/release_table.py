@@ -14,7 +14,6 @@ This script works based on a definition provided in the product's frontmatter to
 necessary information. Available configuration options are:
 
 - selector (mandatory, no default): A CSS selector used to locate one or more tables in the page.
-- selector (mandatory, no default): A CSS selector used to locate one or more tables in the page.
 - header_selector (mandatory, default = thead tr): A CSS selector used to locate the table's header row.
 - rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
 - render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
