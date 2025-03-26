@@ -3,6 +3,8 @@ In addition to automation from git tags,
 use the GHC-status wiki page on GHC gitlab
 as a source for "Not recommended for use" end-of-support signals.
 
+TODO at some point maybe use https://gitlab.haskell.org/ghc/release/release-metadata/
+
 References:
     https://github.com/endoflife-date/release-data/pull/395
     https://github.com/endoflife-date/endoflife.date/pull/6287
@@ -13,7 +15,7 @@ import logging
 import re
 import sys
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 def parse_markdown_tables(lineiter):
     """ Generator. Yields found tables until StopIteration """
@@ -63,11 +65,10 @@ def main():
         [series_table, patchlevel] = parse_markdown_tables(iter(md))
 
         for row in series_table[1:]:
-            [series, _downloadlink, mostrecent, nextplanned, status] = row
+            [series, _downloadlink, _, nextplanned, status] = row
             series = series.split(' ') [0]
             series = series.replace('\\.', '.')
             if series == "Nightlies": continue
-            mostrecent = mostrecent.lstrip('%').replace('"', '')
             status = status.lower()
 
             #-- See discussion in https://github.com/endoflife-date/endoflife.date/pull/6287
@@ -76,12 +77,6 @@ def main():
             r.set_eol("not recommended for use" in status or ":red_circle:" in status)
             #-- eoasColumn label is "Further releases planned"
             r.set_eoas(any(keyword in nextplanned for keyword in ("None",  "N/A")))
-            #-- Initial release in major series is x.y.1
-            r.set_field('latest', mostrecent)
-            if not mostrecent.endswith('.1'):
-                latest = product.get_version(mostrecent)
-                if latest:
-                    r.set_field('latestReleaseDate', latest.date())
 
         for row in patchlevel[1:]:
             [milestone, _downloadlink, date, _ticket, _manager] = row
@@ -89,9 +84,6 @@ def main():
             version = version.split(' ') [0]
             date = dates.parse_date(date)
             product.declare_version(version, date)
-
-
-# TODO at some point maybe use https://gitlab.haskell.org/ghc/release/release-metadata/
 
 try:
     main()
