@@ -11,13 +11,13 @@ References:
     https://gitlab.haskell.org/ghc/ghc/-/wikis/GHC-status
 """
 
-import logging
 import re
-import sys
+from typing import Any, Generator, Iterator
 
 from common import dates, http, releasedata
 
-def parse_markdown_tables(lineiter):
+
+def parse_markdown_tables(lineiter: Iterator[str]) -> Generator[list[list[Any]], Any, None]:
     """ Generator. Yields found tables until StopIteration """
     while True:
         try:
@@ -44,52 +44,43 @@ def parse_markdown_tables(lineiter):
         except StopIteration:
             return # f**ing PEP 479
 
-def maybe_markdown_table_row(line):
+def maybe_markdown_table_row(line: str) -> list[str] | None:
     line = line.strip()
     if not re.match(r'[|].*[|]', line):
         return None
     return [x.strip() for x in line.strip('|').split('|')]
 
-def main():
-    with releasedata.ProductData("ghc") as product:
-        resp = http.fetch_url("https://gitlab.haskell.org/api/v4/projects/1/wikis/GHC-Status")
-        resp.raise_for_status()
-        data = resp.json()
-        assert data['title'] == "GHC Status"
-        assert data['format'] == "markdown"
-        md = data['content'].splitlines()
+with releasedata.ProductData("ghc") as product:
+    resp = http.fetch_url("https://gitlab.haskell.org/api/v4/projects/1/wikis/GHC-Status")
+    resp.raise_for_status()
+    data = resp.json()
+    assert data['title'] == "GHC Status"
+    assert data['format'] == "markdown"
+    md = data['content'].splitlines()
 
-        #-- Parse tables out of the wiki text. At time of writing, the script expects exactly two:
-        #-- 1. "Most recent major" with 5 columns
-        #-- 2. "All released versions" with 5 columns
-        [series_table, patchlevel] = parse_markdown_tables(iter(md))
+    #-- Parse tables out of the wiki text. At time of writing, the script expects exactly two:
+    #-- 1. "Most recent major" with 5 columns
+    #-- 2. "All released versions" with 5 columns
+    [series_table, patch_level] = parse_markdown_tables(iter(md))
 
-        for row in series_table[1:]:
-            [series, _downloadlink, _, nextplanned, status] = row
-            series = series.split(' ') [0]
-            series = series.replace('\\.', '.')
-            if series == "Nightlies": continue
-            status = status.lower()
+    for row in series_table[1:]:
+        [series, _download_link, _most_recent, next_planned, status] = row
+        series = series.split(' ') [0]
+        series = series.replace('\\.', '.')
+        if series == "Nightlies":
+            continue
+        status = status.lower()
 
-            #-- See discussion in https://github.com/endoflife-date/endoflife.date/pull/6287
-            r = product.get_release(series)
-            #-- The clearest semblance of an EOL signal we get
-            r.set_eol("not recommended for use" in status or ":red_circle:" in status)
-            #-- eoasColumn label is "Further releases planned"
-            r.set_eoas(any(keyword in nextplanned for keyword in ("None",  "N/A")))
+        #-- See discussion in https://github.com/endoflife-date/endoflife.date/pull/6287
+        r = product.get_release(series)
+        #-- The clearest semblance of an EOL signal we get
+        r.set_eol("not recommended for use" in status or ":red_circle:" in status)
+        #-- eoasColumn label is "Further releases planned"
+        r.set_eoas(any(keyword in next_planned for keyword in ("None",  "N/A")))
 
-        for row in patchlevel[1:]:
-            [milestone, _downloadlink, date, _ticket, _manager] = row
-            version = milestone.lstrip('%')
-            version = version.split(' ') [0]
-            date = dates.parse_date(date)
-            product.declare_version(version, date)
-
-try:
-    main()
-except AssertionError:
-    logging.exception("When parsing wiki tables")
-    sys.exit(1)
-except:
-    logging.exception("Failed to refresh product data")
-    sys.exit(1)
+    for row in patch_level[1:]:
+        [milestone, _download_link, date, _ticket, _manager] = row
+        version = milestone.lstrip('%')
+        version = version.split(' ') [0]
+        date = dates.parse_date(date)
+        product.declare_version(version, date)
