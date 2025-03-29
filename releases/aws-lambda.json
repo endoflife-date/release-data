@@ -1,5 +1,10 @@
 {
   "releases": {
+    "ruby3.4": {
+      "name": "ruby3.4",
+      "eoas": false,
+      "eol": false
+    },
     "ruby3.3": {
       "name": "ruby3.3",
       "eoas": "2027-03-31",
