@@ -4,7 +4,7 @@ html5lib==1.1 # used in conjunction with beautifulsoup4
 mwparserfromhell==0.6.6 # used in unrealircd.py
 packaging==24.2 # used in latest.py
 playwright==1.50.0 # used by a few scripts to parse html
-pre-commit==3.5.0 # used to check code before commit
+pre-commit==4.2.0 # used to check code before commit
 python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmatters
 python-liquid==1.12.1 # used in endoflife.py to render version templates
 requests==2.32.3 # used in http.py to make HTTP requests simpler
