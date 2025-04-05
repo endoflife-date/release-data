@@ -20,7 +20,7 @@ Common Release Data for various projects in a consistent and easy-to-parse forma
 
 ## Currently Updated
 
-As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automatically tracked releases:
+As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                                              | Auto | Method(s)                         |
 |-----------------------------------------------|--------------------------------------------------------------------------------------------------------|------|-----------------------------------|
@@ -30,7 +30,7 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | AlmaLinux OS                                  | [`/almalinux`](https://endoflife.date/almalinux)                                                       | ✔️   | distrowatch                       |
 | Alpine Linux                                  | [`/alpine`](https://endoflife.date/alpine)                                                             | ✔️   | git, release_table                |
 | Amazon CDK                                    | [`/amazon-cdk`](https://endoflife.date/amazon-cdk)                                                     | ✔️   | git                               |
-| Amazon Corretto                               | [`/amazon-corretto`](https://endoflife.date/amazon-corretto)                                           | ✔️   | github_releases, release_table    |
+| Amazon Corretto                               | [`/amazon-corretto`](https://endoflife.date/amazon-corretto)                                           | ✔️   | github_releases                   |
 | Amazon Glue                                   | [`/amazon-glue`](https://endoflife.date/amazon-glue)                                                   | ❌    |                                   |
 | Amazon Linux                                  | [`/amazon-linux`](https://endoflife.date/amazon-linux)                                                 | ✔️   | docker_hub                        |
 | Amazon Neptune                                | [`/amazon-neptune`](https://endoflife.date/amazon-neptune)                                             | ✔️   | custom, release_table             |
@@ -40,7 +40,7 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | Android OS                                    | [`/android`](https://endoflife.date/android)                                                           | ❌    |                                   |
 | Angular                                       | [`/angular`](https://endoflife.date/angular)                                                           | ✔️   | git, release_table                |
 | AngularJS                                     | [`/angularjs`](https://endoflife.date/angularjs)                                                       | ✔️   | npm                               |
-| Ansible-core                                  | [`/ansible-core`](https://endoflife.date/ansible-core)                                                 | ✔️   | git                               |
+| Ansible-core                                  | [`/ansible-core`](https://endoflife.date/ansible-core)                                                 | ✔️   | git, release_table                |
 | Ansible                                       | [`/ansible`](https://endoflife.date/ansible)                                                           | ✔️   | pypi                              |
 | antiX Linux                                   | [`/antix`](https://endoflife.date/antix)                                                               | ✔️   | distrowatch                       |
 | Apache ActiveMQ                               | [`/apache-activemq`](https://endoflife.date/apache-activemq)                                           | ✔️   | git                               |
@@ -74,6 +74,7 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | Azure DevOps Server                           | [`/azure-devops-server`](https://endoflife.date/azure-devops-server)                                   | ❌    |                                   |
 | Azure Kubernetes Service                      | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service)                         | ❌    |                                   |
 | Backdrop                                      | [`/backdrop`](https://endoflife.date/backdrop)                                                         | ❌    |                                   |
+| Bamboo                                        | [`/bamboo`](https://endoflife.date/bamboo)                                                             | ✔️   | atlassian_eol, atlassian_versions |
 | Bazel                                         | [`/bazel`](https://endoflife.date/bazel)                                                               | ✔️   | git, release_table                |
 | Elastic Beats                                 | [`/beats`](https://endoflife.date/beats)                                                               | ✔️   | git                               |
 | Bellsoft Liberica JDK                         | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica)                                       | ✔️   | github_releases                   |
@@ -146,8 +147,9 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | Forgejo                                       | [`/forgejo`](https://endoflife.date/forgejo)                                                           | ✔️   | git, release_table                |
 | FortiOS                                       | [`/fortios`](https://endoflife.date/fortios)                                                           | ❌    |                                   |
 | FreeBSD                                       | [`/freebsd`](https://endoflife.date/freebsd)                                                           | ❌    |                                   |
+| Gatekeeper                                    | [`/gatekeeper`](https://endoflife.date/gatekeeper)                                                     | ✔️   | git                               |
 | Gerrit                                        | [`/gerrit`](https://endoflife.date/gerrit)                                                             | ✔️   | git                               |
-| Glasgow Haskell Compiler (GHC)                | [`/ghc`](https://endoflife.date/ghc)                                                                   | ✔️   | git                               |
+| Glasgow Haskell Compiler (GHC)                | [`/ghc`](https://endoflife.date/ghc)                                                                   | ✔️   | custom, git                       |
 | GitLab                                        | [`/gitlab`](https://endoflife.date/gitlab)                                                             | ✔️   | git, release_table                |
 | Google Kubernetes Engine                      | [`/google-kubernetes-engine`](https://endoflife.date/google-kubernetes-engine)                         | ✔️   | custom                            |
 | Go                                            | [`/go`](https://endoflife.date/go)                                                                     | ✔️   | git                               |
@@ -208,7 +210,7 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | Laravel                                       | [`/laravel`](https://endoflife.date/laravel)                                                           | ✔️   | git, release_table                |
 | LibreOffice                                   | [`/libreoffice`](https://endoflife.date/libreoffice)                                                   | ✔️   | custom                            |
 | LineageOS                                     | [`/lineageos`](https://endoflife.date/lineageos)                                                       | ❌    |                                   |
-| Linux Kernel                                  | [`/linux`](https://endoflife.date/linux)                                                               | ✔️   | cgit                              |
+| Linux Kernel                                  | [`/linux`](https://endoflife.date/linux)                                                               | ✔️   | github_tags                       |
 | Linux Mint                                    | [`/linuxmint`](https://endoflife.date/linuxmint)                                                       | ✔️   | release_table                     |
 | Apache Log4j                                  | [`/log4j`](https://endoflife.date/log4j)                                                               | ✔️   | maven                             |
 | Logstash                                      | [`/logstash`](https://endoflife.date/logstash)                                                         | ✔️   | git                               |
@@ -310,8 +312,8 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | React Native                                  | [`/react-native`](https://endoflife.date/react-native)                                                 | ✔️   | npm                               |
 | React                                         | [`/react`](https://endoflife.date/react)                                                               | ✔️   | npm                               |
 | Netgear ReadyNAS                              | [`/readynas`](https://endoflife.date/readynas)                                                         | ❌    |                                   |
-| Red Hat build of OpenJDK                      | [`/redhat-build-of-openjdk`](https://endoflife.date/redhat-build-of-openjdk)                           | ❌    |                                   |
-| Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap)                                         | ❌    |                                   |
+| Red Hat build of OpenJDK                      | [`/redhat-build-of-openjdk`](https://endoflife.date/redhat-build-of-openjdk)                           | ✔️   | redhat_lifecycles                 |
+| Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap)                                         | ✔️   | redhat_lifecycles                 |
 | Red Hat OpenShift                             | [`/red-hat-openshift`](https://endoflife.date/red-hat-openshift)                                       | ✔️   | custom                            |
 | Red Hat Satellite                             | [`/redhat-satellite`](https://endoflife.date/redhat-satellite)                                         | ✔️   | custom                            |
 | Redis                                         | [`/redis`](https://endoflife.date/redis)                                                               | ✔️   | git, release_table                |
@@ -362,7 +364,7 @@ As of 2025-03-24, 296 of the 370 products tracked by endoflife.date have automat
 | UnrealIRCd                                    | [`/unrealircd`](https://endoflife.date/unrealircd)                                                     | ❌    |                                   |
 | Valkey                                        | [`/valkey`](https://endoflife.date/valkey)                                                             | ✔️   | git                               |
 | Varnish                                       | [`/varnish`](https://endoflife.date/varnish)                                                           | ✔️   | git, release_table                |
-| Veeam Backup & Replication                    | [`/veeam-backup-and-replication`](https://endoflife.date/veeam-backup-and-replication)                 | ✔️   | custom                            |
+| Veeam Backup & Replication                    | [`/veeam-backup-and-replication`](https://endoflife.date/veeam-backup-and-replication)                 | ✔️   | veeam                             |
 | VirtualBox                                    | [`/virtualbox`](https://endoflife.date/virtualbox)                                                     | ❌    |                                   |
 | Apple visionOS                                | [`/visionos`](https://endoflife.date/visionos)                                                         | ✔️   | apple                             |
 | Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                                 | ❌    |                                   |
