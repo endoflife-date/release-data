@@ -16,7 +16,7 @@ METHOD = "redhat_lifecycles"
 
 class Mapping:
     def __init__(self, phases_by_field: dict[str, str]) -> None:
-        self.fields_by_phase = {v.lower(): k.lower() for k, v in phases_by_field.items()}
+        self.fields_by_phase = {v.lower(): k for k, v in phases_by_field.items()}
 
     def get_field_for(self, phase_name: str) -> str | None:
         return self.fields_by_phase.get(phase_name.lower(), None)
