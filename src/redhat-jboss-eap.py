@@ -10,11 +10,6 @@ from common import dates, http, releasedata
 JBOSS_7_VERSIONS_URL = "https://access.redhat.com/articles/2332721"
 JBOSS_8_METADATA_URL = "https://maven.repository.redhat.com/ga/org/jboss/eap/channels/eap-8.0/maven-metadata.xml"
 
-# Given a dict, find inside the list of phases the one that matches the phase_name, extract and parse it's associated date
-def find_date_field(elem, phase_name):
-    entry = list(filter(lambda it: it.get("name") == phase_name, elem["phases"]))[0]
-    return dates.parse_datetime(entry["date"])
-
 with releasedata.ProductData("redhat-jboss-eap") as product_data:
 
     # JBoss 7.4 versions
@@ -26,6 +21,7 @@ with releasedata.ProductData("redhat-jboss-eap") as product_data:
             continue
 
         columns = row.find_all("td")
+
         # Get the version name and release date
         name = columns[0].getText().strip()
         if name == "GA":
@@ -34,9 +30,8 @@ with releasedata.ProductData("redhat-jboss-eap") as product_data:
         release_date_str = columns[1].getText().strip()
         if release_date_str == "TBD": # Placeholder for a future release
             continue
-        release_date = dates.parse_date(release_date_str)
 
-        # Declare the version
+        release_date = dates.parse_date(release_date_str)
         product_data.declare_version(name, release_date)
 
     # JBoss 8 versions
