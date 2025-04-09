@@ -1,16 +1,14 @@
 import logging
+import re
+import xml.dom.minidom
 
 from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
-"""Fetches RedHat JBoss EAP releases and versions"""
+"""Fetches RedHat JBoss EAP version data for JBoss 7.4 and 8.0"""
 
-VERSION_URLS = [
-    "https://docs.redhat.com/en/documentation/red_hat_jboss_enterprise_application_platform/7.4/",
-    "https://docs.redhat.com/en/documentation/red_hat_jboss_enterprise_application_platform/8.0/"
-]
-
-RELEASES_INFO = "https://access.redhat.com/product-life-cycles/api/v1/products?name=Red%20Hat%20JBoss%20Enterprise%20Application%20Platform"
+JBOSS_7_VERSIONS_URL = "https://access.redhat.com/articles/2332721"
+JBOSS_8_METADATA_URL = "https://maven.repository.redhat.com/ga/org/jboss/eap/channels/eap-8.0/maven-metadata.xml"
 
 # Given a dict, find inside the list of phases the one that matches the phase_name, extract and parse it's associated date
 def find_date_field(elem, phase_name):
@@ -18,33 +16,40 @@ def find_date_field(elem, phase_name):
     return dates.parse_datetime(entry["date"])
 
 with releasedata.ProductData("redhat-jboss-eap") as product_data:
-    # Versions
-    for response in http.fetch_urls(VERSION_URLS):
-        soup = BeautifulSoup(response.text, features="html5lib")
-        # Find all links inside a H3 heading
-        links = [heading.find("a") for (i, heading) in enumerate(soup.find_all("h3")) if heading.find("a")]
-        # From those links, keep the ones pointing to access.redhat.com containing the text " Update "
-        links = [link for link in links if link.get("href").startswith("https://access.redhat.com/articles") and link.getText().find(" Update ") > 0]
 
-        # For every link, get the last modified date of the associated knowledge base article and create a version entry
-        for link in links:
-            name = link.getText().strip()
-            # Clean up the name to obtain an identifier in the form X.Y.Z[.W]
-            identifier = name.replace(" Update", "").replace(" 0", ".").replace(" ", ".")
-            article_url = link.get("href")
-            article_response = http.fetch_url(article_url)
-            article_soup = BeautifulSoup(article_response.text, features="html5lib")
-            date_header = article_soup.find(class_="header")
-            date_str = date_header.find("time").getText().strip()
-            date = dates.parse_datetime(date_str)
-            product_data.declare_version(identifier, date)
+    # JBoss 7.4 versions
+    response = http.fetch_url(JBOSS_7_VERSIONS_URL)
+    soup = BeautifulSoup(response.text, features="html5lib")
+    table = soup.find("table")
+    for (i, row) in enumerate(table.find_all("tr")):
+        if i == 0: # Skip the first row (header)
+            continue
 
-    # Releases
-    response_json = http.fetch_url(RELEASES_INFO).json()
-    for release_info in response_json["data"][0]["versions"]:
-        release_name = release_info["name"].replace(".x", "")
-        release = product_data.get_release(release_name)
-        release.set_release_date(find_date_field(release_info, "General availability"))
-        release.set_eoas(find_date_field(release_info, "Full support"))        
-        release.set_eol(find_date_field(release_info, "Maintenance support"))
-        release.set_eoes(find_date_field(release_info, "Extended life cycle support (ELS) 1"))
+        columns = row.find_all("td")
+        # Get the version name and release date
+        name = columns[0].getText().strip()
+        if name == "GA":
+            name = "7.4.0"
+        name = name.replace("Update ", "7.4.")
+        release_date_str = columns[1].getText().strip()
+        if release_date_str == "TBD": # Placeholder for a future release
+            continue
+        release_date = dates.parse_date(release_date_str)
+
+        # Declare the version
+        product_data.declare_version(name, release_date)
+
+    # JBoss 8 versions
+    response = http.fetch_url(JBOSS_8_METADATA_URL)
+    xml_response = xml.dom.minidom.parseString(response.text)
+    metadata = xml_response.getElementsByTagName("metadata")[0]
+    versioning = metadata.getElementsByTagName("versioning")[0]
+    latest = versioning.getElementsByTagName("latest")[0].firstChild.nodeValue
+    latest_version = "8.0." + re.match(r"^..(.*)\.GA", latest).group(1)
+
+    last_updated_str = versioning.getElementsByTagName("lastUpdated")[0].firstChild.nodeValue
+    # Split the field into 4 digits for year, 2 for month, 2 for day, 2 for hour, 2 for minute, and 2 for second
+    lu = re.match(r"^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})", last_updated_str)
+    # Format the date as %Y-%m-%d %H:%M:%S
+    last_updated_formatted = f"{lu.group(1)}-{lu.group(2)}-{lu.group(3)} {lu.group(4)}:{lu.group(5)}:{lu.group(6)}"
+    product_data.declare_version(latest_version, dates.parse_datetime(last_updated_formatted))
