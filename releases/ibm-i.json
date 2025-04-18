@@ -1,5 +1,9 @@
 {
   "releases": {
+    "7.6": {
+      "name": "7.6",
+      "releaseDate": "2025-04-18"
+    },
     "7.5": {
       "name": "7.5",
       "releaseDate": "2022-05-10"
