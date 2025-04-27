@@ -1,3 +1,4 @@
+import logging
 import re
 import sys
 
@@ -17,13 +18,17 @@ for config in endoflife.list_configs(p_filter, "veeam", m_filter):
         response = http.fetch_url(config.url)
         soup = BeautifulSoup(response.text, features="html5lib")
 
+        version_column = config.data.get("version_column", "Build Number").lower()
+        date_column = config.data.get("date_column", "Release Date").lower()
         for table in soup.find_all("table"):
             headers = [header.get_text().strip().lower() for header in table.find("tr").find_all("td")]
-            if "build number" not in headers or "release date" not in headers:
+            if version_column not in headers or date_column not in headers:
+                logging.warning("Skipping table with headers %s as it does not contains '%s' or '%s'",
+                                headers, version_column, date_column)
                 continue
 
-            version_index = headers.index("build number")
-            date_index = headers.index("release date")
+            version_index = headers.index(version_column)
+            date_index = headers.index(date_column)
             for row in table.find_all("tr")[1:]:
                 cells = row.find_all("td")
                 if len(cells) <= max(version_index, date_index):
