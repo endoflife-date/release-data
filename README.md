@@ -20,7 +20,7 @@ Common Release Data for various projects in a consistent and easy-to-parse forma
 
 ## Currently Updated
 
-As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automatically tracked releases:
+As of 2025-04-27, 303 of the 374 products tracked by endoflife.date have automatically tracked releases:
 
 | Product                                       | Permalink                                                                                              | Auto | Method(s)                         |
 |-----------------------------------------------|--------------------------------------------------------------------------------------------------------|------|-----------------------------------|
@@ -84,6 +84,7 @@ As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automat
 | Blender                                       | [`/blender`](https://endoflife.date/blender)                                                           | ✔️   | git                               |
 | Bootstrap                                     | [`/bootstrap`](https://endoflife.date/bootstrap)                                                       | ✔️   | git                               |
 | Bun                                           | [`/bun`](https://endoflife.date/bun)                                                                   | ✔️   | git                               |
+| caddy                                         | [`/caddy`](https://endoflife.date/caddy)                                                               | ✔️   | git                               |
 | CakePHP                                       | [`/cakephp`](https://endoflife.date/cakephp)                                                           | ✔️   | git                               |
 | Calico                                        | [`/calico`](https://endoflife.date/calico)                                                             | ✔️   | git                               |
 | CentOS Stream                                 | [`/centos-stream`](https://endoflife.date/centos-stream)                                               | ❌    |                                   |
@@ -241,6 +242,7 @@ As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automat
 | MySQL                                         | [`/mysql`](https://endoflife.date/mysql)                                                               | ✔️   | git                               |
 | Neo4j                                         | [`/neo4j`](https://endoflife.date/neo4j)                                                               | ✔️   | git, release_table                |
 | Neos                                          | [`/neos`](https://endoflife.date/neos)                                                                 | ✔️   | git                               |
+| NetApp ONTAP                                  | [`/netapp-ontap`](https://endoflife.date/netapp-ontap)                                                 | ❌    |                                   |
 | NetBSD                                        | [`/netbsd`](https://endoflife.date/netbsd)                                                             | ✔️   | custom                            |
 | Nextcloud                                     | [`/nextcloud`](https://endoflife.date/nextcloud)                                                       | ✔️   | git, release_table                |
 | Next.js                                       | [`/nextjs`](https://endoflife.date/nextjs)                                                             | ✔️   | npm                               |
@@ -266,7 +268,7 @@ As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automat
 | OpenBSD                                       | [`/openbsd`](https://endoflife.date/openbsd)                                                           | ❌    |                                   |
 | OpenJDK builds from Oracle                    | [`/openjdk-builds-from-oracle`](https://endoflife.date/openjdk-builds-from-oracle)                     | ❌    |                                   |
 | OpenSearch                                    | [`/opensearch`](https://endoflife.date/opensearch)                                                     | ✔️   | git, release_table                |
-| OpenSSL                                       | [`/openssl`](https://endoflife.date/openssl)                                                           | ✔️   | git                               |
+| OpenSSL                                       | [`/openssl`](https://endoflife.date/openssl)                                                           | ✔️   | git, release_table                |
 | openSUSE                                      | [`/opensuse`](https://endoflife.date/opensuse)                                                         | ❌    |                                   |
 | OpenTofu                                      | [`/opentofu`](https://endoflife.date/opentofu)                                                         | ✔️   | git                               |
 | OpenVPN                                       | [`/openvpn`](https://endoflife.date/openvpn)                                                           | ✔️   | git                               |
@@ -311,14 +313,13 @@ As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automat
 | Raspberry Pi                                  | [`/raspberry-pi`](https://endoflife.date/raspberry-pi)                                                 | ❌    |                                   |
 | React Native                                  | [`/react-native`](https://endoflife.date/react-native)                                                 | ✔️   | npm                               |
 | React                                         | [`/react`](https://endoflife.date/react)                                                               | ✔️   | npm                               |
-| Netgear ReadyNAS                              | [`/readynas`](https://endoflife.date/readynas)                                                         | ❌    |                                   |
 | Red Hat build of OpenJDK                      | [`/redhat-build-of-openjdk`](https://endoflife.date/redhat-build-of-openjdk)                           | ✔️   | redhat_lifecycles                 |
 | Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap)                                         | ✔️   | redhat_lifecycles                 |
 | Red Hat OpenShift                             | [`/red-hat-openshift`](https://endoflife.date/red-hat-openshift)                                       | ✔️   | custom                            |
 | Red Hat Satellite                             | [`/redhat-satellite`](https://endoflife.date/redhat-satellite)                                         | ✔️   | custom                            |
 | Redis                                         | [`/redis`](https://endoflife.date/redis)                                                               | ✔️   | git, release_table                |
 | Redmine                                       | [`/redmine`](https://endoflife.date/redmine)                                                           | ✔️   | git                               |
-| Red Hat Enterprise Linux                      | [`/rhel`](https://endoflife.date/rhel)                                                                 | ❌    |                                   |
+| Red Hat Enterprise Linux                      | [`/rhel`](https://endoflife.date/rhel)                                                                 | ✔️   | redhat_lifecycles                 |
 | Robo                                          | [`/robo`](https://endoflife.date/robo)                                                                 | ✔️   | git, release_table                |
 | Rocket.Chat                                   | [`/rocket-chat`](https://endoflife.date/rocket-chat)                                                   | ✔️   | git                               |
 | Rocky Linux                                   | [`/rocky-linux`](https://endoflife.date/rocky-linux)                                                   | ✔️   | custom, release_table             |
@@ -365,6 +366,7 @@ As of 2025-04-05, 300 of the 372 products tracked by endoflife.date have automat
 | Valkey                                        | [`/valkey`](https://endoflife.date/valkey)                                                             | ✔️   | git                               |
 | Varnish                                       | [`/varnish`](https://endoflife.date/varnish)                                                           | ✔️   | git, release_table                |
 | Veeam Backup & Replication                    | [`/veeam-backup-and-replication`](https://endoflife.date/veeam-backup-and-replication)                 | ✔️   | veeam                             |
+| Veeam ONE                                     | [`/veeam-one`](https://endoflife.date/veeam-one)                                                       | ✔️   | veeam                             |
 | VirtualBox                                    | [`/virtualbox`](https://endoflife.date/virtualbox)                                                     | ❌    |                                   |
 | Apple visionOS                                | [`/visionos`](https://endoflife.date/visionos)                                                         | ✔️   | apple                             |
 | Visual COBOL                                  | [`/visual-cobol`](https://endoflife.date/visual-cobol)                                                 | ❌    |                                   |
