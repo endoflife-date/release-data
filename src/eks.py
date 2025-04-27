@@ -23,10 +23,11 @@ with releasedata.ProductData("eks") as product_data:
 
             k8s_version = cells[0].text.strip()
             eks_version = cells[1].text.strip()
-            date_str = cells[-1].text.strip()
 
             k8s_version_match = endoflife.DEFAULT_VERSION_PATTERN.match(k8s_version)
             if k8s_version_match:
+                date_str = cells[-1].text.strip()
+                date_str = date_str.replace("April 18.2025", "April 18 2025") # temporary fix for a typo in the source
                 date = dates.parse_date_or_month_year_date(date_str)
                 # K8S patch version is not kept to match versions on https://github.com/aws/eks-distro/tags.
                 version = f"{k8s_version_match.group('major')}.{k8s_version_match.group('minor')}-{eks_version.replace('.', '-')}"
