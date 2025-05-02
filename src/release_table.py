@@ -27,6 +27,9 @@ necessary information. Available configuration options are:
     - column (mandatory): The name or index (starts at 1) of the column in the table.
     - type (mandatory, default = string): The type of the field. Supported types are:
       - string: The raw string value.
+      - identifier: A transformation of the raw string value so that it can be used as an identifier. The transformation
+                    consists of putting the string in lower case, replacing spaces with dashes, and removing all
+                    characters that are not alphanumeric, dashes, dots, plus signs, or underscores.
       - date  : A full or year-month date (supported patterns available in common.dates).
       - range : Convert a comma-separated list of values into a range, only keeping the first and last value.
                 For example, "1.0, 1.1, 1.2" becomes "1.0 - 1.2".
@@ -57,7 +60,9 @@ Supported CSS selectors are defined by BeautifulSoup and documented on its websi
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors."""
 
 METHOD = "release_table"
-SUPPORTED_TYPES = ["date", "string", "range"]
+SUPPORTED_TYPES = ["date", "string", "range", "identifier"]
+STRING_TYPES = ["string", "identifier"]
+STRING_FIELDS = ["releaseCycle", "releaseLabel"]
 DATE_TYPES = ["date"]
 DATE_FIELDS = ["releaseDate", "lts", "eoas", "eol", "eoes"]
 DEFAULT_REGEX = r"^(?P<value>.+)$"
@@ -76,7 +81,7 @@ class Field:
 
         self.name = name
         if self.name == "releaseCycle":
-            definition["type"] = "string"
+            definition["type"] = "string" if "type" not in definition else definition["type"]
             definition["regex"] = definition.get("regex", [DEFAULT_RELEASE_REGEX])
             definition["template"] = definition.get("template", DEFAULT_TEMPLATE)
 
@@ -89,6 +94,8 @@ class Field:
         self.type = definition.get("type", "string")
         if self.name in DATE_FIELDS and self.type not in DATE_TYPES:
             self.type = "date"  # override type for known date fields
+        elif self.name in STRING_FIELDS and self.type not in STRING_TYPES:
+            self.type = "string"  # override type for known string fields
         elif self.type not in SUPPORTED_TYPES:
             msg = f"unsupported type: {self.type} for field {self.name}"
             raise ValueError(msg)
@@ -134,6 +141,11 @@ class Field:
         elif self.type == "range":
             items = RANGE_LIST_SEPARATOR_PATTERN.split(str_value)
             return f"{items[0]} - {items[-1]}" if len(items) > 1 else str_value
+
+        elif self.type == "identifier":
+            normalized_value = str_value.strip().lower()
+            normalized_value = normalized_value.replace(" ", "-")
+            return re.sub(r"[^a-z0-9.\-+_]", "", normalized_value)
 
         return str_value
 
