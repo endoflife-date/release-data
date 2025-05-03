@@ -28,6 +28,9 @@ class ProductRelease:
     def name(self) -> str:
         return self.data["name"]
 
+    def set_label(self, new_value: str) -> None:
+        self.set_field("releaseLabel", new_value)
+
     def set_release_date(self, new_value: datetime) -> None:
         self.set_field("releaseDate", new_value)
 
@@ -42,6 +45,16 @@ class ProductRelease:
 
     def set_eol(self, new_value: datetime | bool) -> None:
         self.set_field("eol", new_value)
+
+    def get_eol(self) -> datetime | bool | None:
+        if "eol" not in self.data:
+            return None
+
+        eol = self.data["eol"]
+        if isinstance(eol, bool):
+            return eol
+
+        return datetime.strptime(self.data["eol"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
 
     def set_eoes(self, new_value: datetime | bool) -> None:
         self.set_field("eoes", new_value)

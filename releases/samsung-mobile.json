@@ -1,0 +1,1769 @@
+{
+  "releases": {
+    "z4": {
+      "name": "z4",
+      "eol": true
+    },
+    "z3-corporate": {
+      "name": "z3-corporate",
+      "eol": true
+    },
+    "z3": {
+      "name": "z3",
+      "eol": true
+    },
+    "z2": {
+      "name": "z2",
+      "eol": true
+    },
+    "z1": {
+      "name": "z1",
+      "eol": true
+    },
+    "i9301i-galaxy-s3-neo": {
+      "name": "i9301i-galaxy-s3-neo",
+      "eol": true
+    },
+    "i9300i-galaxy-s3-neo": {
+      "name": "i9300i-galaxy-s3-neo",
+      "eol": true
+    },
+    "i8200-galaxy-s-iii-mini-ve": {
+      "name": "i8200-galaxy-s-iii-mini-ve",
+      "eol": true
+    },
+    "gear-sport": {
+      "name": "gear-sport",
+      "eol": true
+    },
+    "gear-s3-frontier-lte": {
+      "name": "gear-s3-frontier-lte",
+      "eol": true
+    },
+    "gear-s3-frontier": {
+      "name": "gear-s3-frontier",
+      "eol": true
+    },
+    "gear-s3-classic-lte": {
+      "name": "gear-s3-classic-lte",
+      "eol": true
+    },
+    "gear-s3-classic": {
+      "name": "gear-s3-classic",
+      "eol": true
+    },
+    "gear-s2-classic-3g": {
+      "name": "gear-s2-classic-3g",
+      "eol": true
+    },
+    "gear-s2-classic": {
+      "name": "gear-s2-classic",
+      "eol": "2018-03-26"
+    },
+    "gear-s2-3g": {
+      "name": "gear-s2-3g",
+      "eol": "2018-03-26"
+    },
+    "gear-s2": {
+      "name": "gear-s2",
+      "eol": "2018-03-26"
+    },
+    "gear-s": {
+      "name": "gear-s",
+      "eol": true
+    },
+    "gear-live": {
+      "name": "gear-live",
+      "eol": true
+    },
+    "gear-2-neo": {
+      "name": "gear-2-neo",
+      "eol": true
+    },
+    "gear-2": {
+      "name": "gear-2",
+      "eol": true
+    },
+    "galaxy-z-fold4": {
+      "name": "galaxy-z-fold4",
+      "eol": "2027-08-25"
+    },
+    "galaxy-z-fold3-5g": {
+      "name": "galaxy-z-fold3-5g",
+      "eol": "2026-08-27"
+    },
+    "galaxy-z-fold2-5g": {
+      "name": "galaxy-z-fold2-5g",
+      "eol": "2024-11-04"
+    },
+    "galaxy-z-fold-2": {
+      "name": "galaxy-z-fold-2",
+      "eol": "2024-09-18"
+    },
+    "galaxy-z-flip4": {
+      "name": "galaxy-z-flip4",
+      "eol": "2027-08-25"
+    },
+    "galaxy-z-flip3-5g": {
+      "name": "galaxy-z-flip3-5g",
+      "eol": "2026-08-27"
+    },
+    "galaxy-z-flip-5g": {
+      "name": "galaxy-z-flip-5g",
+      "eol": "2024-08-07"
+    },
+    "galaxy-z-flip": {
+      "name": "galaxy-z-flip",
+      "eol": true
+    },
+    "galaxy-young-2": {
+      "name": "galaxy-young-2",
+      "eol": true
+    },
+    "galaxy-xcover7": {
+      "name": "galaxy-xcover7",
+      "eol": "2031-01-01"
+    },
+    "galaxy-xcover6-pro": {
+      "name": "galaxy-xcover6-pro",
+      "eol": "2027-07-13"
+    },
+    "galaxy-xcover3-g389f": {
+      "name": "galaxy-xcover3-g389f",
+      "eol": "2018-06-01"
+    },
+    "galaxy-xcover-pro": {
+      "name": "galaxy-xcover-pro",
+      "eol": "2024-01-01"
+    },
+    "galaxy-xcover-fieldpro": {
+      "name": "galaxy-xcover-fieldpro",
+      "eol": true
+    },
+    "galaxy-xcover-5": {
+      "name": "galaxy-xcover-5",
+      "eol": "2025-03-12"
+    },
+    "galaxy-xcover-4s": {
+      "name": "galaxy-xcover-4s",
+      "eol": true
+    },
+    "galaxy-xcover-4": {
+      "name": "galaxy-xcover-4",
+      "eol": "2019-06-01"
+    },
+    "galaxy-xcover-3": {
+      "name": "galaxy-xcover-3",
+      "eol": true
+    },
+    "galaxy-watch5-pro": {
+      "name": "galaxy-watch5-pro",
+      "eol": false
+    },
+    "galaxy-watch5": {
+      "name": "galaxy-watch5",
+      "eol": false
+    },
+    "galaxy-watch4-classic": {
+      "name": "galaxy-watch4-classic",
+      "eol": false
+    },
+    "galaxy-watch4": {
+      "name": "galaxy-watch4",
+      "eol": false
+    },
+    "galaxy-watch3": {
+      "name": "galaxy-watch3",
+      "eol": true
+    },
+    "galaxy-watch-active2-aluminum": {
+      "name": "galaxy-watch-active2-aluminum",
+      "eol": true
+    },
+    "galaxy-watch-active2": {
+      "name": "galaxy-watch-active2",
+      "eol": true
+    },
+    "galaxy-watch-active": {
+      "name": "galaxy-watch-active",
+      "eol": true
+    },
+    "galaxy-watch": {
+      "name": "galaxy-watch",
+      "eol": true
+    },
+    "galaxy-w": {
+      "name": "galaxy-w",
+      "eol": true
+    },
+    "galaxy-view2": {
+      "name": "galaxy-view2",
+      "eol": "2021-12-31"
+    },
+    "galaxy-view": {
+      "name": "galaxy-view",
+      "eol": "2018-01-01"
+    },
+    "galaxy-v-plus": {
+      "name": "galaxy-v-plus",
+      "eol": true
+    },
+    "galaxy-v": {
+      "name": "galaxy-v",
+      "eol": true
+    },
+    "galaxy-tab-s9-ultra": {
+      "name": "galaxy-tab-s9-ultra",
+      "eol": "2028-10-16"
+    },
+    "galaxy-tab-s9-fe+": {
+      "name": "galaxy-tab-s9-fe+",
+      "eol": "2028-10-16"
+    },
+    "galaxy-tab-s9-fe": {
+      "name": "galaxy-tab-s9-fe",
+      "eol": false
+    },
+    "galaxy-tab-s9+": {
+      "name": "galaxy-tab-s9+",
+      "eol": "2028-10-16"
+    },
+    "galaxy-tab-s9": {
+      "name": "galaxy-tab-s9",
+      "eol": "2028-10-16"
+    },
+    "galaxy-tab-s8-ultra": {
+      "name": "galaxy-tab-s8-ultra",
+      "eol": "2027-04-30"
+    },
+    "galaxy-tab-s8+": {
+      "name": "galaxy-tab-s8+",
+      "eol": "2027-04-14"
+    },
+    "galaxy-tab-s8": {
+      "name": "galaxy-tab-s8",
+      "eol": "2027-03-22"
+    },
+    "galaxy-tab-s7-fe": {
+      "name": "galaxy-tab-s7-fe",
+      "eol": false
+    },
+    "galaxy-tab-s7+": {
+      "name": "galaxy-tab-s7+",
+      "eol": "2024-08-05"
+    },
+    "galaxy-tab-s7": {
+      "name": "galaxy-tab-s7",
+      "eol": "2024-08-21"
+    },
+    "galaxy-tab-s6-lite-2020": {
+      "name": "galaxy-tab-s6-lite-2020",
+      "eol": true
+    },
+    "galaxy-tab-s6-lite": {
+      "name": "galaxy-tab-s6-lite",
+      "eol": false
+    },
+    "galaxy-tab-s6-5g": {
+      "name": "galaxy-tab-s6-5g",
+      "eol": true
+    },
+    "galaxy-tab-s6": {
+      "name": "galaxy-tab-s6",
+      "eol": true
+    },
+    "galaxy-tab-s5e": {
+      "name": "galaxy-tab-s5e",
+      "eol": true
+    },
+    "galaxy-tab-s4-10.5": {
+      "name": "galaxy-tab-s4-10.5",
+      "eol": "2022-06-01"
+    },
+    "galaxy-tab-s3-9.7": {
+      "name": "galaxy-tab-s3-9.7",
+      "eol": "2019-04-01"
+    },
+    "galaxy-tab-s2-9.7": {
+      "name": "galaxy-tab-s2-9.7",
+      "eol": "2019-07-01"
+    },
+    "galaxy-tab-s2-8.0": {
+      "name": "galaxy-tab-s2-8.0",
+      "eol": "2019-07-01"
+    },
+    "galaxy-tab-s-8.4-lte": {
+      "name": "galaxy-tab-s-8.4-lte",
+      "eol": "2016-12-01"
+    },
+    "galaxy-tab-s-8.4": {
+      "name": "galaxy-tab-s-8.4",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-s-10.5-lte": {
+      "name": "galaxy-tab-s-10.5-lte",
+      "eol": "2016-12-01"
+    },
+    "galaxy-tab-s-10.5": {
+      "name": "galaxy-tab-s-10.5",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-pro-12.2-lte": {
+      "name": "galaxy-tab-pro-12.2-lte",
+      "eol": true
+    },
+    "galaxy-tab-pro-12.2-3g": {
+      "name": "galaxy-tab-pro-12.2-3g",
+      "eol": true
+    },
+    "galaxy-tab-pro-12.2": {
+      "name": "galaxy-tab-pro-12.2",
+      "eol": true
+    },
+    "galaxy-tab-j": {
+      "name": "galaxy-tab-j",
+      "eol": true
+    },
+    "galaxy-tab-e-9.6": {
+      "name": "galaxy-tab-e-9.6",
+      "eol": true
+    },
+    "galaxy-tab-e-8.0": {
+      "name": "galaxy-tab-e-8.0",
+      "eol": "2020-11-10"
+    },
+    "galaxy-tab-advanced2": {
+      "name": "galaxy-tab-advanced2",
+      "eol": true
+    },
+    "galaxy-tab-active4-pro": {
+      "name": "galaxy-tab-active4-pro",
+      "eol": false
+    },
+    "galaxy-tab-active3": {
+      "name": "galaxy-tab-active3",
+      "eol": false
+    },
+    "galaxy-tab-active2": {
+      "name": "galaxy-tab-active2",
+      "eol": "2021-11-17"
+    },
+    "galaxy-tab-active-pro": {
+      "name": "galaxy-tab-active-pro",
+      "eol": true
+    },
+    "galaxy-tab-active-lte": {
+      "name": "galaxy-tab-active-lte",
+      "eol": true
+    },
+    "galaxy-tab-active": {
+      "name": "galaxy-tab-active",
+      "eol": true
+    },
+    "galaxy-tab-a8": {
+      "name": "galaxy-tab-a8",
+      "eol": "2026-01-17"
+    },
+    "galaxy-tab-a7-lite": {
+      "name": "galaxy-tab-a7-lite",
+      "eol": "2025-05-27"
+    },
+    "galaxy-tab-a7-10.4-2022": {
+      "name": "galaxy-tab-a7-10.4-2022",
+      "eol": "2026-11-21"
+    },
+    "galaxy-tab-a7-10.4-2020": {
+      "name": "galaxy-tab-a7-10.4-2020",
+      "eol": "2024-09-11"
+    },
+    "galaxy-tab-a-9.7-and-s-pen": {
+      "name": "galaxy-tab-a-9.7-and-s-pen",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-a-9.7": {
+      "name": "galaxy-tab-a-9.7",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-a-8.4-2020": {
+      "name": "galaxy-tab-a-8.4-2020",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-with-s-pen-2019": {
+      "name": "galaxy-tab-a-8.0-with-s-pen-2019",
+      "eol": "2021-11-17"
+    },
+    "galaxy-tab-a-8.0-and-s-pen-2015": {
+      "name": "galaxy-tab-a-8.0-and-s-pen-2015",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-a-8.0-2019": {
+      "name": "galaxy-tab-a-8.0-2019",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-2018": {
+      "name": "galaxy-tab-a-8.0-2018",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-2017": {
+      "name": "galaxy-tab-a-8.0-2017",
+      "eol": "2021-11-17"
+    },
+    "galaxy-tab-a-8.0-2015": {
+      "name": "galaxy-tab-a-8.0-2015",
+      "eol": "2017-08-01"
+    },
+    "galaxy-tab-a-7.0-2016": {
+      "name": "galaxy-tab-a-7.0-2016",
+      "eol": "2016-12-30"
+    },
+    "galaxy-tab-a-10.5-2018": {
+      "name": "galaxy-tab-a-10.5-2018",
+      "eol": "2022-06-01"
+    },
+    "galaxy-tab-a-10.1-2019": {
+      "name": "galaxy-tab-a-10.1-2019",
+      "eol": true
+    },
+    "galaxy-tab-a-10.1-2016": {
+      "name": "galaxy-tab-a-10.1-2016",
+      "eol": "2020-04-01"
+    },
+    "galaxy-tab-4-8.0-lte": {
+      "name": "galaxy-tab-4-8.0-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-8.0-3g": {
+      "name": "galaxy-tab-4-8.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-8.0": {
+      "name": "galaxy-tab-4-8.0",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0-lte": {
+      "name": "galaxy-tab-4-7.0-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0-3g": {
+      "name": "galaxy-tab-4-7.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0": {
+      "name": "galaxy-tab-4-7.0",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1-lte": {
+      "name": "galaxy-tab-4-10.1-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1-3g": {
+      "name": "galaxy-tab-4-10.1-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1": {
+      "name": "galaxy-tab-4-10.1",
+      "eol": true
+    },
+    "galaxy-tab-3-v": {
+      "name": "galaxy-tab-3-v",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0-ve": {
+      "name": "galaxy-tab-3-lite-7.0-ve",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0-3g": {
+      "name": "galaxy-tab-3-lite-7.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0": {
+      "name": "galaxy-tab-3-lite-7.0",
+      "eol": true
+    },
+    "galaxy-star-trios-s5283": {
+      "name": "galaxy-star-trios-s5283",
+      "eol": true
+    },
+    "galaxy-star-2-plus": {
+      "name": "galaxy-star-2-plus",
+      "eol": true
+    },
+    "galaxy-star-2": {
+      "name": "galaxy-star-2",
+      "eol": true
+    },
+    "galaxy-s9+": {
+      "name": "galaxy-s9+",
+      "eol": "2022-04-05"
+    },
+    "galaxy-s9": {
+      "name": "galaxy-s9",
+      "eol": "2022-04-05"
+    },
+    "galaxy-s8-active": {
+      "name": "galaxy-s8-active",
+      "eol": "2021-11-17"
+    },
+    "galaxy-s8+": {
+      "name": "galaxy-s8+",
+      "eol": "2021-04-01"
+    },
+    "galaxy-s8": {
+      "name": "galaxy-s8",
+      "eol": "2021-04-01"
+    },
+    "galaxy-s7-edge": {
+      "name": "galaxy-s7-edge",
+      "eol": "2019-03-01"
+    },
+    "galaxy-s7-active": {
+      "name": "galaxy-s7-active",
+      "eol": true
+    },
+    "galaxy-s7": {
+      "name": "galaxy-s7",
+      "eol": "2019-06-01"
+    },
+    "galaxy-s6-usa": {
+      "name": "galaxy-s6-usa",
+      "eol": "2018-03-01"
+    },
+    "galaxy-s6-edge-usa": {
+      "name": "galaxy-s6-edge-usa",
+      "eol": true
+    },
+    "galaxy-s6-edge+-usa": {
+      "name": "galaxy-s6-edge+-usa",
+      "eol": true
+    },
+    "galaxy-s6-edge+-duos": {
+      "name": "galaxy-s6-edge+-duos",
+      "eol": "2018-08-01"
+    },
+    "galaxy-s6-edge+": {
+      "name": "galaxy-s6-edge+",
+      "eol": "2018-08-01"
+    },
+    "galaxy-s6-edge": {
+      "name": "galaxy-s6-edge",
+      "eol": "2018-06-01"
+    },
+    "galaxy-s6-duos": {
+      "name": "galaxy-s6-duos",
+      "eol": true
+    },
+    "galaxy-s6-active": {
+      "name": "galaxy-s6-active",
+      "eol": true
+    },
+    "galaxy-s6": {
+      "name": "galaxy-s6",
+      "eol": "2018-06-01"
+    },
+    "galaxy-s5-sport": {
+      "name": "galaxy-s5-sport",
+      "eol": true
+    },
+    "galaxy-s5-plus": {
+      "name": "galaxy-s5-plus",
+      "eol": true
+    },
+    "galaxy-s5-octa-core": {
+      "name": "galaxy-s5-octa-core",
+      "eol": "2017-04-01"
+    },
+    "galaxy-s5-neo": {
+      "name": "galaxy-s5-neo",
+      "eol": "2018-04-01"
+    },
+    "galaxy-s5-mini-duos": {
+      "name": "galaxy-s5-mini-duos",
+      "eol": true
+    },
+    "galaxy-s5-mini": {
+      "name": "galaxy-s5-mini",
+      "eol": "2017-08-01"
+    },
+    "galaxy-s5-lte-a-g906s": {
+      "name": "galaxy-s5-lte-a-g906s",
+      "eol": "2017-01-04"
+    },
+    "galaxy-s5-lte-a-g901f": {
+      "name": "galaxy-s5-lte-a-g901f",
+      "eol": true
+    },
+    "galaxy-s5-duos": {
+      "name": "galaxy-s5-duos",
+      "eol": true
+    },
+    "galaxy-s5-active": {
+      "name": "galaxy-s5-active",
+      "eol": true
+    },
+    "galaxy-s5": {
+      "name": "galaxy-s5",
+      "eol": "2017-04-01"
+    },
+    "galaxy-s4-mini-i9195i": {
+      "name": "galaxy-s4-mini-i9195i",
+      "eol": true
+    },
+    "galaxy-s25-ultra": {
+      "name": "galaxy-s25-ultra",
+      "eol": "2032-02-03"
+    },
+    "galaxy-s25+": {
+      "name": "galaxy-s25+",
+      "eol": "2032-02-03"
+    },
+    "galaxy-s25": {
+      "name": "galaxy-s25",
+      "eol": "2032-02-03"
+    },
+    "galaxy-s24-ultra": {
+      "name": "galaxy-s24-ultra",
+      "eol": "2031-01-24"
+    },
+    "galaxy-s24-fe": {
+      "name": "galaxy-s24-fe",
+      "eol": "2031-09-26"
+    },
+    "galaxy-s24+": {
+      "name": "galaxy-s24+",
+      "eol": "2031-01-24"
+    },
+    "galaxy-s24": {
+      "name": "galaxy-s24",
+      "eol": "2031-01-24"
+    },
+    "galaxy-s23-ultra": {
+      "name": "galaxy-s23-ultra",
+      "eol": "2028-02-17"
+    },
+    "galaxy-s23-fe": {
+      "name": "galaxy-s23-fe",
+      "eol": "2028-10-05"
+    },
+    "galaxy-s23+": {
+      "name": "galaxy-s23+",
+      "eol": "2028-02-17"
+    },
+    "galaxy-s23": {
+      "name": "galaxy-s23",
+      "eol": "2028-02-17"
+    },
+    "galaxy-s22-ultra": {
+      "name": "galaxy-s22-ultra",
+      "eol": "2027-02-25"
+    },
+    "galaxy-s22+": {
+      "name": "galaxy-s22+",
+      "eol": "2027-02-25"
+    },
+    "galaxy-s22": {
+      "name": "galaxy-s22",
+      "eol": "2027-02-25"
+    },
+    "galaxy-s21-ultra-5g": {
+      "name": "galaxy-s21-ultra-5g",
+      "eol": "2026-01-29"
+    },
+    "galaxy-s21-fe-5g": {
+      "name": "galaxy-s21-fe-5g",
+      "eol": "2027-01-07"
+    },
+    "galaxy-s21-5g": {
+      "name": "galaxy-s21-5g",
+      "eol": "2026-01-29"
+    },
+    "galaxy-s21+-5g": {
+      "name": "galaxy-s21+-5g",
+      "eol": "2026-01-29"
+    },
+    "galaxy-s20-ultra-5g": {
+      "name": "galaxy-s20-ultra-5g",
+      "eol": "2025-03-05"
+    },
+    "galaxy-s20-ultra": {
+      "name": "galaxy-s20-ultra",
+      "eol": "2025-03-14"
+    },
+    "galaxy-s20-fe-5g": {
+      "name": "galaxy-s20-fe-5g",
+      "eol": "2025-10-01"
+    },
+    "galaxy-s20-fe-2020": {
+      "name": "galaxy-s20-fe-2020",
+      "eol": true
+    },
+    "galaxy-s20-fe": {
+      "name": "galaxy-s20-fe",
+      "eol": "2026-03-31"
+    },
+    "galaxy-s20-5g-uw": {
+      "name": "galaxy-s20-5g-uw",
+      "eol": "2024-06-04"
+    },
+    "galaxy-s20-5g": {
+      "name": "galaxy-s20-5g",
+      "eol": "2025-03-05"
+    },
+    "galaxy-s20+-5g": {
+      "name": "galaxy-s20+-5g",
+      "eol": "2025-03-05"
+    },
+    "galaxy-s20+": {
+      "name": "galaxy-s20+",
+      "eol": "2025-03-05"
+    },
+    "galaxy-s20": {
+      "name": "galaxy-s20",
+      "eol": "2025-03-05"
+    },
+    "galaxy-s10e": {
+      "name": "galaxy-s10e",
+      "eol": "2023-04-01"
+    },
+    "galaxy-s10-lite": {
+      "name": "galaxy-s10-lite",
+      "eol": true
+    },
+    "galaxy-s10-5g": {
+      "name": "galaxy-s10-5g",
+      "eol": true
+    },
+    "galaxy-s10+": {
+      "name": "galaxy-s10+",
+      "eol": "2023-04-01"
+    },
+    "galaxy-s10": {
+      "name": "galaxy-s10",
+      "eol": "2023-04-01"
+    },
+    "galaxy-s-light-luxury": {
+      "name": "galaxy-s-light-luxury",
+      "eol": true
+    },
+    "galaxy-s-duos-3": {
+      "name": "galaxy-s-duos-3",
+      "eol": true
+    },
+    "galaxy-pocket-2": {
+      "name": "galaxy-pocket-2",
+      "eol": true
+    },
+    "galaxy-on8": {
+      "name": "galaxy-on8",
+      "eol": "2019-01-01"
+    },
+    "galaxy-on7-pro": {
+      "name": "galaxy-on7-pro",
+      "eol": true
+    },
+    "galaxy-on7-2016": {
+      "name": "galaxy-on7-2016",
+      "eol": "2020-07-01"
+    },
+    "galaxy-on7": {
+      "name": "galaxy-on7",
+      "eol": "2018-01-01"
+    },
+    "galaxy-on6": {
+      "name": "galaxy-on6",
+      "eol": "2022-02-01"
+    },
+    "galaxy-on5-pro": {
+      "name": "galaxy-on5-pro",
+      "eol": true
+    },
+    "galaxy-on5": {
+      "name": "galaxy-on5",
+      "eol": true
+    },
+    "galaxy-note8": {
+      "name": "galaxy-note8",
+      "eol": "2021-11-17"
+    },
+    "galaxy-note7": {
+      "name": "galaxy-note7",
+      "eol": true
+    },
+    "galaxy-note4": {
+      "name": "galaxy-note4",
+      "eol": "2017-08-01"
+    },
+    "galaxy-note20-ultra-5g": {
+      "name": "galaxy-note20-ultra-5g",
+      "eol": "2025-08-21"
+    },
+    "galaxy-note20-ultra": {
+      "name": "galaxy-note20-ultra",
+      "eol": "2025-08-21"
+    },
+    "galaxy-note20-5g": {
+      "name": "galaxy-note20-5g",
+      "eol": "2025-08-21"
+    },
+    "galaxy-note20": {
+      "name": "galaxy-note20",
+      "eol": "2025-08-21"
+    },
+    "galaxy-note10-lite": {
+      "name": "galaxy-note10-lite",
+      "eol": true
+    },
+    "galaxy-note10-5g": {
+      "name": "galaxy-note10-5g",
+      "eol": true
+    },
+    "galaxy-note10+-5g": {
+      "name": "galaxy-note10+-5g",
+      "eol": true
+    },
+    "galaxy-note10+": {
+      "name": "galaxy-note10+",
+      "eol": true
+    },
+    "galaxy-note10": {
+      "name": "galaxy-note10",
+      "eol": true
+    },
+    "galaxy-note-pro-12.2-lte": {
+      "name": "galaxy-note-pro-12.2-lte",
+      "eol": true
+    },
+    "galaxy-note-pro-12.2-3g": {
+      "name": "galaxy-note-pro-12.2-3g",
+      "eol": true
+    },
+    "galaxy-note-pro-12.2": {
+      "name": "galaxy-note-pro-12.2",
+      "eol": true
+    },
+    "galaxy-note-fe": {
+      "name": "galaxy-note-fe",
+      "eol": "2019-03-01"
+    },
+    "galaxy-note-edge": {
+      "name": "galaxy-note-edge",
+      "eol": true
+    },
+    "galaxy-note-9": {
+      "name": "galaxy-note-9",
+      "eol": "2022-07-01"
+    },
+    "galaxy-note-7-usa": {
+      "name": "galaxy-note-7-usa",
+      "eol": true
+    },
+    "galaxy-note-5-usa": {
+      "name": "galaxy-note-5-usa",
+      "eol": true
+    },
+    "galaxy-note-5-duos": {
+      "name": "galaxy-note-5-duos",
+      "eol": "2018-08-01"
+    },
+    "galaxy-note-5": {
+      "name": "galaxy-note-5",
+      "eol": "2018-08-01"
+    },
+    "galaxy-note-4-duos": {
+      "name": "galaxy-note-4-duos",
+      "eol": true
+    },
+    "galaxy-note-3-neo-duos": {
+      "name": "galaxy-note-3-neo-duos",
+      "eol": true
+    },
+    "galaxy-note-3-neo": {
+      "name": "galaxy-note-3-neo",
+      "eol": true
+    },
+    "galaxy-mega-2": {
+      "name": "galaxy-mega-2",
+      "eol": true
+    },
+    "galaxy-m62": {
+      "name": "galaxy-m62",
+      "eol": "2024-03-03"
+    },
+    "galaxy-m53": {
+      "name": "galaxy-m53",
+      "eol": "2025-04-22"
+    },
+    "galaxy-m52-5g": {
+      "name": "galaxy-m52-5g",
+      "eol": false
+    },
+    "galaxy-m51": {
+      "name": "galaxy-m51",
+      "eol": "2023-08-06"
+    },
+    "galaxy-m42-5g": {
+      "name": "galaxy-m42-5g",
+      "eol": false
+    },
+    "galaxy-m40": {
+      "name": "galaxy-m40",
+      "eol": true
+    },
+    "galaxy-m33-5g": {
+      "name": "galaxy-m33-5g",
+      "eol": false
+    },
+    "galaxy-m32-5g": {
+      "name": "galaxy-m32-5g",
+      "eol": false
+    },
+    "galaxy-m32": {
+      "name": "galaxy-m32",
+      "eol": false
+    },
+    "galaxy-m31s": {
+      "name": "galaxy-m31s",
+      "eol": "2024-02-09"
+    },
+    "galaxy-m31-prime": {
+      "name": "galaxy-m31-prime",
+      "eol": true
+    },
+    "galaxy-m31": {
+      "name": "galaxy-m31",
+      "eol": true
+    },
+    "galaxy-m30s": {
+      "name": "galaxy-m30s",
+      "eol": true
+    },
+    "galaxy-m30": {
+      "name": "galaxy-m30",
+      "eol": true
+    },
+    "galaxy-m23-5g": {
+      "name": "galaxy-m23-5g",
+      "eol": false
+    },
+    "galaxy-m22": {
+      "name": "galaxy-m22",
+      "eol": false
+    },
+    "galaxy-m21s": {
+      "name": "galaxy-m21s",
+      "eol": true
+    },
+    "galaxy-m21-2021": {
+      "name": "galaxy-m21-2021",
+      "eol": false
+    },
+    "galaxy-m21": {
+      "name": "galaxy-m21",
+      "eol": "2024-03-23"
+    },
+    "galaxy-m20": {
+      "name": "galaxy-m20",
+      "eol": true
+    },
+    "galaxy-m13-india": {
+      "name": "galaxy-m13-india",
+      "eol": "2025-07-23"
+    },
+    "galaxy-m13-5g": {
+      "name": "galaxy-m13-5g",
+      "eol": false
+    },
+    "galaxy-m13": {
+      "name": "galaxy-m13",
+      "eol": "2026-07-01"
+    },
+    "galaxy-m12-india": {
+      "name": "galaxy-m12-india",
+      "eol": "2024-03-18"
+    },
+    "galaxy-m12": {
+      "name": "galaxy-m12",
+      "eol": "2024-11-05"
+    },
+    "galaxy-m11": {
+      "name": "galaxy-m11",
+      "eol": true
+    },
+    "galaxy-m10s": {
+      "name": "galaxy-m10s",
+      "eol": true
+    },
+    "galaxy-m10": {
+      "name": "galaxy-m10",
+      "eol": true
+    },
+    "galaxy-m04": {
+      "name": "galaxy-m04",
+      "eol": "2025-12-16"
+    },
+    "galaxy-m02s": {
+      "name": "galaxy-m02s",
+      "eol": "2024-01-07"
+    },
+    "galaxy-m02": {
+      "name": "galaxy-m02",
+      "eol": "2024-02-09"
+    },
+    "galaxy-m01s": {
+      "name": "galaxy-m01s",
+      "eol": true
+    },
+    "galaxy-m01-core": {
+      "name": "galaxy-m01-core",
+      "eol": true
+    },
+    "galaxy-m01": {
+      "name": "galaxy-m01",
+      "eol": true
+    },
+    "galaxy-k-zoom": {
+      "name": "galaxy-k-zoom",
+      "eol": true
+    },
+    "galaxy-j8": {
+      "name": "galaxy-j8",
+      "eol": "2021-09-01"
+    },
+    "galaxy-j7-v": {
+      "name": "galaxy-j7-v",
+      "eol": "2019-03-01"
+    },
+    "galaxy-j7-top": {
+      "name": "galaxy-j7-top",
+      "eol": "2021-12-31"
+    },
+    "galaxy-j7-pro": {
+      "name": "galaxy-j7-pro",
+      "eol": "2019-04-01"
+    },
+    "galaxy-j7-prime-2": {
+      "name": "galaxy-j7-prime-2",
+      "eol": "2021-12-31"
+    },
+    "galaxy-j7-prime": {
+      "name": "galaxy-j7-prime",
+      "eol": "2020-04-01"
+    },
+    "galaxy-j7-neo": {
+      "name": "galaxy-j7-neo",
+      "eol": "2019-05-01"
+    },
+    "galaxy-j7-max": {
+      "name": "galaxy-j7-max",
+      "eol": "2019-03-01"
+    },
+    "galaxy-j7-duo": {
+      "name": "galaxy-j7-duo",
+      "eol": "2021-12-31"
+    },
+    "galaxy-j7-2018": {
+      "name": "galaxy-j7-2018",
+      "eol": "2021-12-01"
+    },
+    "galaxy-j7-2017": {
+      "name": "galaxy-j7-2017",
+      "eol": "2019-05-01"
+    },
+    "galaxy-j7-2016": {
+      "name": "galaxy-j7-2016",
+      "eol": "2019-11-01"
+    },
+    "galaxy-j7": {
+      "name": "galaxy-j7",
+      "eol": "2018-04-01"
+    },
+    "galaxy-j6+": {
+      "name": "galaxy-j6+",
+      "eol": "2022-06-01"
+    },
+    "galaxy-j6": {
+      "name": "galaxy-j6",
+      "eol": "2022-02-01"
+    },
+    "galaxy-j5-prime": {
+      "name": "galaxy-j5-prime",
+      "eol": "2020-10-01"
+    },
+    "galaxy-j5-2017": {
+      "name": "galaxy-j5-2017",
+      "eol": "2019-03-01"
+    },
+    "galaxy-j5-2016": {
+      "name": "galaxy-j5-2016",
+      "eol": "2019-08-01"
+    },
+    "galaxy-j5": {
+      "name": "galaxy-j5",
+      "eol": "2019-12-03"
+    },
+    "galaxy-j4-core": {
+      "name": "galaxy-j4-core",
+      "eol": "2020-12-01"
+    },
+    "galaxy-j4+": {
+      "name": "galaxy-j4+",
+      "eol": "2020-12-01"
+    },
+    "galaxy-j4": {
+      "name": "galaxy-j4",
+      "eol": "2022-02-01"
+    },
+    "galaxy-j3-pro": {
+      "name": "galaxy-j3-pro",
+      "eol": "2021-04-01"
+    },
+    "galaxy-j3-emerge": {
+      "name": "galaxy-j3-emerge",
+      "eol": "2019-08-01"
+    },
+    "galaxy-j3-2018": {
+      "name": "galaxy-j3-2018",
+      "eol": "2021-11-01"
+    },
+    "galaxy-j3-2017": {
+      "name": "galaxy-j3-2017",
+      "eol": "2019-07-01"
+    },
+    "galaxy-j3-2016": {
+      "name": "galaxy-j3-2016",
+      "eol": "2019-04-02"
+    },
+    "galaxy-j2-pro-2018": {
+      "name": "galaxy-j2-pro-2018",
+      "eol": "2019-10-01"
+    },
+    "galaxy-j2-pro-2016": {
+      "name": "galaxy-j2-pro-2016",
+      "eol": "2019-10-01"
+    },
+    "galaxy-j2-prime": {
+      "name": "galaxy-j2-prime",
+      "eol": true
+    },
+    "galaxy-j2-core-2020": {
+      "name": "galaxy-j2-core-2020",
+      "eol": true
+    },
+    "galaxy-j2-core": {
+      "name": "galaxy-j2-core",
+      "eol": "2021-12-31"
+    },
+    "galaxy-j2-2017": {
+      "name": "galaxy-j2-2017",
+      "eol": true
+    },
+    "galaxy-j2-2016": {
+      "name": "galaxy-j2-2016",
+      "eol": "2018-08-01"
+    },
+    "galaxy-j2": {
+      "name": "galaxy-j2",
+      "eol": true
+    },
+    "galaxy-j1-nxt": {
+      "name": "galaxy-j1-nxt",
+      "eol": true
+    },
+    "galaxy-j1-mini-prime": {
+      "name": "galaxy-j1-mini-prime",
+      "eol": true
+    },
+    "galaxy-j1-ace": {
+      "name": "galaxy-j1-ace",
+      "eol": true
+    },
+    "galaxy-j1-4g": {
+      "name": "galaxy-j1-4g",
+      "eol": true
+    },
+    "galaxy-j1-2016": {
+      "name": "galaxy-j1-2016",
+      "eol": true
+    },
+    "galaxy-j1": {
+      "name": "galaxy-j1",
+      "eol": true
+    },
+    "galaxy-j-max": {
+      "name": "galaxy-j-max",
+      "eol": true
+    },
+    "galaxy-grand-prime-plus": {
+      "name": "galaxy-grand-prime-plus",
+      "eol": true
+    },
+    "galaxy-grand-prime-duos-tv": {
+      "name": "galaxy-grand-prime-duos-tv",
+      "eol": true
+    },
+    "galaxy-grand-prime": {
+      "name": "galaxy-grand-prime",
+      "eol": true
+    },
+    "galaxy-grand-neo": {
+      "name": "galaxy-grand-neo",
+      "eol": true
+    },
+    "galaxy-grand-max": {
+      "name": "galaxy-grand-max",
+      "eol": true
+    },
+    "galaxy-gear": {
+      "name": "galaxy-gear",
+      "eol": true
+    },
+    "galaxy-folder2": {
+      "name": "galaxy-folder2",
+      "eol": true
+    },
+    "galaxy-folder": {
+      "name": "galaxy-folder",
+      "eol": true
+    },
+    "galaxy-fold-5g": {
+      "name": "galaxy-fold-5g",
+      "eol": true
+    },
+    "galaxy-fold": {
+      "name": "galaxy-fold",
+      "eol": true
+    },
+    "galaxy-f62": {
+      "name": "galaxy-f62",
+      "eol": "2024-02-22"
+    },
+    "galaxy-f52-5g": {
+      "name": "galaxy-f52-5g",
+      "eol": false
+    },
+    "galaxy-f42-5g": {
+      "name": "galaxy-f42-5g",
+      "eol": false
+    },
+    "galaxy-f41": {
+      "name": "galaxy-f41",
+      "eol": true
+    },
+    "galaxy-f23": {
+      "name": "galaxy-f23",
+      "eol": "2025-03-16"
+    },
+    "galaxy-f22": {
+      "name": "galaxy-f22",
+      "eol": false
+    },
+    "galaxy-f13": {
+      "name": "galaxy-f13",
+      "eol": "2025-06-29"
+    },
+    "galaxy-f12": {
+      "name": "galaxy-f12",
+      "eol": "2024-11-05"
+    },
+    "galaxy-f04": {
+      "name": "galaxy-f04",
+      "eol": "2027-01-12"
+    },
+    "galaxy-f02s": {
+      "name": "galaxy-f02s",
+      "eol": "2024-04-09"
+    },
+    "galaxy-express-prime": {
+      "name": "galaxy-express-prime",
+      "eol": true
+    },
+    "galaxy-e7": {
+      "name": "galaxy-e7",
+      "eol": true
+    },
+    "galaxy-e5": {
+      "name": "galaxy-e5",
+      "eol": true
+    },
+    "galaxy-core-prime": {
+      "name": "galaxy-core-prime",
+      "eol": true
+    },
+    "galaxy-core-lte-g386w": {
+      "name": "galaxy-core-lte-g386w",
+      "eol": true
+    },
+    "galaxy-core-lte": {
+      "name": "galaxy-core-lte",
+      "eol": true
+    },
+    "galaxy-core-lite-lte": {
+      "name": "galaxy-core-lite-lte",
+      "eol": true
+    },
+    "galaxy-core-ii": {
+      "name": "galaxy-core-ii",
+      "eol": true
+    },
+    "galaxy-c9-pro": {
+      "name": "galaxy-c9-pro",
+      "eol": "2019-07-01"
+    },
+    "galaxy-c7-pro": {
+      "name": "galaxy-c7-pro",
+      "eol": "2019-05-01"
+    },
+    "galaxy-c7-2017": {
+      "name": "galaxy-c7-2017",
+      "eol": true
+    },
+    "galaxy-c7": {
+      "name": "galaxy-c7",
+      "eol": "2018-10-01"
+    },
+    "galaxy-c5-pro": {
+      "name": "galaxy-c5-pro",
+      "eol": "2018-10-01"
+    },
+    "galaxy-c5": {
+      "name": "galaxy-c5",
+      "eol": "2019-01-01"
+    },
+    "galaxy-beam2": {
+      "name": "galaxy-beam2",
+      "eol": true
+    },
+    "galaxy-avant": {
+      "name": "galaxy-avant",
+      "eol": true
+    },
+    "galaxy-alpha-s801": {
+      "name": "galaxy-alpha-s801",
+      "eol": true
+    },
+    "galaxy-alpha": {
+      "name": "galaxy-alpha",
+      "eol": "2017-01-01"
+    },
+    "galaxy-ace-style-lte-g357": {
+      "name": "galaxy-ace-style-lte-g357",
+      "eol": true
+    },
+    "galaxy-ace-style": {
+      "name": "galaxy-ace-style",
+      "eol": true
+    },
+    "galaxy-ace-nxt": {
+      "name": "galaxy-ace-nxt",
+      "eol": true
+    },
+    "galaxy-ace-4-lte-g313": {
+      "name": "galaxy-ace-4-lte-g313",
+      "eol": true
+    },
+    "galaxy-ace-4": {
+      "name": "galaxy-ace-4",
+      "eol": true
+    },
+    "galaxy-a90-5g": {
+      "name": "galaxy-a90-5g",
+      "eol": true
+    },
+    "galaxy-a9-pro-2016": {
+      "name": "galaxy-a9-pro-2016",
+      "eol": "2019-02-01"
+    },
+    "galaxy-a9-2018": {
+      "name": "galaxy-a9-2018",
+      "eol": "2022-06-01"
+    },
+    "galaxy-a9-2016": {
+      "name": "galaxy-a9-2016",
+      "eol": true
+    },
+    "galaxy-a8s": {
+      "name": "galaxy-a8s",
+      "eol": true
+    },
+    "galaxy-a82-5g": {
+      "name": "galaxy-a82-5g",
+      "eol": true
+    },
+    "galaxy-a80": {
+      "name": "galaxy-a80",
+      "eol": true
+    },
+    "galaxy-a8-star": {
+      "name": "galaxy-a8-star",
+      "eol": "2022-06-01"
+    },
+    "galaxy-a8-duos": {
+      "name": "galaxy-a8-duos",
+      "eol": "2017-08-01"
+    },
+    "galaxy-a8-2018-enterprise": {
+      "name": "galaxy-a8-2018-enterprise",
+      "eol": "2021-12-31"
+    },
+    "galaxy-a8-2018": {
+      "name": "galaxy-a8-2018",
+      "eol": "2022-01-01"
+    },
+    "galaxy-a8-2016": {
+      "name": "galaxy-a8-2016",
+      "eol": true
+    },
+    "galaxy-a8+-2018": {
+      "name": "galaxy-a8+-2018",
+      "eol": "2021-09-01"
+    },
+    "galaxy-a8": {
+      "name": "galaxy-a8",
+      "eol": "2017-08-01"
+    },
+    "galaxy-a73-5g": {
+      "name": "galaxy-a73-5g",
+      "eol": "2027-04-22"
+    },
+    "galaxy-a72": {
+      "name": "galaxy-a72",
+      "eol": "2025-03-26"
+    },
+    "galaxy-a71-5g-uw": {
+      "name": "galaxy-a71-5g-uw",
+      "eol": true
+    },
+    "galaxy-a71-5g": {
+      "name": "galaxy-a71-5g",
+      "eol": true
+    },
+    "galaxy-a71": {
+      "name": "galaxy-a71",
+      "eol": true
+    },
+    "galaxy-a70s": {
+      "name": "galaxy-a70s",
+      "eol": true
+    },
+    "galaxy-a70": {
+      "name": "galaxy-a70",
+      "eol": true
+    },
+    "galaxy-a7-duos": {
+      "name": "galaxy-a7-duos",
+      "eol": true
+    },
+    "galaxy-a7-2018": {
+      "name": "galaxy-a7-2018",
+      "eol": "2022-07-01"
+    },
+    "galaxy-a7-2017": {
+      "name": "galaxy-a7-2017",
+      "eol": "2020-08-01"
+    },
+    "galaxy-a7-2016": {
+      "name": "galaxy-a7-2016",
+      "eol": "2018-11-01"
+    },
+    "galaxy-a6s": {
+      "name": "galaxy-a6s",
+      "eol": true
+    },
+    "galaxy-a60": {
+      "name": "galaxy-a60",
+      "eol": true
+    },
+    "galaxy-a6-2018": {
+      "name": "galaxy-a6-2018",
+      "eol": "2022-03-01"
+    },
+    "galaxy-a6+-2018": {
+      "name": "galaxy-a6+-2018",
+      "eol": "2021-12-01"
+    },
+    "galaxy-a55-5g": {
+      "name": "galaxy-a55-5g",
+      "eol": "2029-03-11"
+    },
+    "galaxy-a54-5g": {
+      "name": "galaxy-a54-5g",
+      "eol": "2028-03-24"
+    },
+    "galaxy-a53-5g": {
+      "name": "galaxy-a53-5g",
+      "eol": "2027-04-01"
+    },
+    "galaxy-a52s-5g": {
+      "name": "galaxy-a52s-5g",
+      "eol": "2025-09-01"
+    },
+    "galaxy-a52-5g": {
+      "name": "galaxy-a52-5g",
+      "eol": "2025-03-17"
+    },
+    "galaxy-a52": {
+      "name": "galaxy-a52",
+      "eol": true
+    },
+    "galaxy-a51-5g-uw": {
+      "name": "galaxy-a51-5g-uw",
+      "eol": "2024-06-05"
+    },
+    "galaxy-a51-5g": {
+      "name": "galaxy-a51-5g",
+      "eol": "2024-06-05"
+    },
+    "galaxy-a51": {
+      "name": "galaxy-a51",
+      "eol": true
+    },
+    "galaxy-a50s": {
+      "name": "galaxy-a50s",
+      "eol": true
+    },
+    "galaxy-a50": {
+      "name": "galaxy-a50",
+      "eol": "2023-04-01"
+    },
+    "galaxy-a5-duos": {
+      "name": "galaxy-a5-duos",
+      "eol": true
+    },
+    "galaxy-a5-2017": {
+      "name": "galaxy-a5-2017",
+      "eol": "2019-04-01"
+    },
+    "galaxy-a5-2016": {
+      "name": "galaxy-a5-2016",
+      "eol": "2019-06-01"
+    },
+    "galaxy-a5": {
+      "name": "galaxy-a5",
+      "eol": true
+    },
+    "galaxy-a42-5g": {
+      "name": "galaxy-a42-5g",
+      "eol": "2024-06-20"
+    },
+    "galaxy-a41": {
+      "name": "galaxy-a41",
+      "eol": true
+    },
+    "galaxy-a40": {
+      "name": "galaxy-a40",
+      "eol": true
+    },
+    "galaxy-a35-5g": {
+      "name": "galaxy-a35-5g",
+      "eol": "2029-03-11"
+    },
+    "galaxy-a34-5g": {
+      "name": "galaxy-a34-5g",
+      "eol": "2028-03-24"
+    },
+    "galaxy-a33-5g": {
+      "name": "galaxy-a33-5g",
+      "eol": "2027-04-01"
+    },
+    "galaxy-a32-5g": {
+      "name": "galaxy-a32-5g",
+      "eol": "2025-02-13"
+    },
+    "galaxy-a32": {
+      "name": "galaxy-a32",
+      "eol": "2025-02-13"
+    },
+    "galaxy-a31": {
+      "name": "galaxy-a31",
+      "eol": true
+    },
+    "galaxy-a30s": {
+      "name": "galaxy-a30s",
+      "eol": true
+    },
+    "galaxy-a30": {
+      "name": "galaxy-a30",
+      "eol": true
+    },
+    "galaxy-a3-duos": {
+      "name": "galaxy-a3-duos",
+      "eol": true
+    },
+    "galaxy-a3-2017": {
+      "name": "galaxy-a3-2017",
+      "eol": "2020-11-01"
+    },
+    "galaxy-a3-2016": {
+      "name": "galaxy-a3-2016",
+      "eol": "2018-06-01"
+    },
+    "galaxy-a3": {
+      "name": "galaxy-a3",
+      "eol": true
+    },
+    "galaxy-a25-5g": {
+      "name": "galaxy-a25-5g",
+      "eol": "2028-12-11"
+    },
+    "galaxy-a24": {
+      "name": "galaxy-a24",
+      "eol": "2028-05-05"
+    },
+    "galaxy-a23-5g": {
+      "name": "galaxy-a23-5g",
+      "eol": "2026-09-02"
+    },
+    "galaxy-a23": {
+      "name": "galaxy-a23",
+      "eol": "2026-03-25"
+    },
+    "galaxy-a22-5g": {
+      "name": "galaxy-a22-5g",
+      "eol": false
+    },
+    "galaxy-a22": {
+      "name": "galaxy-a22",
+      "eol": false
+    },
+    "galaxy-a21s": {
+      "name": "galaxy-a21s",
+      "eol": true
+    },
+    "galaxy-a21": {
+      "name": "galaxy-a21",
+      "eol": true
+    },
+    "galaxy-a20s": {
+      "name": "galaxy-a20s",
+      "eol": true
+    },
+    "galaxy-a20e": {
+      "name": "galaxy-a20e",
+      "eol": true
+    },
+    "galaxy-a20": {
+      "name": "galaxy-a20",
+      "eol": true
+    },
+    "galaxy-a2-core": {
+      "name": "galaxy-a2-core",
+      "eol": "2021-10-01"
+    },
+    "galaxy-a16-5g": {
+      "name": "galaxy-a16-5g",
+      "eol": "2030-10-25"
+    },
+    "galaxy-a16": {
+      "name": "galaxy-a16",
+      "eol": "2030-11-20"
+    },
+    "galaxy-a15-5g": {
+      "name": "galaxy-a15-5g",
+      "eol": "2028-12-11"
+    },
+    "galaxy-a15": {
+      "name": "galaxy-a15",
+      "eol": "2028-12-11"
+    },
+    "galaxy-a14-5g": {
+      "name": "galaxy-a14-5g",
+      "eol": "2027-01-12"
+    },
+    "galaxy-a13-sm-a137": {
+      "name": "galaxy-a13-sm-a137",
+      "eol": "2026-07-01"
+    },
+    "galaxy-a13-5g": {
+      "name": "galaxy-a13-5g",
+      "eol": "2025-12-03"
+    },
+    "galaxy-a13": {
+      "name": "galaxy-a13",
+      "eol": "2026-03-23"
+    },
+    "galaxy-a12-nacho": {
+      "name": "galaxy-a12-nacho",
+      "eol": true
+    },
+    "galaxy-a12-india": {
+      "name": "galaxy-a12-india",
+      "eol": true
+    },
+    "galaxy-a12": {
+      "name": "galaxy-a12",
+      "eol": "2024-11-24"
+    },
+    "galaxy-a11": {
+      "name": "galaxy-a11",
+      "eol": true
+    },
+    "galaxy-a10s": {
+      "name": "galaxy-a10s",
+      "eol": true
+    },
+    "galaxy-a10e": {
+      "name": "galaxy-a10e",
+      "eol": true
+    },
+    "galaxy-a10": {
+      "name": "galaxy-a10",
+      "eol": true
+    },
+    "galaxy-a04s": {
+      "name": "galaxy-a04s",
+      "eol": false
+    },
+    "galaxy-a04e": {
+      "name": "galaxy-a04e",
+      "eol": false
+    },
+    "galaxy-a04": {
+      "name": "galaxy-a04",
+      "eol": false
+    },
+    "galaxy-a03s": {
+      "name": "galaxy-a03s",
+      "eol": false
+    },
+    "galaxy-a03-core": {
+      "name": "galaxy-a03-core",
+      "eol": false
+    },
+    "galaxy-a03": {
+      "name": "galaxy-a03",
+      "eol": false
+    },
+    "galaxy-a02s": {
+      "name": "galaxy-a02s",
+      "eol": "2025-01-04"
+    },
+    "galaxy-a02": {
+      "name": "galaxy-a02",
+      "eol": "2024-03-05"
+    },
+    "galaxy-a01-core": {
+      "name": "galaxy-a01-core",
+      "eol": true
+    },
+    "galaxy-a01": {
+      "name": "galaxy-a01",
+      "eol": true
+    },
+    "galaxy-a-quantum2": {
+      "name": "galaxy-a-quantum2",
+      "eol": false
+    },
+    "galaxy-a-quantum": {
+      "name": "galaxy-a-quantum",
+      "eol": true
+    },
+    "g3812b-galaxy-s3-slim": {
+      "name": "g3812b-galaxy-s3-slim",
+      "eol": true
+    },
+    "ativ-se": {
+      "name": "ativ-se",
+      "eol": true
+    }
+  },
+  "versions": {}
+}

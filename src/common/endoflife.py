@@ -127,3 +127,13 @@ def list_configs(products_filter: str = None, methods_filter: str = None, urls_f
     products = list_products(products_filter)
     configs_by_product = [p.auto_configs(methods_filter, urls_filter) for p in products]
     return list(itertools.chain.from_iterable(configs_by_product))  # flatten the list of lists
+
+"""Convert a string to a valid endoflife.date identifier."""
+def to_identifier(s: str) -> str:
+    identifier = s.strip().lower()
+    identifier = identifier.replace(" ", "-")
+    return re.sub(r"[^a-z0-9.\-+_]", "", identifier)
+
+
+
+    return s.lower().replace(" ", "_").replace(".", "_").replace("/", "_")
