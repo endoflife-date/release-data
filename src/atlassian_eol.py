@@ -28,7 +28,7 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
                 logging.warning(f"Failed to parse EOL date from '{li.get_text(strip=True)}'")
                 continue
 
-            version = match.group("release")
+            release_name = match.group("release")
             date = dates.parse_date(match.group("date"))
-            releases = product_data.get_release(version)
-            releases.set_eol(date)
+            release = product_data.get_release(release_name)
+            release.set_eol(date)

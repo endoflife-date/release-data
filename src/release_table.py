@@ -143,9 +143,7 @@ class Field:
             return f"{items[0]} - {items[-1]}" if len(items) > 1 else str_value
 
         elif self.type == "identifier":
-            normalized_value = str_value.strip().lower()
-            normalized_value = normalized_value.replace(" ", "-")
-            return re.sub(r"[^a-z0-9.\-+_]", "", normalized_value)
+            return endoflife.to_identifier(str_value)
 
         return str_value
 
