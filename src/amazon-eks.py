@@ -13,7 +13,7 @@ URLS = [
     "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
 ]
 
-with releasedata.ProductData("eks") as product_data:
+with releasedata.ProductData("amazon-eks") as product_data:
     for version_list in http.fetch_urls(URLS):
         version_list_soup = BeautifulSoup(version_list.text, features="html5lib")
         for tr in version_list_soup.select("#main-col-body")[0].findAll("tr"):
