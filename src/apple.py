@@ -8,17 +8,18 @@ from common import dates, endoflife, http, releasedata
 """Fetches and parses version and release date information from Apple's support website."""
 
 URLS = [
-    "https://support.apple.com/en-us/HT201222",  # latest
-    "https://support.apple.com/kb/HT213078",  # 2018-2019
-    "https://support.apple.com/kb/HT213077",  # 2016-2017
-    "https://support.apple.com/kb/HT209441",  # 2015
-    "https://support.apple.com/kb/HT205762",  # 2014
-    "https://support.apple.com/kb/HT205759",  # 2013
-    "https://support.apple.com/kb/HT204611",  # 2011 to 2012
-    # Apple still links to the following articles, but they are 404:
-    "http://web.archive.org/web/20230404214605_/https://support.apple.com/en-us/HT5165",  # 2010
-    "http://web.archive.org/web/20230327200842_/https://support.apple.com/en-us/HT4218",  # 2008-2009
-    "http://web.archive.org/web/20230204234533_/https://support.apple.com/en-us/HT1263",  # 2005-2007
+    "https://support.apple.com/en-us/100100",  # latest
+    "https://support.apple.com/en-us/103179",  # 2018-2019
+    "https://support.apple.com/en-us/103178",  # 2016-2017
+    "https://support.apple.com/en-us/103813",  # 2015
+    "https://support.apple.com/en-us/101445",  # 2014
+    "https://support.apple.com/en-us/100502",  # 2013
+    "https://support.apple.com/en-us/101444",  # 2011 to 2012
+    "https://support.apple.com/en-us/104188",  # 2010
+    "https://support.apple.com/en-us/104189",  # 15-Jan-2008 to 03-Dec-2009
+    "https://support.apple.com/en-us/104190",  # 25-Jan-2005 to 21-Dec-2007
+    "https://support.apple.com/en-us/101682",  # 03-Oct-2003 to 11-Jan-2005
+    "https://support.apple.com/en-us/104191",  # August, 2003 to ~Jun 2001
 ]
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
@@ -35,6 +36,8 @@ for config in endoflife.list_configs(p_filter, METHOD, m_filter):
             versions_table = soup.find(id="tableWraper")
             versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
 
+            if not versions_table:
+                continue
             for row in versions_table.findAll("tr")[1:]:
                 cells = row.findAll("td")
                 version_text = cells[0].get_text().strip()
