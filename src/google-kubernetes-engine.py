@@ -6,10 +6,10 @@ from common import dates, http, releasedata
 # https://regex101.com/r/zPxBqT/1
 VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
 URL_BY_PRODUCT = {
-    "gke": "https://cloud.google.com/kubernetes-engine/docs/release-notes-nochannel",
-    "gke-stable": "https://cloud.google.com/kubernetes-engine/docs/release-notes-stable",
-    "gke-regular": "https://cloud.google.com/kubernetes-engine/docs/release-notes-regular",
-    "gke-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
+    "google-kubernetes-engine": "https://cloud.google.com/kubernetes-engine/docs/release-notes-nochannel",
+    "google-kubernetes-engine-stable": "https://cloud.google.com/kubernetes-engine/docs/release-notes-stable",
+    "google-kubernetes-engine-regular": "https://cloud.google.com/kubernetes-engine/docs/release-notes-regular",
+    "google-kubernetes-engine-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
 }
 
 for product_name, url in URL_BY_PRODUCT.items():
