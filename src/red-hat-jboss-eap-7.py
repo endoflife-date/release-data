@@ -29,8 +29,12 @@ with releasedata.ProductData("red-hat-jboss-eap") as product_data:
             name_str = ''.join([content for content in columns[0].contents if isinstance(content, str)]).strip()
             date_str = columns[1].text.strip()
 
-            if date_str == "TBD": # Placeholder for a future release
+            if date_str == "TBD" or date_str == "TDB": # Placeholder for a future release
                 continue
+
+            if date_str == "[July 21, 2021][d7400]":
+                # Temporary fix for a typo in the source page
+                date_str = "July 21 2021"
 
             name = name_str.replace("GA", "Update 0").replace("Update ", release + ".")
             date = dates.parse_date(date_str)
