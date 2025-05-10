@@ -122,7 +122,7 @@
     "galaxy-z-fold6": {
       "name": "galaxy-z-fold6",
       "releaseLabel": "Galaxy Z Fold6",
-      "eol": false
+      "eol": "2031-07-24"
     },
     "galaxy-z-fold5": {
       "name": "galaxy-z-fold5",
@@ -155,7 +155,7 @@
     "galaxy-z-flip6": {
       "name": "galaxy-z-flip6",
       "releaseLabel": "Galaxy Z Flip6",
-      "eol": false
+      "eol": "2031-07-24"
     },
     "galaxy-z-flip5": {
       "name": "galaxy-z-flip5",
@@ -2037,22 +2037,22 @@
     "galaxy-a06-5g": {
       "name": "galaxy-a06-5g",
       "releaseLabel": "Galaxy A06 5G",
-      "eol": false
+      "eol": "2031-02-19"
     },
     "galaxy-a06": {
       "name": "galaxy-a06",
       "releaseLabel": "Galaxy A06",
-      "eol": false
+      "eol": "2028-08-22"
     },
     "galaxy-a05s": {
       "name": "galaxy-a05s",
       "releaseLabel": "Galaxy A05s",
-      "eol": false
+      "eol": "2027-10-18"
     },
     "galaxy-a05": {
       "name": "galaxy-a05",
       "releaseLabel": "Galaxy A05",
-      "eol": false
+      "eol": "2027-10-15"
     },
     "galaxy-a04s": {
       "name": "galaxy-a04s",
