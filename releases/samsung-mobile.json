@@ -227,42 +227,6 @@
       "name": "galaxy-xcover-3",
       "eol": true
     },
-    "galaxy-watch5-pro": {
-      "name": "galaxy-watch5-pro",
-      "eol": false
-    },
-    "galaxy-watch5": {
-      "name": "galaxy-watch5",
-      "eol": false
-    },
-    "galaxy-watch4-classic": {
-      "name": "galaxy-watch4-classic",
-      "eol": false
-    },
-    "galaxy-watch4": {
-      "name": "galaxy-watch4",
-      "eol": false
-    },
-    "galaxy-watch3": {
-      "name": "galaxy-watch3",
-      "eol": true
-    },
-    "galaxy-watch-active2-aluminum": {
-      "name": "galaxy-watch-active2-aluminum",
-      "eol": true
-    },
-    "galaxy-watch-active2": {
-      "name": "galaxy-watch-active2",
-      "eol": true
-    },
-    "galaxy-watch-active": {
-      "name": "galaxy-watch-active",
-      "eol": true
-    },
-    "galaxy-watch": {
-      "name": "galaxy-watch",
-      "eol": true
-    },
     "galaxy-w": {
       "name": "galaxy-w",
       "eol": true
