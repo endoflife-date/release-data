@@ -127,7 +127,7 @@
     "galaxy-z-fold5": {
       "name": "galaxy-z-fold5",
       "releaseLabel": "Galaxy Z Fold5",
-      "eol": false
+      "eol": "2028-08-11"
     },
     "galaxy-z-fold4": {
       "name": "galaxy-z-fold4",
@@ -146,7 +146,7 @@
     "galaxy-z-fold-special-edition": {
       "name": "galaxy-z-fold-special-edition",
       "releaseLabel": "Galaxy Z Fold Special Edition",
-      "eol": false
+      "eol": "2031-10-24"
     },
     "galaxy-z-fold-2": {
       "name": "galaxy-z-fold-2",
@@ -160,7 +160,7 @@
     "galaxy-z-flip5": {
       "name": "galaxy-z-flip5",
       "releaseLabel": "Galaxy Z Flip5",
-      "eol": false
+      "eol": "2028-08-11"
     },
     "galaxy-z-flip4": {
       "name": "galaxy-z-flip4",
