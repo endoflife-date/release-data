@@ -2,6 +2,7 @@
   "releases": {
     "1.26": {
       "name": "1.26",
+      "eol": "2026-01-31",
       "supportedKubernetesVersions": "1.29 - 1.32"
     },
     "1.25": {
