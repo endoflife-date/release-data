@@ -1,0 +1,59 @@
+{
+  "releases": {
+    "10.0_u7": {
+      "name": "10.0_u7",
+      "releaseLabel": "10.0 Update 7",
+      "releaseDate": "2025-05-06",
+      "eol": "2026-05-06"
+    },
+    "10.0_u6": {
+      "name": "10.0_u6",
+      "releaseLabel": "10.0 Update 6",
+      "releaseDate": "2024-12-03",
+      "eol": "2026-12-03"
+    },
+    "10.0_u5": {
+      "name": "10.0_u5",
+      "releaseLabel": "10.0 Update 5",
+      "releaseDate": "2024-08-06",
+      "eol": "2024-12-03"
+    },
+    "10.0_u4": {
+      "name": "10.0_u4",
+      "releaseLabel": "10.0 Update 4",
+      "releaseDate": "2024-05-15",
+      "eol": "2024-08-06"
+    },
+    "10.0_u3": {
+      "name": "10.0_u3",
+      "releaseLabel": "10.0 Update 3",
+      "releaseDate": "2024-02-12",
+      "eol": "2024-05-15"
+    },
+    "10.0_u2": {
+      "name": "10.0_u2",
+      "releaseLabel": "10.0 Update 2",
+      "releaseDate": "2023-11-28",
+      "eol": "2024-02-12"
+    },
+    "10.0_u1": {
+      "name": "10.0_u1",
+      "releaseLabel": "10.0 Update 1**Still supported exclusively when paired to Zerto 9.7 for Hyper-V, or VMware only when running in Azure VMware Solution (AVS)",
+      "releaseDate": "2023-08-07",
+      "eol": "2023-11-28"
+    },
+    "10.0_u": {
+      "name": "10.0_u",
+      "releaseLabel": "10.0",
+      "releaseDate": "2023-07-05",
+      "eol": "2023-08-07"
+    },
+    "1.0_u": {
+      "name": "1.0_u",
+      "releaseLabel": "1.0 U2",
+      "releaseDate": "2023-11-28",
+      "eol": "2024-02-12"
+    }
+  },
+  "versions": {}
+}
