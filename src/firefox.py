@@ -18,7 +18,7 @@ Note that it was assumed that:
 
 The script will need to be updated if someday those conditions are not met."""
 
-MAX_VERSIONS_LIMIT = 50
+MAX_VERSIONS_LIMIT = 100
 
 with releasedata.ProductData("firefox") as product_data:
     releases_page = http.fetch_url("https://www.mozilla.org/en-US/firefox/releases/")
