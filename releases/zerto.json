@@ -38,21 +38,15 @@
     },
     "10.0_u1": {
       "name": "10.0_u1",
-      "releaseLabel": "10.0 Update 1**Still supported exclusively when paired to Zerto 9.7 for Hyper-V, or VMware only when running in Azure VMware Solution (AVS)",
+      "releaseLabel": "10.0 Update 1",
       "releaseDate": "2023-08-07",
       "eol": "2023-11-28"
     },
-    "10.0_u": {
-      "name": "10.0_u",
+    "10.0": {
+      "name": "10.0",
       "releaseLabel": "10.0",
       "releaseDate": "2023-07-05",
       "eol": "2023-08-07"
-    },
-    "1.0_u": {
-      "name": "1.0_u",
-      "releaseLabel": "1.0 U2",
-      "releaseDate": "2023-11-28",
-      "eol": "2024-02-12"
     }
   },
   "versions": {}
