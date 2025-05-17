@@ -20,11 +20,6 @@
       "eol": true,
       "eoas": true
     },
-    "9.14": {
-      "name": "9.14",
-      "eol": false,
-      "eoas": false
-    },
     "9.12": {
       "name": "9.12",
       "eol": false,

@@ -65,6 +65,9 @@ with releasedata.ProductData("ghc") as product:
 
     for row in series_table[1:]:
         [series, _download_link, _most_recent, next_planned, status] = row
+        if status == "Next major release":
+            continue
+
         series = series.split(' ') [0]
         series = series.replace('\\.', '.')
         if series == "Nightlies":
