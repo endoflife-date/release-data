@@ -1,0 +1,305 @@
+{
+  "releases": {
+    "galaxy-tab-s9-ultra": {
+      "name": "galaxy-tab-s9-ultra",
+      "eol": "2028-08-11"
+    },
+    "galaxy-tab-s9-fe+": {
+      "name": "galaxy-tab-s9-fe+",
+      "eol": "2028-10-04"
+    },
+    "galaxy-tab-s9-fe": {
+      "name": "galaxy-tab-s9-fe",
+      "eol": "2028-10-04"
+    },
+    "galaxy-tab-s9+": {
+      "name": "galaxy-tab-s9+",
+      "eol": "2028-08-11"
+    },
+    "galaxy-tab-s9": {
+      "name": "galaxy-tab-s9",
+      "eol": "2028-08-11"
+    },
+    "galaxy-tab-s8-ultra": {
+      "name": "galaxy-tab-s8-ultra",
+      "eol": "2027-04-30"
+    },
+    "galaxy-tab-s8+": {
+      "name": "galaxy-tab-s8+",
+      "eol": "2027-04-14"
+    },
+    "galaxy-tab-s8": {
+      "name": "galaxy-tab-s8",
+      "eol": "2027-03-22"
+    },
+    "galaxy-tab-s7-fe": {
+      "name": "galaxy-tab-s7-fe",
+      "eol": false
+    },
+    "galaxy-tab-s7+": {
+      "name": "galaxy-tab-s7+",
+      "eol": "2024-08-05"
+    },
+    "galaxy-tab-s7": {
+      "name": "galaxy-tab-s7",
+      "eol": "2024-08-05"
+    },
+    "galaxy-tab-s6-lite-2024": {
+      "name": "galaxy-tab-s6-lite-2024",
+      "eol": false
+    },
+    "galaxy-tab-s6-lite-2020": {
+      "name": "galaxy-tab-s6-lite-2020",
+      "eol": "2024-03-26"
+    },
+    "galaxy-tab-s6-lite": {
+      "name": "galaxy-tab-s6-lite",
+      "eol": false
+    },
+    "galaxy-tab-s6-5g": {
+      "name": "galaxy-tab-s6-5g",
+      "eol": "2024-01-30"
+    },
+    "galaxy-tab-s6": {
+      "name": "galaxy-tab-s6",
+      "eol": "2023-07-31"
+    },
+    "galaxy-tab-s5e": {
+      "name": "galaxy-tab-s5e",
+      "eol": "2023-04-01"
+    },
+    "galaxy-tab-s4-10.5": {
+      "name": "galaxy-tab-s4-10.5",
+      "eol": true
+    },
+    "galaxy-tab-s3-9.7": {
+      "name": "galaxy-tab-s3-9.7",
+      "eol": true
+    },
+    "galaxy-tab-s2-9.7": {
+      "name": "galaxy-tab-s2-9.7",
+      "eol": true
+    },
+    "galaxy-tab-s2-8.0": {
+      "name": "galaxy-tab-s2-8.0",
+      "eol": true
+    },
+    "galaxy-tab-s10-ultra": {
+      "name": "galaxy-tab-s10-ultra",
+      "eol": "2031-10-03"
+    },
+    "galaxy-tab-s10-fe+": {
+      "name": "galaxy-tab-s10-fe+",
+      "eol": "2032-04-03"
+    },
+    "galaxy-tab-s10-fe": {
+      "name": "galaxy-tab-s10-fe",
+      "eol": "2032-04-03"
+    },
+    "galaxy-tab-s10+": {
+      "name": "galaxy-tab-s10+",
+      "eol": "2031-10-03"
+    },
+    "galaxy-tab-s-8.4-lte": {
+      "name": "galaxy-tab-s-8.4-lte",
+      "eol": true
+    },
+    "galaxy-tab-s-8.4": {
+      "name": "galaxy-tab-s-8.4",
+      "eol": true
+    },
+    "galaxy-tab-s-10.5-lte": {
+      "name": "galaxy-tab-s-10.5-lte",
+      "eol": true
+    },
+    "galaxy-tab-s-10.5": {
+      "name": "galaxy-tab-s-10.5",
+      "eol": true
+    },
+    "galaxy-tab-pro-12.2-lte": {
+      "name": "galaxy-tab-pro-12.2-lte",
+      "eol": true
+    },
+    "galaxy-tab-pro-12.2-3g": {
+      "name": "galaxy-tab-pro-12.2-3g",
+      "eol": true
+    },
+    "galaxy-tab-pro-12.2": {
+      "name": "galaxy-tab-pro-12.2",
+      "eol": true
+    },
+    "galaxy-tab-j": {
+      "name": "galaxy-tab-j",
+      "eol": true
+    },
+    "galaxy-tab-e-9.6": {
+      "name": "galaxy-tab-e-9.6",
+      "eol": true
+    },
+    "galaxy-tab-e-8.0": {
+      "name": "galaxy-tab-e-8.0",
+      "eol": true
+    },
+    "galaxy-tab-advanced2": {
+      "name": "galaxy-tab-advanced2",
+      "eol": true
+    },
+    "galaxy-tab-active5": {
+      "name": "galaxy-tab-active5",
+      "eol": "2029-01-23"
+    },
+    "galaxy-tab-active4-pro": {
+      "name": "galaxy-tab-active4-pro",
+      "eol": "2027-08-31"
+    },
+    "galaxy-tab-active3": {
+      "name": "galaxy-tab-active3",
+      "eol": "2024-09-28"
+    },
+    "galaxy-tab-active2": {
+      "name": "galaxy-tab-active2",
+      "eol": true
+    },
+    "galaxy-tab-active-pro": {
+      "name": "galaxy-tab-active-pro",
+      "eol": "2023-10-01"
+    },
+    "galaxy-tab-active-lte": {
+      "name": "galaxy-tab-active-lte",
+      "eol": true
+    },
+    "galaxy-tab-active": {
+      "name": "galaxy-tab-active",
+      "eol": true
+    },
+    "galaxy-tab-a9+": {
+      "name": "galaxy-tab-a9+",
+      "eol": "2027-10-23"
+    },
+    "galaxy-tab-a9": {
+      "name": "galaxy-tab-a9",
+      "eol": "2027-10-23"
+    },
+    "galaxy-tab-a8": {
+      "name": "galaxy-tab-a8",
+      "eol": false
+    },
+    "galaxy-tab-a7-lite": {
+      "name": "galaxy-tab-a7-lite",
+      "eol": false
+    },
+    "galaxy-tab-a7-10.4-2022": {
+      "name": "galaxy-tab-a7-10.4-2022",
+      "eol": false
+    },
+    "galaxy-tab-a7-10.4-2020": {
+      "name": "galaxy-tab-a7-10.4-2020",
+      "eol": "2024-08-10"
+    },
+    "galaxy-tab-a-9.7-and-s-pen": {
+      "name": "galaxy-tab-a-9.7-and-s-pen",
+      "eol": true
+    },
+    "galaxy-tab-a-9.7": {
+      "name": "galaxy-tab-a-9.7",
+      "eol": true
+    },
+    "galaxy-tab-a-8.4-2020": {
+      "name": "galaxy-tab-a-8.4-2020",
+      "eol": "2024-03-25"
+    },
+    "galaxy-tab-a-8.0-with-s-pen-2019": {
+      "name": "galaxy-tab-a-8.0-with-s-pen-2019",
+      "eol": "2023-04-01"
+    },
+    "galaxy-tab-a-8.0-and-s-pen-2015": {
+      "name": "galaxy-tab-a-8.0-and-s-pen-2015",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-2019": {
+      "name": "galaxy-tab-a-8.0-2019",
+      "eol": "2023-07-01"
+    },
+    "galaxy-tab-a-8.0-2018": {
+      "name": "galaxy-tab-a-8.0-2018",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-2017": {
+      "name": "galaxy-tab-a-8.0-2017",
+      "eol": true
+    },
+    "galaxy-tab-a-8.0-2015": {
+      "name": "galaxy-tab-a-8.0-2015",
+      "eol": true
+    },
+    "galaxy-tab-a-7.0-2016": {
+      "name": "galaxy-tab-a-7.0-2016",
+      "eol": true
+    },
+    "galaxy-tab-a-10.5-2018": {
+      "name": "galaxy-tab-a-10.5-2018",
+      "eol": true
+    },
+    "galaxy-tab-a-10.1-2019": {
+      "name": "galaxy-tab-a-10.1-2019",
+      "eol": true
+    },
+    "galaxy-tab-a-10.1-2016": {
+      "name": "galaxy-tab-a-10.1-2016",
+      "eol": true
+    },
+    "galaxy-tab-4-8.0-lte": {
+      "name": "galaxy-tab-4-8.0-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-8.0-3g": {
+      "name": "galaxy-tab-4-8.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-8.0": {
+      "name": "galaxy-tab-4-8.0",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0-lte": {
+      "name": "galaxy-tab-4-7.0-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0-3g": {
+      "name": "galaxy-tab-4-7.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-7.0": {
+      "name": "galaxy-tab-4-7.0",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1-lte": {
+      "name": "galaxy-tab-4-10.1-lte",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1-3g": {
+      "name": "galaxy-tab-4-10.1-3g",
+      "eol": true
+    },
+    "galaxy-tab-4-10.1": {
+      "name": "galaxy-tab-4-10.1",
+      "eol": true
+    },
+    "galaxy-tab-3-v": {
+      "name": "galaxy-tab-3-v",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0-ve": {
+      "name": "galaxy-tab-3-lite-7.0-ve",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0-3g": {
+      "name": "galaxy-tab-3-lite-7.0-3g",
+      "eol": true
+    },
+    "galaxy-tab-3-lite-7.0": {
+      "name": "galaxy-tab-3-lite-7.0",
+      "eol": true
+    }
+  },
+  "versions": {}
+}
