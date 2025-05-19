@@ -704,10 +704,6 @@
       "releaseLabel": "Galaxy M53 5G",
       "eol": false
     },
-    "galaxy-m53": {
-      "name": "galaxy-m53",
-      "eol": "2025-04-22"
-    },
     "galaxy-m52-5g": {
       "name": "galaxy-m52-5g",
       "eol": false,
