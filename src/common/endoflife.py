@@ -47,6 +47,9 @@ class AutoConfig:
 
         return None
 
+    def is_excluded(self, version: str) -> bool:
+        return self.first_match(version) is None
+
     def render(self, match: re.Match) -> str:
         return self.version_template.render(**match.groupdict())
 
