@@ -102,6 +102,12 @@
       "releaseDate": "2013-10-22",
       "eol": "2018-04-10"
     },
+    "pro-12-inch": {
+      "name": "pro-12-inch",
+      "releaseLabel": "Surface Pro 12-inch",
+      "releaseDate": "2025-05-20",
+      "eol": "2031-05-20"
+    },
     "pro-11th-edition-snapdragon-processor": {
       "name": "pro-11th-edition-snapdragon-processor",
       "releaseLabel": "Surface Pro 11th Edition, Snapdragon processor",
@@ -220,6 +226,12 @@
       "releaseLabel": "Surface Laptop (1st gen)",
       "releaseDate": "2017-06-14",
       "eol": "2021-11-13"
+    },
+    "laptop-13-inch": {
+      "name": "laptop-13-inch",
+      "releaseLabel": "Surface Laptop 13-inch",
+      "releaseDate": "2025-05-20",
+      "eol": "2031-05-20"
     },
     "go-with-lte-advanced": {
       "name": "go-with-lte-advanced",
