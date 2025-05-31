@@ -1,16 +1,45 @@
+import logging
+import sys
+
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
-with releasedata.ProductData("graalvm") as product_data:
-    release_calendar = http.fetch_url("https://www.graalvm.org/release-calendar/")
-    release_calendar_soup = BeautifulSoup(release_calendar.text, features="html5lib")
+p_filter = sys.argv[1] if len(sys.argv) > 1 else None
+m_filter = sys.argv[2] if len(sys.argv) > 2 else None
+for config in endoflife.list_configs(p_filter, "graalvm", m_filter):
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url)
+        html = BeautifulSoup(response.text, features="html5lib")
+        table_selector = config.data.get("table_selector", "#previous-releases + table").strip()
+        date_column = config.data.get("date_column", "Date").strip().lower()
+        versions_column = config.data.get("versions_column").strip().lower()
 
-    for tr in release_calendar_soup.find("h2", id="previous-releases").find_next("table").find("tbody").findAll("tr"):
-        cells = tr.findAll("td")
-        date = dates.parse_date(cells[0].get_text())
+        table = html.select_one(table_selector)
+        if not table:
+            logging.warning(f"Skipping config {config} as no table found with selector {table_selector}")
+            continue
 
-        # 'GraalVM for JDK' versions has to be prefixed as their release cycle collide with older
-        # GraalVM release cycles. Example: GraalVM for JDK 20 and 20.0.
-        versions_str = cells[2].get_text().replace("GraalVM for JDK ", "jdk-")
-        for version in versions_str.split(", "):
-            product_data.declare_version(version, date)
+        headers = [th.get_text().strip().lower() for th in table.select("thead th")]
+        if date_column not in headers or versions_column not in headers:
+            logging.info(f"Skipping table with headers {headers} as it does not contain the required columns: {date_column}, {versions_column}")
+            continue
+
+        date_index = headers.index(date_column)
+        versions_index = headers.index(versions_column)
+
+        for row in table.select("tbody tr"):
+            cells = row.select("td")
+            if len(cells) <= max(date_index, versions_index):
+                logging.warning(f"Skipping row {cells}: not enough cells")
+                continue
+
+            date_text = cells[date_index].get_text().strip()
+            date = dates.parse_date(date_text)
+            if date > dates.today():
+                logging.info(f"Skipping future version {cells}")
+                continue
+
+            versions = cells[versions_index].get_text().strip()
+            for version in versions.split(", "):
+                if config.first_match(version):
+                    product_data.declare_version(version.strip(), date)
