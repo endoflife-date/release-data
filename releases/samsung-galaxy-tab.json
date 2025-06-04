@@ -64,7 +64,7 @@
     },
     "galaxy-tab-s6-lite": {
       "name": "galaxy-tab-s6-lite",
-      "eol": false,
+      "eol": "2025-06-04",
       "releaseLabel": "Galaxy Tab S6 Lite"
     },
     "galaxy-tab-s6-5g": {
@@ -159,6 +159,11 @@
       "name": "galaxy-tab-advanced2",
       "eol": true
     },
+    "galaxy-tab-active5-pro": {
+      "name": "galaxy-tab-active5-pro",
+      "releaseLabel": "Galaxy Tab Active5 Pro",
+      "eol": false
+    },
     "galaxy-tab-active5": {
       "name": "galaxy-tab-active5",
       "eol": "2029-01-23",
@@ -207,7 +212,7 @@
     },
     "galaxy-tab-a7-lite": {
       "name": "galaxy-tab-a7-lite",
-      "eol": false,
+      "eol": "2025-06-04",
       "releaseLabel": "Galaxy Tab A7 Lite"
     },
     "galaxy-tab-a7-10.4-2022": {

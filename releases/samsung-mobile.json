@@ -184,6 +184,11 @@
       "name": "galaxy-young-2",
       "eol": true
     },
+    "galaxy-xcover7-pro": {
+      "name": "galaxy-xcover7-pro",
+      "releaseLabel": "Galaxy XCover7 Pro",
+      "eol": false
+    },
     "galaxy-xcover7": {
       "name": "galaxy-xcover7",
       "eol": "2031-01-01",
@@ -379,6 +384,11 @@
       "name": "galaxy-s25-ultra",
       "eol": "2032-02-03",
       "releaseLabel": "Galaxy S25 Ultra"
+    },
+    "galaxy-s25-edge": {
+      "name": "galaxy-s25-edge",
+      "releaseLabel": "Galaxy S25 Edge",
+      "eol": false
     },
     "galaxy-s25+": {
       "name": "galaxy-s25+",
@@ -720,7 +730,7 @@
     },
     "galaxy-m42-5g": {
       "name": "galaxy-m42-5g",
-      "eol": false,
+      "eol": "2025-06-04",
       "releaseLabel": "Galaxy M42 5G"
     },
     "galaxy-m40": {
@@ -1103,6 +1113,11 @@
     "galaxy-f62": {
       "name": "galaxy-f62",
       "eol": "2024-02-22"
+    },
+    "galaxy-f56-5g": {
+      "name": "galaxy-f56-5g",
+      "releaseLabel": "Galaxy F56 5G",
+      "eol": false
     },
     "galaxy-f55-5g": {
       "name": "galaxy-f55-5g",
