@@ -1,14 +1,9 @@
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
-URLS = [
-    # Disable, it causes too many timeouts / errors
-    # "https://web.archive.org/web/20210123024247/https://www.ibm.com/support/pages/aix-support-lifecycle-information",
-    "https://www.ibm.com/support/pages/aix-support-lifecycle-information",
-]
-
-with releasedata.ProductData("ibm-aix") as product_data:
-    for page in http.fetch_urls(URLS):
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        page = http.fetch_url(config.url)
         page_soup = BeautifulSoup(page.text, features="html5lib")
 
         for release_table in page_soup.find("div", class_="ibm-container-body").find_all("table", class_="ibm-data-table ibm-grid"):

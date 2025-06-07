@@ -1,16 +1,9 @@
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
-# There is no build history for versions 2015 and below.
-# This is not a big deal because there was no version for those releases in a very long time.
-URLS = [
-    "https://learn.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes-history",
-    "https://learn.microsoft.com/en-us/visualstudio/releases/2019/history",
-    "https://learn.microsoft.com/en-us/visualstudio/releases/2022/release-history",
-]
-
-with releasedata.ProductData("visual-studio") as product_data:
-    for response in http.fetch_urls(URLS):
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url)
         soup = BeautifulSoup(response.text, features="html5lib")
 
         for table in soup.find_all("table"):
@@ -29,5 +22,5 @@ with releasedata.ProductData("visual-studio") as product_data:
                 date = cells[date_index].get_text().strip()
                 date = dates.parse_date(date)
 
-                if date and version and endoflife.DEFAULT_VERSION_PATTERN.match(version):
+                if date and version and config.first_match(version):
                     product_data.declare_version(version, date)

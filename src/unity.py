@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
 """Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there, so this automation
 is only partial.
@@ -17,11 +17,12 @@ Note that it was assumed that:
 
 The script will need to be updated if someday those conditions are not met."""
 
-with releasedata.ProductData("unity") as product_data:
-    response = http.fetch_url("https://unity.com/releases/editor/qa/lts-releases")
-    soup = BeautifulSoup(response.text, features="html5lib")
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url)
+        soup = BeautifulSoup(response.text, features="html5lib")
 
-    for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
-        version = release.find('h4').find('span').text
-        date = dates.parse_datetime(release.find('time').attrs['datetime'])
-        product_data.declare_version(version, date)
+        for release in soup.find_all('div', class_='component-releases-item__show__inner-header'):
+            version = release.find('h4').find('span').text
+            date = dates.parse_datetime(release.find('time').attrs['datetime'])
+            product_data.declare_version(version, date)

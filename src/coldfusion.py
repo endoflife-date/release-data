@@ -1,22 +1,13 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
 """Fetches versions from Adobe ColdFusion release notes on helpx.adobe.com.
 
 x.y.0 release dates are unfortunately not available in the release notes and have to updated them manually each time a
 new minor version is released.
 """
-
-URLS = [
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-10-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-11-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2016-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2018-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2021-updates.html",
-    "https://helpx.adobe.com/coldfusion/kb/coldfusion-2023-updates.html",
-]
 
 VERSION_AND_DATE_PATTERN = re.compile(r"Release Date[,|:]? (.*?)\).*?Build Number: (.*?)$",
                                       re.DOTALL | re.MULTILINE | re.IGNORECASE)
@@ -31,8 +22,9 @@ FIXED_VERSIONS = {
     "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
-with releasedata.ProductData("coldfusion") as product_data:
-    for changelog in http.fetch_urls(URLS):
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        changelog = http.fetch_url(config.url)
         changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
 
         for p in changelog_soup.findAll("div", class_="text"):
@@ -42,4 +34,4 @@ with releasedata.ProductData("coldfusion") as product_data:
                 version = version_str.strip().replace(",", ".")  # 11,0,0,289974 -> 11.0.0.289974
                 product_data.declare_version(version, date)
 
-    product_data.declare_versions(FIXED_VERSIONS)
+        product_data.declare_versions(FIXED_VERSIONS)

@@ -2,6 +2,7 @@ import itertools
 import logging
 import os
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -21,11 +22,10 @@ class AutoConfig:
     def __init__(self, product: str, data: dict) -> None:
         self.product = product
         self.data = data
-        self.method = next(key for key in data if key not in ("template", "regex", "regex_exclude"))
+        self.method = next(key for key in data) # assuming the method is always the first key in the dictionary
+        self.script = f"{self.method}.py"
         self.url = data[self.method]
         self.version_template = Template(data.get("template", DEFAULT_VERSION_TEMPLATE))
-
-        self.script = f"{self.url}.py" if self.method == "custom" else f"{self.method}.py"
 
         regexes_include = data.get("regex", DEFAULT_VERSION_REGEX)
         regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
@@ -127,16 +127,21 @@ def list_products(products_filter: str = None) -> list[ProductFrontmatter]:
 
 
 def list_configs(products_filter: str = None, methods_filter: str = None, urls_filter: str = None) -> list[AutoConfig]:
+    """Return a list of auto configs, filtering by product name, method, and URL."""
     products = list_products(products_filter)
     configs_by_product = [p.auto_configs(methods_filter, urls_filter) for p in products]
     return list(itertools.chain.from_iterable(configs_by_product))  # flatten the list of lists
 
-"""Convert a string to a valid endoflife.date identifier."""
+
+def list_configs_from_argv() -> list[AutoConfig]:
+    products_filter = sys.argv[1] if len(sys.argv) > 1 else None
+    methods_filter = sys.argv[2] if len(sys.argv) > 1 else None
+    urls_filter = sys.argv[3] if len(sys.argv) > 2 else None
+    return list_configs(products_filter, methods_filter, urls_filter)
+
+
 def to_identifier(s: str) -> str:
+    """Convert a string to a valid endoflife.date identifier."""
     identifier = s.strip().lower()
     identifier = identifier.replace(" ", "-")
     return re.sub(r"[^a-z0-9.\-+_]", "", identifier)
-
-
-
-    return s.lower().replace(" ", "_").replace(".", "_").replace("/", "_")

@@ -1,34 +1,32 @@
+import logging
+
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches EKS versions from AWS docs.
-Now that AWS no longer publishes docs on GitHub, we use the Web Archive to still get the older versions."""
+Now that AWS no longer publishes docs on GitHub, we use the Web Archive to get the older versions."""
 
-URLS = [
-    # 1.19.eks.1
-    "https://web.archive.org/web/20221007150452/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
-    # + 1.20
-    "https://web.archive.org/web/20230521061347/https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
-    # + latest
-    "https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html",
-]
-
-with releasedata.ProductData("amazon-eks") as product_data:
-    for version_list in http.fetch_urls(URLS):
-        version_list_soup = BeautifulSoup(version_list.text, features="html5lib")
-        for tr in version_list_soup.select("#main-col-body")[0].findAll("tr"):
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url)
+        html = BeautifulSoup(response.text, features="html5lib")
+        for tr in html.select("#main-col-body")[0].findAll("tr"):
             cells = tr.findAll("td")
             if not cells:
                 continue
 
-            k8s_version = cells[0].text.strip()
-            eks_version = cells[1].text.strip()
+            k8s_version_text = cells[0].text.strip()
+            k8s_version_match = config.first_match(k8s_version_text)
+            if not k8s_version_match:
+                logging.warning(f"Skipping {k8s_version_text}: does not match version regex(es)")
+                continue
 
-            k8s_version_match = endoflife.DEFAULT_VERSION_PATTERN.match(k8s_version)
-            if k8s_version_match:
-                date_str = cells[-1].text.strip()
-                date_str = date_str.replace("April 18.2025", "April 18 2025") # temporary fix for a typo in the source
-                date = dates.parse_date_or_month_year_date(date_str)
-                # K8S patch version is not kept to match versions on https://github.com/aws/eks-distro/tags.
-                version = f"{k8s_version_match.group('major')}.{k8s_version_match.group('minor')}-{eks_version.replace('.', '-')}"
-                product_data.declare_version(version, date)
+            eks_version = cells[1].text.strip()
+            # K8S patch version is not kept to match versions on https://github.com/aws/eks-distro/tags
+            version = f"{k8s_version_match.group('major')}.{k8s_version_match.group('minor')}-{eks_version.replace('.', '-')}"
+
+            date_str = cells[-1].text.strip()
+            date_str = date_str.replace("April 18.2025", "April 18 2025") # temporary fix for a typo in the source
+            date = dates.parse_date_or_month_year_date(date_str)
+
+            product_data.declare_version(version, date)
