@@ -162,7 +162,7 @@
     "galaxy-tab-active5-pro": {
       "name": "galaxy-tab-active5-pro",
       "releaseLabel": "Galaxy Tab Active5 Pro",
-      "eol": false
+      "eol": "2030-05-07"
     },
     "galaxy-tab-active5": {
       "name": "galaxy-tab-active5",
