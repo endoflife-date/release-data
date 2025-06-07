@@ -388,7 +388,7 @@
     "galaxy-s25-edge": {
       "name": "galaxy-s25-edge",
       "releaseLabel": "Galaxy S25 Edge",
-      "eol": false
+      "eol": "2032-05-29"
     },
     "galaxy-s25+": {
       "name": "galaxy-s25+",
@@ -1117,7 +1117,7 @@
     "galaxy-f56-5g": {
       "name": "galaxy-f56-5g",
       "releaseLabel": "Galaxy F56 5G",
-      "eol": false
+      "eol": "2031-05-14"
     },
     "galaxy-f55-5g": {
       "name": "galaxy-f55-5g",
