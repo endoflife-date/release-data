@@ -1,7 +1,7 @@
 from pathlib import Path
 from subprocess import run
 
-from common import dates, releasedata
+from common import dates, endoflife, releasedata
 from common.git import Git
 
 """Fetch Debian versions by parsing news in www.debian.org source repository."""
@@ -40,11 +40,11 @@ def extract_point_versions(p: releasedata.ProductData, repo_dir: Path) -> None:
         (date, version) = line.split(' ')
         p.declare_version(version, dates.parse_date(date))
 
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        git = Git(config.url)
+        git.setup()
+        git.checkout("master", file_list=["english/News"])
 
-with releasedata.ProductData("debian") as product_data:
-    git = Git("https://salsa.debian.org/webmaster-team/webwml.git")
-    git.setup()
-    git.checkout("master", file_list=["english/News"])
-
-    extract_major_versions(product_data, git.repo_dir)
-    extract_point_versions(product_data, git.repo_dir)
+        extract_major_versions(product_data, git.repo_dir)
+        extract_point_versions(product_data, git.repo_dir)

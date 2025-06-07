@@ -1,12 +1,6 @@
-import sys
-
 from common import dates, endoflife, http, releasedata
 
-METHOD = "npm"
-
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-m_filter = sys.argv[2] if len(sys.argv) > 2 else None
-for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         data = http.fetch_url(f"https://registry.npmjs.org/{config.url}").json()
         for version_str in data["versions"]:

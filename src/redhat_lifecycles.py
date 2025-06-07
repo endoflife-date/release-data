@@ -1,5 +1,4 @@
 import logging
-import sys
 import urllib.parse
 
 from common import dates, endoflife, http, releasedata
@@ -11,9 +10,6 @@ This script works based on a definition provided in the product's frontmatter to
 More information on https://docs.redhat.com/documentation/red_hat_product_life_cycle_data_api/.
 """
 
-METHOD = "redhat_lifecycles"
-
-
 class Mapping:
     def __init__(self, phases_by_field: dict[str, str]) -> None:
         self.fields_by_phase = {v.lower(): k for k, v in phases_by_field.items()}
@@ -21,9 +17,7 @@ class Mapping:
     def get_field_for(self, phase_name: str) -> str | None:
         return self.fields_by_phase.get(phase_name.lower(), None)
 
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-m_filter = sys.argv[2] if len(sys.argv) > 2 else None
-for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         name = urllib.parse.quote(config.url)
         mapping = Mapping(config.data["fields"])

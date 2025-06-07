@@ -1,6 +1,5 @@
 import logging
 import re
-import sys
 from datetime import date, datetime, time, timezone
 
 from bs4 import BeautifulSoup
@@ -14,9 +13,7 @@ it retains the date and use it as the model's EOL date.
 
 TODAY = dates.today()
 
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-m_filter = sys.argv[2] if len(sys.argv) > 2 else None
-for config in endoflife.list_configs(p_filter, 'samsung-security', m_filter):
+for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         frontmatter = endoflife.ProductFrontmatter(product_data.name)
         frontmatter_release_names = frontmatter.get_release_names()

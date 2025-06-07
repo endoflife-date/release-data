@@ -2,34 +2,34 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
 """Fetches releases from VirtualBox download page."""
 
-RELEASE_REGEX = re.compile(r"^VirtualBox (?P<value>\d+\.\d+)$")
 EOL_REGEX = re.compile(r"^\(no longer supported, support ended (?P<value>\d{4}/\d{2})\)$")
 
-with releasedata.ProductData("virtualbox") as product_data:
-    response = http.fetch_url("https://www.virtualbox.org/wiki/Download_Old_Builds")
-    soup = BeautifulSoup(response.text, features="html5lib")
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product_data:
+        response = http.fetch_url(config.url)
+        soup = BeautifulSoup(response.text, features="html5lib")
 
-    for li in soup.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
-        li_text = li.find("a").text.strip()
+        for li in soup.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
+            li_text = li.find("a").text.strip()
 
-        release_match = RELEASE_REGEX.match(li_text)
-        if not release_match:
-            logging.info(f"Skipping '{li_text}': does not match {RELEASE_REGEX}")
-            continue
+            release_match = config.first_match(li_text)
+            if not release_match:
+                logging.info(f"Skipping '{li_text}': does not match expected pattern")
+                continue
 
-        release_name = release_match.group("value")
-        release = product_data.get_release(release_name)
+            release_name = release_match.group("value")
+            release = product_data.get_release(release_name)
 
-        eol_text = li.find("em").text.lower().strip()
-        eol_match = EOL_REGEX.match(eol_text)
-        if not eol_match:
-            logging.info(f"Ignoring '{eol_text}': does not match {EOL_REGEX}")
-            continue
+            eol_text = li.find("em").text.lower().strip()
+            eol_match = EOL_REGEX.match(eol_text)
+            if not eol_match:
+                logging.info(f"Ignoring '{eol_text}': does not match {EOL_REGEX}")
+                continue
 
-        eol_date_str = eol_match.group("value")
-        eol_date = dates.parse_month_year_date(eol_date_str)
-        release.set_eol(eol_date)
+            eol_date_str = eol_match.group("value")
+            eol_date = dates.parse_month_year_date(eol_date_str)
+            release.set_eol(eol_date)

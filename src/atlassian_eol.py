@@ -1,31 +1,24 @@
 import logging
-import re
-import sys
 
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches EOL dates from Atlassian EOL page.
 
-This script takes a single argument which is the product title identifier on the Atlassian EOL page, such as
+This script takes a selector argument which is the product title identifier on the Atlassian EOL page, such as
 `AtlassianSupportEndofLifePolicy-JiraSoftware`.
 """
 
-METHOD = "atlassian_eol"
-REGEX = r"(?P<release>\d+(\.\d+)+) \(EO[SL] date: (?P<date>.+)\).*$"
-PATTERN = re.compile(REGEX, re.MULTILINE)
-
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-m_filter = sys.argv[2] if len(sys.argv) > 2 else None
-for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        content = http.fetch_javascript_url('https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html')
+        content = http.fetch_javascript_url(config.url)
         soup = BeautifulSoup(content, features="html5lib")
 
-        for li in soup.select(f"#{config.url}+ul li"):
-            match = PATTERN.match(li.get_text(strip=True))
+        # Find the section with the EOL dates
+        for li in soup.select(f"#{config.data.get('selector')}+ul li"):
+            match = config.first_match(li.get_text(strip=True))
             if not match:
-                logging.warning(f"Failed to parse EOL date from '{li.get_text(strip=True)}'")
+                logging.warning(f"Skipping '{li.get_text(strip=True)}', no match found")
                 continue
 
             release_name = match.group("release")

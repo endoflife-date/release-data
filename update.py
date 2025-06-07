@@ -87,7 +87,7 @@ def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: Scrip
     logging.info(f"start running {script} for {config}")
     start = time.perf_counter()
     # timeout is handled in child scripts
-    child = subprocess.run([sys.executable, script, config.product, str(config.url)])
+    child = subprocess.run([sys.executable, script, config.product,  str(config.method), str(config.url)])
     success = child.returncode == 0
     elapsed_seconds = time.perf_counter() - start
 

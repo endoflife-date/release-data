@@ -1,14 +1,8 @@
-import sys
-
 from common import dates, endoflife, http, releasedata
 
 """Fetch Nutanix products versions from https://portal.nutanix.com/api/v1."""
 
-METHOD = 'nutanix'
-
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-m_filter = sys.argv[2] if len(sys.argv) > 2 else None
-for config in endoflife.list_configs(p_filter, METHOD, m_filter):
+for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         url = f"https://portal.nutanix.com/api/v1/eol/find?type={config.url}"
         data = http.fetch_url(url).json()

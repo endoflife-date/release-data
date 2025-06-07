@@ -14,7 +14,7 @@ References:
 import re
 from typing import Any, Generator, Iterator
 
-from common import dates, http, releasedata
+from common import dates, endoflife, http, releasedata
 
 
 def parse_markdown_tables(lineiter: Iterator[str]) -> Generator[list[list[Any]], Any, None]:
@@ -50,40 +50,41 @@ def maybe_markdown_table_row(line: str) -> list[str] | None:
         return None
     return [x.strip() for x in line.strip('|').split('|')]
 
-with releasedata.ProductData("ghc") as product:
-    resp = http.fetch_url("https://gitlab.haskell.org/api/v4/projects/1/wikis/GHC-Status")
-    resp.raise_for_status()
-    data = resp.json()
-    assert data['title'] == "GHC Status"
-    assert data['format'] == "markdown"
-    md = data['content'].splitlines()
+for config in endoflife.list_configs_from_argv():
+    with releasedata.ProductData(config.product) as product:
+        resp = http.fetch_url(config.url)
+        resp.raise_for_status()
+        data = resp.json()
+        assert data['title'] == "GHC Status"
+        assert data['format'] == "markdown"
+        md = data['content'].splitlines()
 
-    #-- Parse tables out of the wiki text. At time of writing, the script expects exactly two:
-    #-- 1. "Most recent major" with 5 columns
-    #-- 2. "All released versions" with 5 columns
-    [series_table, patch_level] = parse_markdown_tables(iter(md))
+        #-- Parse tables out of the wiki text. At time of writing, the script expects exactly two:
+        #-- 1. "Most recent major" with 5 columns
+        #-- 2. "All released versions" with 5 columns
+        [series_table, patch_level] = parse_markdown_tables(iter(md))
 
-    for row in series_table[1:]:
-        [series, _download_link, _most_recent, next_planned, status] = row
-        if status == "Next major release":
-            continue
+        for row in series_table[1:]:
+            [series, _download_link, _most_recent, next_planned, status] = row
+            if status == "Next major release":
+                continue
 
-        series = series.split(' ') [0]
-        series = series.replace('\\.', '.')
-        if series == "Nightlies":
-            continue
-        status = status.lower()
+            series = series.split(' ')[0]
+            series = series.replace('\\.', '.')
+            if series == "Nightlies":
+                continue
+            status = status.lower()
 
-        #-- See discussion in https://github.com/endoflife-date/endoflife.date/pull/6287
-        r = product.get_release(series)
-        #-- The clearest semblance of an EOL signal we get
-        r.set_eol("not recommended for use" in status or ":red_circle:" in status)
-        #-- eoasColumn label is "Further releases planned"
-        r.set_eoas(any(keyword in next_planned for keyword in ("None",  "N/A")))
+            #-- See discussion in https://github.com/endoflife-date/endoflife.date/pull/6287
+            r = product.get_release(series)
+            #-- The clearest semblance of an EOL signal we get
+            r.set_eol("not recommended for use" in status or ":red_circle:" in status)
+            #-- eoasColumn label is "Further releases planned"
+            r.set_eoas(any(keyword in next_planned for keyword in ("None",  "N/A")))
 
-    for row in patch_level[1:]:
-        [milestone, _download_link, date, _ticket, _manager] = row
-        version = milestone.lstrip('%')
-        version = version.split(' ') [0]
-        date = dates.parse_date(date)
-        product.declare_version(version, date)
+        for row in patch_level[1:]:
+            [milestone, _download_link, date, _ticket, _manager] = row
+            version = milestone.lstrip('%')
+            version = version.split(' ') [0]
+            date = dates.parse_date(date)
+            product.declare_version(version, date)
