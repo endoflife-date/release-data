@@ -38,6 +38,22 @@
     }
   },
   "versions": {
+    "12.0.1+security-01": {
+      "name": "12.0.1+security-01",
+      "date": "2025-06-13"
+    },
+    "11.6.2+security-01": {
+      "name": "11.6.2+security-01",
+      "date": "2025-06-13"
+    },
+    "11.5.5+security-01": {
+      "name": "11.5.5+security-01",
+      "date": "2025-06-13"
+    },
+    "11.4.5+security-01": {
+      "name": "11.4.5+security-01",
+      "date": "2025-06-13"
+    },
     "11.3.7+security-01": {
       "name": "11.3.7+security-01",
       "date": "2025-06-12"
