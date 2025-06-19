@@ -3,177 +3,247 @@
     "9": {
       "name": "9",
       "releaseDate": "2020-05-19",
-      "eol": "2021-03-02"
+      "eol": "2021-03-02",
+      "chromeVersion": "M83",
+      "nodeVersion": "12"
     },
     "8": {
       "name": "8",
       "releaseDate": "2020-02-04",
-      "eol": "2020-11-17"
+      "eol": "2020-11-17",
+      "chromeVersion": "M80",
+      "nodeVersion": "12"
     },
     "7": {
       "name": "7",
       "releaseDate": "2019-10-22",
-      "eol": "2020-08-25"
+      "eol": "2020-08-25",
+      "chromeVersion": "M78",
+      "nodeVersion": "12"
     },
     "6": {
       "name": "6",
       "releaseDate": "2019-07-30",
-      "eol": "2020-05-19"
+      "eol": "2020-05-19",
+      "chromeVersion": "M76",
+      "nodeVersion": "12"
     },
     "5": {
       "name": "5",
       "releaseDate": "2019-04-23",
-      "eol": "2020-02-04"
+      "eol": "2020-02-04",
+      "chromeVersion": "M73",
+      "nodeVersion": "12"
     },
     "4": {
       "name": "4",
       "releaseDate": "2018-12-20",
-      "eol": "2019-10-22"
+      "eol": "2019-10-22",
+      "chromeVersion": "M69",
+      "nodeVersion": "10"
     },
     "36": {
       "name": "36",
       "releaseDate": "2025-04-29",
-      "eol": "2025-10-28"
+      "eol": "2025-10-28",
+      "chromeVersion": "M136",
+      "nodeVersion": "22"
     },
     "35": {
       "name": "35",
       "releaseDate": "2025-03-04",
-      "eol": "2025-09-02"
+      "eol": "2025-09-02",
+      "chromeVersion": "M134",
+      "nodeVersion": "22"
     },
     "34": {
       "name": "34",
       "releaseDate": "2025-01-14",
-      "eol": "2025-06-24"
+      "eol": "2025-06-24",
+      "chromeVersion": "M132",
+      "nodeVersion": "20"
     },
     "33": {
       "name": "33",
       "releaseDate": "2024-10-15",
-      "eol": "2025-04-29"
+      "eol": "2025-04-29",
+      "chromeVersion": "M130",
+      "nodeVersion": "20"
     },
     "32": {
       "name": "32",
       "releaseDate": "2024-08-20",
-      "eol": "2025-03-04"
+      "eol": "2025-03-04",
+      "chromeVersion": "M128",
+      "nodeVersion": "20"
     },
     "31": {
       "name": "31",
       "releaseDate": "2024-06-11",
-      "eol": "2025-01-14"
+      "eol": "2025-01-14",
+      "chromeVersion": "M126",
+      "nodeVersion": "20"
     },
     "30": {
       "name": "30",
       "releaseDate": "2024-04-16",
-      "eol": "2024-10-15"
+      "eol": "2024-10-15",
+      "chromeVersion": "M124",
+      "nodeVersion": "20"
     },
     "3": {
       "name": "3",
       "releaseDate": "2018-09-18",
-      "eol": "2019-07-30"
+      "eol": "2019-07-30",
+      "chromeVersion": "M66",
+      "nodeVersion": "10"
     },
     "29": {
       "name": "29",
       "releaseDate": "2024-02-20",
-      "eol": "2024-08-20"
+      "eol": "2024-08-20",
+      "chromeVersion": "M122",
+      "nodeVersion": "20"
     },
     "28": {
       "name": "28",
       "releaseDate": "2023-12-05",
-      "eol": "2024-06-11"
+      "eol": "2024-06-11",
+      "chromeVersion": "M120",
+      "nodeVersion": "18"
     },
     "27": {
       "name": "27",
       "releaseDate": "2023-10-10",
-      "eol": "2024-04-16"
+      "eol": "2024-04-16",
+      "chromeVersion": "M118",
+      "nodeVersion": "18"
     },
     "26": {
       "name": "26",
       "releaseDate": "2023-08-15",
-      "eol": "2024-02-20"
+      "eol": "2024-02-20",
+      "chromeVersion": "M116",
+      "nodeVersion": "18"
     },
     "25": {
       "name": "25",
       "releaseDate": "2023-05-30",
-      "eol": "2023-12-05"
+      "eol": "2023-12-05",
+      "chromeVersion": "M114",
+      "nodeVersion": "18"
     },
     "24": {
       "name": "24",
       "releaseDate": "2023-04-04",
-      "eol": "2023-10-10"
+      "eol": "2023-10-10",
+      "chromeVersion": "M112",
+      "nodeVersion": "18"
     },
     "23": {
       "name": "23",
       "releaseDate": "2023-02-07",
-      "eol": "2023-08-15"
+      "eol": "2023-08-15",
+      "chromeVersion": "M110",
+      "nodeVersion": "18"
     },
     "22": {
       "name": "22",
       "releaseDate": "2022-11-29",
-      "eol": "2023-10-10"
+      "eol": "2023-10-10",
+      "chromeVersion": "M108",
+      "nodeVersion": "16"
     },
     "21": {
       "name": "21",
       "releaseDate": "2022-09-27",
-      "eol": "2023-04-04"
+      "eol": "2023-04-04",
+      "chromeVersion": "M106",
+      "nodeVersion": "16"
     },
     "20": {
       "name": "20",
       "releaseDate": "2022-08-02",
-      "eol": "2023-02-07"
+      "eol": "2023-02-07",
+      "chromeVersion": "M104",
+      "nodeVersion": "16"
     },
     "2": {
       "name": "2",
       "releaseDate": "2018-05-01",
-      "eol": "2019-04-23"
+      "eol": "2019-04-23",
+      "chromeVersion": "M61",
+      "nodeVersion": "8"
     },
     "19": {
       "name": "19",
       "releaseDate": "2022-05-24",
-      "eol": "2022-11-29"
+      "eol": "2022-11-29",
+      "chromeVersion": "M102",
+      "nodeVersion": "16"
     },
     "18": {
       "name": "18",
       "releaseDate": "2022-03-29",
-      "eol": "2022-09-27"
+      "eol": "2022-09-27",
+      "chromeVersion": "M100",
+      "nodeVersion": "16"
     },
     "17": {
       "name": "17",
       "releaseDate": "2022-02-01",
-      "eol": "2022-08-02"
+      "eol": "2022-08-02",
+      "chromeVersion": "M98",
+      "nodeVersion": "16"
     },
     "16": {
       "name": "16",
       "releaseDate": "2021-11-16",
-      "eol": "2022-05-24"
+      "eol": "2022-05-24",
+      "chromeVersion": "M96",
+      "nodeVersion": "16"
     },
     "15": {
       "name": "15",
       "releaseDate": "2021-09-21",
-      "eol": "2022-05-24"
+      "eol": "2022-05-24",
+      "chromeVersion": "M94",
+      "nodeVersion": "16"
     },
     "14": {
       "name": "14",
       "releaseDate": "2021-08-31",
-      "eol": "2022-03-29"
+      "eol": "2022-03-29",
+      "chromeVersion": "M93",
+      "nodeVersion": "14"
     },
     "13": {
       "name": "13",
       "releaseDate": "2021-05-25",
-      "eol": "2022-02-01"
+      "eol": "2022-02-01",
+      "chromeVersion": "M91",
+      "nodeVersion": "14"
     },
     "12": {
       "name": "12",
       "releaseDate": "2021-03-02",
-      "eol": "2021-11-16"
+      "eol": "2021-11-16",
+      "chromeVersion": "M89",
+      "nodeVersion": "14"
     },
     "11": {
       "name": "11",
       "releaseDate": "2020-11-17",
-      "eol": "2021-08-31"
+      "eol": "2021-08-31",
+      "chromeVersion": "M87",
+      "nodeVersion": "12"
     },
     "10": {
       "name": "10",
       "releaseDate": "2020-08-25",
-      "eol": "2021-05-25"
+      "eol": "2021-05-25",
+      "chromeVersion": "M85",
+      "nodeVersion": "12"
     }
   },
   "versions": {
