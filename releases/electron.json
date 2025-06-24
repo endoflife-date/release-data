@@ -42,6 +42,12 @@
       "chromeVersion": "M69",
       "nodeVersion": "10"
     },
+    "37": {
+      "name": "37",
+      "releaseDate": "2025-06-24",
+      "eol": "2026-01-13",
+      "chromeVersion": "M138"
+    },
     "36": {
       "name": "36",
       "releaseDate": "2025-04-29",
