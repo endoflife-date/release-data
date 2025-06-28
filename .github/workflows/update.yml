@@ -64,7 +64,7 @@ jobs:
         run: python update.py
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         if: steps.update_data.outputs.commit_message != ''
         with:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
