@@ -1,7 +1,7 @@
 import urllib.parse
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/.
 
@@ -20,7 +20,7 @@ The script will need to be updated if someday those conditions are not met."""
 
 MAX_VERSIONS_LIMIT = 100
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         releases_page = http.fetch_url(config.url)
         releases_soup = BeautifulSoup(releases_page.text, features="html5lib")

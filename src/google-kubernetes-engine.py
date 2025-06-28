@@ -1,6 +1,6 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 # https://regex101.com/r/zPxBqT/1
 VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
@@ -11,7 +11,7 @@ URL_BY_PRODUCT = {
     "google-kubernetes-engine-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
 }
 
-for config in endoflife.list_configs_from_argv(): # noqa: B007 multiple JSON produced for historical reasons
+for config in releasedata.list_configs_from_argv(): # noqa: B007 multiple JSON produced for historical reasons
     for product_name, url in URL_BY_PRODUCT.items():
         with releasedata.ProductData(product_name) as product_data:
             html = http.fetch_html(url)

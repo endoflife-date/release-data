@@ -150,7 +150,7 @@ class Field:
         return f"{self.name}({self.column})"
 
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         render_javascript = config.data.get("render_javascript", False)
         render_javascript_click_selector = config.data.get("render_javascript_click_selector", None)

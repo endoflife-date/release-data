@@ -1,15 +1,16 @@
+import argparse
 import json
 import logging
-import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from types import TracebackType
 from typing import Optional, Type
 
-# Do not update the format: it's also used to declare groups in the GitHub Actions logs.
-logging.basicConfig(format="%(message)s", level=logging.INFO)
+from . import endoflife
 
-VERSIONS_PATH = Path(os.environ.get("VERSIONS_PATH", "releases"))
+SRC_DIR = Path('src')
+DATA_DIR = Path('releases')
 
 
 class ProductUpdateError(Exception):
@@ -108,7 +109,7 @@ class ProductVersion:
 class ProductData:
     def __init__(self, name: str) -> None:
         self.name: str = name
-        self.versions_path: Path = VERSIONS_PATH / f"{name}.json"
+        self.versions_path: Path = DATA_DIR / f"{name}.json"
         self.releases = {}
         self.versions: dict[str, ProductVersion] = {}
         self.updated = False
@@ -190,3 +191,21 @@ class ProductData:
 
     def __repr__(self) -> str:
         return self.name
+
+
+def list_configs_from_argv() -> list[endoflife.AutoConfig]:
+    return parse_argv()[1]
+
+def parse_argv() -> tuple[endoflife.ProductFrontmatter, list[endoflife.AutoConfig]]:
+    parser = argparse.ArgumentParser(description=sys.argv[0])
+    parser.add_argument('-p', '--product', required=True, help='path to the product')
+    parser.add_argument('-m', '--method', required=True, help='method to filter by')
+    parser.add_argument('-u', '--url', required=True, help='url to filter by')
+    parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
+    args = parser.parse_args()
+
+    # Do not update the format: it's also used to declare groups in the GitHub Actions logs.
+    logging.basicConfig(format="%(message)s", level=(logging.DEBUG if args.verbose else logging.INFO))
+
+    product = endoflife.ProductFrontmatter(Path(args.product))
+    return product, product.auto_configs(args.method, args.url)

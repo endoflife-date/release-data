@@ -1,4 +1,4 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches the Unity LTS releases from the Unity website. Non-LTS releases are not listed there, so this automation
 is only partial.
@@ -16,7 +16,7 @@ Note that it was assumed that:
 
 The script will need to be updated if someday those conditions are not met."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

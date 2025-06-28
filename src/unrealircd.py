@@ -1,10 +1,10 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         wikicode = http.fetch_markdown(config.url)
 

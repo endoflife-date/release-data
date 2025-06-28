@@ -1,6 +1,6 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         # Fetch major versions
         latest_by_major = http.fetch_url(config.url).json()

@@ -1,9 +1,9 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches versions from repositories managed with cgit, such as the Linux kernel repository.
 Ideally we would want to use the git repository directly, but cgit-managed repositories don't support partial clone."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url + '/refs/tags')
 

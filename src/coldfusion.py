@@ -1,6 +1,6 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches versions from Adobe ColdFusion release notes on helpx.adobe.com.
 
@@ -21,7 +21,7 @@ FIXED_VERSIONS = {
     "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

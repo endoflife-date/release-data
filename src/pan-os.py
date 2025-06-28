@@ -1,8 +1,8 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches pan-os versions from https://github.com/mrjcap/panos-versions/."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         versions = http.fetch_json(config.url)
 

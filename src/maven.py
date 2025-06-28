@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
 
-from common import endoflife, http, releasedata
+from common import http, releasedata
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         start = 0
         group_id, artifact_id = config.url.split("/")

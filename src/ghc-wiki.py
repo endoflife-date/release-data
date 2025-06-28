@@ -14,7 +14,7 @@ References:
 import re
 from typing import Any, Generator, Iterator
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 
 def parse_markdown_tables(lineiter: Iterator[str]) -> Generator[list[list[Any]], Any, None]:
@@ -50,7 +50,7 @@ def maybe_markdown_table_row(line: str) -> list[str] | None:
         return None
     return [x.strip() for x in line.strip('|').split('|')]
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product:
         resp = http.fetch_url(config.url)
         resp.raise_for_status()

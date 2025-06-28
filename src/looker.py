@@ -1,14 +1,14 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetch Looker versions from the Google Cloud release notes RSS feed.
 """
 
 ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IGNORECASE)
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         rss = http.fetch_xml(config.url)
 

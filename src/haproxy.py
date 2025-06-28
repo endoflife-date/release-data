@@ -1,11 +1,11 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
 DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+\.\d.?)$")  # https://regex101.com/r/1JCnFC/1
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         # First, get all minor releases from the download page
         download_html = http.fetch_html(config.url)

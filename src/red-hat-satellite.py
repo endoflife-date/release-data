@@ -1,12 +1,12 @@
 import logging
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Satellite versions from access.redhat.com.
 
 A few of the older versions, such as 'Satellite 6.1 GA Release (Build 6.1.1)', were ignored because too hard to parse."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

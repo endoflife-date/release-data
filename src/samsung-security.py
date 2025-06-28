@@ -12,9 +12,9 @@ it retains the date and use it as the model's EOL date.
 
 TODAY = dates.today()
 
-for config in endoflife.list_configs_from_argv():
+frontmatter, configs = releasedata.parse_argv()
+for config in configs:
     with releasedata.ProductData(config.product) as product_data:
-        frontmatter = endoflife.ProductFrontmatter(product_data.name)
         frontmatter_release_names = frontmatter.get_release_names()
 
         # Copy EOL dates from frontmatter to product data

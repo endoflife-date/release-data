@@ -11,7 +11,9 @@ from ruamel.yaml import YAML
 from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
 
+from src.common.endoflife import list_products
 from src.common.gha import GitHubOutput
+from src.common.releasedata import DATA_DIR
 
 """
 Updates the `release`, `latest` and `latestReleaseDate` property in automatically updated pages
@@ -243,7 +245,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update product releases.')
     parser.add_argument('product', nargs='?', help='restrict update to the given product')
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
-    parser.add_argument('-d', '--data-dir', required=True, help='path to the release data directory')
     parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
     args = parser.parse_args()
 
@@ -257,10 +258,11 @@ if __name__ == "__main__":
     RoundTripRepresenter.ignore_aliases = lambda x, y: True # NOQA: ARG005
 
     products_dir = Path(args.product_dir)
-    product_names = [args.product] if args.product else [p.stem for p in products_dir.glob("*.md")]
+    data_dir = Path(__file__).resolve().parent / DATA_DIR
+    products = list_products(products_dir, args.product)
 
     github_output = GitHubOutput("warning")
     with github_output:
-        for product_name in sorted(product_names):
-            logging.debug(f"Processing {product_name}")
-            update_product(product_name, products_dir, Path(args.data_dir), github_output)
+        for product in products:
+            logging.debug(f"Processing {product.name}")
+            update_product(product.name, products_dir, data_dir, github_output)

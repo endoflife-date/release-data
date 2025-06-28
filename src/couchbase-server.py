@@ -1,7 +1,7 @@
 import logging
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches versions from release notes of each minor version on docs.couchbase.com.
 
@@ -16,7 +16,7 @@ MANUAL_VERSIONS = {
     "7.2.0": dates.date(2023, 6, 1),  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
 }
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(f"{config.url}/current/install/install-intro.html")
 

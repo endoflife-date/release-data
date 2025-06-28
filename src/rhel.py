@@ -1,11 +1,11 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 # https://regex101.com/r/877ibq/1
 VERSION_PATTERN = re.compile(r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update (?P<minor2>\d))| GA)?")
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

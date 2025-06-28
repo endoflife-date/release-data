@@ -1,13 +1,13 @@
 import logging
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches releases from VirtualBox download page."""
 
 EOL_REGEX = re.compile(r"^\(no longer supported, support ended (?P<value>\d{4}/\d{2})\)$")
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

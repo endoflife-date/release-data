@@ -1,7 +1,7 @@
 import logging
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Veeam products versions from https://www.veeam.com.
 
@@ -9,7 +9,7 @@ This script takes a single argument which is the url of the versions page on htt
 such as `https://www.veeam.com/kb2680`.
 """
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

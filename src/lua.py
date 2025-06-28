@@ -1,13 +1,13 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Lua releases from lua.org."""
 
 RELEASED_AT_PATTERN = re.compile(r"Lua\s*(?P<release>\d+\.\d+)\s*was\s*released\s*on\s*(?P<release_date>\d+\s*\w+\s*\d{4})")
 VERSION_PATTERN = re.compile(r"(?P<version>\d+\.\d+\.\d+),\s*released\s*on\s*(?P<version_date>\d+\s*\w+\s*\d{4})")
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url, features = 'html.parser')
         page_text = html.text # HTML is broken, no way to parse it with beautifulsoup

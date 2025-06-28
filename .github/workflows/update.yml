@@ -61,7 +61,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true # commit even if the data was not fully updated
-        run: python update.py
+        run: python update.py -p 'website/products'
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v6
