@@ -1,5 +1,4 @@
 import re
-from xml.dom.minidom import parseString
 
 from common import dates, endoflife, http, releasedata
 
@@ -7,9 +6,8 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
+        xml = http.fetch_xml(config.url)
 
-        xml = parseString(response.text)
         versioning = xml.getElementsByTagName("metadata")[0].getElementsByTagName("versioning")[0]
 
         latest_str = versioning.getElementsByTagName("latest")[0].firstChild.nodeValue

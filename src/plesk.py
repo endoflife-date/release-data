@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches versions from Plesk's change log.
@@ -8,10 +7,9 @@ there is no entry for GA of version 18.0.18 and older."""
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for release in soup.find_all("div", class_="changelog-entry--obsidian"):
+        for release in html.find_all("div", class_="changelog-entry--obsidian"):
             version = release.h2.text.strip()
             if not version.startswith('Plesk Obsidian 18'):
                 continue

@@ -2,7 +2,7 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        data = http.fetch_url(config.url).json()
+        data = http.fetch_json(config.url)
         for v in data:
             if v['type'] == 'development':
                 continue

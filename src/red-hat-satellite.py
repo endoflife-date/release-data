@@ -1,6 +1,5 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches Satellite versions from access.redhat.com.
@@ -9,10 +8,9 @@ A few of the older versions, such as 'Satellite 6.1 GA Release (Build 6.1.1)', w
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for table in soup.findAll("tbody"):
+        for table in html.findAll("tbody"):
             for tr in table.findAll("tr"):
                 td_list = tr.findAll("td")
 

@@ -2,7 +2,7 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        data = http.fetch_url(f"https://pypi.org/pypi/{config.url}/json").json()
+        data = http.fetch_json(f"https://pypi.org/pypi/{config.url}/json")
 
         for version_str in data["releases"]:
             version_match = config.first_match(version_str)

@@ -1,6 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches versions from Adobe ColdFusion release notes on helpx.adobe.com.
@@ -24,10 +23,9 @@ FIXED_VERSIONS = {
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        changelog = http.fetch_url(config.url)
-        changelog_soup = BeautifulSoup(changelog.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for p in changelog_soup.findAll("div", class_="text"):
+        for p in html.findAll("div", class_="text"):
             version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
             for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
                 date = dates.parse_date(date_str)

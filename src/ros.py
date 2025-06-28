@@ -1,14 +1,12 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for tr in soup.findAll("tr"):
+        for tr in html.findAll("tr"):
             td_list = tr.findAll("td")
             if len(td_list) == 0:
                 continue

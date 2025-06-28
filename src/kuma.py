@@ -1,6 +1,5 @@
 import logging
 
-import yaml
 from common import dates, endoflife, http, releasedata
 
 """Fetch version data for Kuma from https://raw.githubusercontent.com/kumahq/kuma/master/versions.yml.
@@ -12,8 +11,7 @@ EOL_FIELD = 'endOfLifeDate'
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        yml_response = http.fetch_url(config.url)
-        versions_data = yaml.safe_load(yml_response.text)
+        versions_data = http.fetch_yaml(config.url)
 
         # Iterate through the versions and their associated dates
         for version_info in versions_data:

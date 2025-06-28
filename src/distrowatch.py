@@ -1,12 +1,10 @@
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(f"https://distrowatch.com/index.php?distribution={config.url}")
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(f"https://distrowatch.com/index.php?distribution={config.url}")
 
-        for table in soup.select("td.News1>table.News"):
+        for table in html.select("td.News1>table.News"):
             headline = table.select_one("td.NewsHeadline a[href]").get_text().strip()
             versions_match = config.first_match(headline)
             if not versions_match:

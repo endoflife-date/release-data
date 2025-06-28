@@ -9,7 +9,7 @@ for config in endoflife.list_configs_from_argv():
 
         while True:
             url = f"https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}&core=gav&wt=json&start={start}&rows=100"
-            data = http.fetch_url(url).json()
+            data = http.fetch_json(url)
 
             for row in data["response"]["docs"]:
                 version_match = config.first_match(row["v"])

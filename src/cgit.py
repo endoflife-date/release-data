@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches versions from repositories managed with cgit, such as the Linux kernel repository.
@@ -6,10 +5,9 @@ Ideally we would want to use the git repository directly, but cgit-managed repos
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url + '/refs/tags')
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url + '/refs/tags')
 
-        for table in soup.find_all("table", class_="list"):
+        for table in html.find_all("table", class_="list"):
             for row in table.find_all("tr"):
                 columns = row.find_all("td")
                 if len(columns) != 4:

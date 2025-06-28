@@ -1,7 +1,6 @@
 import logging
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches releases from VirtualBox download page."""
@@ -10,10 +9,10 @@ EOL_REGEX = re.compile(r"^\(no longer supported, support ended (?P<value>\d{4}/\
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for li in soup.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
+
+        for li in html.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
             li_text = li.find("a").text.strip()
 
             release_match = config.first_match(li_text)

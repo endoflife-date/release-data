@@ -1,6 +1,12 @@
 import logging
+import xml.dom.minidom
 from concurrent.futures import as_completed
+from xml.dom.minidom import Document
 
+import mwparserfromhell
+import yaml
+from bs4 import BeautifulSoup
+from mwparserfromhell.wikicode import Wikicode
 from playwright.sync_api import sync_playwright
 from requests import Response
 from requests.adapters import HTTPAdapter
@@ -47,6 +53,31 @@ def fetch_url(url: str, data: any = None, headers: dict[str, str] = None,
               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Response:
     return fetch_urls([url], data, headers, max_retries, backoff_factor, timeout)[0]
 
+def fetch_html(url: str, data: any = None, headers: dict[str, str] = None,
+               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30,
+               features: str = "html5lib") -> BeautifulSoup:
+    response = fetch_url(url, data, headers, max_retries, backoff_factor, timeout)
+    return BeautifulSoup(response.text, features=features)
+
+def fetch_json(url: str, data: any = None, headers: dict[str, str] = None,
+              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Document:
+    response = fetch_url(url, data, headers, max_retries, backoff_factor, timeout)
+    return response.json()
+
+def fetch_yaml(url: str, data: any = None, headers: dict[str, str] = None,
+               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> any:
+    response = fetch_url(url, data, headers, max_retries, backoff_factor, timeout)
+    return yaml.safe_load(response.text)
+
+def fetch_xml(url: str, data: any = None, headers: dict[str, str] = None,
+              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Document:
+    response = fetch_url(url, data, headers, max_retries, backoff_factor, timeout)
+    return xml.dom.minidom.parseString(response.text)
+
+def fetch_markdown(url: str, data: any = None, headers: dict[str, str] = None,
+              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Wikicode:
+    response = fetch_url(url, data, headers, max_retries, backoff_factor, timeout)
+    return mwparserfromhell.parse(response.text)
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
 def fetch_javascript_url(url: str, click_selector: str = None, wait_until: str = None) -> str:

@@ -1,14 +1,12 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        products_table = soup.find("tbody", id="productSupportLifecycle")
+        products_table = html.find("tbody", id="productSupportLifecycle")
         sles_header_rows = products_table.find_all("tr", class_="row", attrs={"data-productfilter": "SUSE Linux Enterprise Server"})
 
         # Extract rows' IDs to find related sub-rows with details (normally hidden until a user expands a section)

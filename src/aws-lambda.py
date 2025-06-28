@@ -1,16 +1,14 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches AWS lambda runtimes with their support / EOL dates from https://docs.aws.amazon.com."""
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for i, table in enumerate(soup.find_all("table")):
+        for i, table in enumerate(html.find_all("table")):
             headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[0].find_all("th")]
             if "identifier" not in headers or "deprecation date" not in headers or "block function update" not in headers:
                 logging.info(f"table with header '{headers}' does not contain all the expected headers")

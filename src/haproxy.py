@@ -1,6 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 CYCLE_PATTERN = re.compile(r"^(\d+\.\d+)/$")
@@ -9,10 +8,9 @@ DATE_AND_VERSION_PATTERN = re.compile(r"^(\d{4})/(\d{2})/(\d{2})\s+:\s+(\d+\.\d+
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         # First, get all minor releases from the download page
-        download = http.fetch_url(config.url)
-        download_soup = BeautifulSoup(download.text, features="html5lib")
+        download_html = http.fetch_html(config.url)
         minor_versions = []
-        for link in download_soup.select("a"):
+        for link in download_html.select("a"):
             minor_version_match = CYCLE_PATTERN.match(link.attrs["href"])
             if not minor_version_match:
                 continue

@@ -1,12 +1,10 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        html = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
         table_selector = config.data.get("table_selector", "#previous-releases + table").strip()
         date_column = config.data.get("date_column", "Date").strip().lower()
         versions_column = config.data.get("versions_column").strip().lower()

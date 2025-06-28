@@ -1,6 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 # https://regex101.com/r/877ibq/1
@@ -8,10 +7,9 @@ VERSION_PATTERN = re.compile(r"RHEL (?P<major>\d)(\. ?(?P<minor>\d+))?(( Update 
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for tr in soup.findAll("tr"):
+        for tr in html.findAll("tr"):
             td_list = tr.findAll("td")
             if len(td_list) == 0:
                 continue

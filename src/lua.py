@@ -1,6 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches Lua releases from lua.org."""
@@ -10,9 +9,8 @@ VERSION_PATTERN = re.compile(r"(?P<version>\d+\.\d+\.\d+),\s*released\s*on\s*(?P
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        page = http.fetch_url(config.url)
-        soup = BeautifulSoup(page.text, 'html.parser')
-        page_text = soup.text # HTML is broken, no way to parse it with beautifulsoup
+        html = http.fetch_html(config.url, features = 'html.parser')
+        page_text = html.text # HTML is broken, no way to parse it with beautifulsoup
 
         for release_match in RELEASED_AT_PATTERN.finditer(page_text):
             release = release_match.group('release')

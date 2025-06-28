@@ -1,7 +1,6 @@
 import logging
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches Veeam products versions from https://www.veeam.com.
@@ -12,12 +11,11 @@ such as `https://www.veeam.com/kb2680`.
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
         version_column = config.data.get("version_column", "Build Number").lower()
         date_column = config.data.get("date_column", "Release Date").lower()
-        for table in soup.find_all("table"):
+        for table in html.find_all("table"):
             headers = [header.get_text().strip().lower() for header in table.find("tr").find_all("td")]
             if version_column not in headers or date_column not in headers:
                 logging.warning("Skipping table with headers %s as it does not contains '%s' or '%s'",

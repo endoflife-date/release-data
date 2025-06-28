@@ -2,7 +2,6 @@ import logging
 import re
 from datetime import date, datetime, time, timezone
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Detect new models and aggregate EOL data for Samsung Mobile devices.
@@ -27,12 +26,11 @@ for config in endoflife.list_configs_from_argv():
             release.set_eol(eol)
 
 
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
         sections = config.data.get("sections", {})
         for update_cadence, title in sections.items():
-            models_list = soup.find(string=lambda text, search=title: search in text if text else False).find_next("ul")
+            models_list = html.find(string=lambda text, search=title: search in text if text else False).find_next("ul")
 
             for item in models_list.find_all("li"):
                 models = item.text.replace("Enterprise Models:", "")
