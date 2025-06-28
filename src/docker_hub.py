@@ -5,7 +5,7 @@ from common import dates, endoflife, http, releasedata
 Unfortunately images creation date cannot be retrieved, so we had to use the tag_last_pushed field instead."""
 
 def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str) -> None:
-    data = http.fetch_url(url).json()
+    data = http.fetch_json(url)
 
     for result in data["results"]:
         version_str = result["name"]

@@ -4,8 +4,8 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        url = f"https://portal.nutanix.com/api/v1/eol/find?type={config.url}"
-        data = http.fetch_url(url).json()
+        data = http.fetch_json(f"https://portal.nutanix.com/api/v1/eol/find?type={config.url}")
+
         for version_data in data["contents"]:
             release_name = '.'.join(version_data["version"].split(".")[:2])
 

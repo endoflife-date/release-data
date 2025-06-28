@@ -1,14 +1,12 @@
 import re
 
-import mwparserfromhell
 from common import dates, endoflife, http, releasedata
 
 DATE_PATTERN = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        wikicode = mwparserfromhell.parse(response.text)
+        wikicode = http.fetch_markdown(config.url)
 
         for tr in wikicode.ifilter_tags(matches=lambda node: node.tag == "tr"):
             items = tr.contents.filter_tags(matches=lambda node: node.tag == "td")

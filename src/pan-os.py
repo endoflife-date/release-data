@@ -4,7 +4,7 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        versions = http.fetch_url(config.url).json()
+        versions = http.fetch_json(config.url)
 
         for version in versions:
             name = version['version']

@@ -1,5 +1,4 @@
 import logging
-import xml.dom.minidom
 
 from common import dates, endoflife, http, releasedata
 
@@ -7,8 +6,7 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        rss_response = http.fetch_url(config.url)
-        rss = xml.dom.minidom.parseString(rss_response.text)
+        rss = http.fetch_xml(config.url)
 
         for entry in rss.getElementsByTagName("item"):
             version_str = entry.getElementsByTagName("title")[0].firstChild.nodeValue

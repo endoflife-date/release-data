@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from common import dates, endoflife, github, http, releasedata
 
 """Fetch released versions from docs.chef.io and retrieve their date from GitHub.
@@ -9,9 +8,8 @@ More context on https://github.com/endoflife-date/endoflife.date/pull/4425#discu
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        rn_response = http.fetch_url(config.url)
-        rn_soup = BeautifulSoup(rn_response.text, features="html5lib")
-        released_versions = [h2.get('id') for h2 in rn_soup.find_all('h2', id=True) if h2.get('id')]
+        html = http.fetch_html(config.url)
+        released_versions = [h2.get('id') for h2 in html.find_all('h2', id=True) if h2.get('id')]
 
         for release in github.fetch_releases("inspec/inspec"):
             sanitized_version = release.tag_name.replace("v", "")

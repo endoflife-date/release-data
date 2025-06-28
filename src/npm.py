@@ -2,7 +2,7 @@ from common import dates, endoflife, http, releasedata
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        data = http.fetch_url(f"https://registry.npmjs.org/{config.url}").json()
+        data = http.fetch_json(f"https://registry.npmjs.org/{config.url}")
         for version_str in data["versions"]:
             version_match = config.first_match(version_str)
             if version_match:

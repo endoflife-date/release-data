@@ -1,5 +1,4 @@
 import re
-import xml.dom.minidom
 
 from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
@@ -11,8 +10,7 @@ ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IG
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        rss = xml.dom.minidom.parseString(response.text)
+        rss = http.fetch_xml(config.url)
 
         for item in rss.getElementsByTagName("entry"):
             content = item.getElementsByTagName("content")[0].firstChild.nodeValue

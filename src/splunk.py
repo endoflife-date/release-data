@@ -1,6 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 VERSION_DATE_PATTERN = re.compile(r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\d+)*) was (?:first )?released on (?P<date>\w+\s\d\d?,\s\d{4})\.", re.MULTILINE)
@@ -32,10 +31,9 @@ def get_latest_minor_versions(versions: list[str]) -> list[str]:
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        main = http.fetch_url(config.url)
-        soup = BeautifulSoup(main.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        all_versions = [option.attrs['value'] for option in soup.select("select#version-select > option")]
+        all_versions = [option.attrs['value'] for option in html.select("select#version-select > option")]
         all_versions = [v for v in all_versions if v != "DataMonitoringAppPreview"]
 
         # Latest minor release notes contains release notes for all previous minor versions.

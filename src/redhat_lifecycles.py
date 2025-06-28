@@ -22,7 +22,7 @@ for config in endoflife.list_configs_from_argv():
         name = urllib.parse.quote(config.url)
         mapping = Mapping(config.data["fields"])
 
-        data = http.fetch_url('https://access.redhat.com/product-life-cycles/api/v1/products?name=' + name).json()
+        data = http.fetch_json('https://access.redhat.com/product-life-cycles/api/v1/products?name=' + name)
 
         for version in data["data"][0]["versions"]:
             version_name = version["name"]

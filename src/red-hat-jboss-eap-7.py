@@ -1,16 +1,14 @@
 import logging
 
-from bs4 import BeautifulSoup
 from common import dates, endoflife, http, releasedata
 
 """Fetches RedHat JBoss EAP version data for JBoss 7"""
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        response = http.fetch_url(config.url)
-        soup = BeautifulSoup(response.text, features="html5lib")
+        html = http.fetch_html(config.url)
 
-        for h4 in soup.find_all("h4"):
+        for h4 in html.find_all("h4"):
             title = h4.get_text(strip=True)
             if not title.startswith("7."):
                 continue

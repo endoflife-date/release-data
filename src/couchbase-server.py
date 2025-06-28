@@ -18,10 +18,9 @@ MANUAL_VERSIONS = {
 
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        main = http.fetch_url(f"{config.url}/current/install/install-intro.html")
-        main_soup = BeautifulSoup(main.text, features="html5lib")
+        html = http.fetch_html(f"{config.url}/current/install/install-intro.html")
 
-        minor_versions = [options.attrs["value"] for options in main_soup.find(class_="version_list").find_all("option")]
+        minor_versions = [options.attrs["value"] for options in html.find(class_="version_list").find_all("option")]
         minor_version_urls = [f"{config.url}/{minor}/release-notes/relnotes.html" for minor in minor_versions]
 
         for minor_version in http.fetch_urls(minor_version_urls):
