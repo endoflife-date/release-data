@@ -1,7 +1,7 @@
 import logging
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches EOL dates from Atlassian EOL page.
 
@@ -9,7 +9,7 @@ This script takes a selector argument which is the product title identifier on t
 `AtlassianSupportEndofLifePolicy-JiraSoftware`.
 """
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         content = http.fetch_javascript_url(config.url)
         soup = BeautifulSoup(content, features="html5lib")

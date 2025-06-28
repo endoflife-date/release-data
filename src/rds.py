@@ -1,6 +1,6 @@
 import logging
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Amazon RDS versions from the version management pages on AWS docs.
 
@@ -8,7 +8,7 @@ Pages parsed by this script are expected to have version tables with a version i
 in the third column (usually named 'RDS release date').
 """
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

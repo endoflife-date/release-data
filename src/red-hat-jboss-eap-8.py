@@ -1,10 +1,10 @@
 import re
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches the latest RedHat JBoss EAP version data for JBoss 8.0"""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         xml = http.fetch_xml(config.url)
 

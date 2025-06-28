@@ -1,11 +1,11 @@
 import logging
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches EKS versions from AWS docs.
 Now that AWS no longer publishes docs on GitHub, we use the Web Archive to get the older versions."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

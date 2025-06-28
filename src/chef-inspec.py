@@ -1,4 +1,4 @@
-from common import dates, endoflife, github, http, releasedata
+from common import dates, github, http, releasedata
 
 """Fetch released versions from docs.chef.io and retrieve their date from GitHub.
 docs.chef.io needs to be scraped because not all tagged versions are actually released.
@@ -6,7 +6,7 @@ docs.chef.io needs to be scraped because not all tagged versions are actually re
 More context on https://github.com/endoflife-date/endoflife.date/pull/4425#discussion_r1447932411.
 """
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
         released_versions = [h2.get('id') for h2 in html.find_all('h2', id=True) if h2.get('id')]

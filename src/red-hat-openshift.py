@@ -1,6 +1,6 @@
 import re
 
-from common import dates, endoflife, releasedata
+from common import dates, releasedata
 from common.git import Git
 
 """Fetches Red Hat OpenShift versions from the documentation's git repository"""
@@ -10,7 +10,7 @@ VERSION_AND_DATE_PATTERN = re.compile(
     re.MULTILINE,
 )
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         git = Git(config.url)
         git.setup()

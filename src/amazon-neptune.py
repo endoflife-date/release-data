@@ -1,10 +1,10 @@
 import logging
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         rss = http.fetch_xml(config.url)
 

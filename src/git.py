@@ -1,9 +1,9 @@
-from common import dates, endoflife, releasedata
+from common import dates, releasedata
 from common.git import Git
 
 """Fetches versions from tags in a git repository. This replace the old update.rb script."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         git = Git(config.url)
         git.setup(bare=True)

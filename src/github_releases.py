@@ -1,11 +1,11 @@
-from common import dates, endoflife, github, releasedata
+from common import dates, github, releasedata
 
 """Fetches versions from GitHub releases using the GraphQL API and the GitHub CLI.
 
 Note: GraphQL API and GitHub CLI are used because it's simpler: no need to manage pagination and authentication.
 """
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         for release in github.fetch_releases(config.url):
             if release.is_prerelease:

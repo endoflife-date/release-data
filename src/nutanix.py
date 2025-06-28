@@ -1,8 +1,8 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetch Nutanix products versions from https://portal.nutanix.com/api/v1."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         data = http.fetch_json(f"https://portal.nutanix.com/api/v1/eol/find?type={config.url}")
 

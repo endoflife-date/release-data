@@ -1,6 +1,6 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 

@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches Artifactory versions from https://jfrog.com, using requests_html because JavaScript is
 needed to render the page."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         content = http.fetch_javascript_url(config.url, wait_until = 'networkidle')
         soup = BeautifulSoup(content, 'html.parser')

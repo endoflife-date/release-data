@@ -1,8 +1,5 @@
-import itertools
 import logging
-import os
 import re
-import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -14,8 +11,6 @@ from liquid import Template
 DEFAULT_VERSION_REGEX = r"^v?(?P<major>[1-9]\d*)\.(?P<minor>\d+)(\.(?P<patch>\d+)(\.(?P<tiny>\d+))?)?$"
 DEFAULT_VERSION_PATTERN = re.compile(DEFAULT_VERSION_REGEX)
 DEFAULT_VERSION_TEMPLATE = "{{major}}{% if minor %}.{{minor}}{% if patch %}.{{patch}}{% if tiny %}.{{tiny}}{% endif %}{% endif %}{% endif %}"
-
-PRODUCTS_PATH = Path(os.environ.get("PRODUCTS_PATH", "website/products"))
 
 
 class AutoConfig:
@@ -58,9 +53,9 @@ class AutoConfig:
 
 
 class ProductFrontmatter:
-    def __init__(self, name: str) -> None:
-        self.name: str = name
-        self.path: Path = PRODUCTS_PATH / f"{name}.md"
+    def __init__(self, path: Path) -> None:
+        self.path: Path = path
+        self.name: str = path.stem
 
         self.data = None
         if self.path.is_file():
@@ -109,35 +104,17 @@ class ProductFrontmatter:
         return None
 
 
-def list_products(products_filter: str = None) -> list[ProductFrontmatter]:
-    """Return a list of products that are using the same given update method."""
+def list_products(products_dir: Path, product_name: str = None) -> list[ProductFrontmatter]:
+    product_names = [product_name] if product_name else sorted([p.stem for p in products_dir.glob("*.md")])
+
     products = []
-
-    for product_file in sorted(PRODUCTS_PATH.glob("*.md")):
-        product_name = product_file.stem
-        if products_filter and product_name != products_filter:
-            continue
-
+    for product_name in product_names:
         try:
-            products.append(ProductFrontmatter(product_name))
+            products.append(ProductFrontmatter(products_dir / f"{product_name}.md"))
         except Exception as e:
             logging.exception(f"failed to load product data for {product_name}: {e}")
 
     return products
-
-
-def list_configs(products_filter: str = None, methods_filter: str = None, urls_filter: str = None) -> list[AutoConfig]:
-    """Return a list of auto configs, filtering by product name, method, and URL."""
-    products = list_products(products_filter)
-    configs_by_product = [p.auto_configs(methods_filter, urls_filter) for p in products]
-    return list(itertools.chain.from_iterable(configs_by_product))  # flatten the list of lists
-
-
-def list_configs_from_argv() -> list[AutoConfig]:
-    products_filter = sys.argv[1] if len(sys.argv) > 1 else None
-    methods_filter = sys.argv[2] if len(sys.argv) > 1 else None
-    urls_filter = sys.argv[3] if len(sys.argv) > 2 else None
-    return list_configs(products_filter, methods_filter, urls_filter)
 
 
 def to_identifier(s: str) -> str:

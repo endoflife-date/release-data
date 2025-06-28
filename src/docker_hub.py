@@ -17,6 +17,6 @@ def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str
         fetch_releases(p, c, data["next"])
 
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")

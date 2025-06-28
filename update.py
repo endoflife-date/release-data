@@ -1,3 +1,4 @@
+import argparse
 import json
 import logging
 import subprocess
@@ -9,9 +10,7 @@ from deepdiff import DeepDiff
 
 from src.common.endoflife import AutoConfig, ProductFrontmatter, list_products
 from src.common.gha import GitHubGroup, GitHubOutput, GitHubStepSummary
-
-SRC_DIR = Path('src')
-DATA_DIR = Path('releases')
+from src.common.releasedata import DATA_DIR, SRC_DIR
 
 
 class ScriptExecutionSummary:
@@ -66,7 +65,7 @@ def install_playwright() -> None:
 
 
 def __delete_data(product: ProductFrontmatter) -> None:
-    release_data_path = DATA_DIR / f"{product.name}.json"
+    release_data_path = Path(__file__).resolve().parent / DATA_DIR / f"{product.name}.json"
     if not release_data_path.exists() or product.is_auto_update_cumulative():
         return
 
@@ -75,19 +74,23 @@ def __delete_data(product: ProductFrontmatter) -> None:
 
 
 def __revert_data(product: ProductFrontmatter) -> None:
-    release_data_path = DATA_DIR / f"{product.name}.json"
+    release_data_path = Path(__file__).resolve().parent / DATA_DIR / f"{product.name}.json"
     # check=False because the command fails if the file did not exist before
     subprocess.run(f'git checkout HEAD -- {release_data_path}', timeout=10, check=False, shell=True)
     logging.warning(f"reverted changes in {release_data_path}")
 
 
 def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: ScriptExecutionSummary) -> bool:
-    script = SRC_DIR / config.script
+    script = Path(__file__).resolve().parent / SRC_DIR / config.script
 
     logging.info(f"start running {script} for {config}")
     start = time.perf_counter()
+
     # timeout is handled in child scripts
-    child = subprocess.run([sys.executable, script, config.product,  str(config.method), str(config.url)])
+    script_args = [sys.executable, script, "-p", product.path, "-m", str(config.method), "-u", str(config.url)]
+    script_args = script_args + ["-v"] if logging.getLogger().isEnabledFor(logging.DEBUG) else script_args
+    child = subprocess.run(script_args)
+
     success = child.returncode == 0
     elapsed_seconds = time.perf_counter() - start
 
@@ -98,13 +101,10 @@ def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: Scrip
     return success
 
 
-def run_scripts(summary: GitHubStepSummary, product_filter: str) -> bool:
+def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter]) -> bool:
     exec_summary = ScriptExecutionSummary()
 
-    with GitHubGroup("Load Product Data"):
-        product_list = list_products(product_filter)
-
-    for product in product_list:
+    for product in products:
         if not product.has_auto_configs():
             continue
 
@@ -166,24 +166,31 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
             commit_message.println("")
             summary.println("")
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Update product releases.')
+    parser.add_argument('product', nargs='?', help='restrict update to the given product')
+    parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
+    parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
+    args = parser.parse_args()
 
-logging.basicConfig(format="%(message)s", level=logging.INFO)
-p_filter = sys.argv[1] if len(sys.argv) > 1 else None
-
-
-with GitHubStepSummary() as step_summary:
+    logging.basicConfig(format=logging.BASIC_FORMAT, level=(logging.DEBUG if args.verbose else logging.INFO))
     install_playwright()
-    some_script_failed = run_scripts(step_summary, p_filter)
-    updated_products = get_updated_products()
 
-    step_summary.println("## Update summary\n")
-    if updated_products:
-        new_files_content = load_products_json(updated_products)
-        subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
-        old_files_content = load_products_json(updated_products)
-        subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
-        generate_commit_message(old_files_content, new_files_content, step_summary)
-    else:
-        step_summary.println("No update")
+    products_dir = Path(args.product_dir)
+    products_list = list_products(products_dir, args.product)
 
-sys.exit(1 if some_script_failed else 0)
+    with GitHubStepSummary() as step_summary:
+        some_script_failed = run_scripts(step_summary, products_list)
+        updated_products = get_updated_products()
+
+        step_summary.println("## Update summary\n")
+        if updated_products:
+            new_files_content = load_products_json(updated_products)
+            subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
+            old_files_content = load_products_json(updated_products)
+            subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
+            generate_commit_message(old_files_content, new_files_content, step_summary)
+        else:
+            step_summary.println("No update")
+
+    sys.exit(1 if some_script_failed else 0)

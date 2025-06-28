@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetch Java versions from https://www.java.com/releases/.
 
 This script is using requests-html because the page needs JavaScript to render correctly."""
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         content = http.fetch_javascript_url(config.url, wait_until='networkidle')
         soup = BeautifulSoup(content, 'html.parser')

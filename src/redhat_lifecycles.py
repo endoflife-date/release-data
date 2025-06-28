@@ -1,7 +1,7 @@
 import logging
 import urllib.parse
 
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches EOL dates from the Red Hat Product Life Cycle Data API.
 
@@ -17,7 +17,7 @@ class Mapping:
     def get_field_for(self, phase_name: str) -> str | None:
         return self.fields_by_phase.get(phase_name.lower(), None)
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         name = urllib.parse.quote(config.url)
         mapping = Mapping(config.data["fields"])

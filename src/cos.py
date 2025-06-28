@@ -2,7 +2,7 @@ import datetime
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 MILESTONE_PATTERN = re.compile(r'COS \d+ LTS')
 VERSION_PATTERN = re.compile(r"^(cos-\d+-\d+-\d+-\d+)")
@@ -14,7 +14,7 @@ def parse_date(date_text: str) -> datetime:
     return dates.parse_date(date_text)
 
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         main = http.fetch_url(config.url)
         main_soup = BeautifulSoup(main.text, features="html5lib")

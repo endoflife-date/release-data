@@ -2,7 +2,7 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, http, releasedata
 
 """Fetches and parses version and release date information from Apple's support website."""
 
@@ -22,7 +22,7 @@ URLS = [
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
-for config in endoflife.list_configs_from_argv():
+for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         # URLs are cached to avoid rate limiting by support.apple.com.
         soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
