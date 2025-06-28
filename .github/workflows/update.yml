@@ -18,20 +18,14 @@ jobs:
     name: Update data
     runs-on: ubuntu-latest
     steps:
-      - name: Get current week
-        uses: josStorer/get-current-time@v2
-        id: current-time
+      # Note that the cache will be destroyed every week by .github/workflows/clear-cache.yml.
+      # See https://github.com/actions/cache/tree/main/save#always-save-cache.
+      - name: Restore repositories and HTTP requests cache
+        id: cache-restore
+        uses: actions/cache/restore@v4
         with:
-          format: YYYY-ww # 2022-01 to 2022-52 for eg
-
-      - name: Cache fetched repositories and HTTP requests
-        uses: actions/cache@v4
-        with:
+          key: 'update-cache'
           path: ~/.cache
-          # The cache is reset on the first build of every week this way. If you wish to reset the cache manually,
-          # you can do it on https://github.com/endoflife-date/release-data/actions/caches or by updating
-          # the last part of the key below.
-          key: "${{ steps.current-time.outputs.formattedTime }}-2"
 
       - name: Clone self repository
         uses: actions/checkout@v4
@@ -75,6 +69,15 @@ jobs:
         with:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+
+      # See https://github.com/actions/cache/tree/main/save#always-save-cache.
+      - name: Save repositories and HTTP requests cache
+        id: cache-save
+        uses: actions/cache/save@v4
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
+        with:
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+          path: ~/.cache
 
       # we still want to easily know if something went wrong
       - name: Restore update.py failure
