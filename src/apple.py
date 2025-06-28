@@ -25,7 +25,7 @@ DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 for config in endoflife.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
         # URLs are cached to avoid rate limiting by support.apple.com.
-        soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS, cache=True)]
+        soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
 
         for soup in soups:
             versions_table = soup.find(id="tableWraper")

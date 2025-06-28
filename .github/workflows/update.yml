@@ -24,7 +24,7 @@ jobs:
         with:
           format: YYYY-ww # 2022-01 to 2022-52 for eg
 
-      - name: Cache fetched repositories
+      - name: Cache fetched repositories and HTTP requests
         uses: actions/cache@v4
         with:
           path: ~/.cache

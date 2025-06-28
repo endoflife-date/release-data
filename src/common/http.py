@@ -20,13 +20,13 @@ USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/1
 
 
 def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None,
-               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30,
-               cache: bool = False) -> list[Response]:
+               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> list[Response]:
     logging.info(f"Fetching {urls}")
 
     try:
-        underlying_session = CachedSession('/tmp/http_cache', backend='filesystem') if cache else None
-        with FuturesSession(session=underlying_session) as session:
+        # Respect Cache-Control header if available, and allow stale responses in case of errors.
+        cache_session = CachedSession('~/.cache/http', backend='filesystem', cache_control=True, stale_if_error=True)
+        with FuturesSession(session=cache_session) as session:
             adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
             session.mount('http://', adapter)
             session.mount('https://', adapter)
