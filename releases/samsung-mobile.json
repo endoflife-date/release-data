@@ -1179,7 +1179,7 @@
     },
     "galaxy-f13": {
       "name": "galaxy-f13",
-      "eol": "2025-06-29",
+      "eol": false,
       "releaseLabel": "Galaxy F13"
     },
     "galaxy-f12": {
