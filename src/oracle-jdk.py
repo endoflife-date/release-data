@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from common import dates, http, releasedata
 
 """Fetch Java versions from https://www.java.com/releases/.
@@ -6,7 +7,8 @@ This script is using requests-html because the page needs JavaScript to render c
 
 for config in releasedata.list_configs_from_argv():
     with releasedata.ProductData(config.product) as product_data:
-        soup = http.fetch_html(config.url)
+        html = http.fetch_javascript_url(config.url)
+        soup = BeautifulSoup(html, 'html5lib')
 
         previous_date = None
         for row in soup.select('#released tr'):
