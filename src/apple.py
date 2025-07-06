@@ -2,7 +2,8 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http, releasedata
+from common import dates, http
+from common.releasedata import ProductData, config_from_argv
 
 """Fetches and parses version and release date information from Apple's support website."""
 
@@ -22,31 +23,31 @@ URLS = [
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
-for config in releasedata.list_configs_from_argv():
-    with releasedata.ProductData(config.product) as product_data:
-        # URLs are cached to avoid rate limiting by support.apple.com.
-        soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
+config = config_from_argv()
+with ProductData(config.product) as product_data:
+    # URLs are cached to avoid rate limiting by support.apple.com.
+    soups = [BeautifulSoup(response.text, features="html5lib") for response in http.fetch_urls(URLS)]
 
-        for soup in soups:
-            versions_table = soup.find(id="tableWraper")
-            versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
+    for soup in soups:
+        versions_table = soup.find(id="tableWraper")
+        versions_table = versions_table if versions_table else soup.find('table', class_="gb-table")
 
-            for row in versions_table.findAll("tr")[1:]:
-                cells = row.findAll("td")
-                version_text = cells[0].get_text().strip()
-                date_text = cells[2].get_text().strip()
+        for row in versions_table.findAll("tr")[1:]:
+            cells = row.findAll("td")
+            version_text = cells[0].get_text().strip()
+            date_text = cells[2].get_text().strip()
 
-                date_match = DATE_PATTERN.search(date_text)
-                if not date_match:
-                    logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
-                    continue
+            date_match = DATE_PATTERN.search(date_text)
+            if not date_match:
+                logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
+                continue
 
-                date_str = date_match.group(0).replace("Sept ", "Sep ")
-                date = dates.parse_date(date_str)
-                for version_pattern in config.include_version_patterns:
-                    for version_str in version_pattern.findall(version_text):
-                        version = product_data.get_version(version_str)
-                        if not version or version.date() > date:
-                            product_data.declare_version(version_str, date)
-                        else:
-                            logging.info(f"ignoring version {version_str} ({date}) for {product_data.name}")
+            date_str = date_match.group(0).replace("Sept ", "Sep ")
+            date = dates.parse_date(date_str)
+            for version_pattern in config.include_version_patterns:
+                for version_str in version_pattern.findall(version_text):
+                    version = product_data.get_version(version_str)
+                    if not version or version.date() > date:
+                        product_data.declare_version(version_str, date)
+                    else:
+                        logging.info(f"ignoring version {version_str} ({date}) for {product_data.name}")

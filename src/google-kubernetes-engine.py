@@ -1,6 +1,7 @@
 import re
 
-from common import dates, http, releasedata
+from common import dates, http
+from common.releasedata import ProductData, config_from_argv
 
 # https://regex101.com/r/zPxBqT/1
 VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
@@ -11,17 +12,17 @@ URL_BY_PRODUCT = {
     "google-kubernetes-engine-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
 }
 
-for config in releasedata.list_configs_from_argv(): # noqa: B007 multiple JSON produced for historical reasons
-    for product_name, url in URL_BY_PRODUCT.items():
-        with releasedata.ProductData(product_name) as product_data:
-            html = http.fetch_html(url)
+config = config_from_argv() # multiple JSON produced for historical reasons
+for product_name, url in URL_BY_PRODUCT.items():
+    with ProductData(product_name) as product_data:
+        html = http.fetch_html(url)
 
-            for section in html.find_all('section', class_='releases'):
-                for h2 in section.find_all('h2'):  # h2 contains the date
-                    date = dates.parse_date(h2.get('data-text'))
+        for section in html.find_all('section', class_='releases'):
+            for h2 in section.find_all('h2'):  # h2 contains the date
+                date = dates.parse_date(h2.get('data-text'))
 
-                    next_div = h2.find_next('div')  # The div next to the h2 contains the notes about changes made on that date
-                    for li in next_div.find_all('li'):
-                        if "versions are now available" in li.text:
-                            for version in VERSION_PATTERN.findall(li.find('ul').text):
-                                product_data.declare_version(version, date)
+                next_div = h2.find_next('div')  # The div next to the h2 contains the notes about changes made on that date
+                for li in next_div.find_all('li'):
+                    if "versions are now available" in li.text:
+                        for version in VERSION_PATTERN.findall(li.find('ul').text):
+                            product_data.declare_version(version, date)

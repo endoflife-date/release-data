@@ -1,6 +1,7 @@
 import re
 
-from common import dates, http, releasedata
+from common import dates, http
+from common.releasedata import ProductData, config_from_argv
 
 """Fetches versions from Adobe ColdFusion release notes on helpx.adobe.com.
 
@@ -21,15 +22,15 @@ FIXED_VERSIONS = {
     "2023.0.0": dates.date(2022, 5, 16),  # https://coldfusion.adobe.com/2023/05/coldfusion2023-release/
 }
 
-for config in releasedata.list_configs_from_argv():
-    with releasedata.ProductData(config.product) as product_data:
-        html = http.fetch_html(config.url)
+config = config_from_argv()
+with ProductData(config.product) as product_data:
+    html = http.fetch_html(config.url)
 
-        for p in html.findAll("div", class_="text"):
-            version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
-            for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
-                date = dates.parse_date(date_str)
-                version = version_str.strip().replace(",", ".")  # 11,0,0,289974 -> 11.0.0.289974
-                product_data.declare_version(version, date)
+    for p in html.findAll("div", class_="text"):
+        version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
+        for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
+            date = dates.parse_date(date_str)
+            version = version_str.strip().replace(",", ".")  # 11,0,0,289974 -> 11.0.0.289974
+            product_data.declare_version(version, date)
 
-        product_data.declare_versions(FIXED_VERSIONS)
+    product_data.declare_versions(FIXED_VERSIONS)

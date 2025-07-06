@@ -85,6 +85,15 @@ class ProductFrontmatter:
 
         return configs
 
+    def auto_config(self, method_filter: str, url_filter: str) -> AutoConfig:
+        configs = self.auto_configs(method_filter, url_filter)
+
+        if len(configs) != 1:
+            message = f"Expected a single auto config for {self.name} with method={method_filter} and url={url_filter}; got {len(configs)}"
+            raise ValueError(message)
+
+        return configs[0]
+
     def get_title(self) -> str:
         return self.data["title"]
 

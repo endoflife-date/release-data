@@ -4,7 +4,8 @@ from datetime import datetime
 from re import Match
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http, releasedata
+from common import dates, endoflife, http
+from common.releasedata import ProductData, config_from_argv
 from liquid import Template
 
 """Fetch release-level data from an HTML table in a web page.
@@ -150,69 +151,69 @@ class Field:
         return f"{self.name}({self.column})"
 
 
-for config in releasedata.list_configs_from_argv():
-    with releasedata.ProductData(config.product) as product_data:
-        render_javascript = config.data.get("render_javascript", False)
-        render_javascript_click_selector = config.data.get("render_javascript_click_selector", None)
-        render_javascript_wait_until = config.data.get("render_javascript_wait_until", None)
-        ignore_empty_releases = config.data.get("ignore_empty_releases", False)
-        header_row_selector = config.data.get("header_selector", "thead tr")
-        rows_selector = config.data.get("rows_selector", "tbody tr")
-        cells_selector = "td, th"
-        release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
-        fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
+config = config_from_argv()
+with ProductData(config.product) as product_data:
+    render_javascript = config.data.get("render_javascript", False)
+    render_javascript_click_selector = config.data.get("render_javascript_click_selector", None)
+    render_javascript_wait_until = config.data.get("render_javascript_wait_until", None)
+    ignore_empty_releases = config.data.get("ignore_empty_releases", False)
+    header_row_selector = config.data.get("header_selector", "thead tr")
+    rows_selector = config.data.get("rows_selector", "tbody tr")
+    cells_selector = "td, th"
+    release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
+    fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
-        if render_javascript:
-            response_text = http.fetch_javascript_url(config.url, click_selector=render_javascript_click_selector,
-                                                      wait_until=render_javascript_wait_until)
-        else:
-            response_text = http.fetch_url(config.url).text
-        soup = BeautifulSoup(response_text, features="html5lib")
+    if render_javascript:
+        response_text = http.fetch_javascript_url(config.url, click_selector=render_javascript_click_selector,
+                                                  wait_until=render_javascript_wait_until)
+    else:
+        response_text = http.fetch_url(config.url).text
+    soup = BeautifulSoup(response_text, features="html5lib")
 
-        for table in soup.select(config.data["selector"]):
-            header_row = table.select_one(header_row_selector)
-            if not header_row:
-                logging.info(f"skipping table with attributes {table.attrs}: no header row found")
-                continue
+    for table in soup.select(config.data["selector"]):
+        header_row = table.select_one(header_row_selector)
+        if not header_row:
+            logging.info(f"skipping table with attributes {table.attrs}: no header row found")
+            continue
 
-            headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
-            logging.info(f"processing table with headers {headers}")
+        headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
+        logging.info(f"processing table with headers {headers}")
 
-            try:
-                fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
+        try:
+            fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
+            for field in fields:
+                fields_index[field.name] = field.column if field.is_index else headers.index(field.column)
+            min_column_count = max(fields_index.values()) + 1
+
+            for row in table.select(rows_selector):
+                cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
+                if len(cells) < min_column_count:
+                    logging.info(f"skipping row {cells}: not enough columns")
+                    continue
+
+                raw_release_name = cells[fields_index[release_cycle_field.name]]
+                release_name = release_cycle_field.extract_from(raw_release_name)
+                if not release_name:
+                    logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
+                                 f"should match one of {release_cycle_field.include_version_patterns} "
+                                 f"and not match all of {release_cycle_field.exclude_version_patterns}")
+                    continue
+
+                release = product_data.get_release(release_name)
                 for field in fields:
-                    fields_index[field.name] = field.column if field.is_index else headers.index(field.column)
-                min_column_count = max(fields_index.values()) + 1
+                    raw_field = cells[fields_index[field.name]]
+                    try:
+                        release.set_field(field.name, field.extract_from(raw_field))
+                    except ValueError as e:
+                        logging.info(f"skipping cell {raw_field} for {release}: {e}")
 
-                for row in table.select(rows_selector):
-                    cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
-                    if len(cells) < min_column_count:
-                        logging.info(f"skipping row {cells}: not enough columns")
-                        continue
+                if ignore_empty_releases and release.is_empty():
+                    logging.info(f"removing empty release '{release}'")
+                    product_data.remove_release(release_name)
 
-                    raw_release_name = cells[fields_index[release_cycle_field.name]]
-                    release_name = release_cycle_field.extract_from(raw_release_name)
-                    if not release_name:
-                        logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
-                                     f"should match one of {release_cycle_field.include_version_patterns} "
-                                     f"and not match all of {release_cycle_field.exclude_version_patterns}")
-                        continue
+                if release.is_released_after(TODAY):
+                    logging.info(f"removing future release '{release}'")
+                    product_data.remove_release(release_name)
 
-                    release = product_data.get_release(release_name)
-                    for field in fields:
-                        raw_field = cells[fields_index[field.name]]
-                        try:
-                            release.set_field(field.name, field.extract_from(raw_field))
-                        except ValueError as e:
-                            logging.info(f"skipping cell {raw_field} for {release}: {e}")
-
-                    if ignore_empty_releases and release.is_empty():
-                        logging.info(f"removing empty release '{release}'")
-                        product_data.remove_release(release_name)
-
-                    if release.is_released_after(TODAY):
-                        logging.info(f"removing future release '{release}'")
-                        product_data.remove_release(release_name)
-
-            except ValueError as e:
-                logging.info(f"skipping table with headers {headers}: {e}")
+        except ValueError as e:
+            logging.info(f"skipping table with headers {headers}: {e}")
