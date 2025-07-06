@@ -193,10 +193,10 @@ class ProductData:
         return self.name
 
 
-def list_configs_from_argv() -> list[endoflife.AutoConfig]:
+def config_from_argv() -> endoflife.AutoConfig:
     return parse_argv()[1]
 
-def parse_argv() -> tuple[endoflife.ProductFrontmatter, list[endoflife.AutoConfig]]:
+def parse_argv() -> tuple[endoflife.ProductFrontmatter, endoflife.AutoConfig]:
     parser = argparse.ArgumentParser(description=sys.argv[0])
     parser.add_argument('-p', '--product', required=True, help='path to the product')
     parser.add_argument('-m', '--method', required=True, help='method to filter by')
@@ -208,4 +208,4 @@ def parse_argv() -> tuple[endoflife.ProductFrontmatter, list[endoflife.AutoConfi
     logging.basicConfig(format="%(message)s", level=(logging.DEBUG if args.verbose else logging.INFO))
 
     product = endoflife.ProductFrontmatter(Path(args.product))
-    return product, product.auto_configs(args.method, args.url)
+    return product, product.auto_config(args.method, args.url)

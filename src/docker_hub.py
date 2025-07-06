@@ -1,10 +1,11 @@
-from common import dates, endoflife, http, releasedata
+from common import dates, endoflife, http
+from common.releasedata import ProductData, config_from_argv
 
 """Fetches releases from the Docker Hub API.
 
 Unfortunately images creation date cannot be retrieved, so we had to use the tag_last_pushed field instead."""
 
-def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str) -> None:
+def fetch_releases(p: ProductData, c: endoflife.AutoConfig, url: str) -> None:
     data = http.fetch_json(url)
 
     for result in data["results"]:
@@ -17,6 +18,6 @@ def fetch_releases(p: releasedata.ProductData, c: endoflife.AutoConfig, url: str
         fetch_releases(p, c, data["next"])
 
 
-for config in releasedata.list_configs_from_argv():
-    with releasedata.ProductData(config.product) as product_data:
-        fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
+config = config_from_argv()
+with ProductData(config.product) as product_data:
+    fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
