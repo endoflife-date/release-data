@@ -2,7 +2,7 @@ import argparse
 import json
 import logging
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from types import TracebackType
 from typing import Optional, Type
@@ -62,6 +62,7 @@ class ProductRelease:
 
     def set_field(self, field: str, new_value: any) -> None:
         new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, datetime) else new_value
+        new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, date) else new_value
         old_value = self.data.get(field, None)
         if old_value != new_value:
             self.data[field] = new_value
@@ -177,10 +178,6 @@ class ProductData:
         else:
             logging.info(f"adding version {version} ({date}) to {self}")
             self.versions[version] = ProductVersion.of(self.name, version, date)
-
-    def declare_versions(self, dates_by_version: dict[str, datetime]) -> None:
-        for (version, date) in dates_by_version.items():
-            self.declare_version(version, date)
 
     def remove_version(self, version: str) -> None:
         if version not in self.versions:

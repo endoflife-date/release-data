@@ -4,18 +4,7 @@ from bs4 import BeautifulSoup
 from common import dates, http
 from common.releasedata import ProductData, config_from_argv
 
-"""Fetches versions from release notes of each minor version on docs.couchbase.com.
-
-Dates are not available for all versions, so they must be set manually in some cases.
-Moreover dates are not accurate (only month and year are provided), so they are set to the last day of the month.
-"""
-
-MANUAL_VERSIONS = {
-    "6.0.0": dates.date(2018, 10, 31),  # https://www.couchbase.com/blog/announcing-couchbase-6-0/
-    "6.0.1": dates.date(2019, 2, 15),  # https://web.archive.org/web/20190307191211/https://docs.couchbase.com/server/6.0/release-notes/relnotes.html
-    "6.6.0": dates.date(2020, 8, 12),  # https://www.couchbase.com/blog/whats-new-and-improved-in-couchbase-server-6-6/
-    "7.2.0": dates.date(2023, 6, 1),  # https://www.couchbase.com/blog/couchbase-capella-spring-release-72/
-}
+"""Fetches versions from release notes of each minor version on docs.couchbase.com."""
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
@@ -37,5 +26,3 @@ with ProductData(config.product) as product_data:
             version = f"{version}.0" if len(version.split(".")) == 2 else version
             date = dates.parse_month_year_date(match['date'])
             product_data.declare_version(version, date)
-
-    product_data.declare_versions(MANUAL_VERSIONS)
