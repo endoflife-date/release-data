@@ -30,11 +30,7 @@ with ProductData(config.product) as product_data:
             except ValueError:
                 deprecation_date = None
 
-            if identifier == "nodejs4.3-edge":
-                # there is a mistake in the data: block function update date cannot be before the deprecation date
-                block_function_update_str = "2020-04-30"
-            else:
-                block_function_update_str = cells[block_function_update_index].get_text().strip()
+            block_function_update_str = cells[block_function_update_index].get_text().strip()
             try:
                 block_function_update = dates.parse_date(block_function_update_str)
             except ValueError:
