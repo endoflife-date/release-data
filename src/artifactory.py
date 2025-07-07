@@ -17,7 +17,3 @@ with ProductData(config.product) as product_data:
             if version:
                 date_str = cells[1].text.strip().replace("_", "-").replace("Sept-", "Sep-")
                 product_data.declare_version(version, dates.parse_date(date_str))
-
-    # 7.29.9 release date is wrong on https://jfrog.com/help/r/jfrog-release-information/artifactory-end-of-life.
-    # Sent a mail to jfrog-help-center-feedback@jfrog.com to fix it, but in the meantime...
-    product_data.declare_version('7.29.9', dates.date(2022, 1, 11))
