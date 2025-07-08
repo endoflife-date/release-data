@@ -42,7 +42,7 @@
     },
     "galaxy-tab-s7-fe": {
       "name": "galaxy-tab-s7-fe",
-      "eol": false,
+      "eol": "2025-07-08",
       "releaseLabel": "Galaxy Tab S7 FE"
     },
     "galaxy-tab-s7+": {

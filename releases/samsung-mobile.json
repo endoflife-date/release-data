@@ -1131,7 +1131,7 @@
     },
     "galaxy-f52-5g": {
       "name": "galaxy-f52-5g",
-      "eol": false,
+      "eol": "2025-07-08",
       "releaseLabel": "Galaxy F52 5G"
     },
     "galaxy-f42-5g": {
@@ -1583,7 +1583,7 @@
     },
     "galaxy-a22-5g": {
       "name": "galaxy-a22-5g",
-      "eol": false,
+      "eol": "2025-07-08",
       "releaseLabel": "Galaxy A22 5G"
     },
     "galaxy-a22": {
