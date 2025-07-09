@@ -80,17 +80,25 @@ def fetch_markdown(url: str, data: any = None, headers: dict[str, str] = None,
     return mwparserfromhell.parse(response.text)
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
-def fetch_javascript_url(url: str, click_selector: str = None, wait_until: str = None) -> str:
-    logging.info(f"Fetching {url} with JavaScript (click_selector = {click_selector}, wait_until = {wait_until})")
+def fetch_javascript_url(url: str, wait_until: str = None, wait_for: str = None, select_wait_for: bool = False) -> str:
+    logging.info(f"Fetching {url} with JavaScript (wait_until = {wait_until}, wait_for = {wait_for}, select_wait_for = {select_wait_for})")
     with sync_playwright() as p:
         browser = p.chromium.launch()
         try:
             page = browser.new_page()
             page.goto(url, wait_until=wait_until)
-            if click_selector:
-                logging.info(f"Clicked on {click_selector}")
-                page.click(click_selector)
             logging.info(f"Fetched {url}")
+
+            if wait_for:
+                logging.info(f"Waiting for element with selector {wait_for}")
+                element = page.wait_for_selector(selector=wait_for)
+
+                if element:
+                    logging.debug(f"Found element with selector {wait_for} on {url}")
+                    return element.inner_html() if select_wait_for else page.content()
+
+                logging.warning(f"No element found with selector {wait_for} on {url}, returning full page content")
+
             return page.content()
         finally:
             browser.close()

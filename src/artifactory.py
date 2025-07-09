@@ -7,7 +7,8 @@ needed to render the page."""
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    content = http.fetch_javascript_url(config.url, wait_until = 'networkidle')
+    # Oddly the full page content does not contain the versions, must use the wait_for element directly.
+    content = http.fetch_javascript_url(config.url, wait_for='div.informaltable', select_wait_for=True)
     soup = BeautifulSoup(content, 'html.parser')
 
     for row in soup.select('.informaltable tbody tr'):
