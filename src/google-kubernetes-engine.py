@@ -1,28 +1,28 @@
-import re
+import logging
 
 from common import dates, http
 from common.releasedata import ProductData, config_from_argv
 
-# https://regex101.com/r/zPxBqT/1
-VERSION_PATTERN = re.compile(r"\d.\d+\.\d+-gke\.\d+")
-URL_BY_PRODUCT = {
-    "google-kubernetes-engine": "https://cloud.google.com/kubernetes-engine/docs/release-notes-nochannel",
-    "google-kubernetes-engine-stable": "https://cloud.google.com/kubernetes-engine/docs/release-notes-stable",
-    "google-kubernetes-engine-regular": "https://cloud.google.com/kubernetes-engine/docs/release-notes-regular",
-    "google-kubernetes-engine-rapid": "https://cloud.google.com/kubernetes-engine/docs/release-notes-rapid",
-}
+"""Fetches versions from Google Kubernetes Engine release notes.
 
-config = config_from_argv() # multiple JSON produced for historical reasons
-for product_name, url in URL_BY_PRODUCT.items():
-    with ProductData(product_name) as product_data:
-        html = http.fetch_html(url)
+This script does not work for versions prior to March 29, 2021, as the release note format was different before that date.
+"""
 
-        for section in html.find_all('section', class_='releases'):
-            for h2 in section.find_all('h2'):  # h2 contains the date
-                date = dates.parse_date(h2.get('data-text'))
+config = config_from_argv()
+with ProductData(config.product) as product_data:
+    html = http.fetch_html(config.url)
+    regex = config.data.get('regex')
 
-                next_div = h2.find_next('div')  # The div next to the h2 contains the notes about changes made on that date
-                for li in next_div.find_all('li'):
-                    if "versions are now available" in li.text:
-                        for version in VERSION_PATTERN.findall(li.find('ul').text):
-                            product_data.declare_version(version, date)
+    for section in html.find_all('section', class_='releases'):
+        for h2 in section.find_all('h2'):  # h2 contains the date
+            date = dates.parse_date(h2.get('data-text'))
+
+            for li in h2.find_next('div').find_all('li'):
+                if "versions are now available" not in li.text:
+                    logging.debug(f"Skipping {li.text}: does not contain new versions")
+                    continue
+
+                for sub_li in li.find_all('li', recursive=True):
+                    match = config.first_match(sub_li.text.strip())
+                    if match:
+                        product_data.declare_version(config.render(match), date)
