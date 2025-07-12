@@ -105,13 +105,18 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter]) 
     exec_summary = ScriptExecutionSummary()
 
     for product in products:
-        if not product.has_auto_configs():
-            continue
+        configs = product.auto_configs()
+
+        if not configs:
+            continue # skip products without auto configs
+
+        # Add default configs
+        configs = [AutoConfig(product.name, {"_copy_product_releases": ""})] + configs
 
         with GitHubGroup(product.name):
             try:
                 __delete_data(product)
-                for config in product.auto_configs():
+                for config in configs:
                     success = __run_script(product, config, exec_summary)
                     if not success:
                         __revert_data(product)
