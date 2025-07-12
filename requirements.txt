@@ -1,8 +1,8 @@
 beautifulsoup4==4.13.4 # used by a lot of scripts to parse html
-deepdiff==8.5.0 # used in update.py
+deepdiff==8.5.0 # used in update-release-data.py
 html5lib==1.1 # used in conjunction with beautifulsoup4
 mwparserfromhell==0.7.2 # used in unrealircd.py
-packaging==25.0 # used in latest.py
+packaging==25.0 # used in update-product-data.py
 playwright==1.53.0 # used by a few scripts to parse html
 pre-commit==3.5.0 # used to check code before commit
 python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmatters
@@ -10,6 +10,6 @@ python-liquid==2.0.2 # used in endoflife.py to render version templates
 requests==2.32.4 # used in http.py to make HTTP requests simpler
 requests-futures==1.0.2 # used in http.py to be able to make async HTTP requests
 requests-cache==1.2.1 # used in http.py to be able to cache HTTP requests
-ruamel.yaml==0.18.14 # used in latest.py
-ruamel.yaml.clib==0.2.12 # used in latest.py
+ruamel.yaml==0.18.14 # used in update-product-data.py
+ruamel.yaml.clib==0.2.12 # used in update-product-data.py
 soupsieve==2.7 # used in conjunction with beautifulsoup4
