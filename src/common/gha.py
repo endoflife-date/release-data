@@ -52,7 +52,7 @@ class GitHubGroup:
         self.name = name
 
     def __enter__(self) -> None:
-        logging.info(f"::group::{self.name}")
+        print(f"::group::{self.name}")
 
     def __exit__(self, exc_type: any, exc_value: any, traceback: any) -> None:
-        logging.info("::endgroup::")
+        print("::endgroup::")
