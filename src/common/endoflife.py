@@ -33,13 +33,16 @@ class AutoConfig:
     def first_match(self, version: str) -> re.Match | None:
         for exclude_pattern in self.exclude_version_patterns:
             if exclude_pattern.match(version):
+                logging.debug(f"Excluding '{version}' as it matches exclude pattern '{exclude_pattern.pattern}'")
                 return None
 
         for include_pattern in self.include_version_patterns:
             match = include_pattern.match(version)
             if match:
+                logging.debug(f"Returning '{version}' as it matches include pattern '{include_pattern.pattern}'")
                 return match
 
+        logging.debug(f"{version} does not match any include or exclude patterns")
         return None
 
     def is_excluded(self, version: str) -> bool:
