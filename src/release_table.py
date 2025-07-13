@@ -21,8 +21,6 @@ necessary information. Available configuration options are:
   render_javascript is true.
 - render_javascript_wait_until (optional, default = None): Argument to pass to Playwright, one of "commit",
   "domcontentloaded", "load", or "networkidle". Only use when render_javascript is true and if the script fails without it.
-- ignore_empty_releases (optional, default = false): A boolean value indicating whether to ignore releases with no
-  fields except the name.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
     - column (mandatory): The name or index (starts at 1) of the column in the table.
     - type (mandatory, default = string): The type of the field. Supported types are:
@@ -69,7 +67,6 @@ DEFAULT_REGEX = r"^(?P<value>.+)$"
 DEFAULT_TEMPLATE = "{{value}}"
 DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)*)$"
 RANGE_LIST_SEPARATOR_PATTERN = re.compile(r"\s*,\s*")
-TODAY = dates.today()
 
 
 class Field:
@@ -156,7 +153,6 @@ with ProductData(config.product) as product_data:
     render_javascript = config.data.get("render_javascript", False)
     render_javascript_wait_until = config.data.get("render_javascript_wait_until", None)
     render_javascript_wait_for = config.data.get("render_javascript_wait_for", None)
-    ignore_empty_releases = config.data.get("ignore_empty_releases", False)
     header_row_selector = config.data.get("header_selector", "thead tr")
     rows_selector = config.data.get("rows_selector", "tbody tr")
     cells_selector = "td, th"
@@ -206,14 +202,6 @@ with ProductData(config.product) as product_data:
                         release.set_field(field.name, field.extract_from(raw_field))
                     except ValueError as e:
                         logging.info(f"skipping cell {raw_field} for {release}: {e}")
-
-                if ignore_empty_releases and release.is_empty():
-                    logging.info(f"removing empty release '{release}'")
-                    product_data.remove_release(release_name)
-
-                if release.is_released_after(TODAY):
-                    logging.info(f"removing future release '{release}'")
-                    product_data.remove_release(release_name)
 
         except ValueError as e:
             logging.info(f"skipping table with headers {headers}: {e}")

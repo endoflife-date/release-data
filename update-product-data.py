@@ -62,12 +62,7 @@ class ReleaseCycle:
             return True
 
         char_after_prefix = version[len(self.name)]
-        return (
-            char_after_prefix == '.'  # release in cycle: prefix = 1.1, r = 1.1.2 (ex. angular)
-            or char_after_prefix == '-'  # version suffix: prefix = 1.2, r = 1.2-final (ex. quarkus)
-            or char_after_prefix == '+'  # build number: prefix = 17, r = 17.0.7+7 (ex. OpenJDK distributions)
-            or char_after_prefix.isalpha()  # build number: prefix = 1.1.0, r = 1.1.0r (ex. openssl)
-        )
+        return not char_after_prefix.isdigit()
 
     def __update_release_date(self, date: datetime.date) -> None:
         release_date = self.data.get("releaseDate", None)
@@ -145,7 +140,7 @@ class Product:
         for release in self.releases:
             latest = release.latest()
             if release.matched and latest not in self.release_data["versions"]:
-                logging.info(f"latest version {latest} for {release} not found in {self.release_data_path}")
+                logging.warning(f"latest version {latest} for {release} not found in {self.release_data_path}")
 
     def process_release(self, release_data: dict) -> None:
         name = release_data.pop("name")  # name must not appear in updates

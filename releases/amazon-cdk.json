@@ -1,9 +1,5 @@
 {
-  "releases": {
-    "2": {
-      "name": "2"
-    }
-  },
+  "releases": {},
   "versions": {
     "2.204.0": {
       "name": "2.204.0",

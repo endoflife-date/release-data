@@ -1,48 +1,5 @@
 {
-  "releases": {
-    "cos-97": {
-      "name": "cos-97"
-    },
-    "cos-93": {
-      "name": "cos-93"
-    },
-    "cos-89": {
-      "name": "cos-89"
-    },
-    "cos-85": {
-      "name": "cos-85"
-    },
-    "cos-81": {
-      "name": "cos-81"
-    },
-    "cos-77": {
-      "name": "cos-77"
-    },
-    "cos-73": {
-      "name": "cos-73"
-    },
-    "cos-69": {
-      "name": "cos-69"
-    },
-    "cos-121": {
-      "name": "cos-121"
-    },
-    "cos-117": {
-      "name": "cos-117"
-    },
-    "cos-113": {
-      "name": "cos-113"
-    },
-    "cos-109": {
-      "name": "cos-109"
-    },
-    "cos-105": {
-      "name": "cos-105"
-    },
-    "cos-101": {
-      "name": "cos-101"
-    }
-  },
+  "releases": {},
   "versions": {
     "cos-121-18867-90-77": {
       "name": "cos-121-18867-90-77",

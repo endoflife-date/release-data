@@ -1,12 +1,5 @@
 {
-  "releases": {
-    "2": {
-      "name": "2"
-    },
-    "1": {
-      "name": "1"
-    }
-  },
+  "releases": {},
   "versions": {
     "2.5": {
       "name": "2.5",
