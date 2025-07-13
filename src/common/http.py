@@ -24,8 +24,10 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
     logging.info(f"Fetching {urls}")
 
     try:
-        # Respect Cache-Control header if available, and allow stale responses in case of errors.
-        cache_session = CachedSession('~/.cache/http', backend='filesystem', cache_control=True, stale_if_error=True)
+        # Respect the caching directives from the server,
+        # but provides a fallback expiration time when caching directives are not provided.
+        # Also use stale responses to avoid errors when the server is down.
+        cache_session = CachedSession('~/.cache/http', backend='filesystem', cache_control=True, expire_after=86400, stale_if_error=True)
         with FuturesSession(session=cache_session) as session:
             adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
             session.mount('http://', adapter)
