@@ -38,12 +38,6 @@
       "name": "3",
       "minAngularVersion": "v5.2.11",
       "maxAngularVersion": "v5.2.11"
-    },
-    "2": {
-      "name": "2"
-    },
-    "1": {
-      "name": "1"
     }
   },
   "versions": {

@@ -112,6 +112,7 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter]) 
 
         # Add default configs
         configs = [AutoConfig(product.name, {"_copy_product_releases": ""})] + configs
+        configs = configs + [AutoConfig(product.name, {"_remove_invalid_releases": ""})]
 
         with GitHubGroup(product.name):
             try:

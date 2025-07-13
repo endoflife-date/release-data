@@ -1,11 +1,5 @@
 {
   "releases": {
-    "surface-3": {
-      "name": "surface-3"
-    },
-    "surface-2": {
-      "name": "surface-2"
-    },
     "studio-2+": {
       "name": "studio-2+",
       "releaseLabel": "Surface Studio 2+",
@@ -23,9 +17,6 @@
       "releaseLabel": "Surface Studio (1st gen)",
       "releaseDate": "2016-12-15",
       "eol": "2021-11-13"
-    },
-    "studio-1": {
-      "name": "studio-1"
     },
     "rt": {
       "name": "rt",
@@ -56,9 +47,6 @@
       "releaseLabel": "Surface Pro LTE (5th gen) (Model 1807)",
       "releaseDate": "2017-12-01",
       "eol": "2024-01-15"
-    },
-    "pro-lte-1807": {
-      "name": "pro-lte-1807"
     },
     "pro-9": {
       "name": "pro-9",
@@ -95,9 +83,6 @@
       "releaseLabel": "Surface Pro (5th gen)",
       "releaseDate": "2017-06-15",
       "eol": "2024-01-15"
-    },
-    "pro-5": {
-      "name": "pro-5"
     },
     "pro-4": {
       "name": "pro-4",
@@ -141,9 +126,6 @@
       "releaseDate": "2024-09-03",
       "eol": "2030-09-26"
     },
-    "pro-11": {
-      "name": "pro-11"
-    },
     "pro-10-with-5g": {
       "name": "pro-10-with-5g",
       "releaseLabel": "Surface Pro 10 with 5G",
@@ -155,9 +137,6 @@
       "releaseLabel": "Surface Pro 10 for Business",
       "releaseDate": "2024-04-09",
       "eol": "2030-04-09"
-    },
-    "pro-10": {
-      "name": "pro-10"
     },
     "pro": {
       "name": "pro",
@@ -212,17 +191,11 @@
       "releaseLabel": "Surface Laptop 7th Edition, Intel processor",
       "eol": "2031-02-18"
     },
-    "laptop-7": {
-      "name": "laptop-7"
-    },
     "laptop-6-for-business": {
       "name": "laptop-6-for-business",
       "releaseLabel": "Surface Laptop 6 for Business",
       "releaseDate": "2024-04-09",
       "eol": "2030-04-09"
-    },
-    "laptop-6": {
-      "name": "laptop-6"
     },
     "laptop-5": {
       "name": "laptop-5",
@@ -260,29 +233,11 @@
       "releaseDate": "2025-05-20",
       "eol": "2031-05-20"
     },
-    "laptop-1": {
-      "name": "laptop-1"
-    },
-    "hub-84": {
-      "name": "hub-84"
-    },
-    "hub-55": {
-      "name": "hub-55"
-    },
-    "hub-2s-85": {
-      "name": "hub-2s-85"
-    },
-    "hub-2s": {
-      "name": "hub-2s"
-    },
     "go-with-lte-advanced": {
       "name": "go-with-lte-advanced",
       "releaseLabel": "Surface Go with LTE Advanced",
       "releaseDate": "2018-11-20",
       "eol": "2022-11-20"
-    },
-    "go-lte": {
-      "name": "go-lte"
     },
     "go-4": {
       "name": "go-4",
@@ -313,9 +268,6 @@
       "releaseLabel": "Surface Book with Performance Base",
       "releaseDate": "2016-11-10",
       "eol": "2021-11-13"
-    },
-    "book-performance": {
-      "name": "book-performance"
     },
     "book-3": {
       "name": "book-3",

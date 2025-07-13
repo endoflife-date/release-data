@@ -1,18 +1,5 @@
 {
-  "releases": {
-    "noetic": {
-      "name": "noetic"
-    },
-    "melodic": {
-      "name": "melodic"
-    },
-    "lunar": {
-      "name": "lunar"
-    },
-    "kinetic": {
-      "name": "kinetic"
-    }
-  },
+  "releases": {},
   "versions": {
     "noetic": {
       "name": "noetic",
