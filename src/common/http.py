@@ -92,14 +92,20 @@ def fetch_javascript_url(url: str, wait_until: str = None, wait_for: str = None,
             logging.info(f"Fetched {url}")
 
             if wait_for:
-                logging.info(f"Waiting for element with selector {wait_for}")
-                element = page.wait_for_selector(selector=wait_for)
+                try:
+                    logging.info(f"Waiting for element with selector {wait_for}")
+                    element = page.wait_for_selector(selector=wait_for)
 
-                if element:
-                    logging.debug(f"Found element with selector {wait_for} on {url}")
-                    return element.inner_html() if select_wait_for else page.content()
+                    if element:
+                        logging.debug(f"Found element with selector {wait_for} on {url}")
+                        return element.inner_html() if select_wait_for else page.content()
 
-                logging.warning(f"No element found with selector {wait_for} on {url}, returning full page content")
+                    logging.error(f"No element found with selector {wait_for} on {url}, will return full page content")
+                    logging.debug(f"Full page content: {page.content()}")
+
+                except Exception as e:  # noqa: BLE001
+                    logging.error(f"Error while waiting for element with selector {wait_for} on {url}: {e}")
+                    logging.debug(f"Full page content: {page.content()}")
 
             return page.content()
         finally:
