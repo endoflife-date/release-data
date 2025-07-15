@@ -160,6 +160,9 @@ class ProductData:
         self.updated = True
         return self.releases[release_name]
 
+    def get_latest_release(self) -> ProductRelease | None:
+        return next(iter(self.releases.values()), None)  # assuming releases are sorted in descending order
+
     def remove_release(self, release_name: str) -> None:
         if release_name not in self.releases:
             logging.warning(f"release {release_name} cannot be removed as it does not exist for {self}")
