@@ -27,8 +27,11 @@ with ProductData(config.product) as product_data:
             columns = row.find_all("td")
             # Get the version name without the content of the <sup> tag, if present
             name_str = ''.join([content for content in columns[0].contents if isinstance(content, str)]).strip()
-            date_str = columns[1].text.strip()
+            name = name_str.replace("GA", "Update 0").replace("Update ", release + ".")
+            if not config.first_match(name):
+                continue
 
+            date_str = columns[1].text.strip()
             if date_str == "TBD" or date_str == "TDB": # Placeholder for a future release
                 continue
 
@@ -36,6 +39,6 @@ with ProductData(config.product) as product_data:
                 # Temporary fix for a typo in the source page
                 date_str = "July 21 2021"
 
-            name = name_str.replace("GA", "Update 0").replace("Update ", release + ".")
+
             date = dates.parse_date(date_str)
             product_data.declare_version(name, date)
