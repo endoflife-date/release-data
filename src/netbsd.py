@@ -25,7 +25,7 @@ with ProductData(config.product) as product_data:
             logging.warning(f"Skipping row {cells}, could not parse release date")
 
         eol_str = cells[2]
-        if not eol_str:
+        if not eol_str or eol_str == 'Â':
             continue
 
         eol = dates.parse_date(eol_str)
