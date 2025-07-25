@@ -16,7 +16,8 @@ from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
-USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
+ENDOFLIFE_USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
+FIREFOX_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0'
 
 
 def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None,
@@ -33,7 +34,7 @@ def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None
             session.mount('http://', adapter)
             session.mount('https://', adapter)
 
-            headers = {'User-Agent': USER_AGENT} | ({} if headers is None else headers)
+            headers = {'User-Agent': ENDOFLIFE_USER_AGENT} | ({} if headers is None else headers)
             futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
             results = [future.result() for future in as_completed(futures)]
 
