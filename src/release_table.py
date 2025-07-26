@@ -16,6 +16,8 @@ necessary information. Available configuration options are:
 - selector (mandatory, no default): A CSS selector used to locate one or more tables in the page.
 - header_selector (mandatory, default = thead tr): A CSS selector used to locate the table's header row.
 - rows_selector (mandatory, default = tbody tr): A CSS selector used to locate the table's rows.
+- user_agent (optional, default = <endoflife.date-bot User-Agent>): A user agent string to use when fetching the page.
+  Unused when render_javascript is true.
 - render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
 - render_javascript_wait_for (optional, default = None): Wait until the given selector appear on the page. Only use when
   render_javascript is true.
@@ -150,20 +152,21 @@ class Field:
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    render_javascript = config.data.get("render_javascript", False)
-    render_javascript_wait_until = config.data.get("render_javascript_wait_until", None)
-    render_javascript_wait_for = config.data.get("render_javascript_wait_for", None)
+    user_agent = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
+    render_js = config.data.get("render_javascript", False)
+    render_js_wait_until = config.data.get("render_javascript_wait_until", None)
+    render_js_wait_for = config.data.get("render_javascript_wait_for", None)
     header_row_selector = config.data.get("header_selector", "thead tr")
     rows_selector = config.data.get("rows_selector", "tbody tr")
     cells_selector = "td, th"
     release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
     fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
-    if render_javascript:
-        response_text = http.fetch_javascript_url(config.url, wait_until=render_javascript_wait_until,
-                                                  wait_for=render_javascript_wait_for)
+    if render_js:
+        response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
+                                                  wait_for=render_js_wait_for)
     else:
-        response_text = http.fetch_url(config.url).text
+        response_text = http.fetch_url(config.url, user_agent=user_agent).text
     soup = BeautifulSoup(response_text, features="html5lib")
 
     for table in soup.select(config.data["selector"]):
