@@ -16,7 +16,7 @@ from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
-USER_AGENT = 'Mozilla/5.0 (compatible; endoflife.date automation; +https://endoflife.date)'
+USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
 
 
 def fetch_urls(urls: list[str], data: any = None, headers: dict[str, str] = None,
