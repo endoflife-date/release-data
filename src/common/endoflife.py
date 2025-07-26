@@ -133,4 +133,5 @@ def to_identifier(s: str) -> str:
     """Convert a string to a valid endoflife.date identifier."""
     identifier = s.strip().lower()
     identifier = identifier.replace(" ", "-")
+    identifier = re.sub(r"-+", "-", identifier)
     return re.sub(r"[^a-z0-9.\-+_]", "", identifier)
