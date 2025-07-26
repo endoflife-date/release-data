@@ -41,7 +41,8 @@ with ProductData(config.product) as product_data:
     # For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
     latest_minor_versions = get_latest_minor_versions(all_versions)
     latest_minor_versions_urls = [f"{config.url}/{v}/ReleaseNotes/MeetSplunk" for v in latest_minor_versions]
-    for response in http.fetch_urls(latest_minor_versions_urls):
+    # Oddly using the endoflife.date user agent does not work for 9.0, 9.2 and 9.3.
+    for response in http.fetch_urls(latest_minor_versions_urls, user_agent=http.FIREFOX_USER_AGENT):
         for (version_str, date_str) in VERSION_DATE_PATTERN.findall(response.text):
             version_str = f"{version_str}.0" if len(version_str.split(".")) == 2 else version_str  # convert x.y to x.y.0
             date = dates.parse_date(date_str)
