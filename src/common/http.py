@@ -62,7 +62,7 @@ def fetch_html(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_
     return BeautifulSoup(response.text, features=features)
 
 def fetch_json(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Document:
+              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> dict:
     response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
     return response.json()
 
