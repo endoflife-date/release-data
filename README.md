@@ -20,7 +20,7 @@ Common Release Data for various projects in a consistent and easy-to-parse forma
 
 ## Currently Updated
 
-As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automatically tracked releases:
+As of 2025-07-27, 327 of the 391 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -69,15 +69,16 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Apple Watch | [`/apple-watch`](https://endoflife.date/apple-watch) | ❌ |  |
 | ArangoDB | [`/arangodb`](https://endoflife.date/arangodb) | ✔️ | git |
 | Argo CD | [`/argo-cd`](https://endoflife.date/argo-cd) | ✔️ | git |
-| Artifactory | [`/artifactory`](https://endoflife.date/artifactory) | ✔️ | artifactory |
-| AWS Lambda | [`/aws-lambda`](https://endoflife.date/aws-lambda) | ✔️ | aws-lambda |
+| Artifactory | [`/artifactory`](https://endoflife.date/artifactory) | ✔️ | artifactory, declare |
+| AWS Lambda | [`/aws-lambda`](https://endoflife.date/aws-lambda) | ✔️ | aws-lambda, declare |
 | Azul Zulu | [`/azul-zulu`](https://endoflife.date/azul-zulu) | ❌ |  |
 | Azure DevOps Server | [`/azure-devops-server`](https://endoflife.date/azure-devops-server) | ❌ |  |
-| Azure Kubernetes Service | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service) | ❌ |  |
+| Azure Kubernetes Service | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service) | ✔️ | release_table |
 | Backdrop | [`/backdrop`](https://endoflife.date/backdrop) | ❌ |  |
 | Bamboo | [`/bamboo`](https://endoflife.date/bamboo) | ✔️ | atlassian_eol, atlassian_versions |
 | Bazel | [`/bazel`](https://endoflife.date/bazel) | ✔️ | git, release_table |
 | Elastic Beats | [`/beats`](https://endoflife.date/beats) | ✔️ | git |
+| Behat | [`/behat`](https://endoflife.date/behat) | ✔️ | git |
 | Bellsoft Liberica JDK | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica) | ✔️ | github_releases |
 | BIG-IP | [`/big-ip`](https://endoflife.date/big-ip) | ❌ |  |
 | BigBlueButton | [`/bigbluebutton`](https://endoflife.date/bigbluebutton) | ✔️ | github_releases |
@@ -96,9 +97,12 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Chef Infra Client | [`/chef-infra-client`](https://endoflife.date/chef-infra-client) | ✔️ | chef-infra |
 | Chef Infra Server | [`/chef-infra-server`](https://endoflife.date/chef-infra-server) | ✔️ | chef-infra |
 | Chef InSpec | [`/chef-inspec`](https://endoflife.date/chef-inspec) | ✔️ | chef-inspec |
-| Citrix Virtual Apps and Desktops | [`/citrix-vad`](https://endoflife.date/citrix-vad) | ❌ |  |
+| Chef Supermarket | [`/chef-supermarket`](https://endoflife.date/chef-supermarket) | ✔️ | chef-infra |
+| Google Chrome | [`/chrome`](https://endoflife.date/chrome) | ✔️ | chrome-releases |
+| Citrix Virtual Apps and Desktops | [`/citrix-vad`](https://endoflife.date/citrix-vad) | ✔️ | citrix-vad-rss |
 | CKEditor | [`/ckeditor`](https://endoflife.date/ckeditor) | ❌ |  |
 | ClamAV | [`/clamav`](https://endoflife.date/clamav) | ✔️ | git |
+| Clear Linux | [`/clear-linux`](https://endoflife.date/clear-linux) | ❌ |  |
 | cnspec | [`/cnspec`](https://endoflife.date/cnspec) | ✔️ | github_releases |
 | CockroachDB | [`/cockroachdb`](https://endoflife.date/cockroachdb) | ✔️ | git, release_table |
 | Coder | [`/coder`](https://endoflife.date/coder) | ✔️ | git |
@@ -111,7 +115,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Contour | [`/contour`](https://endoflife.date/contour) | ✔️ | git |
 | Control-M | [`/controlm`](https://endoflife.date/controlm) | ❌ |  |
 | Google Container-Optimized OS (COS) | [`/cos`](https://endoflife.date/cos) | ✔️ | cos |
-| Couchbase Server | [`/couchbase-server`](https://endoflife.date/couchbase-server) | ✔️ | couchbase-server, release_table |
+| Couchbase Server | [`/couchbase-server`](https://endoflife.date/couchbase-server) | ✔️ | couchbase-server, declare, release_table |
 | Craft CMS | [`/craft-cms`](https://endoflife.date/craft-cms) | ✔️ | git, release_table |
 | dbt Core | [`/dbt-core`](https://endoflife.date/dbt-core) | ✔️ | git |
 | DaoCloud Enterprise | [`/dce`](https://endoflife.date/dce) | ❌ |  |
@@ -145,6 +149,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Firefox | [`/firefox`](https://endoflife.date/firefox) | ✔️ | firefox |
 | Fluent Bit | [`/fluent-bit`](https://endoflife.date/fluent-bit) | ✔️ | git |
 | Flux | [`/flux`](https://endoflife.date/flux) | ✔️ | git |
+| Font Awesome | [`/font-awesome`](https://endoflife.date/font-awesome) | ✔️ | git |
 | Forgejo | [`/forgejo`](https://endoflife.date/forgejo) | ✔️ | git, release_table |
 | FortiOS | [`/fortios`](https://endoflife.date/fortios) | ❌ |  |
 | FreeBSD | [`/freebsd`](https://endoflife.date/freebsd) | ❌ |  |
@@ -165,6 +170,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Grails Framework | [`/grails`](https://endoflife.date/grails) | ✔️ | git |
 | Graylog | [`/graylog`](https://endoflife.date/graylog) | ✔️ | git |
 | Greenlight | [`/greenlight`](https://endoflife.date/greenlight) | ✔️ | git |
+| GrumPHP | [`/grumphp`](https://endoflife.date/grumphp) | ✔️ | git |
 | Grunt | [`/grunt`](https://endoflife.date/grunt) | ✔️ | git |
 | GStreamer | [`/gstreamer`](https://endoflife.date/gstreamer) | ✔️ | git |
 | Guzzle | [`/guzzle`](https://endoflife.date/guzzle) | ✔️ | git |
@@ -236,7 +242,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Microsoft Build of OpenJDK | [`/microsoft-build-of-openjdk`](https://endoflife.date/microsoft-build-of-openjdk) | ✔️ | git, release_table |
 | MongoDB Server | [`/mongodb`](https://endoflife.date/mongodb) | ✔️ | git, release_table |
 | Moodle | [`/moodle`](https://endoflife.date/moodle) | ✔️ | git, release_table |
-| Motorola Mobility | [`/motorola-mobility`](https://endoflife.date/motorola-mobility) | ❌ |  |
+| Motorola Mobility | [`/motorola-mobility`](https://endoflife.date/motorola-mobility) | ✔️ | motorola-security |
 | Microsoft Exchange | [`/msexchange`](https://endoflife.date/msexchange) | ❌ |  |
 | Microsoft SQL Server | [`/mssqlserver`](https://endoflife.date/mssqlserver) | ❌ |  |
 | Mule Runtime | [`/mulesoft-runtime`](https://endoflife.date/mulesoft-runtime) | ❌ |  |
@@ -261,7 +267,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Nutanix Files | [`/nutanix-files`](https://endoflife.date/nutanix-files) | ✔️ | nutanix |
 | Nutanix Prism Central | [`/nutanix-prism`](https://endoflife.date/nutanix-prism) | ✔️ | nutanix |
 | Nuxt | [`/nuxt`](https://endoflife.date/nuxt) | ✔️ | npm, release_table |
-| NVIDIA Driver | [`/nvidia`](https://endoflife.date/nvidia) | ❌ |  |
+| NVIDIA Driver | [`/nvidia`](https://endoflife.date/nvidia) | ✔️ | declare, nvidia-releases |
 | NVIDIA GPUs | [`/nvidia-gpu`](https://endoflife.date/nvidia-gpu) | ❌ |  |
 | nvm | [`/nvm`](https://endoflife.date/nvm) | ✔️ | git |
 | Microsoft Office | [`/office`](https://endoflife.date/office) | ❌ |  |
@@ -289,6 +295,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Palo Alto Networks PAN-OS | [`/panos`](https://endoflife.date/panos) | ✔️ | release_table |
 | PCI-DSS | [`/pci-dss`](https://endoflife.date/pci-dss) | ❌ |  |
 | Perl | [`/perl`](https://endoflife.date/perl) | ✔️ | git |
+| Phoenix Framework | [`/phoenix-framework`](https://endoflife.date/phoenix-framework) | ✔️ | git |
 | PHP | [`/php`](https://endoflife.date/php) | ✔️ | php |
 | phpBB | [`/phpbb`](https://endoflife.date/phpbb) | ✔️ | git |
 | phpMyAdmin | [`/phpmyadmin`](https://endoflife.date/phpmyadmin) | ✔️ | git |
@@ -363,6 +370,7 @@ As of 2025-06-28, 316 of the 383 products tracked by endoflife.date have automat
 | Tarantool | [`/tarantool`](https://endoflife.date/tarantool) | ✔️ | git |
 | Telegraf | [`/telegraf`](https://endoflife.date/telegraf) | ✔️ | git |
 | Hashicorp Terraform | [`/terraform`](https://endoflife.date/terraform) | ✔️ | git |
+| Thumbor | [`/thumbor`](https://endoflife.date/thumbor) | ✔️ | git |
 | Apache Tomcat | [`/tomcat`](https://endoflife.date/tomcat) | ✔️ | maven |
 | Traefik | [`/traefik`](https://endoflife.date/traefik) | ✔️ | git, release_table |
 | Twig | [`/twig`](https://endoflife.date/twig) | ✔️ | git |
