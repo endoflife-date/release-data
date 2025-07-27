@@ -15,7 +15,7 @@ with ProductData(config.product) as product_data:
 
         version_match = config.first_match(version_str)
         if not version_match:
-            logging.warning(f"Skipping entry with malformed version: {entry}")
+            logging.warning(f"Skipping entry with malformed version: {version_str}")
             continue
 
         version = config.render(version_match)
