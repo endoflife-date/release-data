@@ -33,3 +33,15 @@ with ProductData(config.product) as product_data:
         eol_date_str = eol_match.group("value")
         eol_date = dates.parse_month_year_date(eol_date_str)
         release.set_eol(eol_date)
+
+    html = http.fetch_html(config.data['downloadsURL'])
+    for a in html.select("a"):
+        href = a["href"]
+
+        version_match = config.first_match(href)
+        if version_match:
+            version = config.render(version_match)
+            date_str = a.next_sibling.strip().split(" ")[0]
+            date = dates.parse_date(date_str)
+
+            product_data.declare_version(version, date)
