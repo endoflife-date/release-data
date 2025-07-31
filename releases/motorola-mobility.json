@@ -114,6 +114,12 @@
       "releaseDate": "2023-06-01",
       "eol": "2027-06-30"
     },
+    "motorola-edge-60s-pro": {
+      "name": "motorola-edge-60s-pro",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12400",
+      "releaseDate": "2025-04-01",
+      "eol": "2029-04-30"
+    },
     "motorola-edge-60-stylus": {
       "name": "motorola-edge-60-stylus",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12205",
