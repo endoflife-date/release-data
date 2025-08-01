@@ -12,7 +12,6 @@ config = config_from_argv()
 with ProductData(config.product) as product_data:
     html = http.fetch_html(config.url)
 
-
     for li in html.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
         li_text = li.find("a").text.strip()
 
