@@ -7,7 +7,7 @@ from pathlib import Path
 
 import frontmatter
 from packaging.version import InvalidVersion, Version
-from ruamel.yaml import YAML
+from ruamel.yaml import YAML, StringIO
 from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
 
@@ -153,13 +153,7 @@ class Product:
                 self.updated = self.updated or release.updated
 
         if not release_matched:
-            # get the first available date in the release data
-            date_str = (release_data.get("extendedSupport", None)
-                        or release_data.get("eol", None)
-                        or release_data.get("support", None)
-                        or release_data.get("releaseDate", None))
-
-            self.unmatched_releases[name] = datetime.date.fromisoformat(str(date_str)) if isinstance(date_str, str) else None
+            self.unmatched_releases[name] = release_data
 
     def process_version(self, version_data: dict) -> None:
         name = version_data["name"]
@@ -211,7 +205,7 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
     # List all unmatched versions released in the last 30 days
     today = datetime.datetime.now(tz=datetime.timezone.utc).date()
     __raise_alert_for_unmatched_versions(name, output, product, today, 30)
-    __raise_alert_for_unmatched_releases(name, output, product, today, 30)
+    __raise_alert_for_unmatched_releases(name, output, product)
 
 
 def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, product: Product, today: datetime.date,
@@ -225,15 +219,30 @@ def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, produc
             output.println(f"{name}:{version} ({date})")
 
 
-def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, product: Product, today: datetime.date,
-                                         suppress_alert_threshold_days: int) -> None:
+def __print_unmatched_releases_as_yaml(product: Product) -> None:
+    releases = []
+    for release, data in product.unmatched_releases.items():
+        release_data = {"releaseCycle": release}
+        release_data.update(data)
+        releases.append(release_data)
+
+    yaml = YAML()
+    yaml.width = 4096  # prevent line-wrap
+    yaml.indent(sequence=4)
+    yaml_output = StringIO()
+    yaml.dump(releases, yaml_output)
+    logging.debug(f"{product.name}:\n{yaml_output.getvalue()}")
+
+
+def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, product: Product) -> None:
     if len(product.unmatched_releases) == 0:
         return
 
-    for release, date in product.unmatched_releases.items():
-        if (not date) or ((today - date).days < suppress_alert_threshold_days):
-            logging.warning(f"{name}:{release} not included")
-            output.println(f"{name}:{release}")
+    for release in product.unmatched_releases.items():
+        logging.warning(f"{name}:{release} not included")
+        output.println(f"{name}:{release}")
+
+    __print_unmatched_releases_as_yaml(product)
 
 
 if __name__ == "__main__":
