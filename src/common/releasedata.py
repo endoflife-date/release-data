@@ -153,6 +153,8 @@ class ProductData:
             }, indent=2))
 
     def get_release(self, release_name: str) -> ProductRelease:
+        release_name = endoflife.to_identifier(release_name)
+
         if release_name not in self.releases:
             logging.info(f"adding release {release_name} to {self}")
             self.releases[release_name] = ProductRelease.of(self.name, release_name)
