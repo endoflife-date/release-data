@@ -101,14 +101,17 @@ def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: Scrip
     return success
 
 
-def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter]) -> bool:
+def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], force: bool = False) -> bool:
     exec_summary = ScriptExecutionSummary()
 
     for product in products:
         configs = product.auto_configs()
-
         if not configs:
             continue # skip products without auto configs
+
+        if product.is_auto_update_disabled() and not force:
+            logging.info(f"skipping {product.name} as auto update is disabled")
+            continue
 
         # Add default configs
         configs = [AutoConfig(product.name, {"_copy_product_releases": ""})] + configs
@@ -177,6 +180,7 @@ if __name__ == "__main__":
     parser.add_argument('product', nargs='?', help='restrict update to the given product')
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
     parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
+    parser.add_argument('-f', '--force', action='store_true', help='force update even if auto update is disabled')
     args = parser.parse_args()
 
     logging.basicConfig(format=logging.BASIC_FORMAT, level=(logging.DEBUG if args.verbose else logging.INFO))
@@ -186,7 +190,7 @@ if __name__ == "__main__":
     products_list = list_products(products_dir, args.product)
 
     with GitHubStepSummary() as step_summary:
-        some_script_failed = run_scripts(step_summary, products_list)
+        some_script_failed = run_scripts(step_summary, products_list, force=args.force)
         updated_products = get_updated_products()
 
         step_summary.println("## Update summary\n")
