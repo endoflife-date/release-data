@@ -71,6 +71,9 @@ class ProductFrontmatter:
     def has_auto_configs(self) -> bool:
         return self.data and "methods" in self.data.get("auto", {})
 
+    def is_auto_update_disabled(self) -> bool:
+        return self.data.get("auto", {}).get("disabled", False)
+
     def is_auto_update_cumulative(self) -> bool:
         return self.data.get("auto", {}).get("cumulative", False)
 
