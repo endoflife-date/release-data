@@ -1,0 +1,71 @@
+{
+  "releases": {
+    "kilted": {
+      "name": "kilted",
+      "codename": "Kilted Kaiju",
+      "releaseDate": "2025-05-23",
+      "eol": "2026-12-31"
+    },
+    "jazzy": {
+      "name": "jazzy",
+      "codename": "Jazzy Jalisco",
+      "releaseDate": "2024-05-23",
+      "eol": "2029-05-31"
+    },
+    "iron": {
+      "name": "iron",
+      "codename": "Iron Irwini",
+      "releaseDate": "2023-05-23",
+      "eol": "2024-12-04"
+    },
+    "humble": {
+      "name": "humble",
+      "codename": "Humble Hawksbill",
+      "releaseDate": "2022-05-23",
+      "eol": "2027-05-31"
+    },
+    "galactic": {
+      "name": "galactic",
+      "codename": "Galactic Geochelone",
+      "releaseDate": "2021-05-23",
+      "eol": "2022-12-09"
+    },
+    "foxy": {
+      "name": "foxy",
+      "codename": "Foxy Fitzroy",
+      "releaseDate": "2020-06-05",
+      "eol": "2023-06-20"
+    },
+    "eloquent": {
+      "name": "eloquent",
+      "codename": "Eloquent Elusor",
+      "releaseDate": "2019-11-22",
+      "eol": "2020-11-30"
+    },
+    "dashing": {
+      "name": "dashing",
+      "codename": "Dashing Diademata",
+      "releaseDate": "2019-05-31",
+      "eol": "2021-05-31"
+    },
+    "crystal": {
+      "name": "crystal",
+      "codename": "Crystal Clemmys",
+      "releaseDate": "2018-12-14",
+      "eol": "2019-12-31"
+    },
+    "bouncy": {
+      "name": "bouncy",
+      "codename": "Bouncy Bolson",
+      "releaseDate": "2018-07-02",
+      "eol": "2019-07-31"
+    },
+    "ardent": {
+      "name": "ardent",
+      "codename": "Ardent Apalone",
+      "releaseDate": "2017-12-08",
+      "eol": "2018-12-31"
+    }
+  },
+  "versions": {}
+}
