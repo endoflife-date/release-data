@@ -82,8 +82,9 @@ def fetch_markdown(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_U
     return mwparserfromhell.parse(response.text)
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
-def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, wait_until: str = None, wait_for: str = None, select_wait_for: bool = False) -> str:
-    logging.info(f"Fetching {url} with JavaScript (wait_until = {wait_until}, wait_for = {wait_for}, select_wait_for = {select_wait_for})")
+def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, wait_until: str = None, wait_for: str = None,
+                         select_wait_for: bool = False, click_selector: str = None) -> str:
+    logging.info(f"Fetching {url} with JavaScript (wait_until = {wait_until}, wait_for = {wait_for}, select_wait_for = {select_wait_for}, click_selector = {click_selector})")
     with sync_playwright() as p:
         browser = p.chromium.launch()
         context = browser.new_context()
@@ -94,22 +95,16 @@ def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, w
             page.goto(url, wait_until=wait_until)
             logging.info(f"Fetched {url}")
 
+            element_to_wait_for = None
             if wait_for:
-                try:
-                    logging.info(f"Waiting for element with selector {wait_for}")
-                    element = page.wait_for_selector(selector=wait_for)
+                logging.info(f"Waiting for element with selector {wait_for}")
+                element_to_wait_for = page.wait_for_selector(selector=wait_for)
 
-                    if element:
-                        logging.debug(f"Found element with selector {wait_for} on {url}")
-                        return element.inner_html() if select_wait_for else page.content()
+            if click_selector:
+                logging.info(f"Clicking on element with selector {click_selector}")
+                page.click(selector=click_selector)
+                page.wait_for_timeout(1000) # Wait for 1 second to allow the page to update after the click.
 
-                    logging.error(f"No element found with selector {wait_for} on {url}, will return full page content")
-                    logging.debug(f"Full page content: {page.content()}")
-
-                except Exception as e:  # noqa: BLE001
-                    logging.error(f"Error while waiting for element with selector {wait_for} on {url}: {e}")
-                    logging.debug(f"Full page content: {page.content()}")
-
-            return page.content()
+            return element_to_wait_for.inner_html() if select_wait_for else page.content()
         finally:
             browser.close()
