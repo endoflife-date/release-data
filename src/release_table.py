@@ -156,6 +156,7 @@ with ProductData(config.product) as product_data:
     render_js = config.data.get("render_javascript", False)
     render_js_wait_until = config.data.get("render_javascript_wait_until", None)
     render_js_wait_for = config.data.get("render_javascript_wait_for", None)
+    render_js_click_selector = config.data.get("render_javascript_click_selector", None)
     header_row_selector = config.data.get("header_selector", "thead tr")
     rows_selector = config.data.get("rows_selector", "tbody tr")
     cells_selector = "td, th"
@@ -164,7 +165,7 @@ with ProductData(config.product) as product_data:
 
     if render_js:
         response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
-                                                  wait_for=render_js_wait_for)
+                                                  wait_for=render_js_wait_for, click_selector=render_js_click_selector)
     else:
         response_text = http.fetch_url(config.url, user_agent=user_agent).text
     soup = BeautifulSoup(response_text, features="html5lib")
