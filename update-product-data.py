@@ -66,6 +66,9 @@ class ReleaseCycle:
 
     def __update_release_date(self, date: datetime.date) -> None:
         release_date = self.data.get("releaseDate", None)
+        if isinstance(release_date, str):
+            release_date = datetime.date.fromisoformat(release_date)
+
         if release_date and release_date > date:
             logging.info(f"{self} releaseDate updated from {release_date} to {date} using version data")
             self.data["releaseDate"] = date
