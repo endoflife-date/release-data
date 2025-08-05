@@ -195,6 +195,11 @@
       "name": "galaxy-tab-active",
       "eol": true
     },
+    "galaxy-tab-a9+2025": {
+      "name": "galaxy-tab-a9+2025",
+      "releaseLabel": "Galaxy Tab A9+(2025)",
+      "eol": false
+    },
     "galaxy-tab-a9+": {
       "name": "galaxy-tab-a9+",
       "eol": "2027-10-23",

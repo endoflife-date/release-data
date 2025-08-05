@@ -119,6 +119,11 @@
       "name": "gear-2",
       "eol": true
     },
+    "galaxy-z-fold7": {
+      "name": "galaxy-z-fold7",
+      "releaseLabel": "Galaxy Z Fold7",
+      "eol": false
+    },
     "galaxy-z-fold6": {
       "name": "galaxy-z-fold6",
       "releaseLabel": "Galaxy Z Fold6",
@@ -151,6 +156,16 @@
     "galaxy-z-fold-2": {
       "name": "galaxy-z-fold-2",
       "eol": "2024-09-18"
+    },
+    "galaxy-z-flip7-fe": {
+      "name": "galaxy-z-flip7-fe",
+      "releaseLabel": "Galaxy Z Flip7 FE",
+      "eol": false
+    },
+    "galaxy-z-flip7": {
+      "name": "galaxy-z-flip7",
+      "releaseLabel": "Galaxy Z Flip7",
+      "eol": false
     },
     "galaxy-z-flip6": {
       "name": "galaxy-z-flip6",
@@ -733,6 +748,11 @@
       "name": "galaxy-m40",
       "eol": true
     },
+    "galaxy-m36-5g": {
+      "name": "galaxy-m36-5g",
+      "releaseLabel": "Galaxy M36 5G",
+      "eol": false
+    },
     "galaxy-m35-5g": {
       "name": "galaxy-m35-5g",
       "releaseLabel": "Galaxy M35 5G",
@@ -755,7 +775,7 @@
     },
     "galaxy-m32": {
       "name": "galaxy-m32",
-      "eol": false,
+      "eol": "2025-08-05",
       "releaseLabel": "Galaxy M32"
     },
     "galaxy-m31s": {
@@ -1139,6 +1159,11 @@
       "name": "galaxy-f41",
       "eol": true
     },
+    "galaxy-f36-5g": {
+      "name": "galaxy-f36-5g",
+      "releaseLabel": "Galaxy F36 5G",
+      "eol": false
+    },
     "galaxy-f34-5g": {
       "name": "galaxy-f34-5g",
       "releaseLabel": "Galaxy F34 5G",
@@ -1150,7 +1175,7 @@
     },
     "galaxy-f22": {
       "name": "galaxy-f22",
-      "eol": false,
+      "eol": "2025-08-05",
       "releaseLabel": "Galaxy F22"
     },
     "galaxy-f16-5g": {
@@ -1584,7 +1609,7 @@
     },
     "galaxy-a22": {
       "name": "galaxy-a22",
-      "eol": false,
+      "eol": "2025-08-05",
       "releaseLabel": "Galaxy A22"
     },
     "galaxy-a21s": {
