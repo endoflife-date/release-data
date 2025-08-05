@@ -3,6 +3,8 @@ from hashlib import sha1
 from pathlib import Path
 from subprocess import run
 
+from . import http
+
 
 class Git:
     """Git cli wrapper
@@ -39,6 +41,7 @@ class Git:
         """Fetch and return tags matching the given`pattern`"""
         # See https://stackoverflow.com/a/65746233/374236
         self._run("config --local extensions.partialClone true")
+        self._run(f"config --local http.userAgent '{http.ENDOFLIFE_BOT_USER_AGENT}'")
         # Using --force to avoid error like "would clobber existing tag".
         # See https://stackoverflow.com/questions/58031165/how-to-get-rid-of-would-clobber-existing-tag.
         self._run("fetch --force --tags --filter=blob:none --depth=1 origin")
