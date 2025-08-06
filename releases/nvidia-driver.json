@@ -2,7 +2,7 @@
   "releases": {
     "r580-windows": {
       "name": "r580-windows",
-      "latest": "580.86",
+      "latest": "580.88",
       "latestReleaseDate": "2025-08-04",
       "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-65-06/index.html"
     },
