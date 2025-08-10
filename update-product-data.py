@@ -179,7 +179,7 @@ class Product:
 
             yaml_frontmatter = YAML()
             yaml_frontmatter.width = 4096  # prevent line-wrap
-            yaml_frontmatter.indent(sequence=4)
+            yaml_frontmatter.indent(sequence=4, offset=2)
             yaml_frontmatter.dump(self.data, product_file)
 
             product_file.write("\n---\n\n")
