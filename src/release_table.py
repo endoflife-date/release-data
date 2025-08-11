@@ -113,13 +113,18 @@ class Field:
     def extract_from(self, raw_value: str) -> str | datetime | None:
         for exclude_pattern in self.exclude_version_patterns:
             if exclude_pattern.match(raw_value):
+                logging.debug(f"Excluding '{raw_value}': matches exclude pattern {exclude_pattern}")
                 return None
+
+            logging.debug(f"'{raw_value}' does not match exclude pattern {exclude_pattern}")
 
         for include_pattern in self.include_version_patterns:
             match = include_pattern.match(raw_value)
             if not match:
+                logging.debug(f"'{raw_value}' does not match include pattern {include_pattern}")
                 continue
 
+            logging.debug(f"Processing '{raw_value}': matches include pattern {include_pattern}")
             return self.__process_value(match, raw_value)
 
         if self.name == "releaseCycle":
