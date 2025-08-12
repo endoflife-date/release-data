@@ -23,6 +23,8 @@ necessary information. Available configuration options are:
   render_javascript is true.
 - render_javascript_wait_until (optional, default = None): Argument to pass to Playwright, one of "commit",
   "domcontentloaded", "load", or "networkidle". Only use when render_javascript is true and if the script fails without it.
+- remove_if_undefined (optional, default = None): Ignore rows where the given field is undefined. This is useful for
+  example when the table contains a row for a future release with no release date yet.
 - fields: A dictionary that maps release fields to the table's columns. Field definition include:
     - column (mandatory): The name or index (starts at 1) of the column in the table.
     - type (mandatory, default = string): The type of the field. Supported types are:
@@ -157,14 +159,16 @@ class Field:
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    user_agent = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
-    render_js = config.data.get("render_javascript", False)
-    render_js_wait_until = config.data.get("render_javascript_wait_until", None)
-    render_js_wait_for = config.data.get("render_javascript_wait_for", None)
-    render_js_click_selector = config.data.get("render_javascript_click_selector", None)
-    header_row_selector = config.data.get("header_selector", "thead tr")
-    rows_selector = config.data.get("rows_selector", "tbody tr")
-    cells_selector = "td, th"
+    user_agent: str = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
+    render_js: bool = config.data.get("render_javascript", False)
+    render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
+    render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
+    render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
+    header_row_selector: str = config.data.get("header_selector", "thead tr")
+    remove_if_undefined_field: str | None = config.data.get("remove_if_undefined", None)
+    rows_selector: str = config.data.get("rows_selector", "tbody tr")
+    cells_selector: str = "td, th"
+
     release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
     fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
@@ -193,13 +197,13 @@ with ProductData(config.product) as product_data:
             for row in table.select(rows_selector):
                 cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
                 if len(cells) < min_column_count:
-                    logging.info(f"skipping row {cells}: not enough columns")
+                    logging.debug(f"skipping row {cells}: not enough columns")
                     continue
 
                 raw_release_name = cells[fields_index[release_cycle_field.name]]
                 release_name = release_cycle_field.extract_from(raw_release_name)
                 if not release_name:
-                    logging.info(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
+                    logging.debug(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
                                  f"should match one of {release_cycle_field.include_version_patterns} "
                                  f"and not match all of {release_cycle_field.exclude_version_patterns}")
                     continue
@@ -210,7 +214,10 @@ with ProductData(config.product) as product_data:
                     try:
                         release.set_field(field.name, field.extract_from(raw_field))
                     except ValueError as e:
-                        logging.info(f"skipping cell {raw_field} for {release}: {e}")
+                        logging.debug(f"skipping cell {raw_field} for {release}: {e}")
+
+                if remove_if_undefined_field and not release.get_field(remove_if_undefined_field):
+                    product_data.remove_release(release_name, f"{remove_if_undefined_field} is not defined")
 
         except ValueError as e:
             logging.info(f"skipping table with headers {headers}: {e}")

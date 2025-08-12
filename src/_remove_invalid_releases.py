@@ -13,13 +13,11 @@ with releasedata.ProductData(frontmatter.name) as product_data:
 
     for release in releases:
         if release.is_empty():
-            product_data.remove_release(release.name())
-            logging.info(f"Removed empty release {release} from {product_data.name}")
+            product_data.remove_release(release.name(), "empty release")
             continue
 
         if release.was_released_after(TODAY):
-            product_data.remove_release(release.name())
-            logging.info(f"Removed future release {release} from {product_data.name}")
+            product_data.remove_release(release.name(), "future release")
             continue
 
         logging.debug(f"Keeping release {release} in {product_data.name}")

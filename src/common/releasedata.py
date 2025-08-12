@@ -71,6 +71,10 @@ class ProductRelease:
             else:
                 logging.info(f"set '{field}' in {self} to {new_value}")
 
+
+    def get_field(self, field: str) -> any:
+        return self.data.get(field, None)
+
     def is_empty(self) -> bool:
         return len(self.data) == 1  # only the name is set
 
@@ -165,12 +169,12 @@ class ProductData:
     def get_latest_release(self) -> ProductRelease | None:
         return next(iter(self.releases.values()), None)  # assuming releases are sorted in descending order
 
-    def remove_release(self, release_name: str) -> None:
+    def remove_release(self, release_name: str, reason: str) -> None:
         if release_name not in self.releases:
             logging.warning(f"release {release_name} cannot be removed as it does not exist for {self}")
             return
 
-        logging.info(f"removing release {release_name} ({self.releases.pop(release_name)}) from {self}")
+        logging.info(f"removing release {release_name} ({self.releases.pop(release_name)}) from {self}: {reason}")
         self.updated = True
 
     def get_version(self, version_name: str) -> ProductVersion:
