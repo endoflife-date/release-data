@@ -1,18 +1,15 @@
 {
   "releases": {
-    "6": {
-      "name": "6",
-      "supportedLaravelVersions": "11-12",
-      "supportedPhpVersions": "8.3-8.4"
-    },
     "5": {
       "name": "5",
+      "releaseDate": "2024-05-09",
       "eol": "2025-11-30",
       "supportedLaravelVersions": "10-12",
       "supportedPhpVersions": "8.2-8.4"
     },
     "4": {
       "name": "4",
+      "releaseDate": "2023-05-09",
       "eoas": "2024-05-31",
       "eol": "2024-09-30",
       "supportedLaravelVersions": "9-10",
@@ -20,6 +17,7 @@
     },
     "3.4": {
       "name": "3.4",
+      "releaseDate": "2023-01-27",
       "eoas": "2023-01-31",
       "eol": "2024-07-31",
       "supportedLaravelVersions": "8-9",
@@ -27,6 +25,7 @@
     },
     "3.3": {
       "name": "3.3",
+      "releaseDate": "2022-03-14",
       "eoas": "2023-03-31",
       "eol": "2023-09-30",
       "supportedLaravelVersions": "8-9",
