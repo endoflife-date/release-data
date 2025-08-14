@@ -18,6 +18,7 @@ with ProductData(config.product) as product_data:
 
     versions = git.list_tags()
     for version, date_str in versions:
+        version = version.startswith("v") and version[1:] or version  # Remove 'v' prefix if present
         if version in released_versions:
             date = dates.parse_date(date_str)
             product_data.declare_version(version, date)
