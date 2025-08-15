@@ -1,5 +1,6 @@
 import re
 
+from bs4 import BeautifulSoup
 from common import dates, http
 from common.releasedata import ProductData, config_from_argv
 
@@ -31,8 +32,8 @@ def get_latest_minor_versions(versions: list[str]) -> list[str]:
 
 
 config = config_from_argv()
-with ProductData(config.product) as product_data:
-    html = http.fetch_html(config.url)
+with (ProductData(config.product) as product_data):
+    html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
 
     all_versions = [option.attrs['value'] for option in html.select("select#version-select > option")]
     all_versions = [v for v in all_versions if v != "DataMonitoringAppPreview"]
@@ -40,9 +41,8 @@ with ProductData(config.product) as product_data:
     # Latest minor release notes contains release notes for all previous minor versions.
     # For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
     latest_minor_versions = get_latest_minor_versions(all_versions)
-    latest_minor_versions_urls = [f"{config.url}/{v}/ReleaseNotes/MeetSplunk" for v in latest_minor_versions]
-    # Oddly using the endoflife.date user agent does not work for 9.0, 9.2 and 9.3.
-    for response in http.fetch_urls(latest_minor_versions_urls, user_agent=http.FIREFOX_USER_AGENT):
+    for url in [f"{config.url}/{v}/ReleaseNotes/MeetSplunk" for v in latest_minor_versions]:
+        response = BeautifulSoup(http.fetch_javascript_url(url, user_agent=http.FIREFOX_USER_AGENT), features="html5lib")
         for (version_str, date_str) in VERSION_DATE_PATTERN.findall(response.text):
             version_str = f"{version_str}.0" if len(version_str.split(".")) == 2 else version_str  # convert x.y to x.y.0
             date = dates.parse_date(date_str)
