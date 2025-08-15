@@ -6,7 +6,7 @@ from common.releasedata import ProductData, config_from_argv
 
 """Fetches releases from https://www.freebsd.org."""
 
-VERSION_AND_DATE_PATTERN = re.compile(r"^(Release )?(?P<release>\d+\.\d+)\s*\((?P<date>\w+ \d+, \d+)\)")
+VERSION_AND_DATE_PATTERN = re.compile(r"^(Release )?(?P<release>\d+\.\d+)\s*\((?P<date>\w+( \d+)?, \d+)\)")
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
@@ -23,6 +23,7 @@ with ProductData(config.product) as product_data:
         logging.debug(f"Processing {text}")
         release_name = match.group("release")
         release = product_data.get_release(release_name)
+        release.set_field('releaseLabel', f"releng/{release_name}")
 
-        release_date = dates.parse_date(match.group("date"))
+        release_date = dates.parse_date_or_month_year_date(match.group("date"))
         release.set_release_date(release_date)
