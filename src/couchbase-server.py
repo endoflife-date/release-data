@@ -24,5 +24,5 @@ with ProductData(config.product) as product_data:
 
             version = match["version"]
             version = f"{version}.0" if len(version.split(".")) == 2 else version
-            date = dates.parse_month_year_date(match['date'])
+            date = dates.parse_month_year_date(match['date']).replace(day=1)
             product_data.declare_version(version, date)
