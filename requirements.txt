@@ -6,7 +6,7 @@ packaging==25.0 # used in update-product-data.py
 playwright==1.54.0 # used by a few scripts to parse html
 pre-commit==3.5.0 # used to check code before commit
 python-frontmatter==1.1.0 # used in endoflife.py to parse products YAML frontmatters
-python-liquid==2.0.2 # used in endoflife.py to render version templates
+python-liquid==2.1.0 # used in endoflife.py to render version templates
 requests==2.32.4 # used in http.py to make HTTP requests simpler
 requests-futures==1.0.2 # used in http.py to be able to make async HTTP requests
 requests-cache==1.2.1 # used in http.py to be able to cache HTTP requests
