@@ -189,6 +189,7 @@
     "laptop-7th-edition-intel-processor": {
       "name": "laptop-7th-edition-intel-processor",
       "releaseLabel": "Surface Laptop 7th Edition, Intel processor",
+      "releaseDate": "2025-02-18",
       "eol": "2031-02-18"
     },
     "laptop-6-for-business": {

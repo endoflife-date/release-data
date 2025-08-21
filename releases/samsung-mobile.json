@@ -602,22 +602,22 @@
     },
     "galaxy-note20-ultra-5g": {
       "name": "galaxy-note20-ultra-5g",
-      "eol": "2025-08-21",
+      "eol": false,
       "releaseLabel": "Galaxy Note20 Ultra 5G"
     },
     "galaxy-note20-ultra": {
       "name": "galaxy-note20-ultra",
-      "eol": "2025-08-21",
+      "eol": false,
       "releaseLabel": "Galaxy Note20 Ultra"
     },
     "galaxy-note20-5g": {
       "name": "galaxy-note20-5g",
-      "eol": "2025-08-21",
+      "eol": false,
       "releaseLabel": "Galaxy Note20 5G"
     },
     "galaxy-note20": {
       "name": "galaxy-note20",
-      "eol": "2025-08-21",
+      "eol": false,
       "releaseLabel": "Galaxy Note20"
     },
     "galaxy-note10-lite": {
