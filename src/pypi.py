@@ -9,7 +9,7 @@ with ProductData(config.product) as product_data:
         version_match = config.first_match(version_str)
         version_data = data["releases"][version_str]
 
-        if version_match and version_data:
+        if version_match and version_data and version_data[0]['yanked'] == False:
             version = config.render(version_match)
             date = dates.parse_datetime(version_data[0]["upload_time_iso_8601"])
             product_data.declare_version(version, date)
