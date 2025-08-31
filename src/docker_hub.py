@@ -9,10 +9,11 @@ def fetch_releases(p: ProductData, c: endoflife.AutoConfig, url: str) -> None:
     data = http.fetch_json(url)
 
     for result in data["results"]:
-        version_str = result["name"]
-        if c.first_match(version_str):
+        version_str = c.first_match(result["name"])
+        if version_str:
+            version = c.render(version_str)
             date = dates.parse_datetime(result["tag_last_pushed"])
-            p.declare_version(version_str, date)
+            p.declare_version(version, date)
 
     if data["next"]:
         fetch_releases(p, c, data["next"])
