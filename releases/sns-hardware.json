@@ -1,109 +1,154 @@
 {
   "releases": {
     "snxr1200": {
-      "name": "snxr1200"
+      "name": "snxr1200",
+      "releaseDate": "2021-09-16"
     },
     "sni40": {
-      "name": "sni40"
+      "name": "sni40",
+      "releaseDate": "2016-06-01"
     },
     "sni20": {
-      "name": "sni20"
+      "name": "sni20",
+      "releaseDate": "2020-09-24"
     },
     "sni10": {
-      "name": "sni10"
-    },
-    "sn920": {
-      "name": "sn920"
+      "name": "sni10",
+      "releaseDate": "2024-09-30"
     },
     "sn910": {
-      "name": "sn910"
+      "name": "sn910",
+      "releaseDate": "2016-05-01",
+      "eoas": "2022-12-31"
     },
     "sn900": {
-      "name": "sn900"
-    },
-    "sn720": {
-      "name": "sn720"
+      "name": "sn900",
+      "releaseDate": "2014-07-03",
+      "eoas": "2016-09-30"
     },
     "sn710": {
-      "name": "sn710"
+      "name": "sn710",
+      "releaseDate": "2016-10-01",
+      "eoas": "2023-12-31"
     },
     "sn700": {
-      "name": "sn700"
-    },
-    "sn6200": {
-      "name": "sn6200"
+      "name": "sn700",
+      "releaseDate": "2014-07-03",
+      "eoas": "2016-09-30"
     },
     "sn6100": {
-      "name": "sn6100"
+      "name": "sn6100",
+      "releaseDate": "2018-03-10",
+      "eoas": "2024-12-31"
     },
     "sn6000": {
-      "name": "sn6000"
-    },
-    "sn5200": {
-      "name": "sn5200"
-    },
-    "sn520": {
-      "name": "sn520"
+      "name": "sn6000",
+      "releaseDate": "2015-08-01",
+      "eoas": "2019-12-31"
     },
     "sn510": {
-      "name": "sn510"
+      "name": "sn510",
+      "releaseDate": "2016-10-01",
+      "eoas": "2023-12-31"
     },
     "sn500": {
-      "name": "sn500"
-    },
-    "sn3200": {
-      "name": "sn3200"
-    },
-    "sn320": {
-      "name": "sn320"
+      "name": "sn500",
+      "releaseDate": "2014-07-03",
+      "eoas": "2016-09-30"
     },
     "sn3100": {
-      "name": "sn3100"
+      "name": "sn3100",
+      "releaseDate": "2018-03-10",
+      "eoas": "2024-12-31"
     },
     "sn310": {
-      "name": "sn310"
+      "name": "sn310",
+      "releaseDate": "2017-04-01",
+      "eoas": "2023-12-31"
     },
     "sn3000": {
-      "name": "sn3000"
+      "name": "sn3000",
+      "releaseDate": "2014-08-01",
+      "eoas": "2019-12-31"
     },
     "sn300": {
-      "name": "sn300"
-    },
-    "sn2200": {
-      "name": "sn2200"
-    },
-    "sn220": {
-      "name": "sn220"
-    },
-    "sn210w": {
-      "name": "sn210w"
+      "name": "sn300",
+      "releaseDate": "2014-08-01",
+      "eoas": "2017-12-31"
     },
     "sn2100": {
-      "name": "sn2100"
+      "name": "sn2100",
+      "releaseDate": "2018-03-10",
+      "eoas": "2024-12-31"
     },
     "sn210": {
-      "name": "sn210"
+      "name": "sn210",
+      "releaseDate": "2017-04-01",
+      "eoas": "2023-12-31"
     },
     "sn2000": {
-      "name": "sn2000"
+      "name": "sn2000",
+      "releaseDate": "2014-08-01",
+      "eoas": "2019-12-31"
     },
     "sn200": {
-      "name": "sn200"
-    },
-    "sn170": {
-      "name": "sn170"
-    },
-    "sn160w": {
-      "name": "sn160w"
+      "name": "sn200",
+      "releaseDate": "2014-08-01",
+      "eoas": "2017-12-31"
     },
     "sn160": {
-      "name": "sn160"
+      "name": "sn160",
+      "releaseDate": "2017-04-01",
+      "eoas": "2024-06-30"
     },
     "sn150": {
-      "name": "sn150"
+      "name": "sn150",
+      "releaseDate": "2014-08-01",
+      "eoas": "2017-12-31"
     },
     "sn1100": {
-      "name": "sn1100"
+      "name": "sn1100",
+      "releaseDate": "2021-09-16"
+    },
+    "sn-xs-series-170": {
+      "name": "sn-xs-series-170",
+      "releaseDate": "2024-09-30"
+    },
+    "sn-xl-series-6200": {
+      "name": "sn-xl-series-6200",
+      "releaseDate": "2024-05-01"
+    },
+    "sn-xl-series-5200": {
+      "name": "sn-xl-series-5200",
+      "releaseDate": "2024-05-01"
+    },
+    "sn-s-series-320": {
+      "name": "sn-s-series-320",
+      "releaseDate": "2023-06-01"
+    },
+    "sn-s-series-220": {
+      "name": "sn-s-series-220",
+      "releaseDate": "2023-06-01"
+    },
+    "sn-m-series-920": {
+      "name": "sn-m-series-920",
+      "releaseDate": "2022-09-29"
+    },
+    "sn-m-series-720": {
+      "name": "sn-m-series-720",
+      "releaseDate": "2022-09-29"
+    },
+    "sn-m-series-520": {
+      "name": "sn-m-series-520",
+      "releaseDate": "2023-05-04"
+    },
+    "sn-l-series-3200": {
+      "name": "sn-l-series-3200",
+      "releaseDate": "2024-06-10"
+    },
+    "sn-l-series-2200": {
+      "name": "sn-l-series-2200",
+      "releaseDate": "2024-06-10"
     }
   },
   "versions": {}
