@@ -1462,7 +1462,7 @@
     },
     "galaxy-a52s-5g": {
       "name": "galaxy-a52s-5g",
-      "eol": "2025-09-01",
+      "eol": false,
       "releaseLabel": "Galaxy A52s 5G"
     },
     "galaxy-a52-5g": {
