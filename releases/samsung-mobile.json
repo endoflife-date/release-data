@@ -602,22 +602,22 @@
     },
     "galaxy-note20-ultra-5g": {
       "name": "galaxy-note20-ultra-5g",
-      "eol": false,
+      "eol": "2025-09-02",
       "releaseLabel": "Galaxy Note20 Ultra 5G"
     },
     "galaxy-note20-ultra": {
       "name": "galaxy-note20-ultra",
-      "eol": false,
+      "eol": "2025-09-02",
       "releaseLabel": "Galaxy Note20 Ultra"
     },
     "galaxy-note20-5g": {
       "name": "galaxy-note20-5g",
-      "eol": false,
+      "eol": "2025-09-02",
       "releaseLabel": "Galaxy Note20 5G"
     },
     "galaxy-note20": {
       "name": "galaxy-note20",
-      "eol": false,
+      "eol": "2025-09-02",
       "releaseLabel": "Galaxy Note20"
     },
     "galaxy-note10-lite": {
@@ -814,7 +814,7 @@
     },
     "galaxy-m21-2021": {
       "name": "galaxy-m21-2021",
-      "eol": false,
+      "eol": "2025-09-02",
       "releaseLabel": "Galaxy M21 2021"
     },
     "galaxy-m21": {
@@ -1707,6 +1707,11 @@
     "galaxy-a10": {
       "name": "galaxy-a10",
       "eol": true
+    },
+    "galaxy-a07": {
+      "name": "galaxy-a07",
+      "releaseLabel": "Galaxy A07",
+      "eol": false
     },
     "galaxy-a06-5g": {
       "name": "galaxy-a06-5g",
