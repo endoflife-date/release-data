@@ -366,12 +366,6 @@
       "releaseDate": "2024-01-01",
       "eol": "2027-01-31"
     },
-    "moto-g32": {
-      "name": "moto-g32",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11354",
-      "releaseDate": "2022-08-01",
-      "eol": "2025-08-31"
-    },
     "moto-g24-power": {
       "name": "moto-g24-power",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11646",
