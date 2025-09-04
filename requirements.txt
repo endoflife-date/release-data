@@ -12,4 +12,4 @@ requests-futures==1.0.2 # used in http.py to be able to make async HTTP requests
 requests-cache==1.2.1 # used in http.py to be able to cache HTTP requests
 ruamel.yaml==0.18.15 # used in update-product-data.py
 ruamel.yaml.clib==0.2.12 # used in update-product-data.py
-soupsieve==2.7 # used in conjunction with beautifulsoup4
+soupsieve==2.8 # used in conjunction with beautifulsoup4
