@@ -19,7 +19,7 @@ Note that it was assumed that:
 
 The script will need to be updated if someday those conditions are not met."""
 
-MAX_VERSIONS_LIMIT = 100
+MAX_VERSIONS_LIMIT = 200
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
