@@ -48,7 +48,7 @@ jobs:
           git checkout --progress --force -B ${{ github.ref_name }} refs/remotes/origin/${{ github.ref_name }} || true
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
