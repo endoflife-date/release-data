@@ -1,0 +1,74 @@
+{
+  "releases": {
+    "pro-i": {
+      "name": "pro-i"
+    },
+    "pro": {
+      "name": "pro"
+    },
+    "l4": {
+      "name": "l4"
+    },
+    "l3": {
+      "name": "l3"
+    },
+    "5-v": {
+      "name": "5-v"
+    },
+    "5-iv": {
+      "name": "5-iv"
+    },
+    "5-iii": {
+      "name": "5-iii"
+    },
+    "5-ii": {
+      "name": "5-ii"
+    },
+    "5": {
+      "name": "5"
+    },
+    "10-vi": {
+      "name": "10-vi"
+    },
+    "10-v": {
+      "name": "10-v"
+    },
+    "10-plus": {
+      "name": "10-plus"
+    },
+    "10-iv": {
+      "name": "10-iv"
+    },
+    "10-iii": {
+      "name": "10-iii"
+    },
+    "10-ii": {
+      "name": "10-ii"
+    },
+    "10": {
+      "name": "10"
+    },
+    "1-vii": {
+      "name": "1-vii"
+    },
+    "1-vi": {
+      "name": "1-vi"
+    },
+    "1-v": {
+      "name": "1-v"
+    },
+    "1-iv": {
+      "name": "1-iv"
+    },
+    "1-iii": {
+      "name": "1-iii"
+    },
+    "1-ii": {
+      "name": "1-ii"
+    },
+    "1": {
+      "name": "1"
+    }
+  },
+  "versions": {}
+}
