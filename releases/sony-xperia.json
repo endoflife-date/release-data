@@ -1,73 +1,142 @@
 {
   "releases": {
     "pro-i": {
-      "name": "pro-i"
+      "name": "pro-i",
+      "releaseLabel": "Xperia PRO-I",
+      "androidVersions": "11\u00a0> 12\u00a0> 13",
+      "eol": "2023-11-01"
     },
     "pro": {
-      "name": "pro"
+      "name": "pro",
+      "releaseLabel": "Xperia PRO",
+      "androidVersions": "10 > 11 > 12",
+      "eol": "2023-02-01"
     },
     "l4": {
-      "name": "l4"
+      "name": "l4",
+      "releaseLabel": "Xperia L4",
+      "androidVersions": "9",
+      "eol": "2022-01-01"
     },
     "l3": {
-      "name": "l3"
+      "name": "l3",
+      "releaseLabel": "Xperia L3",
+      "androidVersions": "8.1",
+      "eol": "2020-12-01"
     },
     "5-v": {
-      "name": "5-v"
+      "name": "5-v",
+      "releaseLabel": "Xperia 5 V",
+      "androidVersions": "13 > 14 > 15",
+      "eol": "2026-08-01"
     },
     "5-iv": {
-      "name": "5-iv"
+      "name": "5-iv",
+      "releaseLabel": "Xperia 5 IV",
+      "androidVersions": "12\u00a0> 13 > 14",
+      "eol": "2025-09-01"
     },
     "5-iii": {
-      "name": "5-iii"
+      "name": "5-iii",
+      "releaseLabel": "Xperia 5 III",
+      "androidVersions": "11 > 12\u00a0> 13",
+      "eol": "2023-07-01"
     },
     "5-ii": {
-      "name": "5-ii"
+      "name": "5-ii",
+      "releaseLabel": "Xperia 5\u00a0II",
+      "androidVersions": "10 > 11\u00a0> 12",
+      "eol": "2022-10-01"
     },
     "5": {
-      "name": "5"
+      "name": "5",
+      "releaseLabel": "Xperia 5",
+      "androidVersions": "9 > 10 > 11",
+      "eol": "2021-10-01"
     },
     "10-vi": {
-      "name": "10-vi"
+      "name": "10-vi",
+      "releaseLabel": "Xperia 10 VI",
+      "androidVersions": "14\u00a0> 15\u00a0> 16",
+      "eol": "2028-05-01"
     },
     "10-v": {
-      "name": "10-v"
+      "name": "10-v",
+      "releaseLabel": "Xperia 10 V",
+      "androidVersions": "13 > 14 > 15",
+      "eol": "2026-06-01"
     },
     "10-plus": {
-      "name": "10-plus"
+      "name": "10-plus",
+      "releaseLabel": "Xperia 10 Plus",
+      "androidVersions": "9\u00a0> 10",
+      "eol": "2021-10-01"
     },
     "10-iv": {
-      "name": "10-iv"
+      "name": "10-iv",
+      "releaseLabel": "Xperia 10 IV",
+      "androidVersions": "12\u00a0> 13 > 14",
+      "eol": "2025-05-01"
     },
     "10-iii": {
-      "name": "10-iii"
+      "name": "10-iii",
+      "releaseLabel": "Xperia 10 III",
+      "androidVersions": "11\u00a0> 12\u00a0> 13",
+      "eol": "2023-07-01"
     },
     "10-ii": {
-      "name": "10-ii"
+      "name": "10-ii",
+      "releaseLabel": "Xperia 10 II",
+      "androidVersions": "10 > 11 > 12",
+      "eol": "2022-03-01"
     },
     "10": {
-      "name": "10"
+      "name": "10",
+      "releaseLabel": "Xperia 10",
+      "androidVersions": "9\u00a0> 10",
+      "eol": "2021-10-01"
     },
     "1-vii": {
-      "name": "1-vii"
+      "name": "1-vii",
+      "releaseLabel": "Xperia 1 VII",
+      "androidVersions": "15",
+      "eol": "2031-04-01"
     },
     "1-vi": {
-      "name": "1-vi"
+      "name": "1-vi",
+      "releaseLabel": "Xperia 1 VI",
+      "androidVersions": "14 > 15\u00a0> 16",
+      "eol": "2028-04-01"
     },
     "1-v": {
-      "name": "1-v"
+      "name": "1-v",
+      "releaseLabel": "Xperia 1 V",
+      "androidVersions": "13 > 14 > 15",
+      "eol": "2026-05-01"
     },
     "1-iv": {
-      "name": "1-iv"
+      "name": "1-iv",
+      "releaseLabel": "Xperia 1 IV",
+      "androidVersions": "12 > 13 > 14",
+      "eol": "2025-05-01"
     },
     "1-iii": {
-      "name": "1-iii"
+      "name": "1-iii",
+      "releaseLabel": "Xperia 1 III",
+      "androidVersions": "11 > 12\u00a0> 13",
+      "eol": "2023-07-01"
     },
     "1-ii": {
-      "name": "1-ii"
+      "name": "1-ii",
+      "releaseLabel": "Xperia 1\u00a0II",
+      "androidVersions": "10 > 11\u00a0> 12",
+      "eol": "2022-06-01"
     },
     "1": {
-      "name": "1"
+      "name": "1",
+      "releaseLabel": "Xperia 1",
+      "androidVersions": "9 > 10 > 11",
+      "eol": "2021-10-01"
     }
   },
   "versions": {}
