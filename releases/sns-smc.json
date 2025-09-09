@@ -1,0 +1,91 @@
+{
+  "releases": {
+    "3.8": {
+      "name": "3.8",
+      "releaseDate": "2025-06-10",
+      "lowestSNSVersion": "4.3",
+      "highestSNSVersion": "ND"
+    },
+    "3.7": {
+      "name": "3.7",
+      "releaseDate": "2024-12-17",
+      "eoas": "2025-09-10",
+      "eol": "2025-12-10",
+      "lowestSNSVersion": "4.3",
+      "highestSNSVersion": "4.8"
+    },
+    "3.6": {
+      "name": "3.6",
+      "releaseDate": "2024-07-30",
+      "eoas": "2025-03-18",
+      "eol": "2025-06-18",
+      "lowestSNSVersion": "4.3",
+      "highestSNSVersion": "4.8"
+    },
+    "3.5": {
+      "name": "3.5",
+      "releaseDate": "2023-11-08",
+      "eoas": "2024-07-30",
+      "eol": "2024-10-30",
+      "lowestSNSVersion": "3.7.0",
+      "highestSNSVersion": "4.7"
+    },
+    "3.4": {
+      "name": "3.4",
+      "releaseDate": "2023-04-11",
+      "eoas": "2023-11-08",
+      "eol": "2023-11-08",
+      "lowestSNSVersion": "3.7.0",
+      "highestSNSVersion": "4.7"
+    },
+    "3.3": {
+      "name": "3.3",
+      "releaseDate": "2022-08-30",
+      "eoas": "2023-04-11",
+      "eol": "2023-04-11",
+      "lowestSNSVersion": "3.7.0",
+      "highestSNSVersion": "4.7"
+    },
+    "3.2": {
+      "name": "3.2",
+      "releaseDate": "2022-05-24",
+      "eoas": "2022-08-30",
+      "eol": "2022-08-30",
+      "lowestSNSVersion": "3.7.0",
+      "highestSNSVersion": "4.7"
+    },
+    "3.1": {
+      "name": "3.1",
+      "releaseDate": "2021-12-03",
+      "eoas": "2022-05-24",
+      "eol": "2022-05-24",
+      "lowestSNSVersion": "2.5.0",
+      "highestSNSVersion": "4.7"
+    },
+    "3.0": {
+      "name": "3.0",
+      "releaseDate": "2021-06-17",
+      "eoas": "2021-12-03",
+      "eol": "2021-12-03",
+      "lowestSNSVersion": "2.5.0",
+      "highestSNSVersion": "4.7"
+    },
+    "2": {
+      "name": "2",
+      "releaseDate": "2017-03-31",
+      "eoas": "2021-06-17",
+      "eol": "2021-06-17",
+      "lowestSNSVersion": "2.5.0",
+      "highestSNSVersion": "4.7"
+    },
+    "1": {
+      "name": "1",
+      "releaseDate": "2015-12-16",
+      "eoas": "2017-03-31",
+      "eol": "2017-03-31",
+      "lowestSNSVersion": "2.5.0",
+      "highestSNSVersion": "4.7"
+    }
+  },
+  "versions": {}
+}
