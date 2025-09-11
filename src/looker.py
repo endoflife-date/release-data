@@ -7,7 +7,7 @@ from common.releasedata import ProductData, config_from_argv
 """Fetch Looker versions from the Google Cloud release notes RSS feed.
 """
 
-ANNOUNCEMENT_PATTERN = re.compile(r"includes\s+the\s+following\s+changes", re.IGNORECASE)
+ANNOUNCEMENT_PATTERN = re.compile(r"include\s+the\s+following\s+changes", re.IGNORECASE)
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
@@ -21,12 +21,12 @@ with ProductData(config.product) as product_data:
         if not announcement_match:
             continue
 
-        version_match = config.first_match(announcement_match.parent.get_text())
-        if not version_match:
+        release_match = config.first_match(announcement_match.parent.get_text())
+        if not release_match:
             continue
-        version = config.render(version_match)
+        release_name = config.render(release_match)
+        release = product_data.get_release(release_name)
 
         date_str = item.getElementsByTagName("updated")[0].firstChild.nodeValue
         date = dates.parse_datetime(date_str)
-
-        product_data.declare_version(version, date)
+        release.set_release_date(date)
