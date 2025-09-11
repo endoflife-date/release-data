@@ -25,10 +25,11 @@ Common Release Data for various projects in a consistent and easy-to-parse forma
 
 ## Currently Updated
 
-As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automatically tracked releases:
+As of 2025-09-11, 355 of the 417 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
+| AdonisJS | [`/adonisjs`](https://endoflife.date/adonisjs) | ✔️ | git |
 | Akeneo PIM | [`/akeneo-pim`](https://endoflife.date/akeneo-pim) | ✔️ | git, release_table |
 | Alibaba ACK | [`/alibaba-ack`](https://endoflife.date/alibaba-ack) | ✔️ | release_table |
 | Alibaba Dragonwell | [`/alibaba-dragonwell`](https://endoflife.date/alibaba-dragonwell) | ✔️ | git, release_table |
@@ -36,6 +37,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Alpine Linux | [`/alpine-linux`](https://endoflife.date/alpine-linux) | ✔️ | git, release_table |
 | Amazon CDK | [`/amazon-cdk`](https://endoflife.date/amazon-cdk) | ✔️ | git |
 | Amazon Corretto | [`/amazon-corretto`](https://endoflife.date/amazon-corretto) | ✔️ | github_releases |
+| Amazon DocumentDB | [`/amazon-documentdb`](https://endoflife.date/amazon-documentdb) | ✔️ | release_table |
 | Amazon EKS | [`/amazon-eks`](https://endoflife.date/amazon-eks) | ✔️ | amazon-eks, release_table |
 | Amazon Glue | [`/amazon-glue`](https://endoflife.date/amazon-glue) | ❌ |  |
 | Amazon Linux | [`/amazon-linux`](https://endoflife.date/amazon-linux) | ✔️ | docker_hub |
@@ -50,7 +52,8 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Ansible | [`/ansible`](https://endoflife.date/ansible) | ✔️ | pypi |
 | Ansible-core | [`/ansible-core`](https://endoflife.date/ansible-core) | ✔️ | git, release_table |
 | antiX Linux | [`/antix`](https://endoflife.date/antix) | ✔️ | distrowatch |
-| Apache ActiveMQ | [`/apache-activemq`](https://endoflife.date/apache-activemq) | ✔️ | git |
+| Apache ActiveMQ Classic | [`/apache-activemq`](https://endoflife.date/apache-activemq) | ✔️ | git |
+| Apache ActiveMQ Artemis | [`/apache-activemq-artemis`](https://endoflife.date/apache-activemq-artemis) | ✔️ | git |
 | Apache Airflow | [`/apache-airflow`](https://endoflife.date/apache-airflow) | ✔️ | pypi, release_table |
 | Apache Ant | [`/ant`](https://endoflife.date/ant) | ✔️ | maven |
 | Apache APISIX | [`/apache-apisix`](https://endoflife.date/apache-apisix) | ✔️ | github_releases |
@@ -94,6 +97,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Bootstrap | [`/bootstrap`](https://endoflife.date/bootstrap) | ✔️ | git |
 | Hashicorp Boundary | [`/boundary`](https://endoflife.date/boundary) | ✔️ | git |
 | Bun | [`/bun`](https://endoflife.date/bun) | ✔️ | git |
+| Cachet | [`/cachet`](https://endoflife.date/cachet) | ✔️ | git |
 | caddy | [`/caddy`](https://endoflife.date/caddy) | ✔️ | git |
 | CakePHP | [`/cakephp`](https://endoflife.date/cakephp) | ✔️ | git |
 | Calico | [`/calico`](https://endoflife.date/calico) | ✔️ | git |
@@ -136,6 +140,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Docker Engine | [`/docker-engine`](https://endoflife.date/docker-engine) | ✔️ | git |
 | Microsoft .NET | [`/dotnet`](https://endoflife.date/dotnet) | ✔️ | git, release_table |
 | Microsoft .NET Framework | [`/dotnetfx`](https://endoflife.date/dotnetfx) | ✔️ | release_table |
+| Dovecot | [`/dovecot`](https://endoflife.date/dovecot) | ✔️ | git |
 | Drupal | [`/drupal`](https://endoflife.date/drupal) | ✔️ | git |
 | Drush | [`/drush`](https://endoflife.date/drush) | ✔️ | git, release_table |
 | Eclipse Jetty | [`/eclipse-jetty`](https://endoflife.date/eclipse-jetty) | ✔️ | maven |
@@ -159,13 +164,15 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Fluent Bit | [`/fluent-bit`](https://endoflife.date/fluent-bit) | ✔️ | git |
 | Flux | [`/flux`](https://endoflife.date/flux) | ✔️ | git |
 | Font Awesome | [`/font-awesome`](https://endoflife.date/font-awesome) | ✔️ | git |
+| Foreman | [`/foreman`](https://endoflife.date/foreman) | ✔️ | git |
 | Forgejo | [`/forgejo`](https://endoflife.date/forgejo) | ✔️ | git, release_table |
 | FortiOS | [`/fortios`](https://endoflife.date/fortios) | ❌ |  |
-| FreeBSD | [`/freebsd`](https://endoflife.date/freebsd) | ❌ |  |
+| FreeBSD | [`/freebsd`](https://endoflife.date/freebsd) | ✔️ | declare, freebsd-releases, release_table |
 | Gatekeeper | [`/gatekeeper`](https://endoflife.date/gatekeeper) | ✔️ | git |
 | Gerrit | [`/gerrit`](https://endoflife.date/gerrit) | ✔️ | git |
-| Glasgow Haskell Compiler (GHC) | [`/ghc`](https://endoflife.date/ghc) | ✔️ | git |
+| Glasgow Haskell Compiler (GHC) | [`/ghc`](https://endoflife.date/ghc) | ✔️ | ghc-wiki, git |
 | GitLab | [`/gitlab`](https://endoflife.date/gitlab) | ✔️ | git, release_table |
+| Gleam | [`/gleam`](https://endoflife.date/gleam) | ✔️ | git |
 | Go | [`/go`](https://endoflife.date/go) | ✔️ | git |
 | GoAccess | [`/goaccess`](https://endoflife.date/goaccess) | ✔️ | git |
 | Godot | [`/godot`](https://endoflife.date/godot) | ✔️ | git |
@@ -225,7 +232,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Kubernetes | [`/kubernetes`](https://endoflife.date/kubernetes) | ✔️ | git |
 | Kubernetes CSI Node Driver Registrar | [`/kubernetes-csi-node-driver-registrar`](https://endoflife.date/kubernetes-csi-node-driver-registrar) | ✔️ | git |
 | Kubernetes Node Feature Discovery | [`/kubernetes-node-feature-discovery`](https://endoflife.date/kubernetes-node-feature-discovery) | ✔️ | github_releases |
-| Kuma | [`/kuma`](https://endoflife.date/kuma) | ✔️ | git, kuma |
+| Kuma | [`/kuma`](https://endoflife.date/kuma) | ✔️ | github_releases, kuma |
 | Kyverno | [`/kyverno`](https://endoflife.date/kyverno) | ✔️ | git |
 | Laravel | [`/laravel`](https://endoflife.date/laravel) | ✔️ | git, release_table |
 | LDAP Account Manager | [`/ldap-account-manager`](https://endoflife.date/ldap-account-manager) | ✔️ | git |
@@ -263,6 +270,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Neo4j | [`/neo4j`](https://endoflife.date/neo4j) | ✔️ | declare, git, release_table |
 | Neos | [`/neos`](https://endoflife.date/neos) | ✔️ | git |
 | NetApp ONTAP | [`/netapp-ontap`](https://endoflife.date/netapp-ontap) | ❌ |  |
+| NetBackup Appliance OS | [`/netbackup-appliance-os`](https://endoflife.date/netbackup-appliance-os) | ❌ |  |
 | NetBSD | [`/netbsd`](https://endoflife.date/netbsd) | ✔️ | netbsd |
 | Nextcloud | [`/nextcloud`](https://endoflife.date/nextcloud) | ✔️ | git, release_table |
 | Next.js | [`/nextjs`](https://endoflife.date/nextjs) | ✔️ | npm |
@@ -293,7 +301,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | OpenTofu | [`/opentofu`](https://endoflife.date/opentofu) | ✔️ | git |
 | OpenVPN | [`/openvpn`](https://endoflife.date/openvpn) | ✔️ | git |
 | OpenWrt | [`/openwrt`](https://endoflife.date/openwrt) | ✔️ | git |
-| OpenZFS | [`/openzfs`](https://endoflife.date/openzfs) | ✔️ | git |
+| OpenZFS | [`/openzfs`](https://endoflife.date/openzfs) | ✔️ | github_releases |
 | OPNsense | [`/opnsense`](https://endoflife.date/opnsense) | ✔️ | git |
 | Oracle APEX | [`/oracle-apex`](https://endoflife.date/oracle-apex) | ✔️ | release_table |
 | Oracle Database | [`/oracle-database`](https://endoflife.date/oracle-database) | ✔️ | release_table |
@@ -311,6 +319,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | PHP | [`/php`](https://endoflife.date/php) | ✔️ | php |
 | phpBB | [`/phpbb`](https://endoflife.date/phpbb) | ✔️ | git |
 | phpMyAdmin | [`/phpmyadmin`](https://endoflife.date/phpmyadmin) | ✔️ | git |
+| Pigeonhole | [`/pigeonhole`](https://endoflife.date/pigeonhole) | ✔️ | git |
 | Google Pixel | [`/pixel`](https://endoflife.date/pixel) | ❌ |  |
 | Google Pixel Watch | [`/pixel-watch`](https://endoflife.date/pixel-watch) | ❌ |  |
 | Plesk | [`/plesk`](https://endoflife.date/plesk) | ✔️ | plesk |
@@ -365,8 +374,13 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Silverstripe CMS | [`/silverstripe`](https://endoflife.date/silverstripe) | ✔️ | declare, git, release_table |
 | Slackware Linux | [`/slackware`](https://endoflife.date/slackware) | ✔️ | distrowatch |
 | SUSE Linux Enterprise Server | [`/sles`](https://endoflife.date/sles) | ✔️ | release_table |
+| Stormshield firmware | [`/sns-firmware`](https://endoflife.date/sns-firmware) | ✔️ | release_table |
+| Stormshield hardware | [`/sns-hardware`](https://endoflife.date/sns-hardware) | ✔️ | release_table |
+| Stormshield Management Center | [`/sns-smc`](https://endoflife.date/sns-smc) | ✔️ | declare, release_table |
 | Apache Solr | [`/solr`](https://endoflife.date/solr) | ✔️ | git |
-| SonarQube | [`/sonar`](https://endoflife.date/sonar) | ✔️ | git |
+| SonarQube Community Build | [`/sonarqube-community`](https://endoflife.date/sonarqube-community) | ✔️ | github_releases |
+| SonarQube Server | [`/sonarqube-server`](https://endoflife.date/sonarqube-server) | ❌ |  |
+| Sony Xperia | [`/sony-xperia`](https://endoflife.date/sony-xperia) | ✔️ | release_table |
 | Sourcegraph | [`/sourcegraph`](https://endoflife.date/sourcegraph) | ✔️ | git |
 | Splunk | [`/splunk`](https://endoflife.date/splunk) | ✔️ | splunk |
 | Spring Boot | [`/spring-boot`](https://endoflife.date/spring-boot) | ✔️ | git, release_table |
@@ -376,7 +390,8 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Statamic | [`/statamic`](https://endoflife.date/statamic) | ✔️ | declare, git, release_table |
 | SteamOS | [`/steamos`](https://endoflife.date/steamos) | ❌ |  |
 | Microsoft Surface | [`/surface`](https://endoflife.date/surface) | ✔️ | release_table |
-| SUSE Manager | [`/suse-manager`](https://endoflife.date/suse-manager) | ❌ |  |
+| SUSE Linux Micro | [`/suse-linux-micro`](https://endoflife.date/suse-linux-micro) | ✔️ | release_table |
+| SUSE Multi-Linux Manager | [`/suse-manager`](https://endoflife.date/suse-manager) | ❌ |  |
 | Svelte | [`/svelte`](https://endoflife.date/svelte) | ✔️ | npm |
 | Symfony | [`/symfony`](https://endoflife.date/symfony) | ✔️ | git |
 | Tails | [`/tails`](https://endoflife.date/tails) | ✔️ | distrowatch |
@@ -429,7 +444,7 @@ As of 2025-08-15, 341 of the 402 products tracked by endoflife.date have automat
 | Yocto Project | [`/yocto`](https://endoflife.date/yocto) | ✔️ | git |
 | Zabbix | [`/zabbix`](https://endoflife.date/zabbix) | ✔️ | git |
 | Zentyal | [`/zentyal`](https://endoflife.date/zentyal) | ✔️ | release_table |
-| Zerto | [`/zerto`](https://endoflife.date/zerto) | ✔️ | release_table |
+| HPE Zerto | [`/zerto`](https://endoflife.date/zerto) | ✔️ | release_table |
 | Apache ZooKeeper | [`/zookeeper`](https://endoflife.date/zookeeper) | ✔️ | maven |
 
 This table has been generated by [report.py](/report.py).
