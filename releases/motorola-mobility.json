@@ -132,6 +132,12 @@
       "releaseDate": "2025-04-01",
       "eol": "2029-04-30"
     },
+    "motorola-edge-60-neo": {
+      "name": "motorola-edge-60-neo",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12388",
+      "releaseDate": "2025-09-01",
+      "eol": "2031-06-30"
+    },
     "motorola-edge-60-fusion": {
       "name": "motorola-edge-60-fusion",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12206",
@@ -401,6 +407,18 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11429",
       "releaseDate": "2023-01-01",
       "eol": "2026-01-31"
+    },
+    "moto-g06-power": {
+      "name": "moto-g06-power",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12387",
+      "releaseDate": "2025-08-01",
+      "eol": "2027-08-31"
+    },
+    "moto-g06": {
+      "name": "moto-g06",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12386",
+      "releaseDate": "2025-08-01",
+      "eol": "2027-08-31"
     },
     "moto-g05": {
       "name": "moto-g05",
