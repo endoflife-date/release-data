@@ -32,6 +32,7 @@
     },
     "1.21": {
       "name": "1.21",
+      "eol": "2024-09-27",
       "supportedKubernetesVersions": "1.26 - 1.29"
     },
     "1.20": {
