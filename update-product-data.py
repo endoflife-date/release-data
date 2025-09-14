@@ -42,39 +42,10 @@ class ReleaseCycle:
                 self.data[key] = value
                 self.updated = True
 
-    def update_with_version(self, version: str, date: datetime.date) -> None:
+    def update_latest_with_version(self, version: str, date: datetime.date) -> None:
         logging.debug(f"will try to update {self} with {version} ({date})")
         self.matched = True
-        self.__update_release_date(date)
-        self.__update_latest(version, date)
 
-    def latest(self) -> str | None:
-        return self.data.get("latest", None)
-
-    def includes(self, version: str) -> bool:
-        """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
-        or releases that include a dot just after the release cycle (4.1.*)
-        This is important to avoid edge cases like a 4.10.x release being marked under the 4.1 release cycle."""
-        if not version.startswith(self.name):
-            return False
-
-        if len(version) == len(self.name):  # exact match
-            return True
-
-        char_after_prefix = version[len(self.name)]
-        return not char_after_prefix.isdigit()
-
-    def __update_release_date(self, date: datetime.date) -> None:
-        release_date = self.data.get("releaseDate", None)
-        if isinstance(release_date, str):
-            release_date = datetime.date.fromisoformat(release_date)
-
-        if release_date and release_date > date:
-            logging.info(f"{self} releaseDate updated from {release_date} to {date} using version data")
-            self.data["releaseDate"] = date
-            self.updated = True
-
-    def __update_latest(self, version: str, date: datetime.date) -> None:
         old_latest = self.data.get("latest", None)
         old_latest_date = self.data.get("latestReleaseDate", None)
 
@@ -102,6 +73,22 @@ class ReleaseCycle:
             self.data["latest"] = version
             self.data["latestReleaseDate"] = date
             self.updated = True
+
+    def latest(self) -> str | None:
+        return self.data.get("latest", None)
+
+    def includes(self, version: str) -> bool:
+        """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
+        or releases that include a dot just after the release cycle (4.1.*)
+        This is important to avoid edge cases like a 4.10.x release being marked under the 4.1 release cycle."""
+        if not version.startswith(self.name):
+            return False
+
+        if len(version) == len(self.name):  # exact match
+            return True
+
+        char_after_prefix = version[len(self.name)]
+        return not char_after_prefix.isdigit()
 
     def __str__(self) -> str:
         return self.product + '#' + self.name
@@ -166,7 +153,7 @@ class Product:
         for release in self.releases:
             if release.includes(name):
                 version_matched = True
-                release.update_with_version(name, date)
+                release.update_latest_with_version(name, date)
                 self.updated = self.updated or release.updated
 
         if not version_matched:

@@ -64,7 +64,7 @@ class ProductFrontmatter:
         if self.path.is_file():
             with self.path.open() as f:
                 self.data = frontmatter.load(f)
-                logging.info(f"loaded product data for {self.name} from {self.path}")
+                logging.debug(f"loaded product data for {self.name} from {self.path}")
         else:
             logging.warning(f"no product data found for {self.name} at {self.path}")
 
