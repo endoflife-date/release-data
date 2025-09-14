@@ -16,5 +16,5 @@ with ProductData(config.product) as product_data:
         if len(cells) >= 2:
             version = cells[0].text.strip()
             if version:
-                date_str = cells[1].text.strip().replace("_", "-").replace("Sept-", "Sep-")
+                date_str = cells[1].text.strip().replace("_", "-")
                 product_data.declare_version(version, dates.parse_date(date_str))
