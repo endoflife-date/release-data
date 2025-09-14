@@ -48,7 +48,7 @@ with ProductData(config.product) as product_data:
                 logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
                 continue
 
-            date_str = date_match.group(0).replace("Sept ", "Sep ")
+            date_str = date_match.group(0)
             date = dates.parse_date(date_str)
             for version_pattern in config.include_version_patterns:
                 for version_str in version_pattern.findall(version_text):

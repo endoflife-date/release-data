@@ -71,6 +71,10 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
         .replace(". ", " ")  # November 10. 2015 -> November 10 2015
         .replace("(", "")  # (November 10 2015) -> November 10 2015)
         .replace(")", "")  # (November 10 2015) -> (November 10 2015
+        .replace("Sept ", "Sep ")  # 11 Sept 2025 -> 11 Sep 2025
+        .replace("Sept-", "Sep-")  # 11-Sept-2025 -> 11-Sep-2025
+        .replace("sept ", "sep ")  # 11 Sept 2025 -> 11 Sep 2025
+        .replace("sept-", "sep-")  # 11-Sept-2025 -> 11-Sep-2025
     )
     for fmt in formats:
         try:
