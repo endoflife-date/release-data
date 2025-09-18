@@ -11,6 +11,7 @@ from ruamel.yaml import YAML, StringIO
 from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
 
+from src.common.dates import today_at_midnight
 from src.common.endoflife import list_products
 from src.common.gha import GitHubOutput
 from src.common.releasedata import DATA_DIR
@@ -74,8 +75,17 @@ class ReleaseCycle:
             self.data["latestReleaseDate"] = date
             self.updated = True
 
+    def release_date(self) -> datetime.date | None:
+        return self.__as_date(self.data.get("releaseDate", None))
+
+    def eol(self) -> datetime.date | bool | None:
+        return self.__as_date(self.data.get("eol", None))
+
     def latest(self) -> str | None:
         return self.data.get("latest", None)
+
+    def latest_release_date(self) -> datetime.date | None:
+        return self.__as_date(self.data.get("latestReleaseDate", None))
 
     def includes(self, version: str) -> bool:
         """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
@@ -92,6 +102,19 @@ class ReleaseCycle:
 
     def __str__(self) -> str:
         return self.product + '#' + self.name
+
+    @staticmethod
+    def __as_date(o: str | bool | datetime.datetime | datetime.date | None) -> datetime.date | bool | None:
+        if isinstance(o, datetime.date):
+            return o
+        if isinstance(o, datetime.datetime):
+            return o.date()
+        if isinstance(o, str):
+            return datetime.date.fromisoformat(o)
+        if isinstance(o, bool):
+            return o
+
+        return None
 
 
 class Product:
@@ -196,6 +219,7 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
     today = datetime.datetime.now(tz=datetime.timezone.utc).date()
     __raise_alert_for_unmatched_versions(name, output, product, today, 30)
     __raise_alert_for_unmatched_releases(name, output, product)
+    __raise_alert_for_stale_releases(name, output, product)
 
 
 def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, product: Product, today: datetime.date,
@@ -233,6 +257,36 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
         output.println(f"{name}:{release}")
 
     __print_unmatched_releases_as_yaml(product)
+
+
+def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: Product) -> None:
+    threshold = product.data.get("staleReleaseThresholdYears", 1) * 365
+
+    for release in product.releases:
+        logging.debug(f"checking staleness of {name}:{release.name}")
+        eol = release.eol()
+
+        if isinstance(eol, datetime.date):
+            continue # explicitly set, skip
+
+        if eol:
+            continue # explicitly EOL, skip
+
+        latest_release_date = release.latest_release_date()
+        if latest_release_date:
+            days_since_latest = (today_at_midnight().date() - latest_release_date).days
+            if days_since_latest > threshold:
+                message = f"{name}:{release.name} is not EOL and has not had a release in {days_since_latest} days"
+                logging.warning(message)
+                output.println(message)
+            continue
+
+        release_date = release.release_date()
+        days_since_release = (today_at_midnight().date() - release_date).days
+        if days_since_release > threshold:
+            message = f"{name}:{release.name} was released {days_since_release} days ago and has no EOL date"
+            logging.warning(message)
+            output.println(message)
 
 
 if __name__ == "__main__":

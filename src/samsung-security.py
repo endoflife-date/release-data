@@ -11,7 +11,7 @@ This script works cumulatively: when a model is not listed anymore on https://se
 it retains the date and use it as the model's EOL date.
 """
 
-TODAY = dates.today()
+TODAY = dates.today_at_midnight()
 
 frontmatter, config = parse_argv()
 with ProductData(config.product) as product_data:

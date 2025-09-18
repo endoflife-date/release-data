@@ -1,5 +1,5 @@
 import calendar
-from datetime import datetime, timezone
+import datetime
 
 
 def parse_date(text: str, formats: list[str] = frozenset([
@@ -15,7 +15,7 @@ def parse_date(text: str, formats: list[str] = frozenset([
     "%Y/%m/%d",  # 2020/01/25
     "%A %d %B %Y", # Wednesday 1 January 2020
     "%A %d %b %Y", # Wednesday 1 Jan 2020
-])) -> datetime:
+])) -> datetime.datetime:
     """Parse a given text representing a date using a list of formats.
     """
     return parse_datetime(text, formats, to_utc=False)
@@ -28,7 +28,7 @@ def parse_month_year_date(text: str, formats: list[str] = frozenset([
     "%Y/%m",  # 2020/01
     "%m-%Y",  # 01-2020
     "%m/%Y",  # 01/2020
-])) -> datetime:
+])) -> datetime.datetime:
     """Parse a given text representing a partial date using a list of formats,
     adjusting it to the last day of the month.
     """
@@ -37,7 +37,7 @@ def parse_month_year_date(text: str, formats: list[str] = frozenset([
     return date.replace(day=last_day)
 
 
-def parse_date_or_month_year_date(text: str) -> datetime:
+def parse_date_or_month_year_date(text: str) -> datetime.datetime:
     """Parse a given text representing a date or a partial date using the default list of formats.
     """
     try:
@@ -60,7 +60,7 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     "%a %b %d %H:%M:%S %z %Y",   # Wed Jan 01 00:00:00 -0400 2020
     "%b %d  %Y %I:%M %p",        # Jan 1 2020 0:00 pm
     "%Y%m%d%H%M%S",              # 20230501083234
-]), to_utc: bool = True) -> datetime:
+]), to_utc: bool = True) -> datetime.datetime:
     """Parse a given text representing a datetime using a list of formats,
     optionally converting it to UTC.
     """
@@ -78,12 +78,12 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     )
     for fmt in formats:
         try:
-            dt = datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
+            dt = datetime.datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
 
             if to_utc:
-                dt = dt.astimezone(timezone.utc)
+                dt = dt.astimezone(datetime.timezone.utc)
             elif dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
+                dt = dt.replace(tzinfo=datetime.timezone.utc)
 
             return dt
         except ValueError:
@@ -93,11 +93,15 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     raise ValueError(msg)
 
 
-def date(year: int, month: int, day: int) -> datetime:
+def date(year: int, month: int, day: int) -> datetime.datetime:
     """Create a datetime object with the given year, month and day, at midnight."""
-    return datetime(year, month, day, tzinfo=timezone.utc)
+    return datetime.datetime(year, month, day, tzinfo=datetime.timezone.utc)
 
 
-def today() -> datetime:
+def today_at_midnight() -> datetime.datetime:
     """Create a datetime object with today's date, at midnight."""
-    return datetime.now(tz=timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    return datetime.datetime.now(tz=datetime.timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+
+def today() -> datetime.date:
+    """Create a date object with today's date."""
+    return datetime.datetime.now(tz=datetime.timezone.utc).date()
