@@ -23,7 +23,7 @@ with ProductData(config.product) as product_data:
 
         date_text = cells[date_index].get_text().strip()
         date = dates.parse_date(date_text)
-        if date > dates.today():
+        if date > dates.today_at_midnight():
             logging.info(f"Skipping future version {cells}")
             continue
 

@@ -4,7 +4,7 @@ from common import dates, releasedata
 
 """Remove empty releases or releases which are released in the future."""
 
-TODAY = dates.today()
+TODAY = dates.today_at_midnight()
 
 frontmatter, _ = releasedata.parse_argv(ignore_auto_config=True)
 with releasedata.ProductData(frontmatter.name) as product_data:
