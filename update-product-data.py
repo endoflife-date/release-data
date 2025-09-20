@@ -229,8 +229,7 @@ def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, produc
 
     for version, date in product.unmatched_versions.items():
         if (today - date).days < suppress_alert_threshold_days:
-            logging.warning(f"{name}:{version} ({date}) not included")
-            output.println(f"{name}:{version} ({date})")
+            __raise_alert(f"{name}:{version} ({date}) is not declared", output)
 
 
 def __print_unmatched_releases_as_yaml(product: Product) -> None:
@@ -253,8 +252,7 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
         return
 
     for release in product.unmatched_releases.items():
-        logging.warning(f"{name}:{release} not included")
-        output.println(f"{name}:{release}")
+        __raise_alert(f"{name}:{release} is not declared", output)
 
     __print_unmatched_releases_as_yaml(product)
 
@@ -276,18 +274,18 @@ def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: P
         if latest_release_date:
             days_since_latest = (today_at_midnight().date() - latest_release_date).days
             if days_since_latest > threshold:
-                message = f"{name}:{release.name} is not EOL and has not had a release in {days_since_latest} days"
-                logging.warning(message)
-                output.println(message)
+                __raise_alert(f"{name}:{release.name} is not EOL and has not had a version in {days_since_latest} days", output)
             continue
 
         release_date = release.release_date()
         days_since_release = (today_at_midnight().date() - release_date).days
         if days_since_release > threshold:
-            message = f"{name}:{release.name} was released {days_since_release} days ago and has no EOL date"
-            logging.warning(message)
-            output.println(message)
+            __raise_alert(f"{name}:{release.name} is not EOL and is {days_since_release} days old", output)
 
+
+def __raise_alert(message: str, output: GitHubOutput) -> None:
+    logging.warning(message)
+    output.println(message)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update product releases.')
