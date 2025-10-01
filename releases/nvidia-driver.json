@@ -1,10 +1,16 @@
 {
   "releases": {
+    "r580-windows": {
+      "name": "r580-windows",
+      "latest": "581.40",
+      "latestReleaseDate": "2025-09-02",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-95-05/index.html"
+    },
     "r580-linux": {
       "name": "r580-linux",
-      "latest": "580.82.07",
+      "latest": "580.95.05",
       "latestReleaseDate": "2025-09-02",
-      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-82-07/index.html"
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-95-05/index.html"
     },
     "r575-windows": {
       "name": "r575-windows",
