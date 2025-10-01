@@ -496,7 +496,7 @@
     },
     "galaxy-s20-fe-5g": {
       "name": "galaxy-s20-fe-5g",
-      "eol": "2025-10-01",
+      "eol": false,
       "releaseLabel": "Galaxy S20 FE 5G"
     },
     "galaxy-s20-fe-2020": {
