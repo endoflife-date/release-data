@@ -204,18 +204,6 @@
       "releaseDate": "2022-09-01",
       "eol": "2026-09-30"
     },
-    "motorola-edge-30-neo": {
-      "name": "motorola-edge-30-neo",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11373",
-      "releaseDate": "2022-09-01",
-      "eol": "2025-09-30"
-    },
-    "motorola-edge-30-fusion": {
-      "name": "motorola-edge-30-fusion",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11358",
-      "releaseDate": "2022-09-01",
-      "eol": "2025-09-30"
-    },
     "motorola-edge-2025": {
       "name": "motorola-edge-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12238",
@@ -443,12 +431,6 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11492",
       "releaseDate": "2023-06-01",
       "eol": "2026-06-30"
-    },
-    "moto-g-stylus-5g-2022": {
-      "name": "moto-g-stylus-5g-2022",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11246",
-      "releaseDate": "2022-04-01",
-      "eol": "2025-04-30"
     },
     "moto-g-stylus-2025": {
       "name": "moto-g-stylus-2025",
