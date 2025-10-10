@@ -396,6 +396,11 @@
       "eol": "2032-02-03",
       "releaseLabel": "Galaxy S25 Ultra"
     },
+    "galaxy-s25-fe": {
+      "name": "galaxy-s25-fe",
+      "releaseLabel": "Galaxy S25 FE",
+      "eol": false
+    },
     "galaxy-s25-edge": {
       "name": "galaxy-s25-edge",
       "releaseLabel": "Galaxy S25 Edge",
@@ -770,7 +775,7 @@
     },
     "galaxy-m32-5g": {
       "name": "galaxy-m32-5g",
-      "eol": false,
+      "eol": "2025-10-10",
       "releaseLabel": "Galaxy M32 5G"
     },
     "galaxy-m32": {
@@ -1152,7 +1157,7 @@
     },
     "galaxy-f42-5g": {
       "name": "galaxy-f42-5g",
-      "eol": false,
+      "eol": "2025-10-10",
       "releaseLabel": "Galaxy F42 5G"
     },
     "galaxy-f41": {
@@ -1177,6 +1182,11 @@
       "name": "galaxy-f22",
       "eol": "2025-08-05",
       "releaseLabel": "Galaxy F22"
+    },
+    "galaxy-f17-5g": {
+      "name": "galaxy-f17-5g",
+      "releaseLabel": "Galaxy F17 5G",
+      "eol": false
     },
     "galaxy-f16-5g": {
       "name": "galaxy-f16-5g",
@@ -1206,6 +1216,11 @@
     "galaxy-f12": {
       "name": "galaxy-f12",
       "eol": "2024-11-05"
+    },
+    "galaxy-f07": {
+      "name": "galaxy-f07",
+      "releaseLabel": "Galaxy F07",
+      "eol": false
     },
     "galaxy-f06-5g": {
       "name": "galaxy-f06-5g",
@@ -1462,7 +1477,7 @@
     },
     "galaxy-a52s-5g": {
       "name": "galaxy-a52s-5g",
-      "eol": false,
+      "eol": "2025-10-10",
       "releaseLabel": "Galaxy A52s 5G"
     },
     "galaxy-a52-5g": {
@@ -1636,6 +1651,16 @@
       "name": "galaxy-a2-core",
       "eol": "2021-10-01"
     },
+    "galaxy-a17-5g": {
+      "name": "galaxy-a17-5g",
+      "releaseLabel": "Galaxy A17 5G",
+      "eol": false
+    },
+    "galaxy-a17": {
+      "name": "galaxy-a17",
+      "releaseLabel": "Galaxy A17",
+      "eol": false
+    },
     "galaxy-a16-5g": {
       "name": "galaxy-a16-5g",
       "eol": "2030-10-25",
@@ -1750,7 +1775,7 @@
     },
     "galaxy-a03s": {
       "name": "galaxy-a03s",
-      "eol": false,
+      "eol": "2025-10-10",
       "releaseLabel": "Galaxy A03s"
     },
     "galaxy-a03-core": {

@@ -95,10 +95,25 @@
       "name": "galaxy-tab-s2-8.0",
       "eol": true
     },
+    "galaxy-tab-s11-ultra": {
+      "name": "galaxy-tab-s11-ultra",
+      "releaseLabel": "Galaxy Tab S11 Ultra",
+      "eol": false
+    },
+    "galaxy-tab-s11": {
+      "name": "galaxy-tab-s11",
+      "releaseLabel": "Galaxy Tab S11",
+      "eol": false
+    },
     "galaxy-tab-s10-ultra": {
       "name": "galaxy-tab-s10-ultra",
       "eol": "2031-10-03",
       "releaseLabel": "Galaxy Tab S10 Ultra"
+    },
+    "galaxy-tab-s10-lite": {
+      "name": "galaxy-tab-s10-lite",
+      "releaseLabel": "Galaxy Tab S10 Lite",
+      "eol": false
     },
     "galaxy-tab-s10-fe+": {
       "name": "galaxy-tab-s10-fe+",
@@ -227,6 +242,11 @@
     "galaxy-tab-a7-10.4-2020": {
       "name": "galaxy-tab-a7-10.4-2020",
       "eol": "2024-08-10"
+    },
+    "galaxy-tab-a11": {
+      "name": "galaxy-tab-a11",
+      "releaseLabel": "Galaxy Tab A11",
+      "eol": false
     },
     "galaxy-tab-a-9.7-and-s-pen": {
       "name": "galaxy-tab-a-9.7-and-s-pen",
