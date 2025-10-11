@@ -1,0 +1,19 @@
+{
+  "releases": {
+    "11.42": {
+      "name": "11.42",
+      "releaseDate": "2025-07-14",
+      "eol": "2026-07-15",
+      "latest": "11.42.25",
+      "latestReleaseDate": "2025-09-15"
+    },
+    "11.40": {
+      "name": "11.40",
+      "releaseDate": "2025-06-15",
+      "eol": "2027-12-15",
+      "latest": "11.40.22",
+      "latestReleaseDate": "2025-10-08"
+    }
+  },
+  "versions": {}
+}
