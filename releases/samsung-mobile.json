@@ -1186,7 +1186,7 @@
     "galaxy-f17-5g": {
       "name": "galaxy-f17-5g",
       "releaseLabel": "Galaxy F17 5G",
-      "eol": false
+      "eol": "2031-09-11"
     },
     "galaxy-f16-5g": {
       "name": "galaxy-f16-5g",
@@ -1220,7 +1220,7 @@
     "galaxy-f07": {
       "name": "galaxy-f07",
       "releaseLabel": "Galaxy F07",
-      "eol": false
+      "eol": "2031-10-04"
     },
     "galaxy-f06-5g": {
       "name": "galaxy-f06-5g",
@@ -1654,12 +1654,12 @@
     "galaxy-a17-5g": {
       "name": "galaxy-a17-5g",
       "releaseLabel": "Galaxy A17 5G",
-      "eol": false
+      "eol": "2031-08-27"
     },
     "galaxy-a17": {
       "name": "galaxy-a17",
       "releaseLabel": "Galaxy A17",
-      "eol": false
+      "eol": "2031-08-27"
     },
     "galaxy-a16-5g": {
       "name": "galaxy-a16-5g",
@@ -1736,7 +1736,7 @@
     "galaxy-a07": {
       "name": "galaxy-a07",
       "releaseLabel": "Galaxy A07",
-      "eol": false
+      "eol": "2031-09-01"
     },
     "galaxy-a06-5g": {
       "name": "galaxy-a06-5g",
