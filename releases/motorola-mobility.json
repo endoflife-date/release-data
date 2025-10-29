@@ -282,6 +282,12 @@
       "releaseDate": "2022-10-01",
       "eol": "2025-10-31"
     },
+    "moto-g67-power-5g": {
+      "name": "moto-g67-power-5g",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12403",
+      "releaseDate": "2025-09-01",
+      "eol": "2028-06-30"
+    },
     "moto-g66-5g": {
       "name": "moto-g66-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12389",
