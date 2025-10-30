@@ -25,6 +25,10 @@
       "supportedPhpVersions": "5.2.0+",
       "eol": "2015-05-31"
     },
+    "14": {
+      "name": "14",
+      "supportedPhpVersions": "8.3+"
+    },
     "13": {
       "name": "13",
       "supportedPhpVersions": "8.3+"
