@@ -20,6 +20,11 @@
       "name": "z1",
       "eol": true
     },
+    "w26": {
+      "name": "w26",
+      "releaseLabel": "W26",
+      "eol": false
+    },
     "w25-flip": {
       "name": "w25-flip",
       "releaseLabel": "W25 Flip",
@@ -53,7 +58,7 @@
     "w22-5g": {
       "name": "w22-5g",
       "releaseLabel": "W22 5G",
-      "eol": false
+      "eol": "2025-11-04"
     },
     "i9301i-galaxy-s3-neo": {
       "name": "i9301i-galaxy-s3-neo",
@@ -501,7 +506,7 @@
     },
     "galaxy-s20-fe-5g": {
       "name": "galaxy-s20-fe-5g",
-      "eol": false,
+      "eol": "2025-11-04",
       "releaseLabel": "Galaxy S20 FE 5G"
     },
     "galaxy-s20-fe-2020": {
@@ -510,7 +515,7 @@
     },
     "galaxy-s20-fe": {
       "name": "galaxy-s20-fe",
-      "eol": "2026-03-31",
+      "eol": "2025-11-04",
       "releaseLabel": "Galaxy S20 FE"
     },
     "galaxy-s20-5g-uw": {
@@ -732,7 +737,7 @@
     },
     "galaxy-m52-5g": {
       "name": "galaxy-m52-5g",
-      "eol": false,
+      "eol": "2025-11-04",
       "releaseLabel": "Galaxy M52 5G"
     },
     "galaxy-m51": {
@@ -810,7 +815,7 @@
     },
     "galaxy-m22": {
       "name": "galaxy-m22",
-      "eol": false,
+      "eol": "2025-11-04",
       "releaseLabel": "Galaxy M22"
     },
     "galaxy-m21s": {
@@ -829,6 +834,11 @@
     "galaxy-m20": {
       "name": "galaxy-m20",
       "eol": true
+    },
+    "galaxy-m17-5g": {
+      "name": "galaxy-m17-5g",
+      "releaseLabel": "Galaxy M17 5G",
+      "eol": false
     },
     "galaxy-m16-5g": {
       "name": "galaxy-m16-5g",
@@ -883,6 +893,11 @@
     "galaxy-m10": {
       "name": "galaxy-m10",
       "eol": true
+    },
+    "galaxy-m07": {
+      "name": "galaxy-m07",
+      "releaseLabel": "Galaxy M07",
+      "eol": false
     },
     "galaxy-m06-5g": {
       "name": "galaxy-m06-5g",
