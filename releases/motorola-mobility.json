@@ -18,6 +18,18 @@
       "releaseDate": "2025-02-01",
       "eol": "2029-02-28"
     },
+    "motorola-razr-60s": {
+      "name": "motorola-razr-60s",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12402",
+      "releaseDate": "2025-03-01",
+      "eol": "2029-06-30"
+    },
+    "motorola-razr-60d": {
+      "name": "motorola-razr-60d",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12401",
+      "releaseDate": "2025-03-01",
+      "eol": "2029-06-30"
+    },
     "motorola-razr-60-ultra": {
       "name": "motorola-razr-60-ultra",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12209",
