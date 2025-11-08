@@ -59,7 +59,7 @@ with ProductData(config.product) as product_data:
                     continue
 
                 version_name = config.render(version_match)
-                version_date = dates.parse_datetime(cells[version_date_index])
+                version_date = dates.parse__datetime_or_date_or_month_year_date(cells[version_date_index])
                 product_data.declare_version(version_name, version_date)
 
         except ValueError as e:

@@ -93,6 +93,15 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     raise ValueError(msg)
 
 
+def parse__datetime_or_date_or_month_year_date(text: str) -> datetime.datetime:
+    """Parse a given text representing a datetime, date or a partial date using the default list of formats.
+    """
+    try:
+        return parse_datetime(text)
+    except ValueError:
+        return parse_date_or_month_year_date(text)
+
+
 def date(year: int, month: int, day: int) -> datetime.datetime:
     """Create a datetime object with the given year, month and day, at midnight."""
     return datetime.datetime(year, month, day, tzinfo=datetime.timezone.utc)
