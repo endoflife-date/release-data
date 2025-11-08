@@ -138,16 +138,13 @@ class Field:
         str_value = self.template.render(**match.groupdict()) if self.template else raw_value
 
         if self.type == "date":
-            try:
-                return dates.parse_date(str_value)
-            except ValueError:
-                return dates.parse_month_year_date(str_value)
+            return dates.parse_date_or_month_year_date(str_value)
 
-        elif self.type == "range":
+        if self.type == "range":
             items = RANGE_LIST_SEPARATOR_PATTERN.split(str_value)
             return f"{items[0]} - {items[-1]}" if len(items) > 1 else str_value
 
-        elif self.type == "identifier":
+        if self.type == "identifier":
             return endoflife.to_identifier(str_value)
 
         return str_value
