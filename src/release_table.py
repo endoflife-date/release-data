@@ -161,9 +161,9 @@ with ProductData(config.product) as product_data:
     render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
     render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
     render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
-    header_row_selector: str = config.data.get("header_selector", "thead tr")
 
     table_selector: str = config.data.get("selector", "table")
+    header_row_selector: str = config.data.get("header_selector", "thead tr")
     rows_selector: str = config.data.get("rows_selector", "tbody tr")
     cells_selector: str = "td, th"
 
