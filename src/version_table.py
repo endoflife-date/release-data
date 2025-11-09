@@ -1,5 +1,6 @@
 import logging
 
+from bs4 import BeautifulSoup
 from common import dates, http
 from common.releasedata import ProductData, config_from_argv
 
@@ -13,6 +14,11 @@ necessary information. Available configuration options are:
 - rows_selector (optional, default = tbody tr): A CSS selector used to locate the table's rows.
 - name_column (mandatory): The name of the column containing the version names.
 - date_column (mandatory): The name of the column containing the version dates.
+- render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
+- render_javascript_wait_for (optional, default = None): Wait until the given selector appear on the page. Only use when
+  render_javascript is true.
+- render_javascript_wait_until (optional, default = None): Argument to pass to Playwright, one of "commit",
+  "domcontentloaded", "load", or "networkidle". Only use when render_javascript is true and if the script fails without it.
 
 Supported CSS selectors are defined by BeautifulSoup and documented on its website. For more information, see
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors.
@@ -25,12 +31,23 @@ with ProductData(config.product) as product_data:
     rows_selector: str = config.data.get("rows_selector", "tbody tr")
     cells_selector: str = "td, th"
 
-    version_name_column = config.data["name_column"].strip().lower()
-    version_date_column = config.data["date_column"].strip().lower()
+    version_name_column: str = config.data["name_column"].strip().lower()
+    version_date_column: str = config.data["date_column"].strip().lower()
 
-    html = http.fetch_html(config.url)
+    user_agent: str = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
+    render_js: bool = config.data.get("render_javascript", False)
+    render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
+    render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
+    render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
 
-    for table in html.select(table_selector):
+    if render_js:
+        response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
+                                                  wait_for=render_js_wait_for, click_selector=render_js_click_selector)
+    else:
+        response_text = http.fetch_url(config.url, user_agent=user_agent).text
+    soup = BeautifulSoup(response_text, features="html5lib")
+
+    for table in soup.select(table_selector):
         header_row = table.select_one(header_row_selector)
         if not header_row:
             logging.info(f"skipping table with attributes {table.attrs}: no header row found")
