@@ -258,9 +258,11 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
 
 
 def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: Product) -> None:
-    threshold = product.data.get("staleReleaseThresholdYears", 1) * 365
+    global_threshold = product.data.get("staleReleaseThresholdDays", 365)
 
     for release in product.releases:
+        threshold = release.data.get("staleReleaseThresholdDays", global_threshold)
+
         logging.debug(f"checking staleness of {name}:{release.name}")
         eol = release.eol()
 
