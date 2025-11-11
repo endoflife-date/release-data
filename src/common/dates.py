@@ -68,6 +68,7 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     text = (
         text.strip()
         .replace(", ", " ")  # November 10, 2015 -> November 10 2015
+        .replace(" ,", " ")  # November 10 ,2015 -> November 10 2015
         .replace(". ", " ")  # November 10. 2015 -> November 10 2015
         .replace("(", "")  # (November 10 2015) -> November 10 2015)
         .replace(")", "")  # (November 10 2015) -> (November 10 2015
