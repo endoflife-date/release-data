@@ -7,7 +7,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import Optional, Type
 
-from . import endoflife
+from . import dates, endoflife
 
 SRC_DIR = Path('src')
 DATA_DIR = Path('releases')
@@ -182,6 +182,10 @@ class ProductData:
 
     def declare_version(self, version_name: str, versions_date: datetime) -> None:
         self.updated = True
+        if versions_date > dates.today_at_end_of_day():
+            logging.warning(f"skipping declaration of version {version_name} with future date {versions_date} for {self}")
+            return
+
         if version_name in self.versions and self.versions[version_name].date() != versions_date:
             logging.info(f"overwriting {version_name} ({self.get_version(version_name).date()} -> {versions_date}) for {self}")
             self.versions[version_name].replace_date(versions_date)
