@@ -112,6 +112,10 @@ def today_at_midnight() -> datetime.datetime:
     """Create a datetime object with today's date, at midnight."""
     return datetime.datetime.now(tz=datetime.timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
 
+def today_at_end_of_day() -> datetime.datetime:
+    """Create a datetime object with today's date, at the end of the day."""
+    return datetime.datetime.now(tz=datetime.timezone.utc).replace(hour=23, minute=59, second=59, microsecond=999999)
+
 def today() -> datetime.date:
     """Create a date object with today's date."""
     return datetime.datetime.now(tz=datetime.timezone.utc).date()
