@@ -54,6 +54,12 @@
       "androidVersions": "9 > 10 > 11",
       "eol": "2021-10-01"
     },
+    "10-vii": {
+      "name": "10-vii",
+      "releaseLabel": "Xperia 10 VII",
+      "androidVersions": "15 > 16",
+      "eol": "2031-08-01"
+    },
     "10-vi": {
       "name": "10-vi",
       "releaseLabel": "Xperia 10 VI",
@@ -99,7 +105,7 @@
     "1-vii": {
       "name": "1-vii",
       "releaseLabel": "Xperia 1 VII",
-      "androidVersions": "15",
+      "androidVersions": "15 > 16",
       "eol": "2031-04-01"
     },
     "1-vi": {
