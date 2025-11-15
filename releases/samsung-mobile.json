@@ -404,7 +404,7 @@
     "galaxy-s25-fe": {
       "name": "galaxy-s25-fe",
       "releaseLabel": "Galaxy S25 FE",
-      "eol": false
+      "eol": "2032-09-04"
     },
     "galaxy-s25-edge": {
       "name": "galaxy-s25-edge",
