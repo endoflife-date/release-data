@@ -119,3 +119,7 @@ def today_at_end_of_day() -> datetime.datetime:
 def today() -> datetime.date:
     """Create a date object with today's date."""
     return datetime.datetime.now(tz=datetime.timezone.utc).date()
+
+def to_datetime(dt: datetime.date) -> datetime.datetime:
+    """Convert a date object to a datetime object at midnight."""
+    return datetime.datetime(dt.year, dt.month, dt.day, tzinfo=datetime.timezone.utc)

@@ -180,8 +180,10 @@ class ProductData:
     def get_version(self, version_name: str) -> ProductVersion:
         return self.versions[version_name] if version_name in self.versions else None
 
-    def declare_version(self, version_name: str, versions_date: datetime) -> None:
+    def declare_version(self, version_name: str, versions_date: datetime|date) -> None:
         self.updated = True
+
+        versions_date = dates.to_datetime(versions_date) if isinstance(versions_date, date) else versions_date
         if versions_date > dates.today_at_end_of_day():
             logging.warning(f"skipping declaration of version {version_name} with future date {versions_date} for {self}")
             return
