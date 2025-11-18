@@ -3,6 +3,7 @@
     "5": {
       "name": "5",
       "releaseDate": "2024-05-09",
+      "eoas": "2026-03-31",
       "eol": "2026-12-31",
       "supportedLaravelVersions": "10-12",
       "supportedPhpVersions": "8.2-8.4"
@@ -25,11 +26,7 @@
     },
     "3.3": {
       "name": "3.3",
-      "releaseDate": "2022-03-14",
-      "eoas": "2023-03-31",
-      "eol": "2023-09-30",
-      "supportedLaravelVersions": "8-9",
-      "supportedPhpVersions": "7.4-8.1"
+      "releaseDate": "2022-03-14"
     }
   },
   "versions": {
