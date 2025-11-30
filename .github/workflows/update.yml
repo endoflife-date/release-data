@@ -28,12 +28,12 @@ jobs:
           path: ~/.cache
 
       - name: Clone self repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
 
       - name: Clone website repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: endoflife-date/endoflife.date
           path: website
