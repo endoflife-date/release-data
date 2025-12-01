@@ -516,6 +516,12 @@
       "releaseDate": "2023-05-01",
       "eol": "2026-05-31"
     },
+    "moto-g-2026": {
+      "name": "moto-g-2026",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12431",
+      "releaseDate": "2025-12-01",
+      "eol": "2028-12-31"
+    },
     "moto-g-2025": {
       "name": "moto-g-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12163",
