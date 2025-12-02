@@ -277,6 +277,11 @@
       "releaseLabel": "releng/2.0",
       "releaseDate": "1994-11-22"
     },
+    "15.0": {
+      "name": "15.0",
+      "releaseLabel": "releng/15.0",
+      "releaseDate": "2025-12-02"
+    },
     "14.3": {
       "name": "14.3",
       "releaseLabel": "releng/14.3",
