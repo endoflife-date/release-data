@@ -243,6 +243,11 @@
       "name": "galaxy-tab-a7-10.4-2020",
       "eol": "2024-08-10"
     },
+    "galaxy-tab-a11+": {
+      "name": "galaxy-tab-a11+",
+      "releaseLabel": "Galaxy Tab A11+",
+      "eol": false
+    },
     "galaxy-tab-a11": {
       "name": "galaxy-tab-a11",
       "releaseLabel": "Galaxy Tab A11",
