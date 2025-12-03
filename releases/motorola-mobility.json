@@ -324,6 +324,18 @@
       "releaseDate": "2024-04-01",
       "eol": "2027-04-30"
     },
+    "moto-g57-power": {
+      "name": "moto-g57-power",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12451",
+      "releaseDate": "2025-11-01",
+      "eol": "2028-06-30"
+    },
+    "moto-g57": {
+      "name": "moto-g57",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12453",
+      "releaseDate": "2025-11-01",
+      "eol": "2028-06-30"
+    },
     "moto-g56-5g": {
       "name": "moto-g56-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12217",
