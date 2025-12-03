@@ -1712,7 +1712,7 @@
     },
     "galaxy-a13-5g": {
       "name": "galaxy-a13-5g",
-      "eol": "2025-12-03",
+      "eol": false,
       "releaseLabel": "Galaxy A13 5G"
     },
     "galaxy-a13": {
