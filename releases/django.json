@@ -2,18 +2,20 @@
   "releases": {
     "6.0": {
       "name": "6.0",
+      "eoas": "2026-08-31",
+      "eol": "2027-04-30",
       "supportedPythonVersions": "3.12 - 3.14"
     },
     "5.2": {
       "name": "5.2",
-      "eoas": "2025-12-31",
+      "eoas": "2025-12-03",
       "eol": "2028-04-30",
       "supportedPythonVersions": "3.10 - 3.14 (added in 5.2.8)"
     },
     "5.1": {
       "name": "5.1",
       "eoas": "2025-04-02",
-      "eol": "2025-12-31",
+      "eol": "2025-12-03",
       "supportedPythonVersions": "3.10 - 3.13 (added in 5.1.3)"
     },
     "5.0": {
