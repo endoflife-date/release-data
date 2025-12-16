@@ -911,7 +911,7 @@
     },
     "galaxy-m04": {
       "name": "galaxy-m04",
-      "eol": "2025-12-16",
+      "eol": false,
       "releaseLabel": "Galaxy M04"
     },
     "galaxy-m02s": {
