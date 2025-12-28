@@ -22,7 +22,7 @@ jobs:
       # See https://github.com/actions/cache/tree/main/save#always-save-cache.
       - name: Restore repositories and HTTP requests cache
         id: cache-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           key: 'update-cache'
           path: ~/.cache
@@ -73,7 +73,7 @@ jobs:
       # See https://github.com/actions/cache/tree/main/save#always-save-cache.
       - name: Save repositories and HTTP requests cache
         id: cache-save
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: always() && steps.cache-restore.outputs.cache-hit != 'true'
         with:
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
