@@ -246,7 +246,7 @@
     "galaxy-tab-a11+": {
       "name": "galaxy-tab-a11+",
       "releaseLabel": "Galaxy Tab A11+",
-      "eol": false
+      "eol": "2031-12-30"
     },
     "galaxy-tab-a11": {
       "name": "galaxy-tab-a11",
