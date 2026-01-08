@@ -234,6 +234,11 @@
       "name": "dotnet5.0",
       "eoas": "2022-05-10",
       "eol": true
+    },
+    "dotnet10": {
+      "name": "dotnet10",
+      "eoas": "2028-11-14",
+      "eol": "2029-01-15"
     }
   },
   "versions": {}

@@ -492,6 +492,12 @@
       "releaseDate": "2023-04-01",
       "eol": "2026-04-30"
     },
+    "moto-g-power-2026": {
+      "name": "moto-g-power-2026",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12452",
+      "releaseDate": "2026-01-01",
+      "eol": "2029-01-31"
+    },
     "moto-g-power-2025": {
       "name": "moto-g-power-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12162",
