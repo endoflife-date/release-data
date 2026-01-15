@@ -12,6 +12,12 @@
       "releaseDate": "2024-08-01",
       "eol": "2029-08-31"
     },
+    "motorola-signature": {
+      "name": "motorola-signature",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12430",
+      "releaseDate": "2026-01-01",
+      "eol": "2032-06-30"
+    },
     "motorola-razr-ultra-2025": {
       "name": "motorola-razr-ultra-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12208",
