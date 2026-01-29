@@ -523,7 +523,7 @@
     },
     "galaxy-s21-5g": {
       "name": "galaxy-s21-5g",
-      "eol": "2026-01-29",
+      "eol": false,
       "releaseLabel": "Galaxy S21 5G"
     },
     "galaxy-s21+-5g": {
