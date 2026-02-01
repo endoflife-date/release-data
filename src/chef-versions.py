@@ -1,3 +1,5 @@
+import logging
+
 from common import dates, http
 from common.git import Git
 from common.releasedata import ProductData, config_from_argv
@@ -11,11 +13,18 @@ More context on https://github.com/endoflife-date/endoflife.date/pull/4425#discu
 config = config_from_argv()
 with ProductData(config.product) as product_data:
     html = http.fetch_html(config.url)
-    released_versions = [h2.get('id') for h2 in html.find_all('h2', id=True) if h2.get('id')]
+
+    released_versions = []
+    for h2 in html.find_all('h2'):
+        title = h2.get_text(strip=True)
+        match = config.first_match(title)
+        if not match:
+            logging.warning(f"Skipping '{title}', no match found")
+            continue
+        released_versions.append(config.render(match))
 
     git = Git(config.data.get('repository'))
     git.setup(bare=True)
-
     versions = git.list_tags()
     for version, date_str in versions:
         version = version.startswith("v") and version[1:] or version  # Remove 'v' prefix if present
