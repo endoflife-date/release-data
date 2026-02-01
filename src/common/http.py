@@ -82,11 +82,11 @@ def fetch_markdown(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_U
     return mwparserfromhell.parse(response.text)
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
-def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, wait_until: str = None, wait_for: str = None,
-                         select_wait_for: bool = False, click_selector: str = None) -> str:
+def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, headless: bool = True, wait_until: str = None,
+                         wait_for: str = None, select_wait_for: bool = False, click_selector: str = None) -> str:
     logging.info(f"Fetching {url} with JavaScript (wait_until = {wait_until}, wait_for = {wait_for}, select_wait_for = {select_wait_for}, click_selector = {click_selector})")
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = p.chromium.launch(headless=headless)
         context = browser.new_context()
         context.set_extra_http_headers({'User-Agent': user_agent})
 
