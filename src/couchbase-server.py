@@ -8,7 +8,7 @@ from common.releasedata import ProductData, config_from_argv
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    html = http.fetch_html(f"{config.url}/current/install/install-intro.html")
+    html = http.fetch_html(f"{config.url}/current/release-notes/relnotes.html")
 
     minor_versions = [options.attrs["value"] for options in html.find(class_="version_list").find_all("option")]
     minor_version_urls = [f"{config.url}/{minor}/release-notes/relnotes.html" for minor in minor_versions]
