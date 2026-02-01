@@ -19,6 +19,7 @@ necessary information. Available configuration options are:
 - user_agent (optional, default = <endoflife.date-bot User-Agent>): A user agent string to use when fetching the page.
   Unused when render_javascript is true.
 - render_javascript (optional, default = false): A boolean value indicating whether to render JavaScript on the page.
+- render_javascript_headless (optional, default = true): Indicates whether to run the browser in headless mode.
 - render_javascript_wait_for (optional, default = None): Wait until the given selector appear on the page. Only use when
   render_javascript is true.
 - render_javascript_wait_until (optional, default = None): Argument to pass to Playwright, one of "commit",
@@ -161,6 +162,7 @@ with ProductData(config.product) as product_data:
     render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
     render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
     render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
+    render_js_headless: str | None = config.data.get("render_javascript_headless", None)
 
     table_selector: str = config.data.get("selector", "table")
     header_row_selector: str = config.data.get("header_selector", "thead tr")
@@ -173,8 +175,9 @@ with ProductData(config.product) as product_data:
     fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
     if render_js:
-        response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
-                                                  wait_for=render_js_wait_for, click_selector=render_js_click_selector)
+        response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, headless=render_js_headless,
+                                                  wait_until=render_js_wait_until, wait_for=render_js_wait_for,
+                                                  click_selector=render_js_click_selector)
     else:
         response_text = http.fetch_url(config.url, user_agent=user_agent).text
     soup = BeautifulSoup(response_text, features="html5lib")
