@@ -121,6 +121,10 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], 
             try:
                 __delete_data(product)
                 for config in configs:
+                    if config.is_disabled() and not force:
+                        logging.info(f"skipping script {config.script} for {product.name} as it is disabled")
+                        continue
+
                     success = __run_script(product, config, exec_summary)
                     if not success:
                         __revert_data(product)

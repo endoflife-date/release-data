@@ -21,6 +21,7 @@ class AutoConfig:
         self.script = f"{self.method}.py"
         self.url = data[self.method]
         self.version_template = Template(data.get("template", DEFAULT_VERSION_TEMPLATE))
+        self.disabled = data.get("disabled", False)
 
         regexes_include = data.get("regex", DEFAULT_VERSION_REGEX)
         regexes_include = regexes_include if isinstance(regexes_include, list) else [regexes_include]
@@ -44,6 +45,9 @@ class AutoConfig:
 
         logging.debug(f"{version} does not match any include or exclude patterns")
         return None
+
+    def is_disabled(self) -> bool:
+        return self.disabled
 
     def is_excluded(self, version: str) -> bool:
         return self.first_match(version) is None
