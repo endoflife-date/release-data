@@ -32,8 +32,8 @@ with ProductData(config.product) as product_data:
     for update_cadence, title in sections.items():
         models_list = html.find(string=lambda text, search=title: search in text if text else False).find_next("ul")
 
-        for item in models_list.find_all("li"):
-            models = item.text.replace("Enterprise Models:", "")
+        for item in models_list.select("li > ul > li"):
+            models = item.text
             logging.info(f"Found {models} for {update_cadence} security updates")
 
             for model in re.split(r',\s*', models):
