@@ -2,7 +2,7 @@
   "releases": {
     "galaxy-tab-s9-ultra": {
       "name": "galaxy-tab-s9-ultra",
-      "eol": "2028-08-11",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S9 Ultra"
     },
     "galaxy-tab-s9-fe+": {
@@ -12,12 +12,12 @@
     },
     "galaxy-tab-s9-fe": {
       "name": "galaxy-tab-s9-fe",
-      "eol": "2028-10-04",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S9 FE"
     },
     "galaxy-tab-s9+": {
       "name": "galaxy-tab-s9+",
-      "eol": "2028-08-11",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S9+"
     },
     "galaxy-tab-s9": {
@@ -32,7 +32,7 @@
     },
     "galaxy-tab-s8+": {
       "name": "galaxy-tab-s8+",
-      "eol": "2027-04-14",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S8+"
     },
     "galaxy-tab-s8": {
@@ -107,7 +107,7 @@
     },
     "galaxy-tab-s10-ultra": {
       "name": "galaxy-tab-s10-ultra",
-      "eol": "2031-10-03",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S10 Ultra"
     },
     "galaxy-tab-s10-lite": {
@@ -117,12 +117,12 @@
     },
     "galaxy-tab-s10-fe+": {
       "name": "galaxy-tab-s10-fe+",
-      "eol": "2032-04-03",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S10 FE+"
     },
     "galaxy-tab-s10-fe": {
       "name": "galaxy-tab-s10-fe",
-      "eol": "2032-04-03",
+      "eol": false,
       "releaseLabel": "Galaxy Tab S10 FE"
     },
     "galaxy-tab-s10+": {
@@ -213,11 +213,11 @@
     "galaxy-tab-a9+2025": {
       "name": "galaxy-tab-a9+2025",
       "releaseLabel": "Galaxy Tab A9+(2025)",
-      "eol": "2032-06-01"
+      "eol": false
     },
     "galaxy-tab-a9+": {
       "name": "galaxy-tab-a9+",
-      "eol": "2027-10-23",
+      "eol": false,
       "releaseLabel": "Galaxy Tab A9+"
     },
     "galaxy-tab-a9": {

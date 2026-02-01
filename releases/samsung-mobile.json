@@ -137,12 +137,12 @@
     "galaxy-z-fold6": {
       "name": "galaxy-z-fold6",
       "releaseLabel": "Galaxy Z Fold6",
-      "eol": "2031-07-24"
+      "eol": false
     },
     "galaxy-z-fold5": {
       "name": "galaxy-z-fold5",
       "releaseLabel": "Galaxy Z Fold5",
-      "eol": "2028-08-11"
+      "eol": false
     },
     "galaxy-z-fold4": {
       "name": "galaxy-z-fold4",
@@ -180,12 +180,12 @@
     "galaxy-z-flip6": {
       "name": "galaxy-z-flip6",
       "releaseLabel": "Galaxy Z Flip6",
-      "eol": "2031-07-24"
+      "eol": false
     },
     "galaxy-z-flip5": {
       "name": "galaxy-z-flip5",
       "releaseLabel": "Galaxy Z Flip5",
-      "eol": "2028-08-11"
+      "eol": false
     },
     "galaxy-z-flip4": {
       "name": "galaxy-z-flip4",
@@ -212,11 +212,11 @@
     "galaxy-xcover7-pro": {
       "name": "galaxy-xcover7-pro",
       "releaseLabel": "Galaxy XCover7 Pro",
-      "eol": "2032-05-31"
+      "eol": false
     },
     "galaxy-xcover7": {
       "name": "galaxy-xcover7",
-      "eol": "2031-01-01",
+      "eol": false,
       "releaseLabel": "Galaxy XCover7"
     },
     "galaxy-xcover6-pro": {
@@ -403,7 +403,7 @@
     },
     "galaxy-s25-ultra": {
       "name": "galaxy-s25-ultra",
-      "eol": "2032-02-03",
+      "eol": false,
       "releaseLabel": "Galaxy S25 Ultra"
     },
     "galaxy-s25-fe": {
@@ -414,11 +414,11 @@
     "galaxy-s25-edge": {
       "name": "galaxy-s25-edge",
       "releaseLabel": "Galaxy S25 Edge",
-      "eol": "2032-05-29"
+      "eol": false
     },
     "galaxy-s25+": {
       "name": "galaxy-s25+",
-      "eol": "2032-02-03",
+      "eol": false,
       "releaseLabel": "Galaxy S25+"
     },
     "galaxy-s25": {
@@ -428,7 +428,7 @@
     },
     "galaxy-s24-ultra": {
       "name": "galaxy-s24-ultra",
-      "eol": "2031-01-24",
+      "eol": false,
       "releaseLabel": "Galaxy S24 Ultra"
     },
     "galaxy-s24-fe": {
@@ -438,7 +438,7 @@
     },
     "galaxy-s24+": {
       "name": "galaxy-s24+",
-      "eol": "2031-01-24",
+      "eol": false,
       "releaseLabel": "Galaxy S24+"
     },
     "galaxy-s24": {
@@ -448,7 +448,7 @@
     },
     "galaxy-s23-ultra": {
       "name": "galaxy-s23-ultra",
-      "eol": "2028-02-17",
+      "eol": false,
       "releaseLabel": "Galaxy S23 Ultra"
     },
     "galaxy-s23-fe": {
@@ -458,7 +458,7 @@
     },
     "galaxy-s23+": {
       "name": "galaxy-s23+",
-      "eol": "2028-02-17",
+      "eol": false,
       "releaseLabel": "Galaxy S23+"
     },
     "galaxy-s23": {
@@ -473,7 +473,7 @@
     },
     "galaxy-s22+": {
       "name": "galaxy-s22+",
-      "eol": "2027-02-25",
+      "eol": false,
       "releaseLabel": "Galaxy S22+"
     },
     "galaxy-s22": {
@@ -483,7 +483,7 @@
     },
     "galaxy-s21-ultra-5g": {
       "name": "galaxy-s21-ultra-5g",
-      "eol": "2026-01-29",
+      "eol": false,
       "releaseLabel": "Galaxy S21 Ultra 5G"
     },
     "galaxy-s21-fe-5g": {
@@ -498,7 +498,7 @@
     },
     "galaxy-s21+-5g": {
       "name": "galaxy-s21+-5g",
-      "eol": "2026-01-29",
+      "eol": false,
       "releaseLabel": "Galaxy S21+ 5G"
     },
     "galaxy-s20-ultra-5g": {
@@ -718,17 +718,17 @@
     "galaxy-m56-5g": {
       "name": "galaxy-m56-5g",
       "releaseLabel": "Galaxy M56 5G",
-      "eol": "2031-04-17"
+      "eol": false
     },
     "galaxy-m55s-5g": {
       "name": "galaxy-m55s-5g",
       "releaseLabel": "Galaxy M55s 5G",
-      "eol": "2029-09-24"
+      "eol": false
     },
     "galaxy-m55-5g": {
       "name": "galaxy-m55-5g",
       "releaseLabel": "Galaxy M55 5G",
-      "eol": "2029-04-08"
+      "eol": false
     },
     "galaxy-m54-5g": {
       "name": "galaxy-m54-5g",
@@ -771,12 +771,12 @@
     "galaxy-m35-5g": {
       "name": "galaxy-m35-5g",
       "releaseLabel": "Galaxy M35 5G",
-      "eol": "2029-07-17"
+      "eol": false
     },
     "galaxy-m34-5g": {
       "name": "galaxy-m34-5g",
       "releaseLabel": "Galaxy M34 5G",
-      "eol": "2028-07-07"
+      "eol": false
     },
     "galaxy-m33-5g": {
       "name": "galaxy-m33-5g",
@@ -848,22 +848,22 @@
     "galaxy-m16-5g": {
       "name": "galaxy-m16-5g",
       "releaseLabel": "Galaxy M16 5G",
-      "eol": "2031-02-27"
+      "eol": false
     },
     "galaxy-m15-5g": {
       "name": "galaxy-m15-5g",
       "releaseLabel": "Galaxy M15 5G",
-      "eol": "2029-04-08"
+      "eol": false
     },
     "galaxy-m14-5g": {
       "name": "galaxy-m14-5g",
       "releaseLabel": "Galaxy M14 5G",
-      "eol": "2027-04-17"
+      "eol": false
     },
     "galaxy-m14": {
       "name": "galaxy-m14",
       "releaseLabel": "Galaxy M14",
-      "eol": "2028-03-07"
+      "eol": false
     },
     "galaxy-m13-india": {
       "name": "galaxy-m13-india",
@@ -907,12 +907,12 @@
     "galaxy-m06-5g": {
       "name": "galaxy-m06-5g",
       "releaseLabel": "Galaxy M06 5G",
-      "eol": "2029-02-27"
+      "eol": false
     },
     "galaxy-m05": {
       "name": "galaxy-m05",
       "releaseLabel": "Galaxy M05",
-      "eol": "2028-09-12"
+      "eol": false
     },
     "galaxy-m04": {
       "name": "galaxy-m04",
@@ -1158,12 +1158,12 @@
     "galaxy-f56-5g": {
       "name": "galaxy-f56-5g",
       "releaseLabel": "Galaxy F56 5G",
-      "eol": "2031-05-14"
+      "eol": false
     },
     "galaxy-f55-5g": {
       "name": "galaxy-f55-5g",
       "releaseLabel": "Galaxy F55 5G",
-      "eol": "2029-05-27"
+      "eol": false
     },
     "galaxy-f54-5g": {
       "name": "galaxy-f54-5g",
@@ -1211,22 +1211,22 @@
     "galaxy-f16-5g": {
       "name": "galaxy-f16-5g",
       "releaseLabel": "Galaxy F16 5G",
-      "eol": "2031-03-13"
+      "eol": false
     },
     "galaxy-f15-5g": {
       "name": "galaxy-f15-5g",
       "releaseLabel": "Galaxy F15 5G",
-      "eol": "2029-04-03"
+      "eol": false
     },
     "galaxy-f14-5g": {
       "name": "galaxy-f14-5g",
       "releaseLabel": "Galaxy F14 5G",
-      "eol": "2027-03-24"
+      "eol": false
     },
     "galaxy-f14": {
       "name": "galaxy-f14",
       "releaseLabel": "Galaxy F14",
-      "eol": "2028-09-05"
+      "eol": false
     },
     "galaxy-f13": {
       "name": "galaxy-f13",
@@ -1245,12 +1245,12 @@
     "galaxy-f06-5g": {
       "name": "galaxy-f06-5g",
       "releaseLabel": "Galaxy F06 5G",
-      "eol": "2029-02-12"
+      "eol": false
     },
     "galaxy-f05": {
       "name": "galaxy-f05",
       "releaseLabel": "Galaxy F05",
-      "eol": "2028-09-17"
+      "eol": false
     },
     "galaxy-f04": {
       "name": "galaxy-f04",
@@ -1487,7 +1487,7 @@
     },
     "galaxy-a54-5g": {
       "name": "galaxy-a54-5g",
-      "eol": "2028-03-24",
+      "eol": false,
       "releaseLabel": "Galaxy A54 5G"
     },
     "galaxy-a53-5g": {
@@ -1563,12 +1563,12 @@
     },
     "galaxy-a35-5g": {
       "name": "galaxy-a35-5g",
-      "eol": "2029-03-11",
+      "eol": false,
       "releaseLabel": "Galaxy A35 5G"
     },
     "galaxy-a34-5g": {
       "name": "galaxy-a34-5g",
-      "eol": "2028-03-24",
+      "eol": false,
       "releaseLabel": "Galaxy A34 5G"
     },
     "galaxy-a33-5g": {
@@ -1619,17 +1619,17 @@
     },
     "galaxy-a25-5g": {
       "name": "galaxy-a25-5g",
-      "eol": "2028-12-11",
+      "eol": false,
       "releaseLabel": "Galaxy A25 5G"
     },
     "galaxy-a24": {
       "name": "galaxy-a24",
-      "eol": "2028-05-05",
+      "eol": false,
       "releaseLabel": "Galaxy A24"
     },
     "galaxy-a23-5g": {
       "name": "galaxy-a23-5g",
-      "eol": "2028-05-05",
+      "eol": false,
       "releaseLabel": "Galaxy A23 5G"
     },
     "galaxy-a23": {
@@ -1679,37 +1679,37 @@
     "galaxy-a17": {
       "name": "galaxy-a17",
       "releaseLabel": "Galaxy A17",
-      "eol": "2031-08-27"
+      "eol": false
     },
     "galaxy-a16-5g": {
       "name": "galaxy-a16-5g",
-      "eol": "2030-10-25",
+      "eol": false,
       "releaseLabel": "Galaxy A16 5G"
     },
     "galaxy-a16": {
       "name": "galaxy-a16",
-      "eol": "2030-11-20",
+      "eol": false,
       "releaseLabel": "Galaxy A16"
     },
     "galaxy-a15-5g": {
       "name": "galaxy-a15-5g",
-      "eol": "2028-12-11",
+      "eol": false,
       "releaseLabel": "Galaxy A15 5G"
     },
     "galaxy-a15": {
       "name": "galaxy-a15",
-      "eol": "2028-12-11",
+      "eol": false,
       "releaseLabel": "Galaxy A15"
     },
     "galaxy-a14-5g": {
       "name": "galaxy-a14-5g",
-      "eol": "2027-01-05",
+      "eol": false,
       "releaseLabel": "Galaxy A14 5G"
     },
     "galaxy-a14": {
       "name": "galaxy-a14",
       "releaseLabel": "Galaxy A14",
-      "eol": "2027-05-22"
+      "eol": false
     },
     "galaxy-a13-sm-a137": {
       "name": "galaxy-a13-sm-a137",
@@ -1761,22 +1761,22 @@
     "galaxy-a06-5g": {
       "name": "galaxy-a06-5g",
       "releaseLabel": "Galaxy A06 5G",
-      "eol": "2031-02-19"
+      "eol": false
     },
     "galaxy-a06": {
       "name": "galaxy-a06",
       "releaseLabel": "Galaxy A06",
-      "eol": "2028-08-22"
+      "eol": false
     },
     "galaxy-a05s": {
       "name": "galaxy-a05s",
       "releaseLabel": "Galaxy A05s",
-      "eol": "2027-10-18"
+      "eol": false
     },
     "galaxy-a05": {
       "name": "galaxy-a05",
       "releaseLabel": "Galaxy A05",
-      "eol": "2027-10-15"
+      "eol": false
     },
     "galaxy-a04s": {
       "name": "galaxy-a04s",
