@@ -22,6 +22,7 @@ with ProductData(config.product) as product_data:
             continue
 
         date_text = cells[date_index].get_text().strip()
+        date_text = date_text.removesuffix('.')  # Remove trailing . if present, such as for "January 20, 2026."
         date = dates.parse_date(date_text)
         if date > dates.today_at_midnight():
             logging.info(f"Skipping future version {cells}")
