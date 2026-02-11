@@ -42,6 +42,10 @@
     }
   },
   "versions": {
+    "12.3.2+security-01": {
+      "name": "12.3.2+security-01",
+      "date": "2026-02-11"
+    },
     "12.2.4+security-01": {
       "name": "12.2.4+security-01",
       "date": "2026-02-11"
