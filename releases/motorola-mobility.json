@@ -108,12 +108,6 @@
       "releaseDate": "2023-09-01",
       "eol": "2027-09-30"
     },
-    "motorola-razr-2022": {
-      "name": "motorola-razr-2022",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11371",
-      "releaseDate": "2022-10-01",
-      "eol": "2025-10-31"
-    },
     "motorola-razr+-2025": {
       "name": "motorola-razr+-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12221",
@@ -250,7 +244,7 @@
       "name": "motorola-edge-2022",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11319",
       "releaseDate": "2022-08-01",
-      "eol": "2025-08-31"
+      "eol": "2026-08-31"
     },
     "motorola-edge+-2023": {
       "name": "motorola-edge+-2023",
@@ -305,12 +299,6 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11431",
       "releaseDate": "2023-01-01",
       "eol": "2026-01-31"
-    },
-    "moto-g72": {
-      "name": "moto-g72",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11372",
-      "releaseDate": "2022-10-01",
-      "eol": "2025-10-31"
     },
     "moto-g67-power-5g": {
       "name": "moto-g67-power-5g",
@@ -420,12 +408,6 @@
       "releaseDate": "2024-01-01",
       "eol": "2027-01-31"
     },
-    "moto-g23": {
-      "name": "moto-g23",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11430",
-      "releaseDate": "2023-01-01",
-      "eol": "2026-01-31"
-    },
     "moto-g17-power": {
       "name": "moto-g17-power",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12521",
@@ -456,12 +438,6 @@
       "releaseDate": "2023-08-01",
       "eol": "2026-08-31"
     },
-    "moto-g13": {
-      "name": "moto-g13",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11429",
-      "releaseDate": "2023-01-01",
-      "eol": "2026-01-31"
-    },
     "moto-g06-power": {
       "name": "moto-g06-power",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12387",
@@ -479,12 +455,6 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12160",
       "releaseDate": "2024-12-01",
       "eol": "2026-12-31"
-    },
-    "moto-g04": {
-      "name": "moto-g04",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11648",
-      "releaseDate": "2024-01-01",
-      "eol": "2026-01-31"
     },
     "moto-g-stylus-5g-2024": {
       "name": "moto-g-stylus-5g-2024",
@@ -545,12 +515,6 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11642",
       "releaseDate": "2024-01-01",
       "eol": "2027-01-31"
-    },
-    "moto-g-play-2023": {
-      "name": "moto-g-play-2023",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11403",
-      "releaseDate": "2023-01-01",
-      "eol": "2025-12-31"
     },
     "moto-g-5g-2024": {
       "name": "moto-g-5g-2024",
