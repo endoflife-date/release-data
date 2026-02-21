@@ -227,7 +227,7 @@
     },
     "galaxy-tab-a8": {
       "name": "galaxy-tab-a8",
-      "eol": false,
+      "eol": "2026-02-21",
       "releaseLabel": "Galaxy Tab A8"
     },
     "galaxy-tab-a7-lite": {
