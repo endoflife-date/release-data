@@ -30,9 +30,15 @@ with ProductData(config.product) as product_data:
 
     sections = config.data.get("sections", {})
     for update_cadence, title in sections.items():
-        models_list = html.find(string=lambda text, search=title: search in text if text else False).find_next("ul")
+        title_heading = html.find(string=lambda text, search=title: search in text if text else False)
 
-        for item in models_list.select("li > ul > li"):
+        if title_heading:
+            logging.info(f"Processing '{title_heading}'")
+        else:
+            logging.warning(f"Could not find section with title containing '{title}'")
+            continue
+
+        for item in title_heading.find_next("ul").select("li > ul > li"):
             models = item.text
             logging.info(f"Found {models} for {update_cadence} security updates")
 
