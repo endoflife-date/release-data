@@ -298,7 +298,7 @@
       "name": "moto-g73-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11431",
       "releaseDate": "2023-01-01",
-      "eol": "2026-01-31"
+      "eol": "2026-12-31"
     },
     "moto-g67-power-5g": {
       "name": "moto-g67-power-5g",
@@ -382,7 +382,7 @@
       "name": "moto-g53-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11426",
       "releaseDate": "2023-01-01",
-      "eol": "2026-01-31"
+      "eol": "2027-01-31"
     },
     "moto-g45-5g": {
       "name": "moto-g45-5g",
