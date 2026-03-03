@@ -401,6 +401,21 @@
       "name": "galaxy-s4-mini-i9195i",
       "eol": true
     },
+    "galaxy-s26-ultra": {
+      "name": "galaxy-s26-ultra",
+      "releaseLabel": "Galaxy S26 Ultra",
+      "eol": false
+    },
+    "galaxy-s26+": {
+      "name": "galaxy-s26+",
+      "releaseLabel": "Galaxy S26+",
+      "eol": false
+    },
+    "galaxy-s26": {
+      "name": "galaxy-s26",
+      "releaseLabel": "Galaxy S26",
+      "eol": false
+    },
     "galaxy-s25-ultra": {
       "name": "galaxy-s25-ultra",
       "eol": false,
@@ -840,6 +855,11 @@
       "name": "galaxy-m20",
       "eol": true
     },
+    "galaxy-m17e-5g": {
+      "name": "galaxy-m17e-5g",
+      "releaseLabel": "Galaxy M17e 5G",
+      "eol": false
+    },
     "galaxy-m17-5g": {
       "name": "galaxy-m17-5g",
       "releaseLabel": "Galaxy M17 5G",
@@ -1150,6 +1170,11 @@
     "galaxy-fold": {
       "name": "galaxy-fold",
       "eol": true
+    },
+    "galaxy-f70e-5g": {
+      "name": "galaxy-f70e-5g",
+      "releaseLabel": "Galaxy F70e 5G",
+      "eol": false
     },
     "galaxy-f62": {
       "name": "galaxy-f62",
@@ -1752,6 +1777,11 @@
     "galaxy-a10": {
       "name": "galaxy-a10",
       "eol": true
+    },
+    "galaxy-a07-5g": {
+      "name": "galaxy-a07-5g",
+      "releaseLabel": "Galaxy A07 5G",
+      "eol": false
     },
     "galaxy-a07": {
       "name": "galaxy-a07",
