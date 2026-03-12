@@ -1174,7 +1174,7 @@
     "galaxy-f70e-5g": {
       "name": "galaxy-f70e-5g",
       "releaseLabel": "Galaxy F70e 5G",
-      "eol": false
+      "eol": "2032-02-17"
     },
     "galaxy-f62": {
       "name": "galaxy-f62",
@@ -1781,7 +1781,7 @@
     "galaxy-a07-5g": {
       "name": "galaxy-a07-5g",
       "releaseLabel": "Galaxy A07 5G",
-      "eol": false
+      "eol": "2032-01-30"
     },
     "galaxy-a07": {
       "name": "galaxy-a07",
