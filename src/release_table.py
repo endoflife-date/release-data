@@ -71,6 +71,11 @@ DEFAULT_REGEX = r"^(?P<value>.+)$"
 DEFAULT_TEMPLATE = "{{value}}"
 DEFAULT_RELEASE_REGEX = r"^v?(?P<value>\d+(\.\d+)*)$"
 RANGE_LIST_SEPARATOR_PATTERN = re.compile(r"\s*,\s*")
+WHITESPACE_PATTERN = re.compile(r"\s+")
+
+
+def normalize_header(value: str) -> str:
+    return WHITESPACE_PATTERN.sub(' ', value).strip().lower()
 
 
 class Field:
@@ -90,7 +95,7 @@ class Field:
         if self.is_index:
             self.column = definition["column"] - 1  # convert to 0-based index
         else:
-            self.column = definition["column"].lower()
+            self.column = normalize_header(definition["column"])
 
         self.type = definition.get("type", "string")
         if self.name in DATE_FIELDS and self.type not in DATE_TYPES:
@@ -188,7 +193,7 @@ with ProductData(config.product) as product_data:
             logging.info(f"skipping table with attributes {table.attrs}: no header row found")
             continue
 
-        headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
+        headers = [normalize_header(th.get_text()) for th in header_row.select(cells_selector)]
         logging.info(f"processing table with headers {headers}")
 
         try:

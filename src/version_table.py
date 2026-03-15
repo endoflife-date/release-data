@@ -1,4 +1,5 @@
 import logging
+import re
 
 from bs4 import BeautifulSoup
 from common import dates, http
@@ -24,6 +25,14 @@ Supported CSS selectors are defined by BeautifulSoup and documented on its websi
 https://beautiful-soup-4.readthedocs.io/en/latest/index.html?highlight=selector#css-selectors.
 """
 
+
+WHITESPACE_PATTERN = re.compile(r"\s+")
+
+
+def normalize_header(value: str) -> str:
+    return WHITESPACE_PATTERN.sub(' ', value).strip().lower()
+
+
 config = config_from_argv()
 with ProductData(config.product) as product_data:
     table_selector: str = config.data.get("selector", "table")
@@ -31,8 +40,8 @@ with ProductData(config.product) as product_data:
     rows_selector: str = config.data.get("rows_selector", "tbody tr")
     cells_selector: str = "td, th"
 
-    version_name_column: str = config.data["name_column"].strip().lower()
-    version_date_column: str = config.data["date_column"].strip().lower()
+    version_name_column: str = normalize_header(config.data["name_column"])
+    version_date_column: str = normalize_header(config.data["date_column"])
 
     user_agent: str = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
     render_js: bool = config.data.get("render_javascript", False)
@@ -53,7 +62,7 @@ with ProductData(config.product) as product_data:
             logging.info(f"skipping table with attributes {table.attrs}: no header row found")
             continue
 
-        headers = [th.get_text().strip().lower() for th in header_row.select(cells_selector)]
+        headers = [normalize_header(th.get_text()) for th in header_row.select(cells_selector)]
         logging.info(f"processing table with headers {headers}")
 
         try:
