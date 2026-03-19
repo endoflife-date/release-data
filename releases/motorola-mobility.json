@@ -24,6 +24,18 @@
       "releaseDate": "2025-02-01",
       "eol": "2029-02-28"
     },
+    "motorola-razr-fold-2026": {
+      "name": "motorola-razr-fold-2026",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12556",
+      "releaseDate": "2026-03-01",
+      "eol": "2030-03-31"
+    },
+    "motorola-razr-fold": {
+      "name": "motorola-razr-fold",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12524",
+      "releaseDate": "2026-03-01",
+      "eol": "2030-03-31"
+    },
     "motorola-razr-60s": {
       "name": "motorola-razr-60s",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12402",
