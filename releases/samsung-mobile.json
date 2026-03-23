@@ -1747,7 +1747,7 @@
     },
     "galaxy-a13": {
       "name": "galaxy-a13",
-      "eol": "2026-03-23",
+      "eol": false,
       "releaseLabel": "Galaxy A13"
     },
     "galaxy-a12-nacho": {
