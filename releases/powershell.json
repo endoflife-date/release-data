@@ -1,5 +1,11 @@
 {
   "releases": {
+    "7.6": {
+      "name": "7.6",
+      "releaseDate": "2026-03-18",
+      "eol": "2028-11-14",
+      "dotnetVersion": ".NET 10.0"
+    },
     "7.5": {
       "name": "7.5",
       "releaseDate": "2025-01-23",
