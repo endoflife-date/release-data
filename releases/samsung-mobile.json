@@ -830,7 +830,7 @@
     },
     "galaxy-m23-5g": {
       "name": "galaxy-m23-5g",
-      "eol": false,
+      "eol": "2026-04-07",
       "releaseLabel": "Galaxy M23 5G"
     },
     "galaxy-m22": {
@@ -1500,6 +1500,11 @@
       "name": "galaxy-a6+-2018",
       "eol": "2021-12-01"
     },
+    "galaxy-a57-5g": {
+      "name": "galaxy-a57-5g",
+      "releaseLabel": "Galaxy A57 5G",
+      "eol": false
+    },
     "galaxy-a56-5g": {
       "name": "galaxy-a56-5g",
       "releaseLabel": "Galaxy A56 5G",
@@ -1580,6 +1585,11 @@
     "galaxy-a40": {
       "name": "galaxy-a40",
       "eol": true
+    },
+    "galaxy-a37-5g": {
+      "name": "galaxy-a37-5g",
+      "releaseLabel": "Galaxy A37 5G",
+      "eol": false
     },
     "galaxy-a36-5g": {
       "name": "galaxy-a36-5g",
