@@ -404,17 +404,17 @@
     "galaxy-s26-ultra": {
       "name": "galaxy-s26-ultra",
       "releaseLabel": "Galaxy S26 Ultra",
-      "eol": false
+      "eol": "2033-03-06"
     },
     "galaxy-s26+": {
       "name": "galaxy-s26+",
       "releaseLabel": "Galaxy S26+",
-      "eol": false
+      "eol": "2033-03-06"
     },
     "galaxy-s26": {
       "name": "galaxy-s26",
       "releaseLabel": "Galaxy S26",
-      "eol": false
+      "eol": "2033-03-06"
     },
     "galaxy-s25-ultra": {
       "name": "galaxy-s25-ultra",
@@ -858,7 +858,7 @@
     "galaxy-m17e-5g": {
       "name": "galaxy-m17e-5g",
       "releaseLabel": "Galaxy M17e 5G",
-      "eol": false
+      "eol": "2032-03-20"
     },
     "galaxy-m17-5g": {
       "name": "galaxy-m17-5g",
@@ -1503,7 +1503,7 @@
     "galaxy-a57-5g": {
       "name": "galaxy-a57-5g",
       "releaseLabel": "Galaxy A57 5G",
-      "eol": false
+      "eol": "2032-04-10"
     },
     "galaxy-a56-5g": {
       "name": "galaxy-a56-5g",
@@ -1589,7 +1589,7 @@
     "galaxy-a37-5g": {
       "name": "galaxy-a37-5g",
       "releaseLabel": "Galaxy A37 5G",
-      "eol": false
+      "eol": "2032-04-10"
     },
     "galaxy-a36-5g": {
       "name": "galaxy-a36-5g",
