@@ -492,6 +492,12 @@
       "releaseDate": "2023-06-01",
       "eol": "2026-06-30"
     },
+    "moto-g-stylus-2026": {
+      "name": "moto-g-stylus-2026",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12454",
+      "releaseDate": "2026-04-01",
+      "eol": "2029-04-30"
+    },
     "moto-g-stylus-2025": {
       "name": "moto-g-stylus-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12204",
