@@ -217,7 +217,7 @@
     },
     "galaxy-tab-a9+": {
       "name": "galaxy-tab-a9+",
-      "eol": false,
+      "eol": "2027-10-23",
       "releaseLabel": "Galaxy Tab A9+"
     },
     "galaxy-tab-a9": {
