@@ -1,0 +1,53 @@
+{
+  "releases": {
+    "windows-2025-vs2026": {
+      "name": "windows-2025-vs2026",
+      "releaseLabel": "Windows Server 2025 with Visual Studio 2026"
+    },
+    "windows-2025": {
+      "name": "windows-2025",
+      "releaseLabel": "Windows Server 2025"
+    },
+    "windows-2022": {
+      "name": "windows-2022",
+      "releaseLabel": "Windows Server 2022"
+    },
+    "ubuntu-slim": {
+      "name": "ubuntu-slim",
+      "releaseLabel": "Ubuntu Slim"
+    },
+    "ubuntu-24.04": {
+      "name": "ubuntu-24.04",
+      "releaseLabel": "Ubuntu 24.04"
+    },
+    "ubuntu-22.04": {
+      "name": "ubuntu-22.04",
+      "releaseLabel": "Ubuntu 22.04"
+    },
+    "macos-26-arm64": {
+      "name": "macos-26-arm64",
+      "releaseLabel": "macOS 26 Arm64"
+    },
+    "macos-26": {
+      "name": "macos-26",
+      "releaseLabel": "macOS 26"
+    },
+    "macos-15-arm64": {
+      "name": "macos-15-arm64",
+      "releaseLabel": "macOS 15 Arm64"
+    },
+    "macos-15": {
+      "name": "macos-15",
+      "releaseLabel": "macOS 15"
+    },
+    "macos-14-arm64": {
+      "name": "macos-14-arm64",
+      "releaseLabel": "macOS 14 Arm64"
+    },
+    "macos-14": {
+      "name": "macos-14",
+      "releaseLabel": "macOS 14"
+    }
+  },
+  "versions": {}
+}
