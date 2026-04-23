@@ -138,6 +138,12 @@
       "releaseDate": "2023-06-01",
       "eol": "2027-06-30"
     },
+    "motorola-edge-70-pro": {
+      "name": "motorola-edge-70-pro",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12564",
+      "releaseDate": "2026-04-01",
+      "eol": "2031-04-30"
+    },
     "motorola-edge-70-fusion+": {
       "name": "motorola-edge-70-fusion+",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12535",
