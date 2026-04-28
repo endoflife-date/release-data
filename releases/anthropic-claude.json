@@ -1,9 +1,18 @@
 {
   "releases": {
+    "claude-sonnet-4-6": {
+      "name": "claude-sonnet-4-6",
+      "eol": "2027-02-17"
+    },
+    "claude-sonnet-4-5-20250929": {
+      "name": "claude-sonnet-4-5-20250929",
+      "eol": "2026-09-29"
+    },
     "claude-sonnet-4-20250514": {
       "name": "claude-sonnet-4-20250514",
       "eol": "2026-06-15",
-      "recommendedReplacement": "claude-sonnet-4-6"
+      "recommendedReplacement": "claude-sonnet-4-6",
+      "eoas": "2026-04-14"
     },
     "claude-opus-4-7": {
       "name": "claude-opus-4-7",
@@ -20,26 +29,16 @@
     "claude-opus-4-20250514": {
       "name": "claude-opus-4-20250514",
       "eol": "2026-06-15",
-      "recommendedReplacement": "claude-opus-4-7"
+      "recommendedReplacement": "claude-opus-4-7",
+      "eoas": "2026-04-14"
     },
     "claude-opus-4-1-20250805": {
       "name": "claude-opus-4-1-20250805",
       "eol": "2026-08-05"
     },
-    "claude-instant-1.2": {
-      "name": "claude-instant-1.2",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
-    },
-    "claude-instant-1.1": {
-      "name": "claude-instant-1.1",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
-    },
-    "claude-instant-1.0": {
-      "name": "claude-instant-1.0",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
+    "claude-haiku-4-5-20251001": {
+      "name": "claude-haiku-4-5-20251001",
+      "eol": "2026-10-15"
     },
     "claude-3-sonnet-20240229": {
       "name": "claude-3-sonnet-20240229",
@@ -54,12 +53,14 @@
     "claude-3-haiku-20240307": {
       "name": "claude-3-haiku-20240307",
       "eol": "2026-04-20",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
+      "recommendedReplacement": "claude-haiku-4-5-20251001",
+      "eoas": "2026-02-19"
     },
     "claude-3-7-sonnet-20250219": {
       "name": "claude-3-7-sonnet-20250219",
       "eol": "2026-02-19",
-      "recommendedReplacement": "claude-sonnet-4-6"
+      "recommendedReplacement": "claude-sonnet-4-6",
+      "eoas": "2025-10-28"
     },
     "claude-3-5-sonnet-20241022": {
       "name": "claude-3-5-sonnet-20241022",
@@ -74,7 +75,8 @@
     "claude-3-5-haiku-20241022": {
       "name": "claude-3-5-haiku-20241022",
       "eol": "2026-02-19",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
+      "recommendedReplacement": "claude-haiku-4-5-20251001",
+      "eoas": "2025-12-19"
     },
     "claude-2.1": {
       "name": "claude-2.1",
