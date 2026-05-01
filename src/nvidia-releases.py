@@ -19,8 +19,8 @@ with ProductData(config.product) as product_data:
         # Only linux releases are documented in the JSON document.
         release = product_data.get_release(f"r{release_name}-linux")
         release.set_field('latest', latest)
-        release.set_field('latestReleaseDate', latest_release_data)
-        release.set_field('link', link)
+        release.set_field('latestDate', latest_release_data)
+        release.set_field('latestLink', link)
 
         # Windows releases are documented in the release notes.
         if not link.startswith('https://docs.nvidia.com'):
@@ -40,5 +40,5 @@ with ProductData(config.product) as product_data:
 
         release = product_data.get_release(f"r{release_name}-windows")
         release.set_field('latest', windows_version_match.group('version'))
-        release.set_field('latestReleaseDate', latest_release_data)
-        release.set_field('link', link)
+        release.set_field('latestDate', latest_release_data)
+        release.set_field('latestLink', link)

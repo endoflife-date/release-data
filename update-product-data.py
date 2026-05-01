@@ -17,7 +17,7 @@ from src.common.gha import GitHubOutput
 from src.common.releasedata import DATA_DIR
 
 """
-Updates the `release`, `latest` and `latestReleaseDate` property in automatically updated pages
+Updates the `release`, `latest` and `latestDate` property in automatically updated pages
 As per data from _data/release-data. This script runs on dependabot upgrade PRs via GitHub Actions for
 _data/release-data and commits back the updated data.
 This is written in Python because the only package that supports writing back YAML with comments is ruamel
@@ -48,7 +48,7 @@ class ReleaseCycle:
         self.matched = True
 
         old_latest = self.data.get("latest", None)
-        old_latest_date = self.data.get("latestReleaseDate", None)
+        old_latest_date = self.data.get("latestDate", None)
 
         update_detected = False
         if not old_latest:
@@ -56,7 +56,7 @@ class ReleaseCycle:
             update_detected = True
 
         elif old_latest == version and old_latest_date != date:
-            logging.info(f"{self} latestReleaseDate updated from {old_latest_date} to {date} using version data")
+            logging.info(f"{self} latestDate updated from {old_latest_date} to {date} using version data")
             update_detected = True
 
         else:
@@ -72,7 +72,7 @@ class ReleaseCycle:
 
         if update_detected:
             self.data["latest"] = version
-            self.data["latestReleaseDate"] = date
+            self.data["latestDate"] = date
             self.updated = True
 
     def release_date(self) -> datetime.date | None:
@@ -85,7 +85,7 @@ class ReleaseCycle:
         return self.data.get("latest", None)
 
     def latest_release_date(self) -> datetime.date | None:
-        return self.__as_date(self.data.get("latestReleaseDate", None))
+        return self.__as_date(self.data.get("latestDate", None))
 
     def includes(self, version: str) -> bool:
         """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
