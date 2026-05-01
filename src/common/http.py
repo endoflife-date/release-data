@@ -17,7 +17,7 @@ from urllib3.util import Retry
 
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
 ENDOFLIFE_BOT_USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
-FIREFOX_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0'
+FIREFOX_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0'
 
 def fetch_urls(urls: list[str], data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
                max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> list[Response]:

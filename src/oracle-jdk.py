@@ -1,5 +1,5 @@
-from bs4 import BeautifulSoup
 from common import dates, http
+from common.http import FIREFOX_USER_AGENT
 from common.releasedata import ProductData, config_from_argv
 
 """Fetch Java versions from https://www.java.com/releases/.
@@ -8,8 +8,7 @@ This script is using requests-html because the page needs JavaScript to render c
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    html = http.fetch_javascript_url(config.url)
-    soup = BeautifulSoup(html, 'html5lib')
+    soup = http.fetch_html(config.url, user_agent=FIREFOX_USER_AGENT)
 
     previous_date = None
     for row in soup.select('#released tr'):
