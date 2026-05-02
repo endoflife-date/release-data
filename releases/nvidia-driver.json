@@ -3,200 +3,194 @@
     "r595-windows": {
       "name": "r595-windows",
       "latest": "596.36",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-595-71-05/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-595-71-05/index.html"
     },
     "r595-linux": {
       "name": "r595-linux",
       "latest": "595.71.05",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-595-71-05/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-595-71-05/index.html"
     },
     "r590-windows": {
       "name": "r590-windows",
       "latest": "591.59",
-      "latestDate": "2025-12-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-590-48-01/index.html"
+      "latestReleaseDate": "2025-12-22",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-590-48-01/index.html"
     },
     "r590-linux": {
       "name": "r590-linux",
       "latest": "590.48.01",
-      "latestDate": "2025-12-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-590-48-01/index.html"
+      "latestReleaseDate": "2025-12-22",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-590-48-01/index.html"
     },
     "r580-windows": {
       "name": "r580-windows",
       "latest": "582.53",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-159-03/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-159-03/index.html"
     },
     "r580-linux": {
       "name": "r580-linux",
       "latest": "580.159.03",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-159-03/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-159-03/index.html"
     },
     "r575-windows": {
       "name": "r575-windows",
       "latest": "576.57",
-      "latestDate": "2025-06-03",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-575-57-08/index.html"
+      "latestReleaseDate": "2025-06-03",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-575-57-08/index.html"
     },
     "r575-linux": {
       "name": "r575-linux",
       "latest": "575.57.08",
-      "latestDate": "2025-06-03",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-575-57-08/index.html"
+      "latestReleaseDate": "2025-06-03",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-575-57-08/index.html"
     },
     "r570-linux": {
       "name": "r570-linux",
       "latest": "570.211.01",
-      "latestDate": "2026-01-13",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-570-211-01/index.html"
+      "latestReleaseDate": "2026-01-13",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-570-211-01/index.html"
     },
     "r565-windows": {
       "name": "r565-windows",
       "latest": "566.03",
-      "latestDate": "2024-10-29",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-565-57-01/index.html"
+      "latestReleaseDate": "2024-10-29",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-565-57-01/index.html"
     },
     "r565-linux": {
       "name": "r565-linux",
       "latest": "565.57.01",
-      "latestDate": "2024-10-29",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-565-57-01/index.html"
+      "latestReleaseDate": "2024-10-29",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-565-57-01/index.html"
     },
     "r560-windows": {
       "name": "r560-windows",
       "latest": "560.94",
-      "latestDate": "2024-08-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-560-35-03/index.html"
+      "latestReleaseDate": "2024-08-22",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-560-35-03/index.html"
     },
     "r560-linux": {
       "name": "r560-linux",
       "latest": "560.35.03",
-      "latestDate": "2024-08-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-560-35-03/index.html"
+      "latestReleaseDate": "2024-08-22",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-560-35-03/index.html"
     },
     "r550-windows": {
       "name": "r550-windows",
       "latest": "553.74",
-      "latestDate": "2025-04-17",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-550-163-01/index.html"
+      "latestReleaseDate": "2025-04-17",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-550-163-01/index.html"
     },
     "r550-linux": {
       "name": "r550-linux",
       "latest": "550.163.01",
-      "latestDate": "2025-04-17",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-550-163-01/index.html"
+      "latestReleaseDate": "2025-04-17",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-550-163-01/index.html"
     },
     "r535-windows": {
       "name": "r535-windows",
       "latest": "539.72",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-535-309-01/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-535-309-01/index.html"
     },
     "r535-linux": {
       "name": "r535-linux",
       "latest": "535.309.01",
-      "latestDate": "2026-04-28",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-535-309-01/index.html"
+      "latestReleaseDate": "2026-04-28",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-535-309-01/index.html"
     },
     "r525-windows": {
       "name": "r525-windows",
       "latest": "529.19",
-      "latestDate": "2023-10-31",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-147-05/index.html"
+      "latestReleaseDate": "2023-10-31",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-147-05/index.html"
     },
     "r525-linux": {
       "name": "r525-linux",
       "latest": "525.147.05",
-      "latestDate": "2023-10-31",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-147-05/index.html"
+      "latestReleaseDate": "2023-10-31",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-147-05/index.html"
     },
     "r520-linux": {
       "name": "r520-linux",
       "latest": "520.56.06",
-      "latestDate": "2022-10-07",
-      "latestLink": "https://download.nvidia.com/XFree86/Linux-x86_64/520.56.06/README/"
+      "latestReleaseDate": "2022-10-07",
+      "link": "https://download.nvidia.com/XFree86/Linux-x86_64/520.56.06/README/"
     },
     "r515-windows": {
       "name": "r515-windows",
       "latest": "518.03",
-      "latestDate": "2023-03-30",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-105-01/index.html"
+      "latestReleaseDate": "2023-03-30",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-105-01/index.html"
     },
     "r515-linux": {
       "name": "r515-linux",
       "latest": "515.105.01",
-      "latestDate": "2023-03-30",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-105-01/index.html"
+      "latestReleaseDate": "2023-03-30",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-105-01/index.html"
     },
     "r510-windows": {
       "name": "r510-windows",
       "latest": "514.08",
-      "latestDate": "2022-11-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-108-03/index.html",
       "latestReleaseDate": "2022-12-20",
       "link": "https://www.nvidia.com/download/driverResults.aspx/197675/"
     },
     "r510-linux": {
       "name": "r510-linux",
       "latest": "510.108.03",
-      "latestDate": "2022-11-22",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-108-03/index.html"
+      "latestReleaseDate": "2022-11-22",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-108-03/index.html"
     },
     "r495-linux": {
       "name": "r495-linux",
       "latest": "495.46",
-      "latestDate": "2021-10-26",
-      "latestLink": "https://download.nvidia.com/XFree86/Linux-x86_64/495.44/README/",
       "latestReleaseDate": "2021-12-13",
       "link": "https://www.nvidia.com/Download/driverResults.aspx/184248/"
     },
     "r470-windows": {
       "name": "r470-windows",
       "latest": "475.14",
-      "latestDate": "2024-06-04",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-256-02/index.html",
       "latestReleaseDate": "2024-07-09",
       "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-475-14/"
     },
     "r470-linux": {
       "name": "r470-linux",
       "latest": "470.256.02",
-      "latestDate": "2024-06-04",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-256-02/index.html"
+      "latestReleaseDate": "2024-06-04",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-256-02/index.html"
     },
     "r465-linux": {
       "name": "r465-linux",
       "latest": "465.24.02",
-      "latestDate": "2021-04-19",
-      "latestLink": "https://download.nvidia.com/XFree86/Linux-x86_64/465.24.02/README/"
+      "latestReleaseDate": "2021-04-19",
+      "link": "https://download.nvidia.com/XFree86/Linux-x86_64/465.24.02/README/"
     },
     "r460-windows": {
       "name": "r460-windows",
       "latest": "463.15",
-      "latestDate": "2021-10-26",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-106-00/index.html"
+      "latestReleaseDate": "2021-10-26",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-106-00/index.html"
     },
     "r460-linux": {
       "name": "r460-linux",
       "latest": "460.106.00",
-      "latestDate": "2021-10-26",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-106-00/index.html"
+      "latestReleaseDate": "2021-10-26",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-106-00/index.html"
     },
     "r450-windows": {
       "name": "r450-windows",
       "latest": "454.23",
-      "latestDate": "2023-06-26",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-248-02/index.html"
+      "latestReleaseDate": "2023-06-26",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-248-02/index.html"
     },
     "r450-linux": {
       "name": "r450-linux",
       "latest": "450.248.02",
-      "latestDate": "2023-06-26",
-      "latestLink": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-248-02/index.html"
+      "latestReleaseDate": "2023-06-26",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-248-02/index.html"
     }
   },
   "versions": {}
