@@ -795,7 +795,7 @@
     },
     "galaxy-m33-5g": {
       "name": "galaxy-m33-5g",
-      "eol": false,
+      "eol": "2026-05-06",
       "releaseLabel": "Galaxy M33 5G"
     },
     "galaxy-m32-5g": {
@@ -1669,7 +1669,7 @@
     },
     "galaxy-a23": {
       "name": "galaxy-a23",
-      "eol": false,
+      "eol": "2026-05-06",
       "releaseLabel": "Galaxy A23"
     },
     "galaxy-a22-5g": {
@@ -1757,7 +1757,7 @@
     },
     "galaxy-a13": {
       "name": "galaxy-a13",
-      "eol": false,
+      "eol": "2026-05-06",
       "releaseLabel": "Galaxy A13"
     },
     "galaxy-a12-nacho": {
