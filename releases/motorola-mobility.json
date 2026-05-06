@@ -312,6 +312,12 @@
       "releaseDate": "2025-06-01",
       "eol": "2028-06-30"
     },
+    "moto-g87": {
+      "name": "moto-g87",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12536",
+      "releaseDate": "2026-04-01",
+      "eol": "2030-06-30"
+    },
     "moto-g86-power-5g": {
       "name": "moto-g86-power-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12266",
