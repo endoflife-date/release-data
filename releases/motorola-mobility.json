@@ -444,11 +444,29 @@
       "releaseDate": "2023-01-01",
       "eol": "2027-01-31"
     },
+    "moto-g47": {
+      "name": "moto-g47",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12567",
+      "releaseDate": "2026-04-01",
+      "eol": "2029-04-30"
+    },
     "moto-g45-5g": {
       "name": "moto-g45-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12122",
       "releaseDate": "2024-09-01",
       "eol": "2026-09-30"
+    },
+    "moto-g37-power": {
+      "name": "moto-g37-power",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12569",
+      "releaseDate": "2026-04-01",
+      "eol": "2029-04-30"
+    },
+    "moto-g37": {
+      "name": "moto-g37",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12568",
+      "releaseDate": "2026-04-01",
+      "eol": "2029-04-30"
     },
     "moto-g35-5g": {
       "name": "moto-g35-5g",
