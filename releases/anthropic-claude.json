@@ -36,21 +36,6 @@
       "name": "claude-opus-4-1-20250805",
       "eol": "2026-08-05"
     },
-    "claude-instant-1.2": {
-      "name": "claude-instant-1.2",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
-    },
-    "claude-instant-1.1": {
-      "name": "claude-instant-1.1",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
-    },
-    "claude-instant-1.0": {
-      "name": "claude-instant-1.0",
-      "eol": "2024-11-06",
-      "recommendedReplacement": "claude-haiku-4-5-20251001"
-    },
     "claude-haiku-4-5-20251001": {
       "name": "claude-haiku-4-5-20251001",
       "eol": "2026-10-15"
