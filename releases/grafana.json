@@ -52,6 +52,18 @@
     }
   },
   "versions": {
+    "13.0.1+security-01": {
+      "name": "13.0.1+security-01",
+      "date": "2026-05-12"
+    },
+    "12.4.3+security-02": {
+      "name": "12.4.3+security-02",
+      "date": "2026-05-12"
+    },
+    "12.3.6+security-04": {
+      "name": "12.3.6+security-04",
+      "date": "2026-05-12"
+    },
     "12.2.8+security-04": {
       "name": "12.2.8+security-04",
       "date": "2026-05-12"
