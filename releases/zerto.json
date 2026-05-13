@@ -1,5 +1,11 @@
 {
   "releases": {
+    "10.9": {
+      "name": "10.9",
+      "releaseLabel": "10.9",
+      "releaseDate": "2026-05-12",
+      "eol": "2027-05-12"
+    },
     "10.8": {
       "name": "10.8",
       "releaseLabel": "10.8",
