@@ -28,7 +28,7 @@
     "9.12": {
       "name": "9.12",
       "eol": false,
-      "eoas": true
+      "eoas": false
     },
     "9.10": {
       "name": "9.10",
