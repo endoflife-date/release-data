@@ -4,61 +4,71 @@
       "name": "10.9",
       "releaseLabel": "10.9",
       "releaseDate": "2026-05-13",
-      "eol": "2027-05-13"
+      "eoas": "2027-05-13",
+      "eol": "2028-05-13"
     },
     "10.8": {
       "name": "10.8",
       "releaseLabel": "10.8",
       "releaseDate": "2025-10-28",
-      "eol": "2026-10-28"
+      "eoas": "2026-10-28",
+      "eol": "2027-10-28"
     },
     "10.0_u7": {
       "name": "10.0_u7",
       "releaseLabel": "10.0 Update 7",
       "releaseDate": "2025-05-06",
-      "eol": "2026-05-06"
+      "eoas": "2026-05-06",
+      "eol": "2027-05-06"
     },
     "10.0_u6": {
       "name": "10.0_u6",
       "releaseLabel": "10.0 Update 6",
       "releaseDate": "2024-12-03",
-      "eol": "2026-12-03"
+      "eoas": "2026-12-03",
+      "eol": "2027-12-03"
     },
     "10.0_u5": {
       "name": "10.0_u5",
       "releaseLabel": "10.0 Update 5",
       "releaseDate": "2024-08-06",
-      "eol": "2024-12-03"
+      "eoas": "2024-12-03",
+      "eol": "2026-08-06"
     },
     "10.0_u4": {
       "name": "10.0_u4",
       "releaseLabel": "10.0 Update 4",
       "releaseDate": "2024-05-15",
-      "eol": "2024-08-06"
+      "eoas": "2024-08-06",
+      "eol": "2026-05-15"
     },
     "10.0_u3": {
       "name": "10.0_u3",
       "releaseLabel": "10.0 Update 3",
       "releaseDate": "2024-02-12",
-      "eol": "2024-05-15"
+      "eoas": "2024-05-15",
+      "eol": "2026-02-12"
     },
     "10.0_u2": {
       "name": "10.0_u2",
       "releaseLabel": "10.0 Update 2",
       "releaseDate": "2023-11-28",
-      "eol": "2024-02-12"
+      "eoas": "2024-02-12",
+      "eol": "2024-12-31"
     },
     "10.0_u1": {
       "name": "10.0_u1",
       "releaseLabel": "10.0 Update 1",
       "releaseDate": "2023-08-07",
-      "eol": "2023-11-28"
+      "eoas": "2023-11-28",
+      "eol": "2024-08-07"
     },
     "10.0": {
       "name": "10.0",
       "releaseLabel": "10.0",
       "releaseDate": "2023-07-05",
-      "eol": "2023-08-07"
+      "eoas": "2023-08-07",
+      "eol": "2024-07-05"
     }
   },
   "versions": {}
