@@ -48,6 +48,12 @@
       "releaseDate": "2017-12-01",
       "eol": "2024-01-15"
     },
+    "pro-for-business-12th-edition-intel-processor": {
+      "name": "pro-for-business-12th-edition-intel-processor",
+      "releaseLabel": "Surface Pro for Business 12th Edition, Intel processor",
+      "releaseDate": "2026-05-20",
+      "eol": "2032-05-20"
+    },
     "pro-9": {
       "name": "pro-9",
       "releaseLabel": "Surface Pro 9",
@@ -179,6 +185,18 @@
       "releaseLabel": "Surface Laptop Go",
       "releaseDate": "2020-10-13",
       "eol": "2024-10-13"
+    },
+    "laptop-for-business-8th-edition-intel-processor": {
+      "name": "laptop-for-business-8th-edition-intel-processor",
+      "releaseLabel": "Surface Laptop for Business 8th Edition, Intel processor",
+      "releaseDate": "2026-05-20",
+      "eol": "2032-05-20"
+    },
+    "laptop-for-business-13-inch-1st-edition-intel-processor": {
+      "name": "laptop-for-business-13-inch-1st-edition-intel-processor",
+      "releaseLabel": "Surface Laptop for Business 13-inch 1st Edition, Intel processor",
+      "releaseDate": "2026-05-20",
+      "eol": "2032-05-20"
     },
     "laptop-7th-edition-snapdragon-processor": {
       "name": "laptop-7th-edition-snapdragon-processor",
