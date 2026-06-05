@@ -38,7 +38,9 @@
     },
     "claude-opus-4-1-20250805": {
       "name": "claude-opus-4-1-20250805",
-      "eol": "2026-08-05"
+      "eol": "2026-08-05",
+      "recommendedReplacement": "claude-opus-4-8",
+      "eoas": "2026-06-05"
     },
     "claude-instant-1.2": {
       "name": "claude-instant-1.2",
