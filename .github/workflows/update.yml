@@ -43,9 +43,11 @@ jobs:
       # This is useful for testing changes that require updates on both release-data and website repositories.
       # This step must never fail because in most case the branch will not exist on the website repository.
       - name: Checkout the same branch on website
+        env:
+          REF_NAME: ${{ github.ref_name }}
         run: |
           cd website
-          git checkout --progress --force -B ${{ github.ref_name }} refs/remotes/origin/${{ github.ref_name }} || true
+          git checkout --progress --force -B "$REF_NAME" refs/remotes/origin/"$REF_NAME" || true
 
       - name: Setup Python
         uses: actions/setup-python@v6
