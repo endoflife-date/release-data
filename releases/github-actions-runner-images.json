@@ -20,9 +20,17 @@
       "name": "ubuntu-slim",
       "releaseLabel": "Ubuntu Slim"
     },
+    "ubuntu-24.04-arm64": {
+      "name": "ubuntu-24.04-arm64",
+      "releaseLabel": "Ubuntu 24.04 Arm64"
+    },
     "ubuntu-24.04": {
       "name": "ubuntu-24.04",
       "releaseLabel": "Ubuntu 24.04"
+    },
+    "ubuntu-22.04-arm64": {
+      "name": "ubuntu-22.04-arm64",
+      "releaseLabel": "Ubuntu 22.04 Arm64"
     },
     "ubuntu-22.04": {
       "name": "ubuntu-22.04",
