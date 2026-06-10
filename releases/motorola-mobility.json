@@ -294,6 +294,12 @@
       "releaseDate": "2022-09-01",
       "eol": "2026-09-30"
     },
+    "motorola-edge-2026": {
+      "name": "motorola-edge-2026",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12570",
+      "releaseDate": "2026-06-01",
+      "eol": "2029-06-30"
+    },
     "motorola-edge-2025": {
       "name": "motorola-edge-2025",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12238",
