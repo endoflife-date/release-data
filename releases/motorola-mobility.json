@@ -659,12 +659,6 @@
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12161",
       "releaseDate": "2024-12-01",
       "eol": "2026-12-31"
-    },
-    "moto-e14": {
-      "name": "moto-e14",
-      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12029",
-      "releaseDate": "2024-04-01",
-      "eol": "2026-04-30"
     }
   },
   "versions": {}
