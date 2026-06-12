@@ -12,6 +12,10 @@
       "name": "windows-2022",
       "releaseLabel": "Windows Server 2022"
     },
+    "windows-11-vs2026-arm64": {
+      "name": "windows-11-vs2026-arm64",
+      "releaseLabel": "Windows 11 Arm64 with Visual Studio 2026"
+    },
     "windows-11-arm64": {
       "name": "windows-11-arm64",
       "releaseLabel": "Windows 11 Arm64"
@@ -19,6 +23,14 @@
     "ubuntu-slim": {
       "name": "ubuntu-slim",
       "releaseLabel": "Ubuntu Slim"
+    },
+    "ubuntu-26.04-arm64": {
+      "name": "ubuntu-26.04-arm64",
+      "releaseLabel": "Ubuntu 26.04 Arm64"
+    },
+    "ubuntu-26.04": {
+      "name": "ubuntu-26.04",
+      "releaseLabel": "Ubuntu 26.04"
     },
     "ubuntu-24.04-arm64": {
       "name": "ubuntu-24.04-arm64",
