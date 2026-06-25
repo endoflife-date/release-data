@@ -4,9 +4,14 @@
       "name": "snxr1200",
       "releaseDate": "2021-09-16"
     },
+    "sni50": {
+      "name": "sni50",
+      "releaseDate": "2026-06-25"
+    },
     "sni40": {
       "name": "sni40",
-      "releaseDate": "2016-06-01"
+      "releaseDate": "2016-06-01",
+      "eoas": "2026-07-15"
     },
     "sni20": {
       "name": "sni20",
