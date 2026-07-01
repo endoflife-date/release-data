@@ -896,7 +896,7 @@
     },
     "galaxy-m13": {
       "name": "galaxy-m13",
-      "eol": "2026-07-01",
+      "eol": false,
       "releaseLabel": "Galaxy M13"
     },
     "galaxy-m12-india": {
