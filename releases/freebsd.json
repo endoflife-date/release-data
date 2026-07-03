@@ -295,7 +295,8 @@
     "14.3": {
       "name": "14.3",
       "releaseLabel": "releng/14.3",
-      "releaseDate": "2025-06-10"
+      "releaseDate": "2025-06-10",
+      "eol": "2026-06-30"
     },
     "14.2": {
       "name": "14.2",
