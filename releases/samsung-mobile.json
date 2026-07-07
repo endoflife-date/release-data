@@ -764,6 +764,11 @@
       "name": "galaxy-m51",
       "eol": "2023-08-06"
     },
+    "galaxy-m47-5g": {
+      "name": "galaxy-m47-5g",
+      "releaseLabel": "Galaxy M47 5G",
+      "eol": false
+    },
     "galaxy-m44-5g": {
       "name": "galaxy-m44-5g",
       "releaseLabel": "Galaxy M44 5G",
@@ -896,7 +901,7 @@
     },
     "galaxy-m13": {
       "name": "galaxy-m13",
-      "eol": false,
+      "eol": "2026-07-07",
       "releaseLabel": "Galaxy M13"
     },
     "galaxy-m12-india": {
@@ -1646,6 +1651,11 @@
     "galaxy-a3": {
       "name": "galaxy-a3",
       "eol": true
+    },
+    "galaxy-a27-5g": {
+      "name": "galaxy-a27-5g",
+      "releaseLabel": "Galaxy A27 5G",
+      "eol": false
     },
     "galaxy-a26-5g": {
       "name": "galaxy-a26-5g",
