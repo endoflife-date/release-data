@@ -2,10 +2,6 @@
   "releases": {
     "windows-2025-vs2026": {
       "name": "windows-2025-vs2026",
-      "releaseLabel": "Windows Server 2025 with Visual Studio 2026"
-    },
-    "windows-2025": {
-      "name": "windows-2025",
       "releaseLabel": "Windows Server 2025"
     },
     "windows-2022": {
