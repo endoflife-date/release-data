@@ -42,6 +42,12 @@
       "releaseDate": "2019-11-05",
       "eol": "2025-08-10"
     },
+    "pro-with-5g-11th-edition-snapdragon": {
+      "name": "pro-with-5g-11th-edition-snapdragon",
+      "releaseLabel": "Surface Pro with 5G 11th Edition (Snapdragon)",
+      "releaseDate": "2024-09-03",
+      "eol": "2030-09-26"
+    },
     "pro-lte-5th-gen-model-1807": {
       "name": "pro-lte-5th-gen-model-1807",
       "releaseLabel": "Surface Pro LTE (5th gen) (Model 1807)",
@@ -132,15 +138,9 @@
       "releaseDate": "2025-02-18",
       "eol": "2031-02-18"
     },
-    "pro-11th-edition-5g": {
-      "name": "pro-11th-edition-5g",
-      "releaseLabel": "Surface Pro 11th Edition 5G",
-      "releaseDate": "2024-09-03",
-      "eol": "2030-09-26"
-    },
-    "pro-10-with-5g": {
-      "name": "pro-10-with-5g",
-      "releaseLabel": "Surface Pro 10 with 5G",
+    "pro-10-with-5g-for-business": {
+      "name": "pro-10-with-5g-for-business",
+      "releaseLabel": "Surface Pro 10 with 5G for Business",
       "releaseDate": "2024-10-11",
       "eol": "2030-10-11"
     },
