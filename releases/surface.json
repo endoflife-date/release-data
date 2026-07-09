@@ -126,9 +126,9 @@
       "releaseDate": "2026-06-16",
       "eol": "2032-06-16"
     },
-    "pro-12-inch-1st-edition": {
-      "name": "pro-12-inch-1st-edition",
-      "releaseLabel": "Surface Pro 12-inch 1st Edition",
+    "pro-12-inch-1st-edition-snapdragon": {
+      "name": "pro-12-inch-1st-edition-snapdragon",
+      "releaseLabel": "Surface Pro 12-inch 1st Edition (Snapdragon)",
       "releaseDate": "2025-05-20",
       "eol": "2031-05-20"
     },
