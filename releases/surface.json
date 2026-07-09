@@ -42,23 +42,29 @@
       "releaseDate": "2019-11-05",
       "eol": "2025-08-10"
     },
+    "pro-with-lte-advanced-5th-gen": {
+      "name": "pro-with-lte-advanced-5th-gen",
+      "releaseLabel": "Surface Pro with LTE Advanced (5th gen)",
+      "releaseDate": "2017-12-01",
+      "eol": "2024-01-15"
+    },
     "pro-with-5g-11th-edition-snapdragon": {
       "name": "pro-with-5g-11th-edition-snapdragon",
       "releaseLabel": "Surface Pro with 5G 11th Edition (Snapdragon)",
       "releaseDate": "2024-09-03",
       "eol": "2030-09-26"
     },
-    "pro-lte-5th-gen-model-1807": {
-      "name": "pro-lte-5th-gen-model-1807",
-      "releaseLabel": "Surface Pro LTE (5th gen) (Model 1807)",
-      "releaseDate": "2017-12-01",
-      "eol": "2024-01-15"
-    },
     "pro-for-business-12th-edition-intel": {
       "name": "pro-for-business-12th-edition-intel",
       "releaseLabel": "Surface Pro for Business 12th Edition (Intel)",
       "releaseDate": "2026-05-19",
       "eol": "2032-05-19"
+    },
+    "pro-for-business-11th-edition-intel": {
+      "name": "pro-for-business-11th-edition-intel",
+      "releaseLabel": "Surface Pro for Business 11th Edition (Intel)",
+      "releaseDate": "2025-02-18",
+      "eol": "2031-02-18"
     },
     "pro-9": {
       "name": "pro-9",
@@ -120,9 +126,9 @@
       "releaseDate": "2026-06-16",
       "eol": "2032-06-16"
     },
-    "pro-12-inch": {
-      "name": "pro-12-inch",
-      "releaseLabel": "Surface Pro 12-inch",
+    "pro-12-inch-1st-edition": {
+      "name": "pro-12-inch-1st-edition",
+      "releaseLabel": "Surface Pro 12-inch 1st Edition",
       "releaseDate": "2025-05-20",
       "eol": "2031-05-20"
     },
@@ -131,12 +137,6 @@
       "releaseLabel": "Surface Pro 11th Edition (Snapdragon)",
       "releaseDate": "2024-06-18",
       "eol": "2030-09-10"
-    },
-    "pro-11th-edition-intel": {
-      "name": "pro-11th-edition-intel",
-      "releaseLabel": "Surface Pro 11th Edition (Intel)",
-      "releaseDate": "2025-02-18",
-      "eol": "2031-02-18"
     },
     "pro-10-with-5g-for-business": {
       "name": "pro-10-with-5g-for-business",
@@ -198,6 +198,12 @@
       "releaseDate": "2026-05-19",
       "eol": "2032-05-19"
     },
+    "laptop-for-business-7th-edition-intel": {
+      "name": "laptop-for-business-7th-edition-intel",
+      "releaseLabel": "Surface Laptop for Business 7th Edition (Intel)",
+      "releaseDate": "2025-02-18",
+      "eol": "2031-02-18"
+    },
     "laptop-for-business-13-inch-1st-edition-intel": {
       "name": "laptop-for-business-13-inch-1st-edition-intel",
       "releaseLabel": "Surface Laptop for Business 13-inch 1st Edition (Intel)",
@@ -215,12 +221,6 @@
       "releaseLabel": "Surface Laptop 7th Edition (Snapdragon)",
       "releaseDate": "2024-06-18",
       "eol": "2030-09-10"
-    },
-    "laptop-7th-edition-intel": {
-      "name": "laptop-7th-edition-intel",
-      "releaseLabel": "Surface Laptop 7th Edition (Intel)",
-      "releaseDate": "2025-02-18",
-      "eol": "2031-02-18"
     },
     "laptop-6-for-business": {
       "name": "laptop-6-for-business",
@@ -264,9 +264,9 @@
       "releaseDate": "2017-06-14",
       "eol": "2021-11-13"
     },
-    "laptop-13-inch": {
-      "name": "laptop-13-inch",
-      "releaseLabel": "Surface Laptop 13-inch",
+    "laptop-13-inch-1st-edition-snapdragon": {
+      "name": "laptop-13-inch-1st-edition-snapdragon",
+      "releaseLabel": "Surface Laptop 13-inch 1st Edition (Snapdragon)",
       "releaseDate": "2025-05-20",
       "eol": "2031-05-20"
     },
