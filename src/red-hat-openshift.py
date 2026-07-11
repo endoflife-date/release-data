@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 from common import dates
 from common.git import Git
@@ -7,14 +8,21 @@ from common.releasedata import ProductData, config_from_argv
 """Fetches Red Hat OpenShift versions from the documentation's git repository"""
 
 VERSION_AND_DATE_PATTERN = re.compile(
-    r"{product-title}\s(?P<version>{product-version}\.\d+|\d+\.\d+\.\d+).*\n+Issued:\s(?P<date>\d\d?\s[a-zA-Z]+\s\d{4}|\d{4}-\d\d-\d\d)$",
+    r"{product-title}\s(?P<version>{product-version}\.\d+|\d+\.\d+\.\d+).*\n+"
+    r"(?:\[role=.*?\]\s*\n+)?"  # some module files have a "[role=...]" line before "Issued:"
+    r"Issued:\s(?P<date>\d\d?\s[a-zA-Z]+\s\d{4}|\d{4}-\d\d-\d\d)$",
     re.MULTILINE,
 )
 
-MODULE_INCLUDE_PATTERN = re.compile(r"^include::(?P<path>modules/zstream-[^]]+\.adoc)\[", re.MULTILINE)
+# Only match module files that can contain a version/date (either the bare
+# "zstream-<version>.adoc" or the older "zstream-<version>-about.adoc" split
+# style). This excludes companion files like "-bug-fixes.adoc", "-fixed-issues.adoc"
+# and "-updating.adoc", which never match VERSION_AND_DATE_PATTERN and would
+# otherwise be fetched for nothing.
+MODULE_INCLUDE_PATTERN = re.compile(r"^include::(?P<path>modules/zstream-[\d-]+(?:-about)?\.adoc)\[", re.MULTILINE)
 
 
-def _read_text(path) -> str:
+def _read_text(path: Path) -> str:
     with path.open("rb") as f:
         return f.read().decode("utf-8")
 
@@ -47,7 +55,11 @@ with ProductData(config.product) as product_data:
 
         content = _read_text(release_notes_file)
 
-        # Newer OpenShift release notes include z-stream entries from module files.
+        # Older releases are declared inline in the main release notes file, while
+        # newer z-stream entries are pulled in from separate module files. A single
+        # branch can contain both, so both need to be parsed.
+        _declare_versions_from_content(product_data, content, branch_version)
+
         module_files = MODULE_INCLUDE_PATTERN.findall(content)
         if module_files:
             git.checkout(branch, file_list=[release_notes_filename, *module_files])
@@ -57,8 +69,3 @@ with ProductData(config.product) as product_data:
                     continue
 
                 _declare_versions_from_content(product_data, _read_text(module_path), branch_version)
-
-            continue
-
-        # Fallback for older branches where release notes are still inline.
-        _declare_versions_from_content(product_data, content, branch_version)
