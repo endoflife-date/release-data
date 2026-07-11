@@ -4,6 +4,7 @@ import logging
 import subprocess
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 
 from deepdiff import DeepDiff
@@ -12,23 +13,30 @@ from src.common.endoflife import AutoConfig, ProductFrontmatter, list_products
 from src.common.gha import GitHubGroup, GitHubOutput, GitHubStepSummary
 from src.common.releasedata import DATA_DIR, SRC_DIR
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+# Default auto configs implicitly added around each product's own configs (see run_scripts below).
+# These correspond to src/_copy_product_releases.py and src/_remove_invalid_releases.py.
+COPY_PRODUCT_RELEASES_METHOD = "_copy_product_releases"
+REMOVE_INVALID_RELEASES_METHOD = "_remove_invalid_releases"
+
 
 class ScriptExecutionSummary:
     def __init__(self) -> None:
-        self.success_by_product = {}
-        self.success_by_script = {}
-        self.durations_by_product = {}
-        self.durations_by_script = {}
-        self.scripts_by_product = {}
-        self.products_by_script = {}
+        self.success_by_product = defaultdict(lambda: True)
+        self.success_by_script = defaultdict(lambda: True)
+        self.durations_by_product = defaultdict(float)
+        self.durations_by_script = defaultdict(float)
+        self.scripts_by_product = defaultdict(list)
+        self.products_by_script = defaultdict(list)
 
     def register(self, script: str, product: str, duration: float, success: bool) -> None:
-        self.success_by_product[product] = self.success_by_product.get(product, True) and success
-        self.success_by_script[script] = self.success_by_script.get(script, True) and success
-        self.durations_by_product[product] = self.durations_by_product.get(product, 0) + duration
-        self.durations_by_script[script] = self.durations_by_script.get(script, 0) + duration
-        self.scripts_by_product[product] = self.scripts_by_product.get(product, []) + [script]
-        self.products_by_script[script] = self.products_by_script.get(script, []) + [product]
+        self.success_by_product[product] = self.success_by_product[product] and success
+        self.success_by_script[script] = self.success_by_script[script] and success
+        self.durations_by_product[product] += duration
+        self.durations_by_script[script] += duration
+        self.scripts_by_product[product].append(script)
+        self.products_by_script[script].append(product)
 
     def print_summary(self, summary: GitHubStepSummary, min_duration: float = 3) -> None:
         summary.println("## Script execution summary\n")
@@ -60,12 +68,16 @@ class ScriptExecutionSummary:
 def install_playwright() -> None:
     with GitHubGroup("Install Playwright"):
         logging.info("Installing Playwright")
-        subprocess.run('playwright install chromium', timeout=120, check=True, shell=True)
+        subprocess.run(['playwright', 'install', 'chromium'], timeout=120, check=True)
         logging.info("Playwright installed")
 
 
+def __product_data_path(product: ProductFrontmatter) -> Path:
+    return SCRIPT_DIR / DATA_DIR / f"{product.name}.json"
+
+
 def __delete_data(product: ProductFrontmatter) -> None:
-    release_data_path = Path(__file__).resolve().parent / DATA_DIR / f"{product.name}.json"
+    release_data_path = __product_data_path(product)
     if not release_data_path.exists() or product.is_auto_update_cumulative():
         return
 
@@ -74,24 +86,35 @@ def __delete_data(product: ProductFrontmatter) -> None:
 
 
 def __revert_data(product: ProductFrontmatter) -> None:
-    release_data_path = Path(__file__).resolve().parent / DATA_DIR / f"{product.name}.json"
+    release_data_path = __product_data_path(product)
     # check=False because the command fails if the file did not exist before
-    subprocess.run(f'git checkout HEAD -- {release_data_path}', timeout=10, check=False, shell=True)
+    subprocess.run(['git', 'checkout', 'HEAD', '--', str(release_data_path)], timeout=10, check=False, cwd=SCRIPT_DIR)
     logging.warning(f"reverted changes in {release_data_path}")
 
 
+# Defensive upper bound on a single child script's execution time. Child scripts are expected to enforce their
+# own (tighter) timeouts internally, but this acts as a safety net in case one doesn't, so a single hung script
+# can't block the entire CI job indefinitely.
+CHILD_SCRIPT_TIMEOUT_SECONDS = 300
+
+
 def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: ScriptExecutionSummary) -> bool:
-    script = Path(__file__).resolve().parent / SRC_DIR / config.script
+    script = SCRIPT_DIR / SRC_DIR / config.script
 
     logging.info(f"start running {script} for {config}")
     start = time.perf_counter()
 
-    # timeout is handled in child scripts
+    # timeout is handled in child scripts; CHILD_SCRIPT_TIMEOUT_SECONDS is only a defensive fallback
     script_args = [sys.executable, script, "-p", product.path, "-m", str(config.method), "-u", str(config.url)]
     script_args = script_args + ["-v"] if logging.getLogger().isEnabledFor(logging.DEBUG) else script_args
-    child = subprocess.run(script_args)
 
-    success = child.returncode == 0
+    try:
+        child = subprocess.run(script_args, timeout=CHILD_SCRIPT_TIMEOUT_SECONDS)
+        success = child.returncode == 0
+    except subprocess.TimeoutExpired:
+        logging.error(f"{script} for {config} timed out after {CHILD_SCRIPT_TIMEOUT_SECONDS}s")
+        success = False
+
     elapsed_seconds = time.perf_counter() - start
 
     summary.register(script.stem, product.name, elapsed_seconds, success)
@@ -105,8 +128,7 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], 
     exec_summary = ScriptExecutionSummary()
 
     for product in products:
-        configs = product.auto_configs()
-        if not configs:
+        if not product.has_auto_configs():
             continue # skip products without auto configs
 
         if product.is_auto_update_disabled() and not force:
@@ -114,8 +136,9 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], 
             continue
 
         # Add default configs
-        configs = [AutoConfig(product.name, {"_copy_product_releases": ""})] + configs
-        configs = configs + [AutoConfig(product.name, {"_remove_invalid_releases": ""})]
+        configs = product.auto_configs()
+        configs = [AutoConfig(product.name, {COPY_PRODUCT_RELEASES_METHOD: ""})] + configs
+        configs = configs + [AutoConfig(product.name, {REMOVE_INVALID_RELEASES_METHOD: ""})]
 
         with GitHubGroup(product.name):
             try:
@@ -130,7 +153,7 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], 
                         __revert_data(product)
                         break  # stop running scripts for this product
 
-            except BaseException:
+            except Exception:
                 logging.exception(f"Skipping {product.name}, there was an error while running its scripts")
 
     exec_summary.print_summary(summary)
@@ -138,9 +161,9 @@ def run_scripts(summary: GitHubStepSummary, products: list[ProductFrontmatter], 
 
 
 def get_updated_products() -> list[Path]:
-    subprocess.run('git add --all', timeout=10, check=True, shell=True)  # to also get new files in git diff
-    git_diff = subprocess.run('git diff --name-only --staged', capture_output=True, timeout=10, check=True, shell=True)
-    updated_files = [Path(file) for file in git_diff.stdout.decode('utf-8').split('\n')]
+    subprocess.run(['git', 'add', '--all'], timeout=10, check=True, cwd=SCRIPT_DIR)  # to also get new files in git diff
+    git_diff = subprocess.run(['git', 'diff', '--name-only', '--staged'], capture_output=True, timeout=10, check=True, cwd=SCRIPT_DIR)
+    updated_files = [Path(file) for file in git_diff.stdout.decode('utf-8').split('\n') if file]
     return sorted([file for file in updated_files if file.parent == DATA_DIR])
 
 
@@ -148,13 +171,20 @@ def load_products_json(updated_product_files: list[Path]) -> dict[Path, dict]:
     files_content = {}
 
     for path in updated_product_files:
-        if path.exists():
-            with path.open() as file:
+        absolute_path = SCRIPT_DIR / path
+        if absolute_path.exists():
+            with absolute_path.open() as file:
                 files_content[path] = json.load(file)
         else:  # new or deleted file
             files_content[path] = {}
 
     return files_content
+
+
+# GitHub step summaries and outputs are truncated by GitHub past a certain size (docs mention 1MiB for step
+# summaries), so cap the number of diff lines we emit per product to avoid silently losing later products'
+# summaries or blowing past the limit entirely.
+MAX_DIFF_LINES_PER_PRODUCT = 200
 
 
 def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Path, dict], summary: GitHubStepSummary) -> None:
@@ -171,13 +201,28 @@ def generate_commit_message(old_content: dict[Path, dict], new_content: dict[Pat
             commit_message.println(f"{product_name}:")
 
             diff = DeepDiff(old_content[path], new_content[path], ignore_order=True, verbose_level=2)
-            for line in diff.pretty().split('\n'):
+            diff_lines = diff.pretty().split('\n')
+            total_line_count = len(diff_lines)
+
+            truncated = total_line_count > MAX_DIFF_LINES_PER_PRODUCT
+            if truncated:
+                logging.warning(f"{product_name}: diff has {total_line_count} lines, "
+                                 f"truncating to {MAX_DIFF_LINES_PER_PRODUCT} in summary/commit message")
+                diff_lines = diff_lines[:MAX_DIFF_LINES_PER_PRODUCT]
+
+            for line in diff_lines:
                 summary.println(f"- {line}")
                 commit_message.println(f"- {line}")
                 logging.info(f"{product_name}: {line}")
 
+            if truncated:
+                omitted = total_line_count - MAX_DIFF_LINES_PER_PRODUCT
+                summary.println(f"- ... {omitted} more line(s) omitted, see logs for full diff ...")
+                commit_message.println(f"- ... {omitted} more line(s) omitted, see logs for full diff ...")
+
             commit_message.println("")
             summary.println("")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update product releases.')
@@ -200,9 +245,13 @@ if __name__ == "__main__":
         step_summary.println("## Update summary\n")
         if updated_products:
             new_files_content = load_products_json(updated_products)
-            subprocess.run('git stash --all --quiet', timeout=10, check=True, shell=True)
-            old_files_content = load_products_json(updated_products)
-            subprocess.run('git stash pop --quiet', timeout=10, check=True, shell=True)
+            subprocess.run(['git', 'stash', '--all', '--quiet'], timeout=10, check=True, cwd=SCRIPT_DIR)
+            try:
+                old_files_content = load_products_json(updated_products)
+            finally:
+                # Always try to restore the stash, even if reading the old content failed above, so we never
+                # leave the working tree in a half-stashed state.
+                subprocess.run(['git', 'stash', 'pop', '--quiet'], timeout=10, check=True, cwd=SCRIPT_DIR)
             generate_commit_message(old_files_content, new_files_content, step_summary)
         else:
             step_summary.println("No update")
