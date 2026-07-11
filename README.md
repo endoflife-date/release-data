@@ -3,29 +3,21 @@
 > Format is not guaranteed to be stable, and may change at any time.
 > Consider using the [End of Life Date API](https://endoflife.date/docs/api/v1/) which provides a stable interface.
 
-# release-data
-
 Common Release Data for various projects in a consistent and easy-to-parse format. The format is as follows:
 
-* `filename` matches the corresponding filename in the
-  [products/](https://github.com/endoflife-date/endoflife.date/tree/master/products) directory
-  in the endoflife.date repository.
+* `filename` matches the corresponding filename in the [products/](https://github.com/endoflife-date/endoflife.date/tree/master/products) directory in the endoflife.date repository.
 * Top-level keys are version strings.
 * Non-stable versions are not included (nightly, beta, RC, etc.)
 * Values are release dates in the YYYY-MM-DD format
 * Wherever possible, dates are as per the release's timezone.
 
-## Guiding Principles
+The JSON files in the [releases/](releases) directory are generated automatically and are not meant to be updated manually.
 
-* Scripts that update this information should be stand-alone and simple.
-* Code should not rely on existing data; instead it should build the project's release data from scratch.
-  (In case the upstream information changes, we should reflect that change.)
-* It should be easy to add a new script in any language.
-* Everything should run on GitHub Actions.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to the scripts in the [src/](src) directory.
 
 ## Currently Updated
 
-As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automatically tracked releases:
+As of 2026-07-11, 398 of the 460 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -41,9 +33,9 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | Amazon DocumentDB | [`/amazon-documentdb`](https://endoflife.date/amazon-documentdb) | ✔️ | release_table |
 | Amazon EKS | [`/amazon-eks`](https://endoflife.date/amazon-eks) | ✔️ | amazon-eks, release_table |
 | Amazon ElastiCache for Redis OSS | [`/amazon-elasticache-redis`](https://endoflife.date/amazon-elasticache-redis) | ✔️ | release_table |
-| Amazon Glue | [`/amazon-glue`](https://endoflife.date/amazon-glue) | ❌ |  |
+| Amazon Glue | [`/amazon-glue`](https://endoflife.date/amazon-glue) | ✔️ | release_table |
 | Amazon Linux | [`/amazon-linux`](https://endoflife.date/amazon-linux) | ✔️ | docker_hub |
-| Amazon MSK | [`/amazon-msk`](https://endoflife.date/amazon-msk) | ❌ |  |
+| Amazon MSK | [`/amazon-msk`](https://endoflife.date/amazon-msk) | ✔️ | release_table |
 | Amazon Neptune | [`/amazon-neptune`](https://endoflife.date/amazon-neptune) | ✔️ | amazon-neptune, release_table |
 | Amazon OpenSearch | [`/amazon-opensearch`](https://endoflife.date/amazon-opensearch) | ❌ |  |
 | Amazon RDS for MariaDB | [`/amazon-rds-mariadb`](https://endoflife.date/amazon-rds-mariadb) | ✔️ | rds, release_table |
@@ -54,7 +46,7 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | AngularJS | [`/angularjs`](https://endoflife.date/angularjs) | ✔️ | npm |
 | Ansible | [`/ansible`](https://endoflife.date/ansible) | ✔️ | pypi |
 | Ansible-core | [`/ansible-core`](https://endoflife.date/ansible-core) | ✔️ | git, release_table |
-| Anthropic Claude | [`/claude`](https://endoflife.date/claude) | ❌ |  |
+| Anthropic Claude | [`/claude`](https://endoflife.date/claude) | ✔️ | release_table |
 | antiX Linux | [`/antix`](https://endoflife.date/antix) | ✔️ | distrowatch |
 | Apache ActiveMQ Classic | [`/apache-activemq`](https://endoflife.date/apache-activemq) | ✔️ | git |
 | Apache Airflow | [`/apache-airflow`](https://endoflife.date/apache-airflow) | ✔️ | pypi, release_table |
@@ -114,6 +106,7 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | Centreon | [`/centreon`](https://endoflife.date/centreon) | ✔️ | git, release_table |
 | cert-manager | [`/cert-manager`](https://endoflife.date/cert-manager) | ✔️ | git |
 | CFEngine | [`/cfengine`](https://endoflife.date/cfengine) | ✔️ | git |
+| Checkmk | [`/checkmk`](https://endoflife.date/checkmk) | ✔️ | git |
 | Chef Infra Client | [`/chef-infra-client`](https://endoflife.date/chef-infra-client) | ✔️ | chef-versions |
 | Chef Infra Server | [`/chef-infra-server`](https://endoflife.date/chef-infra-server) | ✔️ | chef-versions |
 | Chef InSpec | [`/chef-inspec`](https://endoflife.date/chef-inspec) | ✔️ | chef-versions |
@@ -242,6 +235,7 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | jQuery | [`/jquery`](https://endoflife.date/jquery) | ✔️ | git |
 | jQuery UI | [`/jquery-ui`](https://endoflife.date/jquery-ui) | ✔️ | git |
 | JReleaser | [`/jreleaser`](https://endoflife.date/jreleaser) | ✔️ | maven |
+| JRuby | [`/jruby`](https://endoflife.date/jruby) | ✔️ | git |
 | Julia | [`/julia`](https://endoflife.date/julia) | ✔️ | git |
 | Karpenter | [`/karpenter`](https://endoflife.date/karpenter) | ✔️ | github_releases |
 | KDE Plasma | [`/kde-plasma`](https://endoflife.date/kde-plasma) | ✔️ | git |
@@ -364,6 +358,9 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | ProFTPD | [`/proftpd`](https://endoflife.date/proftpd) | ✔️ | git |
 | Prometheus | [`/prometheus`](https://endoflife.date/prometheus) | ✔️ | git, release_table |
 | Protractor | [`/protractor`](https://endoflife.date/protractor) | ✔️ | npm |
+| Proxmox Backup Server | [`/proxmox-backup-server`](https://endoflife.date/proxmox-backup-server) | ✔️ | git |
+| Proxmox Datacenter Manager | [`/proxmox-datacenter-manager`](https://endoflife.date/proxmox-datacenter-manager) | ✔️ | git |
+| Proxmox Mail Gateway | [`/proxmox-mail-gateway`](https://endoflife.date/proxmox-mail-gateway) | ✔️ | git |
 | Proxmox VE | [`/proxmox-ve`](https://endoflife.date/proxmox-ve) | ✔️ | distrowatch, release_table |
 | Puppet | [`/puppet`](https://endoflife.date/puppet) | ✔️ | git |
 | Python | [`/python`](https://endoflife.date/python) | ✔️ | git, release_table |
@@ -416,11 +413,14 @@ As of 2026-04-19, 387 of the 452 products tracked by endoflife.date have automat
 | Sourcegraph | [`/sourcegraph`](https://endoflife.date/sourcegraph) | ✔️ | git |
 | Splunk | [`/splunk`](https://endoflife.date/splunk) | ✔️ | splunk |
 | Spring Boot | [`/spring-boot`](https://endoflife.date/spring-boot) | ✔️ | git, release_table |
+| Spring Cloud | [`/spring-cloud`](https://endoflife.date/spring-cloud) | ✔️ | git, release_table |
 | Spring Framework | [`/spring-framework`](https://endoflife.date/spring-framework) | ✔️ | git, release_table |
+| Spring Security | [`/spring-security`](https://endoflife.date/spring-security) | ✔️ | github_releases, release_table |
 | SQLite | [`/sqlite`](https://endoflife.date/sqlite) | ✔️ | git |
 | Squid | [`/squid`](https://endoflife.date/squid) | ✔️ | git |
 | Statamic | [`/statamic`](https://endoflife.date/statamic) | ✔️ | declare, git, release_table |
 | SteamOS | [`/steamos`](https://endoflife.date/steamos) | ❌ |  |
+| Strapi | [`/strapi`](https://endoflife.date/strapi) | ✔️ | git, npm |
 | Microsoft Surface | [`/surface`](https://endoflife.date/surface) | ✔️ | release_table |
 | SUSE Linux Micro | [`/suse-linux-micro`](https://endoflife.date/suse-linux-micro) | ✔️ | release_table |
 | SUSE Multi-Linux Manager | [`/suse-manager`](https://endoflife.date/suse-manager) | ❌ |  |
