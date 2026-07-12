@@ -1,6 +1,6 @@
 ## Setting up a development environment
 
-The scripts in this project requires the Python version specified in [`.python-version`](.python-version).
+The scripts in this project require the Python version specified in [`.python-version`](.python-version).
 
 1. Clone this repository:
 
@@ -50,6 +50,12 @@ to fetch the latest release information for each product, and stores the results
 python update-release-data.py --product-dir ../endoflife.date/products
 ```
 
+To restrict the update to a single product, pass the product name as a positional argument:
+
+```shell
+python update-release-data.py --product-dir ../endoflife.date/products docker-engine
+```
+
 Run `python update-release-data.py -h` for the full list of options.
 
 ## Running `update-product-data.py`
@@ -59,6 +65,12 @@ and uses it to update the `releases` in the corresponding product Markdown files
 
 ```shell
 python update-product-data.py --product-dir ../endoflife.date/products
+```
+
+To restrict the update to a single product, pass the product name as a positional argument:
+
+```shell
+python update-product-data.py --product-dir ../endoflife.date/products docker-engine
 ```
 
 Run `python update-product-data.py -h` for the full list of options.
