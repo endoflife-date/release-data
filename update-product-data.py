@@ -23,6 +23,9 @@ _data/release-data and commits back the updated data.
 This is written in Python because the only package that supports writing back YAML with comments is ruamel
 """
 
+UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS = 30
+DEFAULT_STALE_RELEASE_THRESHOLD_DAYS = 365
+
 
 class ReleaseCycle:
     def __init__(self, product: "Product", data: dict) -> None:
@@ -66,7 +69,7 @@ class ReleaseCycle:
                     update_detected = True
             except InvalidVersion: # If we can't compare the version numbers, compare the dates
                 logging.debug(f"could not compare {old_latest} with {version} for {self}, comparing dates instead")
-                if old_latest_date < date:
+                if old_latest_date is None or old_latest_date < date:
                     logging.info(f"{self} latest updated from {old_latest} ({old_latest_date}) to {version} ({date}) using version data")
                     update_detected = True
 
@@ -81,7 +84,7 @@ class ReleaseCycle:
     def eol(self) -> datetime.date | bool | None:
         return self.__as_date(self.data.get("eol", None))
 
-    def latest(self) -> str | None:
+    def latest_version(self) -> str | None:
         return self.data.get("latest", None)
 
     def latest_release_date(self) -> datetime.date | None:
@@ -127,7 +130,11 @@ class Product:
             # First read the frontmatter of the product file.
             yaml = YAML()
             yaml.preserve_quotes = True
-            self.data = next(yaml.load_all(product_file))
+            try:
+                self.data = next(yaml.load_all(product_file))
+            except StopIteration:
+                message = f"{self.product_path} does not contain a YAML frontmatter document"
+                raise ValueError(message) from None
 
             # Now read the content of the product file
             product_file.seek(0)
@@ -145,14 +152,15 @@ class Product:
         self.unmatched_versions = {}
 
     # Placeholder function for mass-upgrading the structure of the product files.
+    # TODO: currently a no-op; implement here when a one-off structural migration is needed,
+    # and do not forget to set self.updated = True so the file gets written back.
     def upgrade_structure(self) -> None:
         logging.debug(f"upgrading {self.name} structure")
-        # Do not forget to set self.updated to True
 
     def check_latest(self) -> None:
         for release in self.releases:
-            latest = release.latest()
-            if release.matched and latest not in self.release_data["versions"]:
+            latest = release.latest_version()
+            if release.matched and latest not in self.release_data.get("versions", {}):
                 logging.warning(f"latest version {latest} for {release} not found in {self.release_data_path}")
 
     def process_release(self, release_data: dict) -> None:
@@ -215,9 +223,9 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
         logging.info(f"Updating {product.product_path}")
         product.write()
 
-    # List all unmatched versions released in the last 30 days
+    # List all unmatched versions released in the last UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS days
     today = datetime.datetime.now(tz=datetime.timezone.utc).date()
-    __raise_alert_for_unmatched_versions(name, output, product, today, 30)
+    __raise_alert_for_unmatched_versions(name, output, product, today, UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS)
     __raise_alert_for_unmatched_releases(name, output, product)
     __raise_alert_for_stale_releases(name, output, product)
 
@@ -251,14 +259,14 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
     if len(product.unmatched_releases) == 0:
         return
 
-    for release in product.unmatched_releases.items():
+    for release in product.unmatched_releases:
         __raise_alert(f"{name}:{release} is not declared", output)
 
     __print_unmatched_releases_as_yaml(product)
 
 
 def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: Product) -> None:
-    global_threshold = product.data.get("staleReleaseThresholdDays", 365)
+    global_threshold = product.data.get("staleReleaseThresholdDays", DEFAULT_STALE_RELEASE_THRESHOLD_DAYS)
 
     for release in product.releases:
         threshold = release.data.get("staleReleaseThresholdDays", global_threshold)
@@ -313,4 +321,8 @@ if __name__ == "__main__":
     with github_output:
         for product in products:
             logging.debug(f"Processing {product.name}")
-            update_product(product.name, products_dir, data_dir, github_output)
+            try:
+                update_product(product.name, products_dir, data_dir, github_output)
+            except Exception as e:
+                logging.exception(f"Failed to process {product.name}, skipping")
+                __raise_alert(f"{product.name}: failed to process ({e}), skipping", github_output)
