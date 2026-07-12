@@ -19,66 +19,75 @@ from urllib3.util import Retry
 ENDOFLIFE_BOT_USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
 FIREFOX_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0'
 
+MAX_RETRIES = 10
+BACKOFF_FACTOR = 0.5
+MAX_WORKERS = 16
+RETRY_STATUS_FORCELIST = [429, 500, 502, 503, 504]
+
+# Created once per process and reused across all fetch_* calls so that:
+# - the cache backend (and its on-disk index) is only opened once, instead of on every call;
+# - the underlying HTTP connection pool (keep-alive) is shared across calls to the same host.
+#
+# Respect the caching directives from the server, but provide a fallback expiration time when
+# caching directives are not provided. Also use stale responses to avoid errors when the server is down.
+_CACHE_SESSION = CachedSession('~/.cache/http', backend='filesystem', cache_control=True, expire_after=86400,
+                                stale_if_error=True)
+_RETRY = Retry(total=MAX_RETRIES, backoff_factor=BACKOFF_FACTOR, status_forcelist=RETRY_STATUS_FORCELIST)
+_ADAPTER = HTTPAdapter(pool_connections=MAX_WORKERS, pool_maxsize=MAX_WORKERS, max_retries=_RETRY)
+_CACHE_SESSION.mount('http://', _ADAPTER)
+_CACHE_SESSION.mount('https://', _ADAPTER)
+_FUTURES_SESSION = FuturesSession(session=_CACHE_SESSION, max_workers=MAX_WORKERS)
+
 def fetch_urls(urls: list[str], data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> list[Response]:
+               timeout: int = 30, _remaining_retries: int = MAX_RETRIES) -> list[Response]:
     logging.info(f"Fetching {urls}")
 
     try:
-        # Respect the caching directives from the server,
-        # but provides a fallback expiration time when caching directives are not provided.
-        # Also use stale responses to avoid errors when the server is down.
-        cache_session = CachedSession('~/.cache/http', backend='filesystem', cache_control=True, expire_after=86400, stale_if_error=True)
-        with FuturesSession(session=cache_session) as session:
-            adapter = HTTPAdapter(max_retries=Retry(total=max_retries, backoff_factor=backoff_factor))
-            session.mount('http://', adapter)
-            session.mount('https://', adapter)
-
-            headers = {'User-Agent': user_agent}
-            futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
-            results = [future.result() for future in as_completed(futures)]
-
-            logging.info(f"Fetched {urls}")
-            return results
+        session = _FUTURES_SESSION
+        headers = {'User-Agent': user_agent}
+        futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
+        results = [future.result() for future in as_completed(futures)]
+        logging.info(f"Fetched {urls}")
+        return results
     except ChunkedEncodingError as e:  # See https://github.com/psf/requests/issues/4771#issue-354077499
-        next_max_retries = max_retries - 1
-        if next_max_retries == 0:
+        next_remaining_retries = _remaining_retries - 1
+        if next_remaining_retries == 0:
             logging.error(f"Got ChunkedEncodingError while fetching {urls} ({e}), giving up")
             raise e  # So that the function does not get stuck in an infinite loop.
 
         # We could wait a bit before retrying, but it's not clear if it would help.
         logging.warning(
-            f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_max_retries}).")
-        return fetch_urls(urls, data, user_agent, next_max_retries, backoff_factor, timeout)
+            f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_remaining_retries}).")
+        return fetch_urls(urls, data, user_agent, timeout, next_remaining_retries)
 
 
 def fetch_url(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Response:
-    return fetch_urls([url], data, user_agent, max_retries, backoff_factor, timeout)[0]
+              timeout: int = 30) -> Response:
+    return fetch_urls([url], data, user_agent, timeout)[0]
 
 def fetch_html(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30,
-               features: str = "html5lib") -> BeautifulSoup:
-    response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
+               timeout: int = 30, features: str = "html5lib") -> BeautifulSoup:
+    response = fetch_url(url, data, user_agent, timeout)
     return BeautifulSoup(response.text, features=features)
 
 def fetch_json(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> dict:
-    response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
+              timeout: int = 30) -> dict:
+    response = fetch_url(url, data, user_agent, timeout)
     return response.json()
 
 def fetch_yaml(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-               max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> any:
-    response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
+               timeout: int = 30) -> any:
+    response = fetch_url(url, data, user_agent, timeout)
     return yaml.safe_load(response.text)
 
 def fetch_xml(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Document:
-    response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
+              timeout: int = 30) -> Document:
+    response = fetch_url(url, data, user_agent, timeout)
     return xml.dom.minidom.parseString(response.text)
 
 def fetch_markdown(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              max_retries: int = 10, backoff_factor: float = 0.5, timeout: int = 30) -> Wikicode:
-    response = fetch_url(url, data, user_agent, max_retries, backoff_factor, timeout)
+              timeout: int = 30) -> Wikicode:
+    response = fetch_url(url, data, user_agent, timeout)
     return mwparserfromhell.parse(response.text)
 
 # This requires some setup, see https://playwright.dev/python/docs/intro#installing-playwright.
