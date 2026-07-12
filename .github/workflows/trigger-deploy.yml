@@ -1,6 +1,10 @@
 # This is triggered on every push to the main branch
 # and triggers a new deploy on the eol website.
 name: Deploy website
+
+permissions:
+  contents: read
+
 on:
   # We trigger a deploy, if we've updated
   # release-data in this push.

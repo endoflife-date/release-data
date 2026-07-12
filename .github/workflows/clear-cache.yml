@@ -1,5 +1,8 @@
 name: Clear Cache
 
+permissions:
+  actions: write
+
 on:
   workflow_dispatch:
   schedule:
