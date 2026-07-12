@@ -1,4 +1,5 @@
 import logging
+import shlex
 from hashlib import sha1
 from pathlib import Path
 from subprocess import run
@@ -19,7 +20,7 @@ class Git:
         """
         try:
             logging.info(f"Running 'git {cmd}' on {self.url}")
-            child = run(f"git {cmd}", capture_output=True, timeout=300, check=True, shell=True, cwd=self.repo_dir)
+            child = run(["git", *shlex.split(cmd)], capture_output=True, timeout=300, check=True, cwd=self.repo_dir)
             return child.stdout.decode("utf-8").strip().split("\n")
         except ChildProcessError as ex:
             msg = f"Failed to run '{cmd}': {ex}"
