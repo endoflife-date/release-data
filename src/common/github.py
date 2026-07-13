@@ -1,6 +1,7 @@
 import json
 import logging
 import subprocess
+import time
 
 
 class Release:
@@ -20,6 +21,7 @@ class Tag:
 def fetch_releases(repo_id: str) -> list[Release]:
     logging.info(f"fetching {repo_id} GitHub releases")
     (owner, repo) = repo_id.split('/')
+    start = time.perf_counter()
     child = subprocess.run("""gh api graphql --paginate -f query='
 query($endCursor: String) {
   repository(name: "%s", owner: "%s") {
@@ -40,7 +42,8 @@ query($endCursor: String) {
     }
   }
 }'""" % (repo, owner), capture_output=True, timeout=300, check=True, shell=True)  # noqa: UP031
-    logging.info(f"fetched {repo_id} GitHub releases")
+    elapsed = time.perf_counter() - start
+    logging.info(f"fetched {repo_id} GitHub releases, took {elapsed:.2f}s")
 
     # splitting because response may contain multiple JSON objects on a single line
     responses = child.stdout.decode("utf-8").strip().replace('}{', '}\n{').split("\n")
@@ -58,6 +61,7 @@ query($endCursor: String) {
 def fetch_tags(repo_id: str) -> list[Tag]:
     logging.info(f"fetching {repo_id} tags")
     (owner, repo) = repo_id.split('/')
+    start = time.perf_counter()
     child = subprocess.run("""gh api graphql --paginate -f query='
 query($endCursor: String) {
   repository(name: "%s", owner: "%s") {
@@ -78,7 +82,8 @@ query($endCursor: String) {
     }
   }
 }'""" % (repo, owner), capture_output=True, timeout=300, check=True, shell=True)  # noqa: UP031
-    logging.info(f"fetched {repo_id} tags")
+    elapsed = time.perf_counter() - start
+    logging.info(f"fetched {repo_id} tags, took {elapsed:.2f}s")
 
     responses = child.stdout.decode("utf-8").strip().replace('}{', '}\n{').split("\n")
     pages = [json.loads(response) for response in responses]

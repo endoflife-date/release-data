@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+import os
 import subprocess
 import sys
 import time
@@ -82,7 +83,7 @@ def __delete_data(product: ProductFrontmatter) -> None:
         return
 
     release_data_path.unlink()
-    logging.info(f"deleted {release_data_path} before running scripts")
+    logging.debug(f"deleted {release_data_path} before running scripts")
 
 
 def __revert_data(product: ProductFrontmatter) -> None:
@@ -101,7 +102,7 @@ CHILD_SCRIPT_TIMEOUT_SECONDS = 300
 def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: ScriptExecutionSummary) -> bool:
     script = SCRIPT_DIR / SRC_DIR / config.script
 
-    logging.info(f"start running {script} for {config}")
+    logging.info(f"start running {script.name} for {config}")
     start = time.perf_counter()
 
     # timeout is handled in child scripts; CHILD_SCRIPT_TIMEOUT_SECONDS is only a defensive fallback
@@ -119,7 +120,7 @@ def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: Scrip
 
     summary.register(script.stem, product.name, elapsed_seconds, success)
     logging.log(logging.ERROR if not success else logging.INFO,
-                f"ran {script} for {config}, took {elapsed_seconds:.2f}s (success={success})")
+                f"ran {script.name} for {config}, took {elapsed_seconds:.2f}s (success={success})")
 
     return success
 
@@ -228,11 +229,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update product releases.')
     parser.add_argument('product', nargs='?', help='restrict update to the given product')
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
-    parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
     parser.add_argument('-f', '--force', action='store_true', help='force update even if auto update is disabled')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        default=os.environ.get('ACTIONS_STEP_DEBUG') == 'true',
+                        help='enable verbose logging (automatically enabled when ACTIONS_STEP_DEBUG is set)')
     args = parser.parse_args()
 
-    logging.basicConfig(format=logging.BASIC_FORMAT, level=(logging.DEBUG if args.verbose else logging.INFO))
+    logging.basicConfig(format=logging.BASIC_FORMAT, level=(logging.DEBUG if args.verbose else logging.INFO), stream=sys.stdout)
     install_playwright()
 
     products_dir = Path(args.product_dir)

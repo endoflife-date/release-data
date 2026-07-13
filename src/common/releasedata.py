@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+import os
 import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -67,9 +68,9 @@ class ProductRelease:
         if old_value != new_value:
             self.data[field] = new_value
             if old_value:
-                logging.info(f"updated '{field}' in {self} from {old_value} to {new_value}")
+                logging.debug(f"updated '{field}' in {self} from {old_value} to {new_value}")
             else:
-                logging.info(f"set '{field}' in {self} to {new_value}")
+                logging.debug(f"set '{field}' in {self} to {new_value}")
 
 
     def get_field(self, field: str) -> any:
@@ -129,9 +130,9 @@ class ProductData:
                 for json_release in json_data.get("releases", {}).values():
                     release = ProductRelease(self.name, json_release)
                     self.releases[release.name()] = release
-            logging.info(f"loaded data for {self} from {self.path}")
+            logging.debug(f"loaded data for {self} from {self.path}")
         else:
-            logging.info(f"no data found for {self} at {self.path}")
+            logging.debug(f"no data found for {self} at {self.path}")
 
         return self
 
@@ -147,7 +148,7 @@ class ProductData:
             logging.error(message)
             raise ProductUpdateError(message)
 
-        logging.info("updating %s data", self.path)
+        logging.debug("updating %s data", self.path)
         ordered_releases = sorted(self.releases.values(), key=lambda v: v.name(), reverse=True)
         ordered_versions = sorted(self.versions.values(), key=lambda v: (v.date(), v.name()), reverse=True)
         with self.path.open("w") as f:
@@ -160,7 +161,7 @@ class ProductData:
         release_name = endoflife.to_identifier(release_name)
 
         if release_name not in self.releases:
-            logging.info(f"adding release {release_name} to {self}")
+            logging.debug(f"adding release {release_name} to {self}")
             self.releases[release_name] = ProductRelease.of(self.name, release_name)
 
         self.updated = True
@@ -174,7 +175,7 @@ class ProductData:
             logging.warning(f"release {release_name} cannot be removed as it does not exist for {self}")
             return
 
-        logging.info(f"removing release {release_name} ({self.releases.pop(release_name)}) from {self}: {reason}")
+        logging.debug(f"removing release {release_name} ({self.releases.pop(release_name)}) from {self}: {reason}")
         self.updated = True
 
     def get_version(self, version_name: str) -> ProductVersion:
@@ -189,10 +190,10 @@ class ProductData:
             return
 
         if version_name in self.versions and self.versions[version_name].date() != versions_date:
-            logging.info(f"overwriting {version_name} ({self.get_version(version_name).date()} -> {versions_date}) for {self}")
+            logging.debug(f"overwriting {version_name} ({self.get_version(version_name).date()} -> {versions_date}) for {self}")
             self.versions[version_name].replace_date(versions_date)
         else:
-            logging.info(f"adding version {version_name} ({versions_date}) to {self}")
+            logging.debug(f"adding version {version_name} ({versions_date}) to {self}")
             self.versions[version_name] = ProductVersion.of(self.name, version_name, versions_date)
 
     def remove_version(self, version_name: str) -> None:
@@ -200,7 +201,7 @@ class ProductData:
             logging.warning(f"version {version_name} cannot be removed as it does not exist for {self}")
             return
 
-        logging.info(f"removing version {version_name} ({self.versions.pop(version_name)}) from {self}")
+        logging.debug(f"removing version {version_name} ({self.versions.pop(version_name)}) from {self}")
 
     def __repr__(self) -> str:
         return self.name
@@ -214,11 +215,13 @@ def parse_argv(ignore_auto_config: bool = False) -> tuple[endoflife.ProductFront
     parser.add_argument('-p', '--product', required=True, help='path to the product')
     parser.add_argument('-m', '--method', required=True, help='method to filter by')
     parser.add_argument('-u', '--url', required=True, help='url to filter by')
-    parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        default=os.environ.get('ACTIONS_STEP_DEBUG') == 'true',
+                        help='enable verbose logging (automatically enabled when ACTIONS_STEP_DEBUG is set)')
     args = parser.parse_args()
 
     # Do not update the format: it's also used to declare groups in the GitHub Actions logs.
-    logging.basicConfig(format="%(message)s", level=(logging.DEBUG if args.verbose else logging.INFO))
+    logging.basicConfig(format="%(message)s", level=(logging.DEBUG if args.verbose else logging.INFO), stream=sys.stdout)
 
     product = endoflife.ProductFrontmatter(Path(args.product))
     auto_config = None if ignore_auto_config else product.auto_config(args.method, args.url)
