@@ -1,4 +1,5 @@
 import logging
+import time
 import xml.dom.minidom
 from concurrent.futures import as_completed
 from xml.dom.minidom import Document
@@ -45,9 +46,12 @@ def fetch_urls(urls: list[str], data: any = None, user_agent: str = ENDOFLIFE_BO
     try:
         session = _FUTURES_SESSION
         headers = {'User-Agent': user_agent}
+        start = time.perf_counter()
         futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
         results = [future.result() for future in as_completed(futures)]
-        logging.info(f"Fetched {urls}")
+        elapsed = time.perf_counter() - start
+        status_codes = [r.status_code for r in results]
+        logging.info(f"Fetched {urls}, took {elapsed:.2f}s, status={status_codes}")
         return results
     except ChunkedEncodingError as e:  # See https://github.com/psf/requests/issues/4771#issue-354077499
         next_remaining_retries = _remaining_retries - 1
@@ -101,8 +105,10 @@ def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, h
 
         try:
             page = browser.new_page()
-            page.goto(url, wait_until=wait_until)
-            logging.info(f"Fetched {url}")
+            start = time.perf_counter()
+            response = page.goto(url, wait_until=wait_until)
+            elapsed = time.perf_counter() - start
+            logging.info(f"Fetched {url}, took {elapsed:.2f}s, status={response.status}")
 
             element_to_wait_for = None
             if wait_for:
