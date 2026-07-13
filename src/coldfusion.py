@@ -11,9 +11,9 @@ VERSION_AND_DATE_PATTERN = re.compile(r"Release Date[,|:]? (.*?)\).*?Build Numbe
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    html = BeautifulSoup(http.fetch_javascript_url(config.url), "html5lib")
+    html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
 
-    for p in html.findAll("div", class_="text"):
+    for p in html.find_all("div", class_="text"):
         version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
         for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
             date = dates.parse_date(date_str)

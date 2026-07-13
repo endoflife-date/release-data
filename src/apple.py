@@ -30,7 +30,7 @@ with ProductData(config.product) as product_data:
     responses = http.fetch_urls(URLS)
 
     for response in responses:
-        soup = BeautifulSoup(response.text, "html5lib")
+        soup = BeautifulSoup(response.text, features="html5lib")
         versions_table = soup.select_one("#tableWraper")
         versions_table = versions_table if versions_table else soup.select_one("table.gb-table")
 

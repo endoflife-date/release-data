@@ -35,7 +35,7 @@ config = config_from_argv()
 with (ProductData(config.product) as product_data):
     html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
 
-    all_versions = [option.attrs['value'] for option in html.select("select#version-select > option")]
+    all_versions = [option['value'] for option in html.select("select#version-select > option")]
     all_versions = [v for v in all_versions if v != "DataMonitoringAppPreview"]
 
     # Latest minor release notes contains release notes for all previous minor versions.
