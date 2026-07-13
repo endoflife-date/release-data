@@ -9,7 +9,8 @@ from common.releasedata import ProductData, config_from_argv
 
 config = config_from_argv()
 with ProductData(config.product) as product_data:
-    html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
+    raw_html = http.fetch_javascript_url(config.url, wait_for="tr.topic-list-item")
+    html = BeautifulSoup(raw_html, features="html5lib")
 
     for topic in html.select("tr.topic-list-item"):
         title = topic.select_one("span.link-top-line").get_text(strip=True)
