@@ -11,9 +11,9 @@ This script takes a single argument which is the url of the product's download-a
 config = config_from_argv()
 with ProductData(config.product) as product_data:
     content = http.fetch_javascript_url(config.url, wait_until='networkidle')
-    soup = BeautifulSoup(content, 'html5lib')
+    soup = BeautifulSoup(content, features='html5lib')
 
     for version_block in soup.select('.versions-list'):
-        version = version_block.select_one('a.product-versions').attrs['data-version']
+        version = version_block.select_one('a.product-versions')['data-version']
         date = dates.parse_date(version_block.select_one('.release-date').text)
         product_data.declare_version(version, date)
