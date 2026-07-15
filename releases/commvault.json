@@ -1,5 +1,11 @@
 {
   "releases": {
+    "11.46": {
+      "name": "11.46",
+      "releaseDate": "2026-07-15",
+      "latest": "11.46.10",
+      "latestReleaseDate": "2026-07-15"
+    },
     "11.44": {
       "name": "11.44",
       "releaseDate": "2026-06-15",
