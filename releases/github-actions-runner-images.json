@@ -1,5 +1,9 @@
 {
   "releases": {
+    "xcode-27": {
+      "name": "xcode-27",
+      "releaseLabel": "Xcode 27"
+    },
     "windows-2025-vs2026": {
       "name": "windows-2025-vs2026",
       "releaseLabel": "Windows Server 2025"
