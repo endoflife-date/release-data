@@ -369,8 +369,8 @@
     "moto-g84-5g": {
       "name": "moto-g84-5g",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/11601",
-      "releaseDate": "2023-09-01",
-      "eol": "2026-09-30"
+      "releaseDate": "2023-08-01",
+      "eol": "2027-08-31"
     },
     "moto-g77": {
       "name": "moto-g77",
