@@ -129,6 +129,14 @@
       "releaseLabel": "Galaxy Z TriFold",
       "eol": "2032-12-01"
     },
+    "galaxy-z-fold8-ultra": {
+      "name": "galaxy-z-fold8-ultra",
+      "eol": "2033-07-31"
+    },
+    "galaxy-z-fold8": {
+      "name": "galaxy-z-fold8",
+      "eol": "2033-07-31"
+    },
     "galaxy-z-fold7": {
       "name": "galaxy-z-fold7",
       "releaseLabel": "Galaxy Z Fold7",
@@ -166,6 +174,10 @@
     "galaxy-z-fold-2": {
       "name": "galaxy-z-fold-2",
       "eol": "2024-09-18"
+    },
+    "galaxy-z-flip8": {
+      "name": "galaxy-z-flip8",
+      "eol": "2033-07-31"
     },
     "galaxy-z-flip7-fe": {
       "name": "galaxy-z-flip7-fe",
