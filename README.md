@@ -7,7 +7,7 @@ Common Release Data for various projects in a consistent and easy-to-parse forma
 
 * `filename` matches the corresponding filename in the [products/](https://github.com/endoflife-date/endoflife.date/tree/master/products) directory in the endoflife.date repository.
 * Top-level keys are version strings.
-* Non-stable versions are not included (nightly, beta, RC, etc.)
+* Non-stable versions are not included (nightly, beta, RC, etc.).
 * Values are release dates in the YYYY-MM-DD format
 * Wherever possible, dates are as per the release's timezone.
 
