@@ -17,7 +17,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to the s
 
 ## Currently Updated
 
-As of 2026-07-11, 398 of the 460 products tracked by endoflife.date have automatically tracked releases:
+As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -149,6 +149,7 @@ As of 2026-07-11, 398 of the 460 products tracked by endoflife.date have automat
 | Microsoft .NET | [`/dotnet`](https://endoflife.date/dotnet) | ✔️ | git, release_table |
 | Microsoft .NET Framework | [`/dotnetfx`](https://endoflife.date/dotnetfx) | ✔️ | release_table |
 | Dovecot | [`/dovecot`](https://endoflife.date/dovecot) | ✔️ | git |
+| Dropwizard | [`/dropwizard`](https://endoflife.date/dropwizard) | ✔️ | git |
 | Drupal | [`/drupal`](https://endoflife.date/drupal) | ✔️ | git |
 | Drush | [`/drush`](https://endoflife.date/drush) | ✔️ | git, release_table |
 | DuckDB | [`/duckdb`](https://endoflife.date/duckdb) | ✔️ | github_releases |
@@ -182,7 +183,7 @@ As of 2026-07-11, 398 of the 460 products tracked by endoflife.date have automat
 | Gerrit | [`/gerrit`](https://endoflife.date/gerrit) | ✔️ | git |
 | Glasgow Haskell Compiler (GHC) | [`/ghc`](https://endoflife.date/ghc) | ✔️ | ghc-wiki, git |
 | GitHub Actions Runner Images | [`/github-actions-runner-images`](https://endoflife.date/github-actions-runner-images) | ✔️ | release_table |
-| GitLab | [`/gitlab`](https://endoflife.date/gitlab) | ✔️ | git |
+| GitLab | [`/gitlab`](https://endoflife.date/gitlab) | ✔️ | gitlab_tags |
 | Gleam | [`/gleam`](https://endoflife.date/gleam) | ✔️ | git |
 | Go | [`/go`](https://endoflife.date/go) | ✔️ | git |
 | GoAccess | [`/goaccess`](https://endoflife.date/goaccess) | ✔️ | git |
@@ -359,14 +360,14 @@ As of 2026-07-11, 398 of the 460 products tracked by endoflife.date have automat
 | Prometheus | [`/prometheus`](https://endoflife.date/prometheus) | ✔️ | git, release_table |
 | Protractor | [`/protractor`](https://endoflife.date/protractor) | ✔️ | npm |
 | Proxmox Backup Server | [`/proxmox-backup-server`](https://endoflife.date/proxmox-backup-server) | ✔️ | git |
-| Proxmox Datacenter Manager | [`/proxmox-datacenter-manager`](https://endoflife.date/proxmox-datacenter-manager) | ✔️ | git |
-| Proxmox Mail Gateway | [`/proxmox-mail-gateway`](https://endoflife.date/proxmox-mail-gateway) | ✔️ | git |
+| Proxmox Datacenter Manager | [`/proxmox-datacenter-manager`](https://endoflife.date/proxmox-datacenter-manager) | ❌ |  |
+| Proxmox Mail Gateway | [`/proxmox-mail-gateway`](https://endoflife.date/proxmox-mail-gateway) | ❌ |  |
 | Proxmox VE | [`/proxmox-ve`](https://endoflife.date/proxmox-ve) | ✔️ | distrowatch, release_table |
 | Puppet | [`/puppet`](https://endoflife.date/puppet) | ✔️ | git |
 | Python | [`/python`](https://endoflife.date/python) | ✔️ | git, release_table |
 | Qt | [`/qt`](https://endoflife.date/qt) | ✔️ | git |
 | Quarkus | [`/quarkus-framework`](https://endoflife.date/quarkus-framework) | ✔️ | github_releases |
-| Quasar | [`/quasar`](https://endoflife.date/quasar) | ✔️ | npm, release_table |
+| Quasar | [`/quasar`](https://endoflife.date/quasar) | ✔️ | npm |
 | RabbitMQ | [`/rabbitmq`](https://endoflife.date/rabbitmq) | ✔️ | git |
 | Rancher | [`/rancher`](https://endoflife.date/rancher) | ✔️ | git, release_table |
 | Raspberry Pi | [`/raspberry-pi`](https://endoflife.date/raspberry-pi) | ❌ |  |
