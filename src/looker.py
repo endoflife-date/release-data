@@ -1,32 +1,34 @@
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetch Looker versions from the Google Cloud release notes RSS feed.
 """
 
 ANNOUNCEMENT_PATTERN = re.compile(r"include\s+the\s+following\s+changes", re.IGNORECASE)
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    rss = http.fetch_xml(config.url)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        rss = http.fetch_xml(config.url)
 
-    for item in rss.getElementsByTagName("entry"):
-        content = item.getElementsByTagName("content")[0].firstChild.nodeValue
-        content_soup = BeautifulSoup(content, features="html5lib")
+        for item in rss.getElementsByTagName("entry"):
+            content = item.getElementsByTagName("content")[0].firstChild.nodeValue
+            content_soup = BeautifulSoup(content, features="html5lib")
 
-        announcement_match = content_soup.find(string=ANNOUNCEMENT_PATTERN)
-        if not announcement_match:
-            continue
+            announcement_match = content_soup.find(string=ANNOUNCEMENT_PATTERN)
+            if not announcement_match:
+                continue
 
-        release_match = config.first_match(announcement_match.parent.get_text())
-        if not release_match:
-            continue
-        release_name = config.render(release_match)
-        release = product_data.get_release(release_name)
+            release_match = config.first_match(announcement_match.parent.get_text())
+            if not release_match:
+                continue
+            release_name = config.render(release_match)
+            release = product_data.get_release(release_name)
 
-        date_str = item.getElementsByTagName("updated")[0].firstChild.nodeValue
-        date = dates.parse_datetime(date_str)
-        release.set_release_date(date)
+            date_str = item.getElementsByTagName("updated")[0].firstChild.nodeValue
+            date = dates.parse_datetime(date_str)
+            release.set_release_date(date)

@@ -1,8 +1,5 @@
-import argparse
 import json
 import logging
-import os
-import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 from types import TracebackType
@@ -205,24 +202,3 @@ class ProductData:
 
     def __repr__(self) -> str:
         return self.name
-
-
-def config_from_argv() -> endoflife.AutoConfig:
-    return parse_argv()[1]
-
-def parse_argv(ignore_auto_config: bool = False) -> tuple[endoflife.ProductFrontmatter, endoflife.AutoConfig]:
-    parser = argparse.ArgumentParser(description=sys.argv[0])
-    parser.add_argument('-p', '--product', required=True, help='path to the product')
-    parser.add_argument('-m', '--method', required=True, help='method to filter by')
-    parser.add_argument('-u', '--url', required=True, help='url to filter by')
-    parser.add_argument('-v', '--verbose', action='store_true',
-                        default=os.environ.get('ACTIONS_STEP_DEBUG') == 'true',
-                        help='enable verbose logging (automatically enabled when ACTIONS_STEP_DEBUG is set)')
-    args = parser.parse_args()
-
-    # Do not update the format: it's also used to declare groups in the GitHub Actions logs.
-    logging.basicConfig(format="%(message)s", level=(logging.DEBUG if args.verbose else logging.INFO), stream=sys.stdout)
-
-    product = endoflife.ProductFrontmatter(Path(args.product))
-    auto_config = None if ignore_auto_config else product.auto_config(args.method, args.url)
-    return product, auto_config

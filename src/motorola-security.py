@@ -2,8 +2,9 @@ import json
 import logging
 import re
 
-from common import dates, endoflife, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, endoflife, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 
 def extract_data(url: str, key_to_search_for: str) -> dict | None:
@@ -33,27 +34,27 @@ def extract_data(url: str, key_to_search_for: str) -> dict | None:
     logging.debug(f"Found : {raw_json}")
     return json.loads(raw_json.group(0))
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    json_data = extract_data(config.url, "guidedAssistant")
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        json_data = extract_data(config.url, "guidedAssistant")
 
-    for question in json_data["j"]["guidedAssistant"]["questions"]:
-        if not question.get("responses") or question["responses"][0].get("text") != "Security patch details for all Motorola products":
-            logging.debug(f"Skipping {question}")
-            continue
+        for question in json_data["j"]["guidedAssistant"]["questions"]:
+            if not question.get("responses") or question["responses"][0].get("text") != "Security patch details for all Motorola products":
+                logging.debug(f"Skipping {question}")
+                continue
 
-        lines = question["taglessText"].replace("\xa0", " ").split("\n")
-        logging.debug(lines)
+            lines = question["taglessText"].replace("\xa0", " ").split("\n")
+            logging.debug(lines)
 
-        product_id = question["agentText"]
-        label = lines[0].strip()
-        name = endoflife.to_identifier(label)
-        release = product_data.get_release(name)
-        release.set_field("link", f"https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/{product_id}")
-        for line in lines:
-            if (m := re.search(r"^Device launched on (.*)$", line)):
-                date = dates.parse_date_or_month_year_date(m.group(1).strip()).replace(day=1)
-                release.set_release_date(date)
-            if (m := re.search(r"^Security updates will stop on (.*)$", line)):
-                eol = dates.parse_date_or_month_year_date(m.group(1).strip())
-                release.set_eol(eol)
+            product_id = question["agentText"]
+            label = lines[0].strip()
+            name = endoflife.to_identifier(label)
+            release = product_data.get_release(name)
+            release.set_field("link", f"https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/{product_id}")
+            for line in lines:
+                if (m := re.search(r"^Device launched on (.*)$", line)):
+                    date = dates.parse_date_or_month_year_date(m.group(1).strip()).replace(day=1)
+                    release.set_release_date(date)
+                if (m := re.search(r"^Security updates will stop on (.*)$", line)):
+                    eol = dates.parse_date_or_month_year_date(m.group(1).strip())
+                    release.set_eol(eol)

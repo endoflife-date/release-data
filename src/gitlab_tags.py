@@ -1,8 +1,9 @@
 from collections.abc import Iterator
 from urllib.parse import quote
 
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches versions from GitLab tags using the REST API.
 """
@@ -23,12 +24,12 @@ def fetch_tags(project_path: str) -> Iterator[dict]:
         page += 1
 
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    for tag in fetch_tags(config.url):
-        version_str = tag['name']
-        version_match = config.first_match(version_str)
-        if version_match:
-            version = config.render(version_match)
-            date = dates.parse_datetime(tag['commit']['created_at'])
-            product_data.declare_version(version, date)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        for tag in fetch_tags(config.url):
+            version_str = tag['name']
+            version_match = config.first_match(version_str)
+            if version_match:
+                version = config.render(version_match)
+                date = dates.parse_datetime(tag['commit']['created_at'])
+                product_data.declare_version(version, date)

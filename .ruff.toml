@@ -32,3 +32,6 @@ extend-ignore = [
   "ANN101", # Missing type annotation for self in method
   "E501", # Line too long
 ]
+
+per-file-ignores."src/release_table.py" = ["C901"]
+per-file-ignores."src/samsung-security.py" = ["C901"]

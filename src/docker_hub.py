@@ -1,5 +1,6 @@
-from common import dates, endoflife, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, endoflife, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches releases from the Docker Hub API.
 
@@ -19,6 +20,6 @@ def fetch_releases(p: ProductData, c: endoflife.AutoConfig, url: str) -> None:
         fetch_releases(p, c, data["next"])
 
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        fetch_releases(product_data, config, f"https://hub.docker.com/v2/repositories/{config.url}/tags?page_size=100&page=1")

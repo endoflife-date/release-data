@@ -1,4 +1,5 @@
 import argparse
+import importlib
 import json
 import logging
 import os
@@ -93,27 +94,18 @@ def __revert_data(product: ProductFrontmatter) -> None:
     logging.warning(f"reverted changes in {release_data_path}")
 
 
-# Defensive upper bound on a single child script's execution time. Child scripts are expected to enforce their
-# own (tighter) timeouts internally, but this acts as a safety net in case one doesn't, so a single hung script
-# can't block the entire CI job indefinitely.
-CHILD_SCRIPT_TIMEOUT_SECONDS = 300
-
-
 def __run_script(product: ProductFrontmatter, config: AutoConfig, summary: ScriptExecutionSummary) -> bool:
     script = SCRIPT_DIR / SRC_DIR / config.script
 
     logging.info(f"start running {script.name} for {config}")
     start = time.perf_counter()
 
-    # timeout is handled in child scripts; CHILD_SCRIPT_TIMEOUT_SECONDS is only a defensive fallback
-    script_args = [sys.executable, script, "-p", product.path, "-m", str(config.method), "-u", str(config.url)]
-    script_args = script_args + ["-v"] if logging.getLogger().isEnabledFor(logging.DEBUG) else script_args
-
     try:
-        child = subprocess.run(script_args, timeout=CHILD_SCRIPT_TIMEOUT_SECONDS)
-        success = child.returncode == 0
-    except subprocess.TimeoutExpired:
-        logging.error(f"{script} for {config} timed out after {CHILD_SCRIPT_TIMEOUT_SECONDS}s")
+        module = importlib.import_module(f"src.{config.method}")
+        module.update(product, config)
+        success = True
+    except Exception:
+        logging.exception(f"{script} for {config} failed")
         success = False
 
     elapsed_seconds = time.perf_counter() - start

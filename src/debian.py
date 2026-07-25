@@ -1,9 +1,10 @@
 from pathlib import Path
 from subprocess import run
 
-from common import dates
-from common.git import Git
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.git import Git
+from src.common.releasedata import ProductData
 
 """Fetch Debian versions by parsing news in www.debian.org source repository."""
 
@@ -41,11 +42,11 @@ def extract_point_versions(p: ProductData, repo_dir: Path) -> None:
         (date, version) = line.split(' ')
         p.declare_version(version, dates.parse_date(date))
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    git = Git(config.url)
-    git.setup()
-    git.checkout("master", file_list=["english/News"])
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        git = Git(config.url)
+        git.setup()
+        git.checkout("master", file_list=["english/News"])
 
-    extract_major_versions(product_data, git.repo_dir)
-    extract_point_versions(product_data, git.repo_dir)
+        extract_major_versions(product_data, git.repo_dir)
+        extract_point_versions(product_data, git.repo_dir)

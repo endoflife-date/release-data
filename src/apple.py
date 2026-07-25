@@ -2,8 +2,10 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches and parses version and release date information from Apple's support website."""
 
@@ -25,35 +27,35 @@ URLS = [
 
 DATE_PATTERN = re.compile(r"\b\d+\s[A-Za-z]+\s\d+\b")
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    responses = http.fetch_urls(URLS)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        responses = http.fetch_urls(URLS)
 
-    for response in responses:
-        soup = BeautifulSoup(response.text, features="html5lib")
-        versions_table = soup.select_one("#tableWraper")
-        versions_table = versions_table if versions_table else soup.select_one("table.gb-table")
+        for response in responses:
+            soup = BeautifulSoup(response.text, features="html5lib")
+            versions_table = soup.select_one("#tableWraper")
+            versions_table = versions_table if versions_table else soup.select_one("table.gb-table")
 
-        if not versions_table:
-            message = f"no versions table found in {response.url}"
-            raise ValueError(message)
+            if not versions_table:
+                message = f"no versions table found in {response.url}"
+                raise ValueError(message)
 
-        for row in versions_table.find_all("tr")[1:]:
-            cells = row.find_all("td")
-            version_text = cells[0].get_text(separator=" ").strip()
-            date_text = cells[2].get_text(separator=" ").strip()
+            for row in versions_table.find_all("tr")[1:]:
+                cells = row.find_all("td")
+                version_text = cells[0].get_text(separator=" ").strip()
+                date_text = cells[2].get_text(separator=" ").strip()
 
-            date_match = DATE_PATTERN.search(date_text)
-            if not date_match:
-                logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
-                continue
+                date_match = DATE_PATTERN.search(date_text)
+                if not date_match:
+                    logging.info(f"ignoring version {version_text} ({date_text}), date pattern don't match")
+                    continue
 
-            date_str = date_match.group(0)
-            date = dates.parse_date(date_str)
-            for version_pattern in config.include_version_patterns:
-                for version_str in version_pattern.findall(version_text):
-                    version = product_data.get_version(version_str)
-                    if not version or version.date() > date:
-                        product_data.declare_version(version_str, date)
-                    else:
-                        logging.info(f"ignoring version {version_str} ({date}) for {product_data.name}")
+                date_str = date_match.group(0)
+                date = dates.parse_date(date_str)
+                for version_pattern in config.include_version_patterns:
+                    for version_str in version_pattern.findall(version_text):
+                        version = product_data.get_version(version_str)
+                        if not version or version.date() > date:
+                            product_data.declare_version(version_str, date)
+                        else:
+                            logging.info(f"ignoring version {version_str} ({date}) for {product_data.name}")
