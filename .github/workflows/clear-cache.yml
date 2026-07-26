@@ -1,17 +1,22 @@
 name: Clear Cache
 
-permissions:
-  actions: write
+permissions: {}
 
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 1' # Every Monday at 00:00 UTC
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   clear-cache:
     name: Clear Cache
     runs-on: ubuntu-latest
+    permissions:
+      actions: write # Needed by `gh cache delete` to manage Actions caches via the API
     steps:
       - name: Clear all caches
         run: gh cache delete --all --succeed-on-no-caches --repo "$OWNER/$REPO"
