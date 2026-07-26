@@ -26,23 +26,24 @@ jobs:
       # See https://github.com/actions/cache/tree/main/save#always-save-cache.
       - name: Restore repositories and HTTP requests cache
         id: cache-restore
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: 'update-cache'
           path: ~/.cache
 
       - name: Clone self repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.head_ref }}
 
       - name: Clone website repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: endoflife-date/endoflife.date
           path: website
           submodules: false
           fetch-depth: 0 # fetch all history for all branches and tags, needed for next step
+          persist-credentials: false
 
       # This is useful for testing changes that require updates on both release-data and website repositories.
       # This step must never fail because in most case the branch will not exist on the website repository.
@@ -54,7 +55,7 @@ jobs:
           git checkout --progress --force -B "$REF_NAME" refs/remotes/origin/"$REF_NAME" || true
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version-file: '.python-version'
           cache: 'pip'
@@ -70,7 +71,7 @@ jobs:
         run: python update-release-data.py -p 'website/products'
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
         if: steps.update_data.outputs.commit_message != ''
         with:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
@@ -79,7 +80,7 @@ jobs:
       # See https://github.com/actions/cache/tree/main/save#always-save-cache.
       - name: Save repositories and HTTP requests cache
         id: cache-save
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         if: always() && steps.cache-restore.outputs.cache-hit != 'true'
         with:
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
