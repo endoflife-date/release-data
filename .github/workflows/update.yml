@@ -35,6 +35,8 @@ jobs:
         uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
+          # Needed so that git-auto-commit-action below can push using this checkout's credential.
+          persist-credentials: true
 
       - name: Clone website repository
         uses: actions/checkout@v7
