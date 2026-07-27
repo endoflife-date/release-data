@@ -372,6 +372,12 @@
       "releaseDate": "2023-08-01",
       "eol": "2027-08-31"
     },
+    "moto-g77-power": {
+      "name": "moto-g77-power",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12899",
+      "releaseDate": "2026-04-01",
+      "eol": "2029-04-30"
+    },
     "moto-g77": {
       "name": "moto-g77",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12520",
