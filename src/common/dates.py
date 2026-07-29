@@ -1,8 +1,27 @@
 import calendar
 import datetime
+import re
 
 
-def parse_date(text: str, formats: list[str] = frozenset([
+def sanitize_input(text: str) -> str:
+    """Clean and normalize date text to handle common formatting variations."""
+    text = (
+        text.strip()
+        .replace(", ", " ")
+        .replace(" ,", " ")
+        .replace(". ", " ")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("Sept ", "Sep ")
+        .replace("Sept-", "Sep-")
+        .replace("sept ", "sep ")
+        .replace("sept-", "sep-")
+    )
+
+    return re.sub(r"(\d+)(st|nd|rd|th)\b", r"\1", text)
+
+
+def parse_date(text: str, formats: frozenset[str] = frozenset([
     "%B %d %Y",  # January 1 2020
     "%b %d %Y",  # Jan 1 2020
     "%d %B %Y",  # 1 January 2020
@@ -18,10 +37,11 @@ def parse_date(text: str, formats: list[str] = frozenset([
 ])) -> datetime.datetime:
     """Parse a given text representing a date using a list of formats.
     """
+    text = sanitize_input(text)
     return parse_datetime(text, formats, to_utc=False)
 
 
-def parse_month_year_date(text: str, formats: list[str] = frozenset([
+def parse_month_year_date(text: str, formats: frozenset[str] = frozenset([
     "%B %Y",  # January 2020
     "%b %Y",  # Jan 2020
     "%Y-%m",  # 2020-01
@@ -32,9 +52,10 @@ def parse_month_year_date(text: str, formats: list[str] = frozenset([
     """Parse a given text representing a partial date using a list of formats,
     adjusting it to the last day of the month.
     """
-    date = parse_datetime(text, formats, to_utc=False)
-    _, last_day = calendar.monthrange(date.year, date.month)
-    return date.replace(day=last_day)
+    text = sanitize_input(text)
+    partial_date = parse_datetime(text, formats, to_utc=False)
+    _, last_day = calendar.monthrange(partial_date.year, partial_date.month)
+    return partial_date.replace(day=last_day)
 
 
 def parse_date_or_month_year_date(text: str) -> datetime.datetime:
@@ -46,7 +67,7 @@ def parse_date_or_month_year_date(text: str) -> datetime.datetime:
         return parse_month_year_date(text)
 
 
-def parse_datetime(text: str, formats: list[str] = frozenset([
+def parse_datetime(text: str, formats: frozenset[str] = frozenset([
     "%Y-%m-%d %H:%M:%S",         # 2023-05-01 08:32:34
     "%Y-%m-%dT%H:%M:%S",         # 2023-05-01T08:32:34
     "%d-%b-%Y %H:%M",            # 01-May-2023 08:32
@@ -64,19 +85,7 @@ def parse_datetime(text: str, formats: list[str] = frozenset([
     """Parse a given text representing a datetime using a list of formats,
     optionally converting it to UTC.
     """
-    # so that we don't have to deal with some special cases in formats
-    text = (
-        text.strip()
-        .replace(", ", " ")  # November 10, 2015 -> November 10 2015
-        .replace(" ,", " ")  # November 10 ,2015 -> November 10 2015
-        .replace(". ", " ")  # November 10. 2015 -> November 10 2015
-        .replace("(", "")  # (November 10 2015) -> November 10 2015)
-        .replace(")", "")  # (November 10 2015) -> (November 10 2015
-        .replace("Sept ", "Sep ")  # 11 Sept 2025 -> 11 Sep 2025
-        .replace("Sept-", "Sep-")  # 11-Sept-2025 -> 11-Sep-2025
-        .replace("sept ", "sep ")  # 11 Sept 2025 -> 11 Sep 2025
-        .replace("sept-", "sep-")  # 11-Sept-2025 -> 11-Sep-2025
-    )
+    text = sanitize_input(text)
     for fmt in formats:
         try:
             dt = datetime.datetime.strptime(text, fmt)  # NOQA: DTZ007, timezone is handled below
