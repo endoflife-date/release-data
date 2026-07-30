@@ -1,5 +1,6 @@
 import logging
 import re
+from urllib.parse import urlparse
 
 from common import http
 from common.releasedata import ProductData, config_from_argv
@@ -23,8 +24,8 @@ with ProductData(config.product) as product_data:
         release.set_field('link', link)
 
         # Windows releases are documented in the release notes.
-        if not link.startswith('https://docs.nvidia.com'):
-            logging.debug("Skipping windows release %s, link %s does not start with https://docs.nvidia.com", release_name, link)
+        if urlparse(link).hostname != 'docs.nvidia.com':
+            logging.debug("Skipping windows release %s, link %s is not from docs.nvidia.com", release_name, link)
             continue
 
         release_note_html = http.fetch_html(link)
