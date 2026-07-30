@@ -17,7 +17,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to the s
 
 ## Currently Updated
 
-As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automatically tracked releases:
+As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -57,9 +57,9 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | Apache Cassandra | [`/apache-cassandra`](https://endoflife.date/apache-cassandra) | ✔️ | git |
 | Apache CouchDB | [`/apache-couchdb`](https://endoflife.date/apache-couchdb) | ✔️ | git |
 | Apache Flink | [`/apache-flink`](https://endoflife.date/apache-flink) | ✔️ | git |
-| Apache Groovy | [`/apache-groovy`](https://endoflife.date/apache-groovy) | ✔️ | maven |
+| Apache Groovy | [`/apache-groovy`](https://endoflife.date/apache-groovy) | ✔️ | git |
 | Apache Hadoop | [`/apache-hadoop`](https://endoflife.date/apache-hadoop) | ✔️ | git |
-| Apache Hop | [`/apache-hop`](https://endoflife.date/apache-hop) | ✔️ | maven |
+| Apache Hop | [`/apache-hop`](https://endoflife.date/apache-hop) | ✔️ | version_table |
 | Apache HTTP Server | [`/apache-http-server`](https://endoflife.date/apache-http-server) | ✔️ | apache-http-server |
 | Apache Kafka | [`/apache-kafka`](https://endoflife.date/apache-kafka) | ✔️ | git, release_table |
 | Apache Lucene | [`/apache-lucene`](https://endoflife.date/apache-lucene) | ✔️ | maven |
@@ -119,7 +119,7 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | CKEditor | [`/ckeditor`](https://endoflife.date/ckeditor) | ❌ |  |
 | ClamAV | [`/clamav`](https://endoflife.date/clamav) | ✔️ | git |
 | Clear Linux | [`/clear-linux`](https://endoflife.date/clear-linux) | ❌ |  |
-| ClickHouse | [`/clickhouse`](https://endoflife.date/clickhouse) | ✔️ | git |
+| ClickHouse | [`/clickhouse`](https://endoflife.date/clickhouse) | ✔️ | github_releases |
 | Cloud SQL Auth Proxy | [`/cloud-sql-auth-proxy`](https://endoflife.date/cloud-sql-auth-proxy) | ✔️ | git |
 | cnspec | [`/cnspec`](https://endoflife.date/cnspec) | ✔️ | github_releases |
 | CockroachDB | [`/cockroachdb`](https://endoflife.date/cockroachdb) | ✔️ | git, release_table |
@@ -184,6 +184,7 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | Glasgow Haskell Compiler (GHC) | [`/ghc`](https://endoflife.date/ghc) | ✔️ | ghc-wiki, git |
 | GitHub Actions Runner Images | [`/github-actions-runner-images`](https://endoflife.date/github-actions-runner-images) | ✔️ | release_table |
 | GitLab | [`/gitlab`](https://endoflife.date/gitlab) | ✔️ | gitlab_tags |
+| GitLab Runner | [`/gitlab-runner`](https://endoflife.date/gitlab-runner) | ✔️ | gitlab_tags |
 | Gleam | [`/gleam`](https://endoflife.date/gleam) | ✔️ | git |
 | Go | [`/go`](https://endoflife.date/go) | ✔️ | git |
 | GoAccess | [`/goaccess`](https://endoflife.date/goaccess) | ✔️ | git |
@@ -235,7 +236,7 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | Joomla! | [`/joomla`](https://endoflife.date/joomla) | ✔️ | git |
 | jQuery | [`/jquery`](https://endoflife.date/jquery) | ✔️ | git |
 | jQuery UI | [`/jquery-ui`](https://endoflife.date/jquery-ui) | ✔️ | git |
-| JReleaser | [`/jreleaser`](https://endoflife.date/jreleaser) | ✔️ | maven |
+| JReleaser | [`/jreleaser`](https://endoflife.date/jreleaser) | ✔️ | git |
 | JRuby | [`/jruby`](https://endoflife.date/jruby) | ✔️ | git |
 | Julia | [`/julia`](https://endoflife.date/julia) | ✔️ | git |
 | Karpenter | [`/karpenter`](https://endoflife.date/karpenter) | ✔️ | github_releases |
@@ -259,7 +260,7 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | LineageOS | [`/lineageos`](https://endoflife.date/lineageos) | ❌ |  |
 | Linux Kernel | [`/linux`](https://endoflife.date/linux) | ✔️ | github_tags |
 | Linux Mint | [`/linuxmint`](https://endoflife.date/linuxmint) | ✔️ | release_table |
-| Liquibase | [`/liquibase`](https://endoflife.date/liquibase) | ✔️ | maven |
+| Liquibase | [`/liquibase`](https://endoflife.date/liquibase) | ✔️ | github_releases |
 | Apache Log4j | [`/log4j`](https://endoflife.date/log4j) | ✔️ | maven |
 | Logstash | [`/logstash`](https://endoflife.date/logstash) | ✔️ | git |
 | Longhorn | [`/longhorn`](https://endoflife.date/longhorn) | ✔️ | git |
@@ -279,7 +280,7 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | Memcached | [`/memcached`](https://endoflife.date/memcached) | ✔️ | git |
 | MetalLB | [`/metallb`](https://endoflife.date/metallb) | ✔️ | git |
 | Micronaut Framework | [`/micronaut`](https://endoflife.date/micronaut) | ✔️ | git |
-| Microsoft Build of OpenJDK | [`/microsoft-build-of-openjdk`](https://endoflife.date/microsoft-build-of-openjdk) | ✔️ | git, release_table |
+| Microsoft Build of OpenJDK | [`/microsoft-build-of-openjdk`](https://endoflife.date/microsoft-build-of-openjdk) | ✔️ | github_tags, release_table |
 | MongoDB Server | [`/mongodb`](https://endoflife.date/mongodb) | ✔️ | git, release_table |
 | Moodle | [`/moodle`](https://endoflife.date/moodle) | ✔️ | git, release_table |
 | Motorola Mobility | [`/motorola-mobility`](https://endoflife.date/motorola-mobility) | ✔️ | motorola-security |
@@ -481,6 +482,6 @@ As of 2026-07-24, 397 of the 461 products tracked by endoflife.date have automat
 | Zabbix | [`/zabbix`](https://endoflife.date/zabbix) | ✔️ | git |
 | Zentyal | [`/zentyal`](https://endoflife.date/zentyal) | ✔️ | release_table |
 | HPE Zerto | [`/zerto`](https://endoflife.date/zerto) | ✔️ | release_table |
-| Apache ZooKeeper | [`/zookeeper`](https://endoflife.date/zookeeper) | ✔️ | maven |
+| Apache ZooKeeper | [`/zookeeper`](https://endoflife.date/zookeeper) | ✔️ | git |
 
 This table has been generated by [report.py](/report.py).
