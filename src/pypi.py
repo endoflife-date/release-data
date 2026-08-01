@@ -1,15 +1,17 @@
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    data = http.fetch_json(f"https://pypi.org/pypi/{config.url}/json")
 
-    for version_str in data["releases"]:
-        version_match = config.first_match(version_str)
-        version_data = data["releases"][version_str]
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        data = http.fetch_json(f"https://pypi.org/pypi/{config.url}/json")
 
-        if version_match and version_data and not version_data[0]['yanked']:
-            version = config.render(version_match)
-            date = dates.parse_datetime(version_data[0]["upload_time_iso_8601"])
-            product_data.declare_version(version, date)
+        for version_str in data["releases"]:
+            version_match = config.first_match(version_str)
+            version_data = data["releases"][version_str]
+
+            if version_match and version_data and not version_data[0]['yanked']:
+                version = config.render(version_match)
+                date = dates.parse_datetime(version_data[0]["upload_time_iso_8601"])
+                product_data.declare_version(version, date)

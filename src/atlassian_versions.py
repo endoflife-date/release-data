@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches versions from Atlassian download-archives pages.
 
@@ -8,12 +10,12 @@ This script takes a single argument which is the url of the product's download-a
 `https://www.atlassian.com/software/confluence/download-archives`.
 """
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    content = http.fetch_javascript_url(config.url, wait_until='networkidle')
-    soup = BeautifulSoup(content, features='html5lib')
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        content = http.fetch_javascript_url(config.url, wait_until='networkidle')
+        soup = BeautifulSoup(content, features='html5lib')
 
-    for version_block in soup.select('.versions-list'):
-        version = version_block.select_one('a.product-versions')['data-version']
-        date = dates.parse_date(version_block.select_one('.release-date').text)
-        product_data.declare_version(version, date)
+        for version_block in soup.select('.versions-list'):
+            version = version_block.select_one('a.product-versions')['data-version']
+            date = dates.parse_date(version_block.select_one('.release-date').text)
+            product_data.declare_version(version, date)

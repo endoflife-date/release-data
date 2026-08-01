@@ -4,9 +4,11 @@ from datetime import datetime
 from re import Match
 
 from bs4 import BeautifulSoup
-from common import dates, endoflife, http
-from common.releasedata import ProductData, config_from_argv
 from liquid import Template
+
+from src.common import dates, endoflife, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetch release-level data from an HTML table in a web page.
 
@@ -159,73 +161,73 @@ class Field:
         return f"{self.name}({self.column})"
 
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    user_agent: str = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        user_agent: str = config.data.get("user_agent", http.ENDOFLIFE_BOT_USER_AGENT)
 
-    render_js: bool = config.data.get("render_javascript", False)
-    render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
-    render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
-    render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
-    render_js_headless: str | None = config.data.get("render_javascript_headless", None)
+        render_js: bool = config.data.get("render_javascript", False)
+        render_js_wait_until: str | None = config.data.get("render_javascript_wait_until", None)
+        render_js_wait_for: str | None = config.data.get("render_javascript_wait_for", None)
+        render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
+        render_js_headless: str | None = config.data.get("render_javascript_headless", None)
 
-    table_selector: str = config.data.get("selector", "table")
-    header_row_selector: str = config.data.get("header_selector", "thead tr")
-    rows_selector: str = config.data.get("rows_selector", "tbody tr")
-    cells_selector: str = "td, th"
+        table_selector: str = config.data.get("selector", "table")
+        header_row_selector: str = config.data.get("header_selector", "thead tr")
+        rows_selector: str = config.data.get("rows_selector", "tbody tr")
+        cells_selector: str = "td, th"
 
-    remove_if_undefined_field: str | None = config.data.get("remove_if_undefined", None)
+        remove_if_undefined_field: str | None = config.data.get("remove_if_undefined", None)
 
-    release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
-    fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
+        release_cycle_field = Field("releaseCycle", config.data["fields"].pop("releaseCycle"))
+        fields = [Field(name, definition) for name, definition in config.data["fields"].items()]
 
-    if render_js:
-        response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, headless=render_js_headless,
-                                                  wait_until=render_js_wait_until, wait_for=render_js_wait_for,
-                                                  click_selector=render_js_click_selector)
-    else:
-        response_text = http.fetch_url(config.url, user_agent=user_agent).text
-    soup = BeautifulSoup(response_text, features="html5lib")
+        if render_js:
+            response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, headless=render_js_headless,
+                                                      wait_until=render_js_wait_until, wait_for=render_js_wait_for,
+                                                      click_selector=render_js_click_selector)
+        else:
+            response_text = http.fetch_url(config.url, user_agent=user_agent).text
+        soup = BeautifulSoup(response_text, features="html5lib")
 
-    for table in soup.select(table_selector):
-        header_row = table.select_one(header_row_selector)
-        if not header_row:
-            logging.info(f"skipping table with attributes {table.attrs}: no header row found")
-            continue
+        for table in soup.select(table_selector):
+            header_row = table.select_one(header_row_selector)
+            if not header_row:
+                logging.info(f"skipping table with attributes {table.attrs}: no header row found")
+                continue
 
-        headers = [normalize_header(th.get_text()) for th in header_row.select(cells_selector)]
-        logging.info(f"processing table with headers {headers}")
+            headers = [normalize_header(th.get_text()) for th in header_row.select(cells_selector)]
+            logging.info(f"processing table with headers {headers}")
 
-        try:
-            fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
-            for field in fields:
-                fields_index[field.name] = field.column if field.is_index else headers.index(field.column)
-            min_column_count = max(fields_index.values()) + 1
-
-            for row in table.select(rows_selector):
-                cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
-                if len(cells) < min_column_count:
-                    logging.debug(f"skipping row {cells}: not enough columns")
-                    continue
-
-                raw_release_name = cells[fields_index[release_cycle_field.name]]
-                release_name = release_cycle_field.extract_from(raw_release_name)
-                if not release_name:
-                    logging.debug(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
-                                 f"should match one of {release_cycle_field.include_version_patterns} "
-                                 f"and not match all of {release_cycle_field.exclude_version_patterns}")
-                    continue
-
-                release = product_data.get_release(release_name)
+            try:
+                fields_index = {"releaseCycle": headers.index(release_cycle_field.column)}
                 for field in fields:
-                    raw_field = cells[fields_index[field.name]]
-                    try:
-                        release.set_field(field.name, field.extract_from(raw_field))
-                    except ValueError as e:
-                        logging.debug(f"skipping cell {raw_field} for {release}: {e}")
+                    fields_index[field.name] = field.column if field.is_index else headers.index(field.column)
+                min_column_count = max(fields_index.values()) + 1
 
-                if remove_if_undefined_field and not release.get_field(remove_if_undefined_field):
-                    product_data.remove_release(release_name, f"{remove_if_undefined_field} is not defined")
+                for row in table.select(rows_selector):
+                    cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
+                    if len(cells) < min_column_count:
+                        logging.debug(f"skipping row {cells}: not enough columns")
+                        continue
 
-        except ValueError as e:
-            logging.info(f"skipping table with headers {headers}: {e}")
+                    raw_release_name = cells[fields_index[release_cycle_field.name]]
+                    release_name = release_cycle_field.extract_from(raw_release_name)
+                    if not release_name:
+                        logging.debug(f"skipping row {cells}: invalid release cycle '{raw_release_name}', "
+                                     f"should match one of {release_cycle_field.include_version_patterns} "
+                                     f"and not match all of {release_cycle_field.exclude_version_patterns}")
+                        continue
+
+                    release = product_data.get_release(release_name)
+                    for field in fields:
+                        raw_field = cells[fields_index[field.name]]
+                        try:
+                            release.set_field(field.name, field.extract_from(raw_field))
+                        except ValueError as e:
+                            logging.debug(f"skipping cell {raw_field} for {release}: {e}")
+
+                    if remove_if_undefined_field and not release.get_field(remove_if_undefined_field):
+                        product_data.remove_release(release_name, f"{remove_if_undefined_field} is not defined")
+
+            except ValueError as e:
+                logging.info(f"skipping table with headers {headers}: {e}")

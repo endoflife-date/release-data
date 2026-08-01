@@ -1,7 +1,8 @@
 import re
 
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches Amazon Neptune versions from its RSS feed on docs.aws.amazon.com."""
 
@@ -20,7 +21,7 @@ def parse(data: dict, product: ProductData) -> None:
     for item in data.get("contents", []):
         parse(item, product)
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    json = http.fetch_json(config.url)
-    parse(json, product_data)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        json = http.fetch_json(config.url)
+        parse(json, product_data)

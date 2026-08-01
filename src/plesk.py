@@ -1,23 +1,24 @@
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches versions from Plesk's change log.
 
 Only 18.0.20.3 and later will be picked up, as the format of the change log for 18.0.20 and 18.0.19 are different and
 there is no entry for GA of version 18.0.18 and older."""
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    html = http.fetch_html(config.url)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        html = http.fetch_html(config.url)
 
-    for release in html.find_all("div", class_="changelog-entry--obsidian"):
-        version = release.h2.text.strip()
-        if not version.startswith('Plesk Obsidian 18'):
-            continue
+        for release in html.find_all("div", class_="changelog-entry--obsidian"):
+            version = release.h2.text.strip()
+            if not version.startswith('Plesk Obsidian 18'):
+                continue
 
-        version = version.replace(' Update ', '.').replace('Plesk Obsidian ', '')
-        if ' ' in version:
-            continue
+            version = version.replace(' Update ', '.').replace('Plesk Obsidian ', '')
+            if ' ' in version:
+                continue
 
-        date = dates.parse_date(release.p.text)
-        product_data.declare_version(version, date)
+            date = dates.parse_date(release.p.text)
+            product_data.declare_version(version, date)

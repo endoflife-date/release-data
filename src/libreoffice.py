@@ -1,7 +1,8 @@
 import logging
 
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetches LibreOffice versions from https://downloadarchive.documentfoundation.org/libreoffice/old/"""
 
@@ -28,31 +29,31 @@ def fetch_prereleases(url: str, text_to_match: str) -> list[str]:
     return prereleases
 
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    prereleases_url = config.data.get("prereleases_url", "https://www.libreoffice.org/download/download-libreoffice/")
-    prereleases_text = config.data.get("prereleases_text", "LibreOffice is available in the following prerelease versions:")
-    prerelease_prefixes = fetch_prereleases(prereleases_url, prereleases_text)
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        prereleases_url = config.data.get("prereleases_url", "https://www.libreoffice.org/download/download-libreoffice/")
+        prereleases_text = config.data.get("prereleases_text", "LibreOffice is available in the following prerelease versions:")
+        prerelease_prefixes = fetch_prereleases(prereleases_url, prereleases_text)
 
-    html = http.fetch_html(config.url)
-    for table in html.find_all("table"):
-        for row in table.find_all("tr")[1:]:
-            cells = row.find_all("td")
-            if len(cells) < 4:
-                continue
+        html = http.fetch_html(config.url)
+        for table in html.find_all("table"):
+            for row in table.find_all("tr")[1:]:
+                cells = row.find_all("td")
+                if len(cells) < 4:
+                    continue
 
-            version_str = cells[1].get_text().strip()
-            version_match = config.first_match(version_str)
-            if not version_match:
-                logging.warning(f"Skipping version {version_str} as it does not match any known version pattern")
-                continue
-            version = config.render(version_match)
+                version_str = cells[1].get_text().strip()
+                version_match = config.first_match(version_str)
+                if not version_match:
+                    logging.warning(f"Skipping version {version_str} as it does not match any known version pattern")
+                    continue
+                version = config.render(version_match)
 
-            if any(prerelease_prefix in version for prerelease_prefix in prerelease_prefixes):
-                logging.info(f"Skipping prerelease version {version}")
-                continue
+                if any(prerelease_prefix in version for prerelease_prefix in prerelease_prefixes):
+                    logging.info(f"Skipping prerelease version {version}")
+                    continue
 
-            date_str = cells[2].get_text().strip()
-            date = dates.parse_datetime(date_str)
+                date_str = cells[2].get_text().strip()
+                date = dates.parse_datetime(date_str)
 
-            product_data.declare_version(version, date)
+                product_data.declare_version(version, date)

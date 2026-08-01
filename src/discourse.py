@@ -2,28 +2,30 @@ import logging
 import re
 
 from bs4 import BeautifulSoup
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetch versions from a discourse server."""
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    raw_html = http.fetch_javascript_url(config.url, wait_for="tr.topic-list-item")
-    html = BeautifulSoup(raw_html, features="html5lib")
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        raw_html = http.fetch_javascript_url(config.url, wait_for="tr.topic-list-item")
+        html = BeautifulSoup(raw_html, features="html5lib")
 
-    for topic in html.select("tr.topic-list-item"):
-        title = topic.select_one("span.link-top-line").get_text(strip=True)
-        versions = config.first_match(title)
-        if not versions:
-            continue
+        for topic in html.select("tr.topic-list-item"):
+            title = topic.select_one("span.link-top-line").get_text(strip=True)
+            versions = config.first_match(title)
+            if not versions:
+                continue
 
-        name = config.render(versions)
-        date_str = topic.select_one("td.activity").get("title").strip()
-        date_match = re.search(r"Created:\s*([A-Za-z]+\s+\d{1,2},\s+\d{4}\s+\d{1,2}:\d{2}\s+[ap]m)", date_str)
-        if not date_match:
-            logging.debug("Skipping %s: no created date found", title)
-            continue
+            name = config.render(versions)
+            date_str = topic.select_one("td.activity").get("title").strip()
+            date_match = re.search(r"Created:\s*([A-Za-z]+\s+\d{1,2},\s+\d{4}\s+\d{1,2}:\d{2}\s+[ap]m)", date_str)
+            if not date_match:
+                logging.debug("Skipping %s: no created date found", title)
+                continue
 
-        date = dates.parse_datetime(date_match.group(1))
-        product_data.declare_version(name, date)
+            date = dates.parse_datetime(date_match.group(1))
+            product_data.declare_version(name, date)

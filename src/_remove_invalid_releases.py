@@ -1,23 +1,24 @@
 import logging
 
-from common import dates, releasedata
+from src.common import dates, releasedata
+from src.common.endoflife import AutoConfig, ProductFrontmatter
 
 """Remove empty releases or releases which are released in the future."""
 
 TODAY = dates.today_at_midnight()
 
-frontmatter, _ = releasedata.parse_argv(ignore_auto_config=True)
-with releasedata.ProductData(frontmatter.name) as product_data:
-    releases = list(product_data.releases.values()) # a copy is needed to avoid modifying the dict while iterating
-    product_data.updated = True # mark the product data as updated even when there are no changes
+def update(product: ProductFrontmatter, _config: AutoConfig) -> None:
+    with releasedata.ProductData(product.name) as product_data:
+        releases = list(product_data.releases.values()) # a copy is needed to avoid modifying the dict while iterating
+        product_data.updated = True # mark the product data as updated even when there are no changes
 
-    for release in releases:
-        if release.is_empty():
-            product_data.remove_release(release.name(), "empty release")
-            continue
+        for release in releases:
+            if release.is_empty():
+                product_data.remove_release(release.name(), "empty release")
+                continue
 
-        if release.was_released_after(TODAY):
-            product_data.remove_release(release.name(), "future release")
-            continue
+            if release.was_released_after(TODAY):
+                product_data.remove_release(release.name(), "future release")
+                continue
 
-        logging.debug(f"Keeping release {release} in {product_data.name}")
+            logging.debug(f"Keeping release {release} in {product_data.name}")

@@ -1,8 +1,10 @@
 import urllib.parse
 
 from bs4 import BeautifulSoup
-from common import dates, http
-from common.releasedata import ProductData, config_from_argv
+
+from src.common import dates, http
+from src.common.endoflife import AutoConfig, ProductFrontmatter
+from src.common.releasedata import ProductData
 
 """Fetch Firefox versions with their dates from https://www.mozilla.org/.
 
@@ -21,15 +23,15 @@ The script will need to be updated if someday those conditions are not met."""
 
 MAX_VERSIONS_LIMIT = 250
 
-config = config_from_argv()
-with ProductData(config.product) as product_data:
-    releases_page = http.fetch_url(config.url)
-    releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
-    releases_list = releases_soup.find_all("ol", class_="c-release-list")
+def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
+    with ProductData(config.product) as product_data:
+        releases_page = http.fetch_url(config.url)
+        releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
+        releases_list = releases_soup.find_all("ol", class_="c-release-list")
 
-    release_notes_urls = [urllib.parse.urljoin(releases_page.url, p.get("href")) for p in releases_list[0].find_all("a")]
-    for release_notes in http.fetch_urls(release_notes_urls[:MAX_VERSIONS_LIMIT]):
-        version = release_notes.url.split("/")[-3]
-        release_notes_soup = BeautifulSoup(release_notes.text, features="html5lib")
-        date_str = release_notes_soup.find(class_="c-release-date").get_text()  # note: only works for versions > 25
-        product_data.declare_version(version, dates.parse_date(date_str))
+        release_notes_urls = [urllib.parse.urljoin(releases_page.url, p.get("href")) for p in releases_list[0].find_all("a")]
+        for release_notes in http.fetch_urls(release_notes_urls[:MAX_VERSIONS_LIMIT]):
+            version = release_notes.url.split("/")[-3]
+            release_notes_soup = BeautifulSoup(release_notes.text, features="html5lib")
+            date_str = release_notes_soup.find(class_="c-release-date").get_text()  # note: only works for versions > 25
+            product_data.declare_version(version, dates.parse_date(date_str))
