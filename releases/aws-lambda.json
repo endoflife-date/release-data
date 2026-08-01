@@ -160,6 +160,11 @@
       "eoas": "2016-08-30",
       "eol": "2016-10-31"
     },
+    "java8.al2023": {
+      "name": "java8.al2023",
+      "eoas": false,
+      "eol": false
+    },
     "java8.al2": {
       "name": "java8.al2",
       "eoas": "2027-06-30",
@@ -180,10 +185,20 @@
       "eoas": "2029-06-30",
       "eol": "2029-08-31"
     },
+    "java17.al2023": {
+      "name": "java17.al2023",
+      "eoas": false,
+      "eol": false
+    },
     "java17": {
       "name": "java17",
       "eoas": "2027-06-30",
       "eol": "2027-08-31"
+    },
+    "java11.al2023": {
+      "name": "java11.al2023",
+      "eoas": false,
+      "eol": false
     },
     "java11": {
       "name": "java11",
