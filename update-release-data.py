@@ -3,6 +3,7 @@ import importlib
 import json
 import logging
 import os
+import random
 import subprocess
 import sys
 import threading
@@ -280,6 +281,9 @@ if __name__ == "__main__":
 
     products_dir = Path(args.product_dir)
     products_list = list_products(products_dir, args.product)
+    # Shuffle so the concurrent workers hit external sites in a different order on each run, instead of a
+    # predictable alphabetical pattern, and so no product is systematically favored/starved.
+    random.shuffle(products_list)
 
     try:
         with GitHubStepSummary() as step_summary:
