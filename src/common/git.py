@@ -65,6 +65,17 @@ class Git:
 
         return [line.split("\t")[1][11:] for line in lines if "\t" in line]
 
+    def fetch_branches(self, branches: list[str]) -> None:
+        """Fetch all given branches in a single command, saving a network round-trip per branch."""
+        if not branches:
+            return
+
+        refspecs = [f"+refs/heads/{branch}:refs/remotes/origin/{branch}" for branch in branches]
+        self._run([
+            "-c", "extensions.partialClone=true",
+            "fetch", "--filter=blob:none", "--depth", "1", "origin", *refspecs,
+        ])
+
     def checkout(self, branch: str, file_list: list[str] = None) -> None:
         """Checks out a branch
         If `file_list` is given, sparse-checkout is used to save bandwidth
@@ -73,5 +84,12 @@ class Git:
         if file_list:
             # --skip-checks needed to avoid error when file_list contains a file
             self._run(["sparse-checkout", "set", "--skip-checks", *file_list])
-        self._run(["fetch", "--filter=blob:none", "--depth", "1", "origin", branch])
+        # The branch may already have been fetched (e.g. by fetch_branches), in which
+        # case a second fetch would just waste a network round-trip.
+        if not self._has_remote_branch(branch):
+            self._run(["fetch", "--filter=blob:none", "--depth", "1", "origin", branch])
         self._run(["checkout", branch])
+
+    def _has_remote_branch(self, branch: str) -> bool:
+        child = run(["git", "rev-parse", "--verify", "--quiet", f"refs/remotes/origin/{branch}"], cwd=self.repo_dir)
+        return child.returncode == 0
