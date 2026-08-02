@@ -1,9 +1,9 @@
 import logging
 from hashlib import sha1
 from pathlib import Path
-from subprocess import run
 
 from . import http
+from .proc import run
 
 
 class Git:

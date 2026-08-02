@@ -1,7 +1,8 @@
 import json
 import logging
-import subprocess
 import time
+
+from src.common import proc
 
 
 class Release:
@@ -22,7 +23,7 @@ def fetch_releases(repo_id: str) -> list[Release]:
     logging.info(f"fetching {repo_id} GitHub releases")
     (owner, repo) = repo_id.split('/')
     start = time.perf_counter()
-    child = subprocess.run("""gh api graphql --paginate -f query='
+    child = proc.run("""gh api graphql --paginate -f query='
 query($endCursor: String) {
   repository(name: "%s", owner: "%s") {
     releases(
@@ -62,7 +63,7 @@ def fetch_tags(repo_id: str) -> list[Tag]:
     logging.info(f"fetching {repo_id} tags")
     (owner, repo) = repo_id.split('/')
     start = time.perf_counter()
-    child = subprocess.run("""gh api graphql --paginate -f query='
+    child = proc.run("""gh api graphql --paginate -f query='
 query($endCursor: String) {
   repository(name: "%s", owner: "%s") {
     refs(refPrefix: "refs/tags/", first: 100, after: $endCursor) {

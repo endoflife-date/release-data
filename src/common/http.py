@@ -16,6 +16,8 @@ from requests_cache import CachedSession
 from requests_futures.sessions import FuturesSession
 from urllib3.util import Retry
 
+from . import proc
+
 # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent.
 ENDOFLIFE_BOT_USER_AGENT = 'endoflife.date-bot/1.0 (endoflife.date automation; +https://endoflife.date/bot)'
 FIREFOX_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0'
@@ -100,6 +102,7 @@ def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, h
     logging.info(f"Fetching {url} with JavaScript (wait_until = {wait_until}, wait_for = {wait_for}, select_wait_for = {select_wait_for}, click_selector = {click_selector})")
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=headless)
+        proc.register(browser.close)
         context = browser.new_context()
         context.set_extra_http_headers({'User-Agent': user_agent})
 
@@ -122,4 +125,5 @@ def fetch_javascript_url(url: str, user_agent: str = ENDOFLIFE_BOT_USER_AGENT, h
 
             return element_to_wait_for.inner_html() if select_wait_for else page.content()
         finally:
+            proc.unregister(browser.close)
             browser.close()
