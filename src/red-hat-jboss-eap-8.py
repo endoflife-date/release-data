@@ -10,10 +10,14 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         xml = http.fetch_xml(config.url)
 
-        versioning = xml.getElementsByTagName("metadata")[0].getElementsByTagName("versioning")[0]
+        metadata = xml.getElementsByTagName("metadata")[0]
+        versioning = metadata.getElementsByTagName("versioning")[0]
 
+        artifact_id = metadata.getElementsByTagName("artifactId")[0].firstChild.nodeValue
         latest_str = versioning.getElementsByTagName("latest")[0].firstChild.nodeValue
-        latest_name = "8.0." + re.match(r"^..(.*)\.GA", latest_str).group(1)
+
+        version_prefix = artifact_id.removeprefix("eap-")
+        latest_name = version_prefix + "." + re.match(r"^1\.(.*)\.GA", latest_str).group(1)
 
         latest_date_str = versioning.getElementsByTagName("lastUpdated")[0].firstChild.nodeValue
         latest_date = dates.parse_datetime(latest_date_str)
