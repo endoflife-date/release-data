@@ -28,7 +28,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         git.setup(bare=True)
         versions = git.list_tags()
         for version, date_str in versions:
-            version = version.removeprefix("v")  # Remove 'v' prefix if present
+            version = version.removeprefix("v")
             if version in released_versions:
                 date = dates.parse_date(date_str)
                 product_data.declare_version(version, date)
