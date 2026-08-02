@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     products_dir = Path(args.product_dir)
     products = endoflife.list_products(products_dir)
-    count_auto = len([product for product in products if product.auto_configs()])
+    count_auto = sum(1 for product in products if product.auto_configs())
 
     print(f"As of {time.strftime('%Y-%m-%d')}, {count_auto} of the {len(products)} products"
           f" tracked by endoflife.date have automatically tracked releases:")

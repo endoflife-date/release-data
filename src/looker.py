@@ -23,8 +23,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             if not announcement_match:
                 continue
 
-            release_match = config.first_match(announcement_match.parent.get_text())
-            if not release_match:
+            if not (release_match := config.first_match(announcement_match.parent.get_text())):
                 continue
             release_name = config.render(release_match)
             release = product_data.get_release(release_name)

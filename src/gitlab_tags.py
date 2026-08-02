@@ -28,8 +28,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         for tag in fetch_tags(config.url):
             version_str = tag['name']
-            version_match = config.first_match(version_str)
-            if version_match:
+            if (version_match := config.first_match(version_str)):
                 version = config.render(version_match)
                 date = dates.parse_datetime(tag['commit']['created_at'])
                 product_data.declare_version(version, date)

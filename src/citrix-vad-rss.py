@@ -14,8 +14,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             version_str = entry.getElementsByTagName("title")[0].firstChild.nodeValue
             date_str = entry.getElementsByTagName("pubDate")[0].firstChild.nodeValue
 
-            version_match = config.first_match(version_str)
-            if not version_match:
+            if not (version_match := config.first_match(version_str)):
                 logging.info(f"Skipping unmatched entry: {version_str}")
                 continue
 

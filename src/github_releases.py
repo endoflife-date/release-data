@@ -14,8 +14,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                 continue
 
             version_str = release.tag_name
-            version_match = config.first_match(version_str)
-            if version_match:
+            if (version_match := config.first_match(version_str)):
                 version = config.render(version_match)
                 date = dates.parse_datetime(release.published_at)
                 product_data.declare_version(version, date)

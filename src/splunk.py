@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 
 from bs4 import BeautifulSoup
 
@@ -10,27 +11,18 @@ VERSION_DATE_PATTERN = re.compile(r"Splunk Enterprise (?P<version>\d+\.\d+(?:\.\
 
 
 def get_latest_minor_versions(versions: list[str]) -> list[str]:
-    versions_split = [v.split('.') for v in versions]
-
     # Group versions by major and minor version
-    version_groups = {}
-    for version in versions_split:
+    version_groups = defaultdict(list)
+    for version in versions:
+        version = version.split('.')
         major, minor = map(int, version[:2])
         # Release notes for versions before 7.2 don't contain release information
         if major < 7 or (major == 7 and minor < 2):
             continue
-        major_minor = '.'.join(version[:2])
-        if major_minor not in version_groups:
-            version_groups[major_minor] = []
-        version_groups[major_minor].append(version)
+        version_groups['.'.join(version[:2])].append(version)
 
     # For each group, find the version with the highest patch version
-    latest_versions = []
-    for version_group in version_groups.values():
-        latest_patch = max(version_group, key=lambda v: int(v[2]))
-        latest_versions.append('.'.join(latest_patch))
-
-    return latest_versions
+    return ['.'.join(max(version_group, key=lambda v: int(v[2]))) for version_group in version_groups.values()]
 
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:

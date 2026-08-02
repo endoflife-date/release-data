@@ -16,8 +16,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         for topic in html.select("tr.topic-list-item"):
             title = topic.select_one("span.link-top-line").get_text(strip=True)
-            versions = config.first_match(title)
-            if not versions:
+            if not (versions := config.first_match(title)):
                 continue
 
             name = config.render(versions)

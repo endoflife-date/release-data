@@ -104,14 +104,14 @@ class ReleaseCycle:
         return not char_after_prefix.isdigit()
 
     def __str__(self) -> str:
-        return self.product + '#' + self.name
+        return f"{self.product}#{self.name}"
 
     @staticmethod
     def __as_date(o: str | bool | datetime.datetime | datetime.date | None) -> datetime.date | bool | None:
-        if isinstance(o, datetime.date):
-            return o
         if isinstance(o, datetime.datetime):
             return o.date()
+        if isinstance(o, datetime.date):
+            return o
         if isinstance(o, str):
             return datetime.date.fromisoformat(o)
         if isinstance(o, bool):

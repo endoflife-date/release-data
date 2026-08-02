@@ -19,8 +19,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             minor_version_soup = BeautifulSoup(minor_version.text, features="html5lib")
 
             for title in minor_version_soup.find_all("h2"):
-                match = config.first_match(title.get_text().strip())
-                if not match:
+                if not (match := config.first_match(title.get_text().strip())):
                     logging.info(f"Skipping {title}, does not match any regex")
                     continue
 

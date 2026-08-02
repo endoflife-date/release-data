@@ -70,7 +70,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             try:
                 version_name_index = headers.index(version_name_column)
                 version_date_index = headers.index(version_date_column)
-                min_columns_count = max([version_name_index, version_date_index]) + 1
+                min_columns_count = max(version_name_index, version_date_index) + 1
 
                 for row in table.select(rows_selector):
                     cells = [cell.get_text().strip() for cell in row.select(cells_selector)]
@@ -79,8 +79,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                         continue
 
                     raw_version_name = cells[version_name_index]
-                    version_match = config.first_match(raw_version_name)
-                    if not version_match:
+                    if not (version_match := config.first_match(raw_version_name)):
                         logging.debug(f"skipping row {cells}: invalid release cycle '{raw_version_name}', "
                                       f"should match one of {config.include_version_patterns} "
                                       f"and not match all of {config.exclude_version_patterns}")

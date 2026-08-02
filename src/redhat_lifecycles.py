@@ -28,8 +28,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         for version in data["data"][0]["versions"]:
             version_name = version["name"]
-            version_match = config.first_match(version_name)
-            if not version_match:
+            if not (version_match := config.first_match(version_name)):
                 logging.warning(f"Ignoring version '{version_name}', config is {config}")
                 continue
 

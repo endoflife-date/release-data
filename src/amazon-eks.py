@@ -17,8 +17,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                 continue
 
             k8s_version_text = cells[0].text.strip()
-            k8s_version_match = config.first_match(k8s_version_text)
-            if not k8s_version_match:
+            if not (k8s_version_match := config.first_match(k8s_version_text)):
                 logging.warning(f"Skipping {k8s_version_text}: does not match version regex(es)")
                 continue
 

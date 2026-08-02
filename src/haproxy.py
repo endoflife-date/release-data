@@ -11,15 +11,11 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         # First, get all minor releases from the download page
         download_html = http.fetch_html(config.url)
-        minor_versions = []
-        for link in download_html.select("a"):
-            minor_version_match = CYCLE_PATTERN.match(link.attrs["href"])
-            if not minor_version_match:
-                continue
-
-            minor_version = minor_version_match.groups()[0]
-            if minor_version != "1.0":  # No changelog in https://www.haproxy.org/download/1.0/src
-                minor_versions.append(minor_version)
+        minor_versions = [
+            m.group(1)
+            for link in download_html.select("a")
+            if (m := CYCLE_PATTERN.match(link.attrs["href"])) and m.group(1) != "1.0"
+        ]  # No changelog in https://www.haproxy.org/download/1.0/src
 
         # Then, fetches all versions from each changelog
         changelog_urls = [f"{config.url}{minor_version}/src/CHANGELOG" for minor_version in minor_versions]

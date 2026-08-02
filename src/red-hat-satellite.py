@@ -17,8 +17,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                 td_list = tr.findAll("td")
 
                 version_str = td_list[0].get_text().replace(' GA', '.0').strip()  # x.y GA => x.y.0
-                version_match = config.first_match(version_str)
-                if not version_match:
+                if not (version_match := config.first_match(version_str)):
                     logging.warning(f"Skipping version '{version_str}': does not match any version pattern.")
                     continue
                 version = version_match["version"].replace('-', '.')  # a.b.c-d => a.b.c.d

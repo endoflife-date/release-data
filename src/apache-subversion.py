@@ -12,8 +12,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         ul = html.find("h2").find_next("ul")
         for li in ul.find_all("li"):
             text = li.get_text(strip=True)
-            match = config.first_match(text)
-            if not match:
+            if not (match := config.first_match(text)):
                 logging.info(f"Skipping {text}, does not match any regex")
                 continue
 

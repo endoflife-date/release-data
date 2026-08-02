@@ -16,8 +16,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                     continue
 
                 version_str = columns[0].text.strip()
-                version_match = config.first_match(version_str)
-                if not version_match:
+                if not (version_match := config.first_match(version_str)):
                     continue
 
                 datetime_td = columns[3].find_next("span")

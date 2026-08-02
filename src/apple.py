@@ -33,8 +33,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         for response in responses:
             soup = BeautifulSoup(response.text, features="html5lib")
-            versions_table = soup.select_one("#tableWraper")
-            versions_table = versions_table if versions_table else soup.select_one("table.gb-table")
+            versions_table = soup.select_one("#tableWraper") or soup.select_one("table.gb-table")
 
             if not versions_table:
                 message = f"no versions table found in {response.url}"

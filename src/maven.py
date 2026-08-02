@@ -15,8 +15,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             data = http.fetch_json(url)
 
             for row in data["response"]["docs"]:
-                version_match = config.first_match(row["v"])
-                if version_match:
+                if (version_match := config.first_match(row["v"])):
                     version = config.render(version_match)
                     date = datetime.fromtimestamp(row["timestamp"] / 1000, tz=timezone.utc)
                     product_data.declare_version(version, date)
