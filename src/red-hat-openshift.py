@@ -40,11 +40,17 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         git = Git(config.url)
         git.setup()
 
-        # only fetch v4+ branches, because the format was different in openshift v3
-        for branch in git.list_branches("refs/heads/enterprise-[4-9]*"):
-            if "-archive-" in branch:
-                continue
+        # only consider v4+ branches, because the format was different in openshift v3
+        branches = [
+            branch
+            for branch in git.list_branches("refs/heads/enterprise-[4-9]*")
+            if "-archive-" not in branch
+        ]
 
+        # Fetch every branch in a single round-trip instead of one fetch per branch.
+        git.fetch_branches(branches)
+
+        for branch in branches:
             branch_version = branch.split("-")[1]
             file_version = branch_version.replace(".", "-")
             release_notes_filename = f"release_notes/ocp-{file_version}-release-notes.adoc"
