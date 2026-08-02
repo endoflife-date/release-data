@@ -28,10 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Note that the cache will be destroyed every week by .github/workflows/clear-cache.yml.
-      # See https://github.com/actions/cache/tree/main/save#always-save-cache.
-      - name: Restore repositories and HTTP requests cache
-        id: cache-restore
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Set up cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: 'update-cache'
           path: ~/.cache
@@ -87,7 +85,7 @@ jobs:
 
       # When running on a pull request, don't commit the updated data: instead the script execution summary
       # is posted as a comment on the PR so the author can review it and commit themselves if needed.
-      - name: Comment on the pull request with the script execution summary
+      - name: Comment pull request with the script execution summary
         if: github.event_name == 'pull_request'
         continue-on-error: true # a comment failure shouldn't fail the whole run or mask an update-script failure
         env:
@@ -109,16 +107,6 @@ jobs:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
 
-      # See https://github.com/actions/cache/tree/main/save#always-save-cache.
-      - name: Save repositories and HTTP requests cache
-        id: cache-save
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
-        with:
-          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
-          path: ~/.cache
-
-      # we still want to easily know if something went wrong
-      - name: Restore update-release-data.py failure
+      - name: Annotate run with failure
         if: steps.update_data.outcome != 'success'
-        run: exit 1
+        run: echo "::error title=update-release-data.py did not complete successfully::The update-release-data.py script did not complete successfully. See the 'Script execution summary' for details."
