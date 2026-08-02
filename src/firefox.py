@@ -9,7 +9,7 @@ from src.common.releasedata import ProductData
 """Fetch Firefox versions with their dates from https://www.mozilla.org/.
 
 This script is cumulative: previously found versions are kept, and eventually updated if needed. It only considers the
-first MAX_VERSIONS_COUNT versions on Firefox release page because:
+first MAX_VERSIONS_LIMIT versions on Firefox release page because:
 - it is too long to fetch them all (at least a minute usually),
 - this generates too many requests to the mozilla.org servers,
 - and anyway oldest versions are never updated.
@@ -17,11 +17,11 @@ first MAX_VERSIONS_COUNT versions on Firefox release page because:
 Note that it was assumed that:
 - the script is ran regularly enough to keep the versions up to date (once a day or week looks enough),
 - the versions are listed in descending order on the page,
-- new versions are always added inside in the last MAX_VERSIONS_COUNT versions.
+- new versions are always added inside in the last MAX_VERSIONS_LIMIT versions.
 
 The script will need to be updated if someday those conditions are not met."""
 
-MAX_VERSIONS_LIMIT = 250
+MAX_VERSIONS_LIMIT = 100
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
