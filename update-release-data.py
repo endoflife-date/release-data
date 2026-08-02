@@ -16,6 +16,7 @@ from deepdiff import DeepDiff
 from src.common.endoflife import AutoConfig, ProductFrontmatter, list_products
 from src.common.gha import GitHubOutput, GitHubStepSummary
 from src.common.releasedata import DATA_DIR, SRC_DIR
+from src.common.terminal import TerminalColorLogFormatter
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -265,9 +266,16 @@ if __name__ == "__main__":
                         help='enable verbose logging (automatically enabled when ACTIONS_STEP_DEBUG is set)')
     args = parser.parse_args()
 
-    logging.basicConfig(format="%(levelname)s [%(product)s]: %(message)s",
-                        level=(logging.DEBUG if args.verbose else logging.INFO), stream=sys.stdout)
-    logging.getLogger().handlers[0].addFilter(ProductLogFilter())
+    log_format = "%(levelname)s [%(product)s]: %(message)s"
+    if os.environ.get("GITHUB_ACTIONS") == "true" or sys.stdout.isatty():
+        log_formatter = TerminalColorLogFormatter(log_format)
+    else:
+        log_formatter = logging.Formatter(log_format)
+
+    log_handler = logging.StreamHandler(stream=sys.stdout)
+    log_handler.setFormatter(log_formatter)
+    log_handler.addFilter(ProductLogFilter())
+    logging.basicConfig(level=(logging.DEBUG if args.verbose else logging.INFO), handlers=[log_handler])
     install_playwright()
 
     products_dir = Path(args.product_dir)

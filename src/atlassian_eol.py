@@ -14,7 +14,7 @@ This script takes a selector argument which is the product title identifier on t
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        content = http.fetch_javascript_url(config.url)
+        content = http.fetch_javascript_url(config.url, wait_until='networkidle')
         soup = BeautifulSoup(content, features="html5lib")
 
         # Find the section with the EOL dates
