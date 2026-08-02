@@ -16,8 +16,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         for li in html.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
             li_text = li.find("a").text.strip()
 
-            release_match = config.first_match(li_text)
-            if not release_match:
+            if not (release_match := config.first_match(li_text)):
                 logging.info(f"Skipping '{li_text}': does not match expected pattern")
                 continue
 

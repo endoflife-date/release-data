@@ -19,8 +19,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         # Find the section with the EOL dates
         for li in soup.select(f"#{config.data.get('selector')}+ul li"):
-            match = config.first_match(li.get_text(strip=True))
-            if not match:
+            if not (match := config.first_match(li.get_text(strip=True))):
                 logging.warning(f"Skipping '{li.get_text(strip=True)}', no match found")
                 continue
 

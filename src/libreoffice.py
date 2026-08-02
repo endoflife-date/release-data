@@ -43,8 +43,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                     continue
 
                 version_str = cells[1].get_text().strip()
-                version_match = config.first_match(version_str)
-                if not version_match:
+                if not (version_match := config.first_match(version_str)):
                     logging.warning(f"Skipping version {version_str} as it does not match any known version pattern")
                     continue
                 version = config.render(version_match)

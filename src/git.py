@@ -12,8 +12,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         tags = git.list_tags()
         for tag, date_str in tags:
-            version_match = config.first_match(tag)
-            if version_match:
+            if (version_match := config.first_match(tag)):
                 version = config.render(version_match)
                 date = dates.parse_date(date_str)
                 product_data.declare_version(version, date)

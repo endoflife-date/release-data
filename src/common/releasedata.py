@@ -59,7 +59,6 @@ class ProductRelease:
         self.set_field("eoes", new_value)
 
     def set_field(self, field: str, new_value: any) -> None:
-        new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, datetime) else new_value
         new_value = new_value.strftime("%Y-%m-%d") if isinstance(new_value, date) else new_value
         old_value = self.data.get(field, None)
         if old_value != new_value:
@@ -175,8 +174,8 @@ class ProductData:
         logging.debug(f"removing release {release_name} ({self.releases.pop(release_name)}) from {self}: {reason}")
         self.updated = True
 
-    def get_version(self, version_name: str) -> ProductVersion:
-        return self.versions[version_name] if version_name in self.versions else None
+    def get_version(self, version_name: str) -> ProductVersion | None:
+        return self.versions.get(version_name)
 
     def declare_version(self, version_name: str, versions_date: datetime|date) -> None:
         self.updated = True

@@ -23,6 +23,5 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                         continue
 
                     for sub_li in li.find_all('li', recursive=True):
-                        match = config.first_match(sub_li.text.strip())
-                        if match:
+                        if (match := config.first_match(sub_li.text.strip())):
                             product_data.declare_version(config.render(match), date)

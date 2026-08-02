@@ -59,10 +59,6 @@ class Git:
         """
         lines = self._run(["ls-remote", "origin", pattern])
 
-        # this checks keeps the linter quiet, because _run returns a bool OR list
-        if isinstance(lines, bool):
-            return []
-
         return [line.split("\t")[1][11:] for line in lines if "\t" in line]
 
     def fetch_branches(self, branches: list[str]) -> None:

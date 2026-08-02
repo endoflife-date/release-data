@@ -28,8 +28,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                 continue
 
             product_version = unquote(fields[2].strip())
-            match = config.first_match(product_version)
-            if not match:
+            if not (match := config.first_match(product_version)):
                 logging.warning("Skipping '%s' version %s, no match found", product_name, product_version)
                 continue
 

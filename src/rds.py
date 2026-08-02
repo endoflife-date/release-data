@@ -21,8 +21,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                     continue
 
                 version_text = columns[0].text.strip()
-                version_match = config.first_match(version_text)
-                if not version_match:
+                if not (version_match := config.first_match(version_text)):
                     logging.warning(f"Skipping {version_text}: does not match any version pattern")
                     continue
 

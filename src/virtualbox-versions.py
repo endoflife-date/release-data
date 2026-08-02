@@ -11,8 +11,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         for a in html.select("a"):
             href = a["href"]
 
-            version_match = config.first_match(href)
-            if version_match:
+            if (version_match := config.first_match(href)):
                 version = config.render(version_match)
                 date_str = a.next_sibling.strip().split(" ")[0]
                 date = dates.parse_date(date_str)

@@ -18,8 +18,6 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
             version_str = td_list[0].get_text().strip()
             version_match = VERSION_PATTERN.match(version_str).groupdict()
-            version = version_match["major"]
-            version += ("." + version_match["minor"]) if version_match["minor"] else ""
-            version += ("." + version_match["minor2"]) if version_match["minor2"] else ""
+            version = ".".join(v for v in version_match.values() if v)
             date = dates.parse_date(td_list[1].get_text())
             product_data.declare_version(version, date)
