@@ -3,10 +3,15 @@ name: Update Data
 permissions:
   contents: write
   actions: write
+  issues: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
+  pull_request:
   schedule:
     # See https://crontab.guru/#17_6,18_*_*_*
     - cron: '17 0,6,12,18 * * *'
@@ -14,7 +19,7 @@ on:
 # Cancel previous runs for a given branch if they are still running when a new one starts.
 # This is useful to avoid errors as the same branch would be changed multiple times.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -51,7 +56,7 @@ jobs:
       # This step must never fail because in most case the branch will not exist on the website repository.
       - name: Checkout the same branch on website
         env:
-          REF_NAME: ${{ github.ref_name }}
+          REF_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           cd website
           git checkout --progress --force -B "$REF_NAME" refs/remotes/origin/"$REF_NAME" || true
@@ -70,11 +75,36 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true # commit even if the data was not fully updated
-        run: python update-release-data.py -p 'website/products'
+        run: |
+          set +e
+          python update-release-data.py -p 'website/products'
+          script_exit_code=$?
+          set -e
+          # GITHUB_STEP_SUMMARY is unique per step and isolated from other steps (see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#step-isolation-and-limits).
+          # Copy it to a fixed path while it's still readable here for the comment step below to reuse.
+          cp "$GITHUB_STEP_SUMMARY" /tmp/update_data_summary.md
+          exit "$script_exit_code"
+
+      # When running on a pull request, don't commit the updated data: instead the script execution summary
+      # is posted as a comment on the PR so the author can review it and commit themselves if needed.
+      - name: Comment on the pull request with the script execution summary
+        if: github.event_name == 'pull_request'
+        continue-on-error: true # a comment failure shouldn't fail the whole run or mask an update-script failure
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # GitHub comments are limited to 65536 characters, truncate the summary to stay under the limit. Fall back to a placeholder if the summary is empty.
+          head -c 60000 /tmp/update_data_summary.md > /tmp/summary.md
+          if [ ! -s /tmp/summary.md ]; then
+            echo "No script execution summary was produced (the update step likely failed early)." > /tmp/summary.md
+          fi
+          # --edit-last edits the last comment made by this token (github-actions[bot]): assuming this token does not produce other comments.
+          gh pr comment "$PR_NUMBER" --body-file /tmp/summary.md --edit-last --create-if-none
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
-        if: steps.update_data.outputs.commit_message != ''
+        if: steps.update_data.outputs.commit_message != '' && github.ref == 'refs/heads/main' && github.repository == 'endoflife-date/release-data'
         with:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
           commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
