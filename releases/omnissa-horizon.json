@@ -1,0 +1,125 @@
+{
+  "releases": {
+    "8.2603": {
+      "name": "8.2603",
+      "releaseDate": "2026-04-14",
+      "eol": "2029-04-14",
+      "technicalGuidance": "2030-04-14"
+    },
+    "8.2512": {
+      "name": "8.2512",
+      "releaseDate": "2025-12-16",
+      "eol": "2028-12-16",
+      "technicalGuidance": "2029-12-16"
+    },
+    "8.2506": {
+      "name": "8.2506",
+      "releaseDate": "2025-07-31",
+      "eol": "2028-07-31",
+      "technicalGuidance": "2029-07-31"
+    },
+    "8.2503": {
+      "name": "8.2503",
+      "releaseDate": "2025-04-15",
+      "eol": "2028-04-15",
+      "technicalGuidance": "2029-04-15"
+    },
+    "8.2412": {
+      "name": "8.2412",
+      "releaseDate": "2025-01-28",
+      "eol": "2028-01-28",
+      "technicalGuidance": "2029-01-28"
+    },
+    "8.2406": {
+      "name": "8.2406",
+      "releaseDate": "2024-07-25",
+      "eol": "2027-07-25",
+      "technicalGuidance": "2028-07-25"
+    },
+    "8.2312": {
+      "name": "8.2312",
+      "releaseDate": "2024-01-23",
+      "eol": "2027-01-23",
+      "technicalGuidance": "2028-01-23"
+    },
+    "8.2309": {
+      "name": "8.2309",
+      "releaseDate": "2023-10-26",
+      "eol": "2026-10-26",
+      "technicalGuidance": "2027-10-26"
+    },
+    "8.2306": {
+      "name": "8.2306",
+      "releaseDate": "2023-07-06",
+      "eol": "2026-07-06",
+      "technicalGuidance": "2027-07-06"
+    },
+    "8.2303": {
+      "name": "8.2303",
+      "releaseDate": "2023-03-30",
+      "eol": "2026-03-30",
+      "technicalGuidance": "2027-03-30"
+    },
+    "8.2212": {
+      "name": "8.2212",
+      "releaseDate": "2023-01-12",
+      "eol": "2026-07-12",
+      "technicalGuidance": "2027-07-12"
+    },
+    "8.2209": {
+      "name": "8.2209",
+      "releaseDate": "2022-10-20",
+      "eol": "2025-10-20",
+      "technicalGuidance": "2026-10-20"
+    },
+    "8.2206": {
+      "name": "8.2206",
+      "releaseDate": "2022-07-19",
+      "eol": "2025-07-19",
+      "technicalGuidance": "2026-07-19"
+    },
+    "8.2203": {
+      "name": "8.2203",
+      "releaseDate": "2022-04-05",
+      "eol": "2025-04-05",
+      "technicalGuidance": "2026-04-05"
+    },
+    "8.2111": {
+      "name": "8.2111",
+      "releaseDate": "2021-11-30",
+      "eol": "2024-11-30",
+      "technicalGuidance": "2025-11-30"
+    },
+    "8.2106": {
+      "name": "8.2106",
+      "releaseDate": "2021-07-15",
+      "eol": "2024-07-15",
+      "technicalGuidance": "2025-07-15"
+    },
+    "8.2103": {
+      "name": "8.2103",
+      "releaseDate": "2021-03-23",
+      "eol": "2024-03-23",
+      "technicalGuidance": "2025-03-23"
+    },
+    "8.2012": {
+      "name": "8.2012",
+      "releaseDate": "2021-01-07",
+      "eol": "2024-01-07",
+      "technicalGuidance": "2025-01-07"
+    },
+    "8.2006": {
+      "name": "8.2006",
+      "releaseDate": "2020-08-11",
+      "eol": "2025-08-11",
+      "technicalGuidance": "2027-08-11"
+    },
+    "7.13": {
+      "name": "7.13",
+      "releaseDate": "2020-10-15",
+      "eol": "2023-04-30",
+      "technicalGuidance": "2025-04-30"
+    }
+  },
+  "versions": {}
+}
