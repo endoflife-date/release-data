@@ -10,22 +10,22 @@
       "name": "11.44",
       "releaseDate": "2026-06-15",
       "eol": "2028-12-15",
-      "latest": "11.44.12",
-      "latestReleaseDate": "2026-07-16"
+      "latest": "11.44.15",
+      "latestReleaseDate": "2026-08-04"
     },
     "11.40": {
       "name": "11.40",
       "releaseDate": "2025-06-15",
       "eol": "2027-12-15",
-      "latest": "11.40.63",
-      "latestReleaseDate": "2026-07-06"
+      "latest": "11.40.67",
+      "latestReleaseDate": "2026-08-04"
     },
     "11.36": {
       "name": "11.36",
       "releaseDate": "2024-08-15",
       "eol": "2027-06-15",
-      "latest": "11.36.114",
-      "latestReleaseDate": "2026-07-06"
+      "latest": "11.36.119",
+      "latestReleaseDate": "2026-08-04"
     }
   },
   "versions": {}
