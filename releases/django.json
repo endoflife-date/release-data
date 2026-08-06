@@ -2,11 +2,13 @@
   "releases": {
     "6.1": {
       "name": "6.1",
+      "eoas": "2027-04-30",
+      "eol": "2027-12-31",
       "supportedPythonVersions": "3.12 - 3.14"
     },
     "6.0": {
       "name": "6.0",
-      "eoas": "2026-08-31",
+      "eoas": "2026-08-04",
       "eol": "2027-04-30",
       "supportedPythonVersions": "3.12 - 3.14"
     },
