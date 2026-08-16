@@ -50,6 +50,11 @@
       "eoas": "2022-07-18",
       "eol": "2022-08-29"
     },
+    "python3.15": {
+      "name": "python3.15",
+      "eoas": false,
+      "eol": false
+    },
     "python3.14": {
       "name": "python3.14",
       "eoas": "2029-06-30",
@@ -115,6 +120,11 @@
       "eoas": "2020-03-05",
       "eol": "2020-03-05"
     },
+    "nodejs26.x": {
+      "name": "nodejs26.x",
+      "eoas": false,
+      "eol": false
+    },
     "nodejs24.x": {
       "name": "nodejs24.x",
       "eoas": "2028-04-30",
@@ -162,8 +172,8 @@
     },
     "java8.al2023": {
       "name": "java8.al2023",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "java8.al2": {
       "name": "java8.al2",
@@ -187,8 +197,8 @@
     },
     "java17.al2023": {
       "name": "java17.al2023",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "java17": {
       "name": "java17",
@@ -197,8 +207,8 @@
     },
     "java11.al2023": {
       "name": "java11.al2023",
-      "eoas": false,
-      "eol": false
+      "eoas": "2029-06-30",
+      "eol": "2029-08-31"
     },
     "java11": {
       "name": "java11",
