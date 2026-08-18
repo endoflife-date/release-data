@@ -1,5 +1,11 @@
 {
   "releases": {
+    "6.0": {
+      "name": "6.0",
+      "pythonVersion": "3.13",
+      "sparkVersion": "4.1.1",
+      "javaVersion": "17"
+    },
     "5.1": {
       "name": "5.1",
       "pythonVersion": "3.11",
