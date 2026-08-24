@@ -1,5 +1,11 @@
 {
   "releases": {
+    "8.2606": {
+      "name": "8.2606",
+      "releaseDate": "2026-08-24",
+      "eol": "2029-08-24",
+      "technicalGuidance": "2030-08-24"
+    },
     "8.2603": {
       "name": "8.2603",
       "releaseDate": "2026-04-14",
