@@ -7,9 +7,10 @@ from pathlib import Path
 
 import frontmatter
 from packaging.version import InvalidVersion, Version
-from ruamel.yaml import YAML, StringIO
+from ruamel.yaml import YAML
 from ruamel.yaml.representer import RoundTripRepresenter
 from ruamel.yaml.resolver import Resolver
+from ruamel.yaml.scalarstring import DoubleQuotedScalarString
 
 from src.common.dates import today_at_midnight
 from src.common.endoflife import list_products
@@ -79,16 +80,16 @@ class ReleaseCycle:
             self.updated = True
 
     def release_date(self) -> datetime.date | None:
-        return self.__as_date(self.data.get("releaseDate", None))
+        return self.as_date(self.data.get("releaseDate", None))
 
     def eol(self) -> datetime.date | bool | None:
-        return self.__as_date(self.data.get("eol", None))
+        return self.as_date(self.data.get("eol", None))
 
     def latest_version(self) -> str | None:
         return self.data.get("latest", None)
 
     def latest_release_date(self) -> datetime.date | None:
-        return self.__as_date(self.data.get("latestReleaseDate", None))
+        return self.as_date(self.data.get("latestReleaseDate", None))
 
     def includes(self, version: str) -> bool:
         """matches releases that are exact (such as 4.1 being the first release for the 4.1 release cycle)
@@ -107,7 +108,7 @@ class ReleaseCycle:
         return f"{self.product}#{self.name}"
 
     @staticmethod
-    def __as_date(o: str | bool | datetime.datetime | datetime.date | None) -> datetime.date | bool | None:
+    def as_date(o: str | bool | datetime.datetime | datetime.date | None) -> datetime.date | bool | None:
         if isinstance(o, datetime.datetime):
             return o.date()
         if isinstance(o, datetime.date):
@@ -190,6 +191,32 @@ class Product:
         if not version_matched:
             self.unmatched_versions[name] = date
 
+    @staticmethod
+    def __as_yaml_value(value: object) -> object:
+        if isinstance(value, str) and re.fullmatch(r"^\d{4}-\d{2}-\d{2}$", value):
+            return datetime.date.fromisoformat(value)
+        return DoubleQuotedScalarString(value) if isinstance(value, str) else value
+
+    def patch_undeclared_releases(self) -> None:
+        if not self.unmatched_releases:
+            return
+
+        releases = self.data.setdefault("releases", [])
+        for name, release_data in self.unmatched_releases.items():
+            release = {"releaseCycle": DoubleQuotedScalarString(name)}
+            release.update({key: self.__as_yaml_value(value) for key, value in release_data.items()})
+            logging.info(f"{self.name}: declaring {name}")
+            releases.append(release)
+
+        dated = [release for release in releases
+                 if isinstance(ReleaseCycle.as_date(release.get("releaseDate")), datetime.date)]
+        undated = [release for release in releases
+                   if not isinstance(ReleaseCycle.as_date(release.get("releaseDate")), datetime.date)]
+        dated.sort(key=lambda release: ReleaseCycle.as_date(release.get("releaseDate")), reverse=True)
+        releases[:] = dated + undated
+        self.unmatched_releases.clear()
+        self.updated = True
+
     def write(self) -> None:
         with self.product_path.open("w") as product_file:
             product_file.truncate()
@@ -205,7 +232,8 @@ class Product:
             product_file.write("\n")
 
 
-def update_product(name: str, product_dir: Path, releases_dir: Path, output: GitHubOutput) -> None:
+def update_product(name: str, product_dir: Path, releases_dir: Path, output: GitHubOutput,
+                   declare_undeclared_releases: bool, increase_stale_releases_threshold: bool) -> None:
     product = Product(name, product_dir, releases_dir)
     product.upgrade_structure()
 
@@ -217,17 +245,20 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
         for release_data in product.release_data.get("releases", {}).values():
             product.process_release(release_data)
 
-        product.check_latest()
+        if declare_undeclared_releases:
+            product.patch_undeclared_releases()
 
-    if product.updated:
-        logging.info(f"Updating {product.product_path}")
-        product.write()
+        product.check_latest()
 
     # List all unmatched versions released in the last UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS days
     today = datetime.datetime.now(tz=datetime.timezone.utc).date()
     __raise_alert_for_unmatched_versions(name, output, product, today, UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS)
     __raise_alert_for_unmatched_releases(name, output, product)
-    __raise_alert_for_stale_releases(name, output, product)
+    __raise_alert_for_stale_releases(name, output, product, increase_stale_releases_threshold)
+
+    if product.updated:
+        logging.info(f"Updating {product.product_path}")
+        product.write()
 
 
 def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, product: Product, today: datetime.date,
@@ -240,21 +271,6 @@ def __raise_alert_for_unmatched_versions(name: str, output: GitHubOutput, produc
             __raise_alert(f"{name}:{version} ({date}) is not declared", output)
 
 
-def __print_unmatched_releases_as_yaml(product: Product) -> None:
-    releases = []
-    for release, data in product.unmatched_releases.items():
-        release_data = {"releaseCycle": release}
-        release_data.update(data)
-        releases.append(release_data)
-
-    yaml = YAML()
-    yaml.width = 4096  # prevent line-wrap
-    yaml.indent(sequence=4)
-    yaml_output = StringIO()
-    yaml.dump(releases, yaml_output)
-    logging.debug(f"{product.name}:\n{yaml_output.getvalue()}")
-
-
 def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, product: Product) -> None:
     if len(product.unmatched_releases) == 0:
         return
@@ -262,10 +278,9 @@ def __raise_alert_for_unmatched_releases(name: str, output: GitHubOutput, produc
     for release in product.unmatched_releases:
         __raise_alert(f"{name}:{release} is not declared", output)
 
-    __print_unmatched_releases_as_yaml(product)
 
-
-def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: Product) -> None:
+def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: Product,
+                                     increase_threshold: bool) -> None:
     global_threshold = product.data.get("staleReleaseThresholdDays", DEFAULT_STALE_RELEASE_THRESHOLD_DAYS)
 
     for release in product.releases:
@@ -282,15 +297,25 @@ def __raise_alert_for_stale_releases(name: str, output: GitHubOutput, product: P
 
         latest_release_date = release.latest_release_date()
         if latest_release_date:
-            days_since_latest = (today_at_midnight().date() - latest_release_date).days
-            if days_since_latest > threshold:
-                __raise_alert(f"{name}:{release.name} is not EOL and has not had a version in {days_since_latest} days", output)
+            days_stale = (today_at_midnight().date() - latest_release_date).days
+            alert = f"{name}:{release.name} is not EOL and has not had a version in {days_stale} days"
+        else:
+            release_date = release.release_date()
+            days_stale = (today_at_midnight().date() - release_date).days
+            alert = f"{name}:{release.name} is not EOL and is {days_stale} days old"
+
+        if days_stale <= threshold:
             continue
 
-        release_date = release.release_date()
-        days_since_release = (today_at_midnight().date() - release_date).days
-        if days_since_release > threshold:
-            __raise_alert(f"{name}:{release.name} is not EOL and is {days_since_release} days old", output)
+        if increase_threshold:
+            new_threshold = threshold + DEFAULT_STALE_RELEASE_THRESHOLD_DAYS
+            logging.info(f"{release} staleReleaseThresholdDays updated from {threshold} to {new_threshold}")
+            release.data["staleReleaseThresholdDays"] = new_threshold
+            release.updated = True
+            product.updated = True
+            continue
+
+        __raise_alert(alert, output)
 
 
 def __raise_alert(message: str, output: GitHubOutput) -> None:
@@ -301,6 +326,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update product releases.')
     parser.add_argument('product', nargs='?', help='restrict update to the given product')
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
+    parser.add_argument('-u', '--declare-undeclared-releases', action='store_true', default=False,
+                        help='declare release cycles present in release data but missing from product frontmatter')
+    parser.add_argument('-s', '--increase-stale-releases-threshold', action='store_true', default=False,
+                        help='increase the threshold for stale, non-EOL release cycles')
     parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
     args = parser.parse_args()
 
@@ -322,7 +351,8 @@ if __name__ == "__main__":
         for product in products:
             logging.debug(f"Processing {product.name}")
             try:
-                update_product(product.name, products_dir, data_dir, github_output)
+                update_product(product.name, products_dir, data_dir, github_output, args.declare_undeclared_releases,
+                               args.increase_stale_releases_threshold)
             except Exception as e:
                 logging.exception(f"Failed to process {product.name}, skipping")
                 __raise_alert(f"{product.name}: failed to process ({e}), skipping", github_output)
