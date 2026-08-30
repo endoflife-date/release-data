@@ -197,16 +197,69 @@ class Product:
             return datetime.date.fromisoformat(value)
         return DoubleQuotedScalarString(value) if isinstance(value, str) else value
 
+    def __infer_release_name(self, version: str) -> str:
+        version_match = re.fullmatch(r"(\D*)(\d+(?:\.\d+)*)(.*)", version)
+        if not version_match:
+            return version
+
+        prefix, numeric_version, suffix = version_match.groups()
+        component_counts = []
+        for release in self.releases:
+            release_match = re.fullmatch(r"(\D*)(\d+(?:\.\d+)*)(.*)", release.name)
+            if not release_match:
+                continue
+
+            release_prefix, numeric_release, release_suffix = release_match.groups()
+            if release_prefix == prefix and release_suffix == suffix:
+                component_counts.append(numeric_release.count(".") + 1)
+
+        if not component_counts:
+            return version
+
+        component_count = max(component_counts, key=lambda count: (component_counts.count(count), count))
+        components = numeric_version.split(".")
+        if len(components) <= component_count:
+            return version
+
+        return f"{prefix}{'.'.join(components[:component_count])}{suffix}"
+
     def patch_undeclared_releases(self) -> None:
-        if not self.unmatched_releases:
+        if not self.unmatched_releases and not self.unmatched_versions:
             return
 
         releases = self.data.setdefault("releases", [])
+        inferred_releases = {}
+        for version, date in self.unmatched_versions.items():
+            name = self.__infer_release_name(version)
+            release = inferred_releases.setdefault(
+                name, {"releaseDate": date, "latest": version, "latestReleaseDate": date},
+            )
+            if date < release["releaseDate"]:
+                release["releaseDate"] = date
+            if date > release["latestReleaseDate"]:
+                release["latest"] = version
+                release["latestReleaseDate"] = date
+
         for name, release_data in self.unmatched_releases.items():
             release = {"releaseCycle": DoubleQuotedScalarString(name)}
+            version_data = inferred_releases.pop(name, None)
+            if version_data:
+                release.update({
+                    "latest": DoubleQuotedScalarString(version_data["latest"]),
+                    "latestReleaseDate": version_data["latestReleaseDate"],
+                })
             release.update({key: self.__as_yaml_value(value) for key, value in release_data.items()})
             logging.info(f"{self.name}: declaring {name}")
             releases.append(release)
+
+        for name, version_data in inferred_releases.items():
+            logging.info(f"{self.name}: declaring {name} from version data")
+            releases.append({
+                "releaseCycle": DoubleQuotedScalarString(name),
+                "releaseDate": version_data["releaseDate"],
+                "latest": DoubleQuotedScalarString(version_data["latest"]),
+                "latestReleaseDate": version_data["latestReleaseDate"],
+            })
 
         dated = [release for release in releases
                  if isinstance(ReleaseCycle.as_date(release.get("releaseDate")), datetime.date)]
@@ -215,6 +268,7 @@ class Product:
         dated.sort(key=lambda release: ReleaseCycle.as_date(release.get("releaseDate")), reverse=True)
         releases[:] = dated + undated
         self.unmatched_releases.clear()
+        self.unmatched_versions.clear()
         self.updated = True
 
     def write(self) -> None:
@@ -327,7 +381,7 @@ if __name__ == "__main__":
     parser.add_argument('product', nargs='?', help='restrict update to the given product')
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
     parser.add_argument('-u', '--declare-undeclared-releases', action='store_true', default=False,
-                        help='declare release cycles present in release data but missing from product frontmatter')
+                        help='declare release cycles from unmatched release or version data')
     parser.add_argument('-s', '--increase-stale-releases-threshold', action='store_true', default=False,
                         help='increase the threshold for stale, non-EOL release cycles')
     parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
