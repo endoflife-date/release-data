@@ -17,7 +17,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to the s
 
 ## Currently Updated
 
-As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automatically tracked releases:
+As of 2026-08-30, 401 of the 467 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -27,7 +27,8 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Alibaba Dragonwell | [`/alibaba-dragonwell`](https://endoflife.date/alibaba-dragonwell) | ✔️ | git, release_table |
 | AlmaLinux OS | [`/almalinux`](https://endoflife.date/almalinux) | ✔️ | distrowatch |
 | Alpine Linux | [`/alpine-linux`](https://endoflife.date/alpine-linux) | ✔️ | git, release_table |
-| Amazon Aurora PostgreSQL | [`/amazon-aurora-postgresql`](https://endoflife.date/amazon-aurora-postgresql) | ✔️ | rds, release_table |
+| Amazon Aurora MySQL | [`/amazon-aurora-mysql`](https://endoflife.date/amazon-aurora-mysql) | ✔️ | release_table, version_table |
+| Amazon Aurora PostgreSQL | [`/amazon-aurora-postgresql`](https://endoflife.date/amazon-aurora-postgresql) | ✔️ | release_table, version_table |
 | Amazon CDK | [`/amazon-cdk`](https://endoflife.date/amazon-cdk) | ✔️ | git |
 | Amazon Corretto | [`/amazon-corretto`](https://endoflife.date/amazon-corretto) | ✔️ | github_releases |
 | Amazon DocumentDB | [`/amazon-documentdb`](https://endoflife.date/amazon-documentdb) | ✔️ | release_table |
@@ -35,12 +36,14 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Amazon ElastiCache for Redis OSS | [`/amazon-elasticache-redis`](https://endoflife.date/amazon-elasticache-redis) | ✔️ | release_table |
 | Amazon Glue | [`/amazon-glue`](https://endoflife.date/amazon-glue) | ✔️ | release_table |
 | Amazon Linux | [`/amazon-linux`](https://endoflife.date/amazon-linux) | ✔️ | docker_hub |
+| Amazon MQ for ActiveMQ | [`/amazon-mq-activemq`](https://endoflife.date/amazon-mq-activemq) | ❌ |  |
+| Amazon MQ for RabbitMQ | [`/amazon-mq-rabbitmq`](https://endoflife.date/amazon-mq-rabbitmq) | ❌ |  |
 | Amazon MSK | [`/amazon-msk`](https://endoflife.date/amazon-msk) | ✔️ | release_table |
 | Amazon Neptune | [`/amazon-neptune`](https://endoflife.date/amazon-neptune) | ✔️ | amazon-neptune, release_table |
 | Amazon OpenSearch | [`/amazon-opensearch`](https://endoflife.date/amazon-opensearch) | ❌ |  |
-| Amazon RDS for MariaDB | [`/amazon-rds-mariadb`](https://endoflife.date/amazon-rds-mariadb) | ✔️ | rds, release_table |
-| Amazon RDS for MySQL | [`/amazon-rds-mysql`](https://endoflife.date/amazon-rds-mysql) | ✔️ | rds, release_table |
-| Amazon RDS for PostgreSQL | [`/amazon-rds-postgresql`](https://endoflife.date/amazon-rds-postgresql) | ✔️ | rds, release_table |
+| Amazon RDS for MariaDB | [`/amazon-rds-mariadb`](https://endoflife.date/amazon-rds-mariadb) | ✔️ | release_table, version_table |
+| Amazon RDS for MySQL | [`/amazon-rds-mysql`](https://endoflife.date/amazon-rds-mysql) | ✔️ | release_table, version_table |
+| Amazon RDS for PostgreSQL | [`/amazon-rds-postgresql`](https://endoflife.date/amazon-rds-postgresql) | ✔️ | release_table, version_table |
 | Android OS | [`/android`](https://endoflife.date/android) | ❌ |  |
 | Angular | [`/angular`](https://endoflife.date/angular) | ✔️ | git, release_table |
 | AngularJS | [`/angularjs`](https://endoflife.date/angularjs) | ✔️ | npm |
@@ -50,11 +53,12 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | antiX Linux | [`/antix`](https://endoflife.date/antix) | ✔️ | distrowatch |
 | Apache ActiveMQ Classic | [`/apache-activemq`](https://endoflife.date/apache-activemq) | ✔️ | git |
 | Apache Airflow | [`/apache-airflow`](https://endoflife.date/apache-airflow) | ✔️ | pypi, release_table |
-| Apache Ant | [`/ant`](https://endoflife.date/ant) | ✔️ | maven |
+| Apache Ant | [`/ant`](https://endoflife.date/ant) | ✔️ | git |
 | Apache APISIX | [`/apache-apisix`](https://endoflife.date/apache-apisix) | ✔️ | github_releases |
 | Apache Artemis | [`/apache-artemis`](https://endoflife.date/apache-artemis) | ✔️ | git |
 | Apache Camel | [`/apache-camel`](https://endoflife.date/apache-camel) | ✔️ | git |
 | Apache Cassandra | [`/apache-cassandra`](https://endoflife.date/apache-cassandra) | ✔️ | git |
+| Apache Celeborn | [`/apache-celeborn`](https://endoflife.date/apache-celeborn) | ✔️ | github_releases |
 | Apache CouchDB | [`/apache-couchdb`](https://endoflife.date/apache-couchdb) | ✔️ | git |
 | Apache Flink | [`/apache-flink`](https://endoflife.date/apache-flink) | ✔️ | git |
 | Apache Groovy | [`/apache-groovy`](https://endoflife.date/apache-groovy) | ✔️ | git |
@@ -62,12 +66,12 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Apache Hop | [`/apache-hop`](https://endoflife.date/apache-hop) | ✔️ | version_table |
 | Apache HTTP Server | [`/apache-http-server`](https://endoflife.date/apache-http-server) | ✔️ | apache-http-server |
 | Apache Kafka | [`/apache-kafka`](https://endoflife.date/apache-kafka) | ✔️ | git, release_table |
-| Apache Lucene | [`/apache-lucene`](https://endoflife.date/apache-lucene) | ✔️ | maven |
+| Apache Lucene | [`/apache-lucene`](https://endoflife.date/apache-lucene) | ✔️ | github_releases |
 | Apache Maven | [`/apache-maven`](https://endoflife.date/apache-maven) | ✔️ | github_releases |
 | Apache NiFi | [`/apache-nifi`](https://endoflife.date/apache-nifi) | ✔️ | git |
 | Apache Pulsar | [`/apache-pulsar`](https://endoflife.date/apache-pulsar) | ✔️ | github_releases, release_table |
 | Apache Spark | [`/apache-spark`](https://endoflife.date/apache-spark) | ✔️ | git |
-| Apache Struts | [`/apache-struts`](https://endoflife.date/apache-struts) | ✔️ | maven |
+| Apache Struts | [`/apache-struts`](https://endoflife.date/apache-struts) | ✔️ | git |
 | Apache Subversion | [`/apache-subversion`](https://endoflife.date/apache-subversion) | ✔️ | apache-subversion |
 | API Platform | [`/api-platform`](https://endoflife.date/api-platform) | ✔️ | git |
 | Apple tvOS | [`/tvos`](https://endoflife.date/tvos) | ✔️ | apple |
@@ -86,7 +90,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Backdrop | [`/backdrop`](https://endoflife.date/backdrop) | ✔️ | github_releases |
 | Bamboo | [`/bamboo`](https://endoflife.date/bamboo) | ✔️ | atlassian_eol, atlassian_versions |
 | Bazel | [`/bazel`](https://endoflife.date/bazel) | ✔️ | git, release_table |
-| Elastic Beats | [`/beats`](https://endoflife.date/beats) | ✔️ | git |
+| Elastic Beats | [`/beats`](https://endoflife.date/beats) | ✔️ | github_releases |
 | Behat | [`/behat`](https://endoflife.date/behat) | ✔️ | git |
 | Bellsoft Liberica JDK | [`/bellsoft-liberica`](https://endoflife.date/bellsoft-liberica) | ✔️ | github_releases |
 | BIG-IP | [`/big-ip`](https://endoflife.date/big-ip) | ✔️ | release_table, version_table |
@@ -155,7 +159,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | DuckDB | [`/duckdb`](https://endoflife.date/duckdb) | ✔️ | github_releases |
 | Eclipse Jetty | [`/eclipse-jetty`](https://endoflife.date/eclipse-jetty) | ✔️ | github_releases |
 | Eclipse Temurin | [`/eclipse-temurin`](https://endoflife.date/eclipse-temurin) | ✔️ | github_releases, release_table |
-| Elasticsearch | [`/elasticsearch`](https://endoflife.date/elasticsearch) | ✔️ | git |
+| Elasticsearch | [`/elasticsearch`](https://endoflife.date/elasticsearch) | ✔️ | github_releases |
 | Electron | [`/electron`](https://endoflife.date/electron) | ✔️ | npm, release_table |
 | Elixir | [`/elixir`](https://endoflife.date/elixir) | ✔️ | git |
 | Ember | [`/emberjs`](https://endoflife.date/emberjs) | ✔️ | npm, release_table |
@@ -210,7 +214,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Hashicorp Vault | [`/hashicorp-vault`](https://endoflife.date/hashicorp-vault) | ✔️ | git |
 | Apache HBase | [`/hbase`](https://endoflife.date/hbase) | ✔️ | git |
 | Hibernate ORM | [`/hibernate-orm`](https://endoflife.date/hibernate-orm) | ✔️ | git |
-| IBM AIX | [`/ibm-aix`](https://endoflife.date/ibm-aix) | ✔️ | ibm-aix, release_table |
+| IBM AIX | [`/ibm-aix`](https://endoflife.date/ibm-aix) | ✔️ | release_table, version_table |
 | IBM Db2 | [`/ibm-db2`](https://endoflife.date/ibm-db2) | ✔️ | ibm-product-lifecycle |
 | IBM iSeries | [`/ibm-i`](https://endoflife.date/ibm-i) | ✔️ | release_table |
 | IBM MQ | [`/ibm-mq`](https://endoflife.date/ibm-mq) | ✔️ | ibm-product-lifecycle |
@@ -233,7 +237,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Jenkins | [`/jenkins`](https://endoflife.date/jenkins) | ✔️ | git |
 | JHipster | [`/jhipster`](https://endoflife.date/jhipster) | ✔️ | npm |
 | Jira Software | [`/jira-software`](https://endoflife.date/jira-software) | ✔️ | atlassian_eol, atlassian_versions |
-| Joomla! | [`/joomla`](https://endoflife.date/joomla) | ✔️ | git |
+| Joomla! | [`/joomla`](https://endoflife.date/joomla) | ✔️ | github_releases |
 | jQuery | [`/jquery`](https://endoflife.date/jquery) | ✔️ | git |
 | jQuery UI | [`/jquery-ui`](https://endoflife.date/jquery-ui) | ✔️ | git |
 | JReleaser | [`/jreleaser`](https://endoflife.date/jreleaser) | ✔️ | git |
@@ -243,7 +247,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | KDE Plasma | [`/kde-plasma`](https://endoflife.date/kde-plasma) | ✔️ | git |
 | KEDA | [`/keda`](https://endoflife.date/keda) | ✔️ | git |
 | Keycloak | [`/keycloak`](https://endoflife.date/keycloak) | ✔️ | github_releases |
-| Kibana | [`/kibana`](https://endoflife.date/kibana) | ✔️ | git |
+| Kibana | [`/kibana`](https://endoflife.date/kibana) | ✔️ | github_releases |
 | Amazon Kindle | [`/kindle`](https://endoflife.date/kindle) | ❌ |  |
 | Kirby | [`/kirby`](https://endoflife.date/kirby) | ✔️ | git |
 | Knative | [`/knative`](https://endoflife.date/knative) | ✔️ | git, release_table |
@@ -261,8 +265,8 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Linux Kernel | [`/linux`](https://endoflife.date/linux) | ✔️ | github_tags |
 | Linux Mint | [`/linuxmint`](https://endoflife.date/linuxmint) | ✔️ | release_table |
 | Liquibase | [`/liquibase`](https://endoflife.date/liquibase) | ✔️ | github_releases |
-| Apache Log4j | [`/log4j`](https://endoflife.date/log4j) | ✔️ | maven |
-| Logstash | [`/logstash`](https://endoflife.date/logstash) | ✔️ | git |
+| Apache Log4j | [`/log4j`](https://endoflife.date/log4j) | ✔️ | github_releases |
+| Logstash | [`/logstash`](https://endoflife.date/logstash) | ✔️ | github_releases |
 | Longhorn | [`/longhorn`](https://endoflife.date/longhorn) | ✔️ | git |
 | Looker | [`/looker`](https://endoflife.date/looker) | ✔️ | looker, release_table |
 | Lua | [`/lua`](https://endoflife.date/lua) | ✔️ | lua |
@@ -313,7 +317,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | NVIDIA GPUs | [`/nvidia-gpu`](https://endoflife.date/nvidia-gpu) | ❌ |  |
 | nvm | [`/nvm`](https://endoflife.date/nvm) | ✔️ | git |
 | Microsoft Office | [`/office`](https://endoflife.date/office) | ❌ |  |
-| Omnissa Horizon | [`/horizon`](https://endoflife.date/horizon) | ❌ |  |
+| Omnissa Horizon | [`/horizon`](https://endoflife.date/horizon) | ✔️ | release_table |
 | OnePlus | [`/oneplus`](https://endoflife.date/oneplus) | ❌ |  |
 | Oniguruma | [`/oniguruma`](https://endoflife.date/oniguruma) | ✔️ | git |
 | OpenBao | [`/openbao`](https://endoflife.date/openbao) | ✔️ | git |
@@ -354,7 +358,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | Pop!_OS | [`/pop-os`](https://endoflife.date/pop-os) | ❌ |  |
 | Postfix | [`/postfix`](https://endoflife.date/postfix) | ✔️ | git |
 | PostgreSQL | [`/postgresql`](https://endoflife.date/postgresql) | ✔️ | git, release_table |
-| postmarketOS | [`/postmarketos`](https://endoflife.date/postmarketos) | ✔️ | distrowatch |
+| postmarketOS | [`/postmarketos`](https://endoflife.date/postmarketos) | ✔️ | release_table |
 | Microsoft PowerShell | [`/powershell`](https://endoflife.date/powershell) | ✔️ | git, release_table |
 | PrivateBin | [`/privatebin`](https://endoflife.date/privatebin) | ✔️ | git |
 | ProFTPD | [`/proftpd`](https://endoflife.date/proftpd) | ✔️ | git |
@@ -376,10 +380,10 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | React Native | [`/react-native`](https://endoflife.date/react-native) | ✔️ | npm |
 | Red Hat Ansible Automation Platform | [`/red-hat-ansible-automation-platform`](https://endoflife.date/red-hat-ansible-automation-platform) | ❌ |  |
 | Red Hat build of OpenJDK | [`/redhat-build-of-openjdk`](https://endoflife.date/redhat-build-of-openjdk) | ✔️ | redhat_lifecycles |
-| Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap) | ✔️ | red-hat-jboss-eap-7, red-hat-jboss-eap-8, redhat_lifecycles |
+| Red Hat JBoss Enterprise Application Platform | [`/redhat-jboss-eap`](https://endoflife.date/redhat-jboss-eap) | ✔️ | redhat_lifecycles, version_table |
 | Red Hat OpenShift | [`/red-hat-openshift`](https://endoflife.date/red-hat-openshift) | ✔️ | red-hat-openshift |
 | Red Hat Satellite | [`/redhat-satellite`](https://endoflife.date/redhat-satellite) | ✔️ | version_table |
-| Redis | [`/redis`](https://endoflife.date/redis) | ✔️ | git |
+| Redis | [`/redis`](https://endoflife.date/redis) | ✔️ | git, release_table |
 | Redmine | [`/redmine`](https://endoflife.date/redmine) | ✔️ | git |
 | Renovate CLI | [`/renovate`](https://endoflife.date/renovate) | ✔️ | git |
 | Red Hat Enterprise Linux | [`/rhel`](https://endoflife.date/rhel) | ✔️ | redhat_lifecycles |
@@ -439,6 +443,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | TLS | [`/tls`](https://endoflife.date/tls) | ❌ |  |
 | Apache Tomcat | [`/tomcat`](https://endoflife.date/tomcat) | ✔️ | git |
 | Traefik | [`/traefik`](https://endoflife.date/traefik) | ✔️ | git, release_table |
+| TrueNAS | [`/truenas`](https://endoflife.date/truenas) | ❌ |  |
 | Twig | [`/twig`](https://endoflife.date/twig) | ✔️ | git |
 | TYPO3 | [`/typo3`](https://endoflife.date/typo3) | ✔️ | typo3 |
 | Ubuntu | [`/ubuntu`](https://endoflife.date/ubuntu) | ✔️ | distrowatch |
@@ -453,7 +458,7 @@ As of 2026-07-30, 398 of the 462 products tracked by endoflife.date have automat
 | VirtualBox | [`/virtualbox`](https://endoflife.date/virtualbox) | ✔️ | virtualbox-releases, virtualbox-versions |
 | Apple visionOS | [`/visionos`](https://endoflife.date/visionos) | ✔️ | apple |
 | Visual COBOL | [`/visual-cobol`](https://endoflife.date/visual-cobol) | ✔️ | release_table |
-| Microsoft Visual Studio | [`/visual-studio`](https://endoflife.date/visual-studio) | ✔️ | visual-studio |
+| Microsoft Visual Studio | [`/visual-studio`](https://endoflife.date/visual-studio) | ✔️ | version_table |
 | Vitess | [`/vitess`](https://endoflife.date/vitess) | ✔️ | git |
 | VMware Cloud Foundation | [`/vmware-cloud-foundation`](https://endoflife.date/vmware-cloud-foundation) | ❌ |  |
 | VMware ESXi | [`/esxi`](https://endoflife.date/esxi) | ❌ |  |
