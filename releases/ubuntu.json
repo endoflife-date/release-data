@@ -1,10 +1,227 @@
 {
-  "releases": {},
-  "versions": {
-    "26.04.1": {
-      "name": "26.04.1",
-      "date": "2026-08-28"
+  "releases": {
+    "9.10": {
+      "name": "9.10",
+      "codename": "Karmic Koala",
+      "releaseDate": "2009-10-29"
     },
+    "9.04": {
+      "name": "9.04",
+      "codename": "Jaunty Jackalope",
+      "releaseDate": "2009-04-23"
+    },
+    "8.10": {
+      "name": "8.10",
+      "codename": "Intrepid Ibex",
+      "releaseDate": "2008-10-30"
+    },
+    "8.04": {
+      "name": "8.04",
+      "codename": "Hardy Heron",
+      "releaseDate": "2008-04-24"
+    },
+    "7.10": {
+      "name": "7.10",
+      "codename": "Gutsy Gibbon",
+      "releaseDate": "2007-10-18"
+    },
+    "7.04": {
+      "name": "7.04",
+      "codename": "Feisty Fawn",
+      "releaseDate": "2007-04-19"
+    },
+    "6.10": {
+      "name": "6.10",
+      "codename": "Edgy Eft",
+      "releaseDate": "2006-10-26"
+    },
+    "6.06": {
+      "name": "6.06",
+      "codename": "Dapper Drake",
+      "releaseDate": "2006-06-01"
+    },
+    "5.10": {
+      "name": "5.10",
+      "codename": "Breezy Badger",
+      "releaseDate": "2005-10-12"
+    },
+    "5.04": {
+      "name": "5.04",
+      "codename": "Hoary Hedgehog",
+      "releaseDate": "2005-04-08"
+    },
+    "4.10": {
+      "name": "4.10",
+      "codename": "Warty Warthog",
+      "releaseDate": "2004-10-26"
+    },
+    "26.04": {
+      "name": "26.04",
+      "codename": "Resolute Raccoon",
+      "releaseDate": "2026-04-23"
+    },
+    "25.10": {
+      "name": "25.10",
+      "codename": "Questing Quokka",
+      "releaseDate": "2025-10-09"
+    },
+    "25.04": {
+      "name": "25.04",
+      "codename": "Plucky Puffin",
+      "releaseDate": "2025-04-17"
+    },
+    "24.10": {
+      "name": "24.10",
+      "codename": "Oracular Oriole",
+      "releaseDate": "2024-10-10"
+    },
+    "24.04": {
+      "name": "24.04",
+      "codename": "Noble Numbat",
+      "releaseDate": "2024-04-25"
+    },
+    "23.10": {
+      "name": "23.10",
+      "codename": "Mantic Minotaur",
+      "releaseDate": "2023-10-12"
+    },
+    "23.04": {
+      "name": "23.04",
+      "codename": "Lunar Lobster",
+      "releaseDate": "2023-04-20"
+    },
+    "22.10": {
+      "name": "22.10",
+      "codename": "Kinetic Kudu",
+      "releaseDate": "2022-10-20"
+    },
+    "22.04": {
+      "name": "22.04",
+      "codename": "Jammy Jellyfish",
+      "releaseDate": "2022-04-21"
+    },
+    "21.10": {
+      "name": "21.10",
+      "codename": "Impish Indri",
+      "releaseDate": "2021-10-14"
+    },
+    "21.04": {
+      "name": "21.04",
+      "codename": "Hirsute Hippo",
+      "releaseDate": "2021-04-22"
+    },
+    "20.10": {
+      "name": "20.10",
+      "codename": "Groovy Gorilla",
+      "releaseDate": "2020-10-22"
+    },
+    "20.04": {
+      "name": "20.04",
+      "codename": "Focal Fossa",
+      "releaseDate": "2020-04-23"
+    },
+    "19.10": {
+      "name": "19.10",
+      "codename": "Eoan Ermine",
+      "releaseDate": "2019-10-17"
+    },
+    "19.04": {
+      "name": "19.04",
+      "codename": "Disco Dingo",
+      "releaseDate": "2019-04-18"
+    },
+    "18.10": {
+      "name": "18.10",
+      "codename": "Cosmic Cuttlefish",
+      "releaseDate": "2018-10-18"
+    },
+    "18.04": {
+      "name": "18.04",
+      "codename": "Bionic Beaver",
+      "releaseDate": "2018-04-26"
+    },
+    "17.10": {
+      "name": "17.10",
+      "codename": "Artful Aardvark",
+      "releaseDate": "2017-10-19"
+    },
+    "17.04": {
+      "name": "17.04",
+      "codename": "Zesty Zapus",
+      "releaseDate": "2017-04-13"
+    },
+    "16.10": {
+      "name": "16.10",
+      "codename": "Yakkety Yak",
+      "releaseDate": "2016-10-13"
+    },
+    "16.04": {
+      "name": "16.04",
+      "codename": "Xenial Xerus",
+      "releaseDate": "2016-04-21"
+    },
+    "15.10": {
+      "name": "15.10",
+      "codename": "Wily Werewolf",
+      "releaseDate": "2015-10-22"
+    },
+    "15.04": {
+      "name": "15.04",
+      "codename": "Vivid Vervet",
+      "releaseDate": "2015-04-23"
+    },
+    "14.10": {
+      "name": "14.10",
+      "codename": "Utopic Unicorn",
+      "releaseDate": "2014-10-23"
+    },
+    "14.04": {
+      "name": "14.04",
+      "codename": "Trusty Tahr",
+      "releaseDate": "2014-04-17"
+    },
+    "13.10": {
+      "name": "13.10",
+      "codename": "Saucy Salamander",
+      "releaseDate": "2013-10-17"
+    },
+    "13.04": {
+      "name": "13.04",
+      "codename": "Raring Ringtail",
+      "releaseDate": "2013-04-25"
+    },
+    "12.10": {
+      "name": "12.10",
+      "codename": "Quantal Quetzal",
+      "releaseDate": "2012-10-18"
+    },
+    "12.04": {
+      "name": "12.04",
+      "codename": "Precise Pangolin",
+      "releaseDate": "2012-04-26"
+    },
+    "11.10": {
+      "name": "11.10",
+      "codename": "Oneiric Ocelot",
+      "releaseDate": "2011-10-13"
+    },
+    "11.04": {
+      "name": "11.04",
+      "codename": "Natty Narwhal",
+      "releaseDate": "2011-04-28"
+    },
+    "10.10": {
+      "name": "10.10",
+      "codename": "Maverick Meerkat",
+      "releaseDate": "2010-10-10"
+    },
+    "10.04": {
+      "name": "10.04",
+      "codename": "Lucid Lynx",
+      "releaseDate": "2010-04-29"
+    }
+  },
+  "versions": {
     "26.04": {
       "name": "26.04",
       "date": "2026-04-23"
@@ -67,7 +284,7 @@
     },
     "22.04.2": {
       "name": "22.04.2",
-      "date": "2023-02-24"
+      "date": "2023-02-23"
     },
     "22.10": {
       "name": "22.10",
@@ -87,7 +304,7 @@
     },
     "20.04.4": {
       "name": "20.04.4",
-      "date": "2022-02-25"
+      "date": "2022-02-24"
     },
     "21.10": {
       "name": "21.10",
@@ -175,7 +392,7 @@
     },
     "16.04.4": {
       "name": "16.04.4",
-      "date": "2018-03-02"
+      "date": "2018-03-01"
     },
     "17.10": {
       "name": "17.10",
@@ -191,7 +408,7 @@
     },
     "16.04.2": {
       "name": "16.04.2",
-      "date": "2017-02-17"
+      "date": "2017-02-16"
     },
     "16.10": {
       "name": "16.10",
@@ -199,7 +416,7 @@
     },
     "14.04.5": {
       "name": "14.04.5",
-      "date": "2016-08-05"
+      "date": "2016-08-04"
     },
     "16.04.1": {
       "name": "16.04.1",
@@ -219,7 +436,7 @@
     },
     "14.04.3": {
       "name": "14.04.3",
-      "date": "2015-08-07"
+      "date": "2015-08-06"
     },
     "15.04": {
       "name": "15.04",
@@ -235,11 +452,11 @@
     },
     "12.04.5": {
       "name": "12.04.5",
-      "date": "2014-08-08"
+      "date": "2014-08-07"
     },
     "14.04.1": {
       "name": "14.04.1",
-      "date": "2014-07-25"
+      "date": "2014-07-24"
     },
     "14.04": {
       "name": "14.04",
@@ -255,7 +472,7 @@
     },
     "12.04.3": {
       "name": "12.04.3",
-      "date": "2013-08-24"
+      "date": "2013-08-23"
     },
     "13.04": {
       "name": "13.04",
@@ -281,13 +498,17 @@
       "name": "10.04.4",
       "date": "2012-02-16"
     },
+    "10.04": {
+      "name": "10.04",
+      "date": "2012-02-16"
+    },
     "11.10": {
       "name": "11.10",
       "date": "2011-10-13"
     },
     "10.04.3": {
       "name": "10.04.3",
-      "date": "2011-07-22"
+      "date": "2011-07-21"
     },
     "11.04": {
       "name": "11.04",
@@ -303,15 +524,11 @@
     },
     "10.04.1": {
       "name": "10.04.1",
-      "date": "2010-08-18"
-    },
-    "10.04": {
-      "name": "10.04",
-      "date": "2010-04-29"
+      "date": "2010-08-17"
     },
     "8.04.4": {
       "name": "8.04.4",
-      "date": "2010-01-29"
+      "date": "2010-01-28"
     },
     "9.10": {
       "name": "9.10",
@@ -343,7 +560,7 @@
     },
     "6.06.2": {
       "name": "6.06.2",
-      "date": "2008-01-22"
+      "date": "2008-01-21"
     },
     "7.10": {
       "name": "7.10",
@@ -361,9 +578,13 @@
       "name": "6.06.1",
       "date": "2006-08-10"
     },
+    "6.06": {
+      "name": "6.06",
+      "date": "2006-06-01"
+    },
     "5.10": {
       "name": "5.10",
-      "date": "2005-10-13"
+      "date": "2005-10-12"
     },
     "5.04": {
       "name": "5.04",
@@ -371,7 +592,7 @@
     },
     "4.10": {
       "name": "4.10",
-      "date": "2004-10-20"
+      "date": "2004-10-26"
     }
   }
 }
