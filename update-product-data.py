@@ -223,13 +223,15 @@ class Product:
 
         return f"{prefix}{'.'.join(components[:component_count])}{suffix}"
 
-    def patch_undeclared_releases(self) -> None:
+    def patch_undeclared_releases(self, today: datetime.date, version_threshold_days: int) -> None:
         if not self.unmatched_releases and not self.unmatched_versions:
             return
 
-        releases = self.data.setdefault("releases", [])
         inferred_releases = {}
         for version, date in self.unmatched_versions.items():
+            if (today - date).days >= version_threshold_days:
+                continue
+
             name = self.__infer_release_name(version)
             release = inferred_releases.setdefault(
                 name, {"releaseDate": date, "latest": version, "latestReleaseDate": date},
@@ -240,6 +242,10 @@ class Product:
                 release["latest"] = version
                 release["latestReleaseDate"] = date
 
+        if not self.unmatched_releases and not inferred_releases:
+            return
+
+        releases = self.data.setdefault("releases", [])
         for name, release_data in self.unmatched_releases.items():
             release = {"releaseCycle": DoubleQuotedScalarString(name)}
             version_data = inferred_releases.pop(name, None)
@@ -268,7 +274,10 @@ class Product:
         dated.sort(key=lambda release: ReleaseCycle.as_date(release.get("releaseDate")), reverse=True)
         releases[:] = dated + undated
         self.unmatched_releases.clear()
-        self.unmatched_versions.clear()
+        self.unmatched_versions = {
+            version: date for version, date in self.unmatched_versions.items()
+            if (today - date).days >= version_threshold_days
+        }
         self.updated = True
 
     def write(self) -> None:
@@ -287,9 +296,11 @@ class Product:
 
 
 def update_product(name: str, product_dir: Path, releases_dir: Path, output: GitHubOutput,
-                   declare_undeclared_releases: bool, increase_stale_releases_threshold: bool) -> None:
+                   declare_undeclared_releases: bool, increase_stale_releases_threshold: bool,
+                   unmatched_version_alert_threshold_days: int) -> None:
     product = Product(name, product_dir, releases_dir)
     product.upgrade_structure()
+    today = datetime.datetime.now(tz=datetime.timezone.utc).date()
 
     if product.release_data:
         for version_data in product.release_data.get("versions", {}).values():
@@ -300,13 +311,12 @@ def update_product(name: str, product_dir: Path, releases_dir: Path, output: Git
             product.process_release(release_data)
 
         if declare_undeclared_releases:
-            product.patch_undeclared_releases()
+            product.patch_undeclared_releases(today, unmatched_version_alert_threshold_days)
 
         product.check_latest()
 
-    # List all unmatched versions released in the last UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS days
-    today = datetime.datetime.now(tz=datetime.timezone.utc).date()
-    __raise_alert_for_unmatched_versions(name, output, product, today, UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS)
+    # List all unmatched versions released within the configured threshold.
+    __raise_alert_for_unmatched_versions(name, output, product, today, unmatched_version_alert_threshold_days)
     __raise_alert_for_unmatched_releases(name, output, product)
     __raise_alert_for_stale_releases(name, output, product, increase_stale_releases_threshold)
 
@@ -382,6 +392,9 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--product-dir', required=True, help='path to the product directory')
     parser.add_argument('-u', '--declare-undeclared-releases', action='store_true', default=False,
                         help='declare release cycles from unmatched release or version data')
+    parser.add_argument('--unmatched-version-alert-threshold-days', type=int,
+                        default=UNMATCHED_VERSION_ALERT_THRESHOLD_DAYS,
+                        help='alert on and declare unmatched versions released within this many days (default: 30)')
     parser.add_argument('-s', '--increase-stale-releases-threshold', action='store_true', default=False,
                         help='increase the threshold for stale, non-EOL release cycles')
     parser.add_argument('-v', '--verbose', action='store_true', help='enable verbose logging')
@@ -406,7 +419,8 @@ if __name__ == "__main__":
             logging.debug(f"Processing {product.name}")
             try:
                 update_product(product.name, products_dir, data_dir, github_output, args.declare_undeclared_releases,
-                               args.increase_stale_releases_threshold)
+                               args.increase_stale_releases_threshold,
+                               args.unmatched_version_alert_threshold_days)
             except Exception as e:
                 logging.exception(f"Failed to process {product.name}, skipping")
                 __raise_alert(f"{product.name}: failed to process ({e}), skipping", github_output)
