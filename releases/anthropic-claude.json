@@ -69,6 +69,10 @@
       "name": "claude-haiku-4-5-20251001",
       "eol": "2026-10-15"
     },
+    "claude-fable-5-1": {
+      "name": "claude-fable-5-1",
+      "eol": "2027-09-01"
+    },
     "claude-fable-5": {
       "name": "claude-fable-5",
       "eol": "2027-06-09"
