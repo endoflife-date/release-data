@@ -25,31 +25,24 @@ itself and its container images report four (v0.63.16.1). Versions are therefore
 method, such as `git` on the tags of https://github.com/metabase/metabase.git.
 """
 
-EOL_FIELD = "eol"
-LTS_FIELD = "lts"
-MAJOR_FIELD = "major"
-MAJOR_VERSIONS_FIELD = "major_version_support"
-RELEASE_DATE_FIELD = "released"
-
-
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         version_info = http.fetch_json(config.url)
 
-        for major_version in version_info.get(MAJOR_VERSIONS_FIELD, []):
-            major = major_version.get(MAJOR_FIELD)
+        for major_version in version_info.get("major_version_support", []):
+            major = major_version.get("major")
             if not major:
-                logging.info(f"skipping {major_version}: no {MAJOR_FIELD} field")
+                logging.info(f"skipping {major_version}: no major field")
                 continue
 
             release = product_data.get_release(config.version_template.render(major=major))
 
-            if release_date := major_version.get(RELEASE_DATE_FIELD):
+            if release_date := major_version.get("released"):
                 release.set_release_date(dates.parse_date(release_date))
 
-            if eol := major_version.get(EOL_FIELD):
+            if eol := major_version.get("eol"):
                 release.set_eol(dates.parse_date(eol))
 
             # Only a set flag is reported, as endoflife.date omits the field for non-LTS cycles.
-            if major_version.get(LTS_FIELD):
-                release.set_field(LTS_FIELD, True)
+            if major_version.get("lts"):
+                release.set_field("lts", True)
