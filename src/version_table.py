@@ -89,7 +89,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                     try:
                         version_date = dates.parse__datetime_or_date_or_month_year_date(cells[version_date_index])
                     except ValueError as e:
-                        logging.info(f"skipping row {cells}: {e}")
+                        logging.warning(f"skipping row {cells}: {e}")
                         continue
 
                     product_data.declare_version(version_name, version_date)
