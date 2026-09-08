@@ -161,7 +161,7 @@
     },
     "galaxy-z-fold3-5g": {
       "name": "galaxy-z-fold3-5g",
-      "eol": false,
+      "eol": "2026-09-08",
       "releaseLabel": "Galaxy Z Fold3 5G"
     },
     "galaxy-z-fold2-5g": {
@@ -209,7 +209,7 @@
     },
     "galaxy-z-flip3-5g": {
       "name": "galaxy-z-flip3-5g",
-      "eol": false,
+      "eol": "2026-09-08",
       "releaseLabel": "Galaxy Z Flip3 5G"
     },
     "galaxy-z-flip-5g": {
@@ -420,6 +420,11 @@
       "name": "galaxy-s26-ultra",
       "releaseLabel": "Galaxy S26 Ultra",
       "eol": "2033-03-06"
+    },
+    "galaxy-s26-fe": {
+      "name": "galaxy-s26-fe",
+      "releaseLabel": "Galaxy S26 FE",
+      "eol": false
     },
     "galaxy-s26+": {
       "name": "galaxy-s26+",
@@ -1195,6 +1200,11 @@
       "name": "galaxy-f70e-5g",
       "releaseLabel": "Galaxy F70e 5G",
       "eol": "2032-02-17"
+    },
+    "galaxy-f70-pro-5g": {
+      "name": "galaxy-f70-pro-5g",
+      "releaseLabel": "Galaxy F70 Pro 5G",
+      "eol": false
     },
     "galaxy-f62": {
       "name": "galaxy-f62",
