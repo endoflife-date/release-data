@@ -306,6 +306,24 @@
         "gpt-live-transcribe"
       ]
     },
+    "gpt-image-2.5-sunburst": {
+      "name": "gpt-image-2.5-sunburst",
+      "releaseLabel": "GPT-Image-2.5 Sunburst",
+      "link": "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst",
+      "aliases": [
+        "gpt-image-2.5-sunburst",
+        "gpt-image-2.5-sunburst-2026-09-08"
+      ]
+    },
+    "gpt-image-2.5-flare": {
+      "name": "gpt-image-2.5-flare",
+      "releaseLabel": "GPT-Image-2.5 Flare",
+      "link": "https://developers.openai.com/api/docs/models/gpt-image-2.5-flare",
+      "aliases": [
+        "gpt-image-2.5-flare",
+        "gpt-image-2.5-flare-2026-09-08"
+      ]
+    },
     "gpt-image-2": {
       "name": "gpt-image-2",
       "releaseLabel": "GPT-Image-2",
