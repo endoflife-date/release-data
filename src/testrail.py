@@ -24,13 +24,24 @@ or as "TestRail 10.7.1.1003 Server", both meaning 10.7.1.1003.
 
 That alone would overstate what self-hosted users can install, because TestRail ships every version
 to Cloud but only some of them as a Server package. The vendor's supported-versions table is no help
-here, as it lists Cloud-only builds such as 9.7.2.1003 and 9.5.3.1058. The distribution archive is
-authoritative instead: a build shipped for Server if and only if
+here, as it lists Cloud-only builds such as 9.7.2.1003 and 9.5.3.1058. A build is therefore taken as
+a Server package when any of these holds:
 
-    https://secure.testrail.com/downloads/testrail/testrail-<version>-<ioncube>.zip
+1. the Server release notes section carries an article for it;
+2. the product file already names it as a release cycle's latest;
+3. the distribution archive still serves it, that is
 
-answers 200 to a HEAD request. The <ioncube> suffix names the ionCube loader the package is built
-against and changes every few releases, so candidates are tried newest-first for the version at hand.
+       https://secure.testrail.com/downloads/testrail/testrail-<version>-<ioncube>.zip
+
+   answers 200 to a HEAD request. The <ioncube> suffix names the ionCube loader the package is
+   built against and changes every few releases, so candidates are tried newest-first.
+
+The archive is the broadest of the three but it is not proof of absence, only of presence. TestRail
+moved these downloads to object storage during 2025 and some packages stopped resolving even though
+they had shipped and are still installed in the wild; 9.4.1.1001 and 9.5.1.1042 are two of them.
+That is what the first two signals are for, and in particular why a version the product file already
+documents is kept whatever the archive answers today: without that, delisting the newest package of
+a cycle would silently walk its latest backwards.
 
 Do not read release dates from that archive: its Last-Modified headers reflect a bulk migration to
 object storage rather than the release, and most files report the same August 2025 timestamp.
@@ -188,9 +199,14 @@ def _fetch_supported_versions() -> dict[str, datetime]:
     return ga_dates
 
 
-def _fetch_announced_builds() -> dict[str, datetime]:
-    """Return the best known release date of every build announced in the release notes."""
+def _fetch_announced_builds() -> tuple[dict[str, datetime], set[str]]:
+    """Return the release date of every announced build, and which of them shipped for Server.
+
+    A build is known to have shipped for Server when the Server release notes section carries an
+    article for it. That is a positive signal only: most Server packages never got one.
+    """
     candidates: dict[str, _Candidate] = {}
+    documented_for_server: set[str] = set()
 
     for version, ga_date in _fetch_supported_versions().items():
         candidates.setdefault(version, _Candidate()).offer(FROM_SUPPORTED_VERSIONS_TABLE, ga_date)
@@ -207,6 +223,9 @@ def _fetch_announced_builds() -> dict[str, datetime]:
                 if not version:
                     continue
 
+                if section == SERVER_SECTION:
+                    documented_for_server.add(version)
+
                 candidate = candidates.setdefault(version, _Candidate())
                 for source, text in _parse_date_lines(article.get("body")).items():
                     try:
@@ -220,8 +239,9 @@ def _fetch_announced_builds() -> dict[str, datetime]:
             url = page.get("next_page")
 
     announced = {version: c.date for version, c in candidates.items() if c.date}
-    logging.info(f"found {len(announced)} announced builds")
-    return announced
+    logging.info(f"found {len(announced)} announced builds, {len(documented_for_server)} of them "
+                 f"documented as Server packages")
+    return announced, documented_for_server
 
 
 def _is_published_for_server(base_url: str, version: str) -> bool:
@@ -241,6 +261,11 @@ def _is_published_for_server(base_url: str, version: str) -> bool:
 
     logging.debug(f"{version} never shipped for Server")
     return False
+
+
+def _documented_latest_versions(product: ProductFrontmatter) -> set[str]:
+    """Return the versions the product file already names as a cycle's latest."""
+    return {str(release["latest"]) for release in product.get_releases() or [] if release.get("latest")}
 
 
 def _documented_latest_dates(product: ProductFrontmatter) -> dict[str, datetime]:
@@ -281,15 +306,23 @@ def _update_support_dates(product_data: ProductData, documented: dict[str, datet
 
 def update(product: ProductFrontmatter, config: AutoConfig) -> None:
     base_url = config.url.rstrip("/")
-    announced = _fetch_announced_builds()
+    announced, documented_for_server = _fetch_announced_builds()
     documented = _documented_latest_dates(product)
 
+    # A build the product file already names as a cycle's latest shipped for Server, whatever the
+    # archive says today, so it is never dropped. Otherwise delisting the newest package of a cycle
+    # would silently walk its latest backwards.
+    known_for_server = documented_for_server | _documented_latest_versions(product)
+
     with ProductData(config.product) as product_data:
-        # Release data is rebuilt from scratch on every run, so every announced build is checked.
-        # One HEAD request is enough for all but the handful of versions published against more
-        # than one ionCube loader.
-        builds = sorted(announced, key=_version_key)
-        logging.info(f"checking {len(builds)} announced builds against the distribution archive")
+        for version in sorted(known_for_server & set(announced), key=_version_key):
+            product_data.declare_version(version, announced[version])
+
+        # Release data is rebuilt from scratch on every run, so everything else is checked against
+        # the archive. One HEAD request is enough for all but the handful of versions published
+        # against more than one ionCube loader.
+        builds = sorted(set(announced) - known_for_server, key=_version_key)
+        logging.info(f"checking {len(builds)} builds against the distribution archive")
 
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
             published = executor.map(lambda v: _is_published_for_server(base_url, v), builds)
