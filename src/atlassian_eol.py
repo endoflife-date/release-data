@@ -17,8 +17,20 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         content = http.fetch_javascript_url(config.url, wait_until='networkidle')
         soup = BeautifulSoup(content, features="html5lib")
 
-        # Find the section with the EOL dates
-        for li in soup.select(f"#{config.data.get('selector')}+ul li"):
+        # Find the section with the EOL dates. The list is not always the heading's immediate
+        # sibling: the Jira Service Management section puts a paragraph in between, which an
+        # adjacent sibling selector would step over.
+        heading = soup.find(id=config.data.get('selector'))
+        if not heading:
+            message = f"{config} found no section with id '{config.data.get('selector')}'"
+            raise ValueError(message)
+
+        version_list = heading.find_next('ul')
+        if not version_list:
+            message = f"{config} found no version list under '{config.data.get('selector')}'"
+            raise ValueError(message)
+
+        for li in version_list.find_all('li'):
             if not (match := config.first_match(li.get_text(strip=True))):
                 logging.warning(f"Skipping '{li.get_text(strip=True)}', no match found")
                 continue
