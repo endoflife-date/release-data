@@ -306,6 +306,15 @@
         "gpt-live-transcribe"
       ]
     },
+    "gpt-live-1": {
+      "name": "gpt-live-1",
+      "releaseLabel": "GPT-Live 1",
+      "link": "https://developers.openai.com/api/docs/models/gpt-live-1",
+      "aliases": [
+        "gpt-live-1",
+        "gpt-live-1"
+      ]
+    },
     "gpt-image-2.5-sunburst": {
       "name": "gpt-image-2.5-sunburst",
       "releaseLabel": "GPT-Image-2.5 Sunburst",
