@@ -424,7 +424,7 @@
     "galaxy-s26-fe": {
       "name": "galaxy-s26-fe",
       "releaseLabel": "Galaxy S26 FE",
-      "eol": false
+      "eol": "2033-09-04"
     },
     "galaxy-s26+": {
       "name": "galaxy-s26+",
@@ -1204,7 +1204,7 @@
     "galaxy-f70-pro-5g": {
       "name": "galaxy-f70-pro-5g",
       "releaseLabel": "Galaxy F70 Pro 5G",
-      "eol": false
+      "eol": "2032-07-31"
     },
     "galaxy-f62": {
       "name": "galaxy-f62",
