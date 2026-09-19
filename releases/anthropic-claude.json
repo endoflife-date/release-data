@@ -50,10 +50,6 @@
       "recommendedReplacement": "claude-opus-4-8",
       "eoas": "2026-06-05"
     },
-    "claude-mythos-preview": {
-      "name": "claude-mythos-preview",
-      "eoas": "2026-06-09"
-    },
     "claude-mythos-5-1": {
       "name": "claude-mythos-5-1",
       "eol": "2027-09-01"
