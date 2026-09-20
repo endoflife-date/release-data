@@ -59,13 +59,20 @@ class ScriptExecutionSummary:
             self.scripts_by_product[product].append(script)
             self.products_by_script[script].append(product)
 
+    def mark_product_failed(self, product: str) -> None:
+        """Record a product failure that happened before a script was registered."""
+        with self._lock:
+            self.success_by_product[product] = False
+
     def print_summary(self, summary: GitHubStepSummary, min_duration: float = 3) -> None:
         summary.println("## Script execution summary\n")
         summary.println(f"Executions below {min_duration} seconds are hidden except in case of failure.\n")
         summary.println("### By products\n")
         summary.println("| Name | Duration | Scripts | Succeeded |")
         summary.println("|------|----------|---------|-----------|")
-        for product, duration in sorted(self.durations_by_product.items(), key=lambda x: x[1], reverse=True):
+        products = set(self.durations_by_product) | set(self.success_by_product)
+        for product in sorted(products, key=lambda name: (-self.durations_by_product[name], name)):
+            duration = self.durations_by_product[product]
             if duration >= min_duration or not self.success_by_product[product]:
                 scripts = ', '.join(self.scripts_by_product[product])
                 success = '✅' if self.success_by_product[product] else '❌'
@@ -165,6 +172,10 @@ def __process_product(product: ProductFrontmatter, force: bool, exec_summary: Sc
 
         except Exception:
             logging.exception(f"Skipping {product.name}, there was an error while running its scripts")
+            exec_summary.mark_product_failed(product.name)
+    except Exception:
+        logging.exception(f"Unexpected error processing {product.name}")
+        exec_summary.mark_product_failed(product.name)
     finally:
         _log_context.product = "main"
 
