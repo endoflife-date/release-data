@@ -1,6 +1,6 @@
 import logging
 
-from jsonpath_ng import parse
+from jsonpath_ng.ext import parse
 
 from src.common import http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
