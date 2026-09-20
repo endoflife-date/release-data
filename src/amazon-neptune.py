@@ -11,7 +11,6 @@ REGEX = r"(Maintenance r|R)elease:? (?P<version>.+) \((?P<date>\d+-\d+-\d+)\)"
 def parse(data: dict, product: ProductData) -> None:
     if "title" in data:
         title = data["title"]
-        print(title)
         match = re.search(REGEX, title)
         if match:
             name = match.group("version")

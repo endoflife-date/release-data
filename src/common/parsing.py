@@ -14,6 +14,12 @@ DEFAULT_TEMPLATE = "{{value}}"
 DEFAULT_TYPES = {
     "name": "string",
     "date": "datetime",
+    "releaseDate": "datetime",
+    "lts": "boolean",
+    "eoas": "datetime",
+    "eol": "datetime",
+    "eoes": "datetime",
+    "latestReleaseDate": "datetime",
 }
 
 DEFAULT_REGEXES = {
@@ -38,6 +44,8 @@ class ValueExtractor(Generic[Entry], ABC):
                 self.type_resolver = dates.parse__datetime_or_date_or_month_year_date
             case "string":
                 self.type_resolver = lambda value: value
+            case "boolean":
+                self.type_resolver = lambda value: {"true": True, "false": False}.get(value.lower())
             case _:
                 message = f"unsupported type: {self.type}"
                 raise ValueError(message)
