@@ -1,52 +1,29 @@
 import logging
 
+from jsonpath_ng import parse
+
 from src.common import http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.parsing import ValueExtractor
 from src.common.releasedata import ProductData
 
-"""Fetch versions and release dates from a JSON document.
+"""Fetch versions and release dates from a JSON document."""
 
-The ``selector``, ``name`` and ``date`` configuration values use dot-separated
-paths. List indexes can be used as path components, for example
-``releases.0.version``. The name and date values also support ``regex``,
-``regex_exclude`` and ``template`` options, matching ``xml_versions.py``.
-"""
 
-def select(data: object, path: str) -> object | None:
-    """Return the value at a dot-separated path in a JSON value."""
-    if not path:
-        return data
-
-    value = data
-    for component in path.split("."):
-        if isinstance(value, dict):
-            if component not in value:
-                return None
-            value = value[component]
-        elif isinstance(value, list) and component.isdigit():
-            index = int(component)
-            if index >= len(value):
-                return None
-            value = value[index]
-        else:
-            return None
-
-    return value
+def _select(data: object, path: str) -> list[object]:
+    return [match.value for match in parse(path).find(data)]
 
 
 class _Extractor(ValueExtractor[object]):
     def extract_raw_value(self, entry: object) -> str | None:
-        selected = select(entry, self.selector)
-        return str(selected) if selected else None
+        matches = _select(entry, self.selector)
+        return str(matches[0]) if matches else None
 
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         document = http.fetch_json(config.url)
-        entries = select(document, config.data["selector"])
-        if not isinstance(entries, list):
-            entries = [entries]
+        entries = _select(document, config.data["selector"])
 
         version_extractor = _Extractor("name", config.data["name"])
         date_extractor = _Extractor("date", config.data["date"])
