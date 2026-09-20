@@ -12,7 +12,7 @@ from src.common.releasedata import ProductData
 
 class _Extractor(ValueExtractor[Tag]):
     def extract_raw_value(self, entry: Tag) -> str | None:
-        selected = entry.select_one(self.selector)
+        selected = entry if self.selector == ":scope" else entry.select_one(self.selector)
         return selected.get_text(strip=True) if selected else None
 
 
