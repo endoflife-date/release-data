@@ -405,6 +405,24 @@
       "eol": "2027-01-20",
       "recommendedReplacement": "gpt-audio-1.5"
     },
+    "gpt-6-sol": {
+      "name": "gpt-6-sol",
+      "releaseLabel": "GPT-6 Sol",
+      "link": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+      "aliases": [
+        "gpt-6-sol",
+        "gpt-6-sol"
+      ]
+    },
+    "gpt-6-luna": {
+      "name": "gpt-6-luna",
+      "releaseLabel": "GPT-6 Luna",
+      "link": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "aliases": [
+        "gpt-6-luna",
+        "gpt-6-luna"
+      ]
+    },
     "gpt-6-astra": {
       "name": "gpt-6-astra",
       "releaseLabel": "GPT-6 Astra",
