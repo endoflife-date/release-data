@@ -82,7 +82,8 @@
         "sora-2-pro"
       ],
       "eoas": "2026-03-24",
-      "eol": "2026-09-24"
+      "eol": "2026-09-24",
+      "recommendedReplacement": "\u2014"
     },
     "sora-2": {
       "name": "sora-2",
@@ -94,7 +95,8 @@
         "sora-2"
       ],
       "eoas": "2026-03-24",
-      "eol": "2026-09-24"
+      "eol": "2026-09-24",
+      "recommendedReplacement": "\u2014"
     },
     "omni-moderation-latest": {
       "name": "omni-moderation-latest",
