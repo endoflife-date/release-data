@@ -75,25 +75,12 @@
     },
     "sora-2-pro": {
       "name": "sora-2-pro",
-      "releaseLabel": "Sora 2 Pro",
-      "link": "https://developers.openai.com/api/docs/models/sora-2-pro",
-      "aliases": [
-        "sora-2-pro-2025-10-06",
-        "sora-2-pro"
-      ],
       "eoas": "2026-03-24",
       "eol": "2026-09-24",
       "recommendedReplacement": "\u2014"
     },
     "sora-2": {
       "name": "sora-2",
-      "releaseLabel": "Sora 2",
-      "link": "https://developers.openai.com/api/docs/models/sora-2",
-      "aliases": [
-        "sora-2-2025-12-08",
-        "sora-2-2025-10-06",
-        "sora-2"
-      ],
       "eoas": "2026-03-24",
       "eol": "2026-09-24",
       "recommendedReplacement": "\u2014"
