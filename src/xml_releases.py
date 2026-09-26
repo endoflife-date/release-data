@@ -19,7 +19,7 @@ class _Extractor(ValueExtractor[Tag]):
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        document = http.fetch_html(config.url, features="xml")
+        document = http.fetch_html(config.url, features=config.data.get("features", "xml"))
         entries = document.select(config.data["selector"])
 
         extractors = {
