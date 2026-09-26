@@ -32,6 +32,8 @@ def parse_date(text: str, formats: frozenset[str] = frozenset([
     "%Y-%m-%d",  # 2020-01-01
     "%m/%d/%Y",  # 01/25/2020
     "%Y/%m/%d",  # 2020/01/25
+    "%Y %B %d",  # 2020 January 1
+    "%Y %b %d",  # 2020 Jan 1
     "%A %d %B %Y", # Wednesday 1 January 2020
     "%A %d %b %Y", # Wednesday 1 Jan 2020
 ])) -> datetime.datetime:
@@ -46,6 +48,8 @@ def parse_month_year_date(text: str, formats: frozenset[str] = frozenset([
     "%b %Y",  # Jan 2020
     "%Y-%m",  # 2020-01
     "%Y/%m",  # 2020/01
+    "%Y %B",   # 2020 January
+    "%Y %b",   # 2020 Jan
     "%m-%Y",  # 01-2020
     "%m/%Y",  # 01/2020
 ])) -> datetime.datetime:
