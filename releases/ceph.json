@@ -71,12 +71,6 @@
       "codename": "Jewel",
       "releaseDate": "2016-04-01",
       "eol": "2018-07-01"
-    },
-    "0": {
-      "name": "0",
-      "codename": "Dumpling",
-      "releaseDate": "2013-08-01",
-      "eol": "2015-05-01"
     }
   },
   "versions": {
