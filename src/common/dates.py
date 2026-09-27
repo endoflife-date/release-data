@@ -16,6 +16,8 @@ def sanitize_input(text: str) -> str:
         .replace("Sept-", "Sep-")
         .replace("sept ", "sep ")
         .replace("sept-", "sep-")
+        .removeprefix("~")
+        .strip()
     )
 
     return re.sub(r"(\d+)(st|nd|rd|th)\b", r"\1", text)
