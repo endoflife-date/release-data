@@ -52,13 +52,13 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         render_js_click_selector: str | None = config.data.get("render_javascript_click_selector", None)
 
         if render_js:
-            response_text = http.fetch_javascript_url(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
-                                                      wait_for=render_js_wait_for, click_selector=render_js_click_selector)
+            html = http.fetch_html_js(config.url, user_agent=user_agent, wait_until=render_js_wait_until,
+                                      wait_for=render_js_wait_for, click_selector=render_js_click_selector)
         else:
             response_text = http.fetch_url(config.url, user_agent=user_agent).text
-        soup = BeautifulSoup(response_text, features="html5lib")
+            html = BeautifulSoup(response_text, features="html5lib")
 
-        for table in soup.select(table_selector):
+        for table in html.select(table_selector):
             header_row = table.select_one(header_row_selector)
             if not header_row:
                 logging.info(f"skipping table with attributes {table.attrs}: no header row found")

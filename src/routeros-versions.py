@@ -1,8 +1,6 @@
 import logging
 import re
 
-from bs4 import BeautifulSoup
-
 from src.common import dates, http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.releasedata import ProductData
@@ -14,10 +12,9 @@ This script only considers stable and long-term versions, and ignores testing an
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        content = http.fetch_javascript_url(config.url)
-        soup = BeautifulSoup(content, features="html5lib")
+        html = http.fetch_html_js(config.url)
 
-        for release_line in soup.select("div.grow"):
+        for release_line in html.select("div.grow"):
             text = re.sub(r'\s+', ' ', release_line.get_text()).strip()
             parts = text.split(' ')
             if len(parts) != 3:
