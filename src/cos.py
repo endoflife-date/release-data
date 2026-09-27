@@ -26,8 +26,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         milestones_urls = [f"{main.url}m{milestone}" for milestone in milestones]
         for milestone in http.fetch_urls(milestones_urls):
             milestone_soup = BeautifulSoup(milestone.text, features="html5lib")
-            for article in milestone_soup.find_all('article', class_='devsite-article'):
-                for heading in article.find_all(['h2', 'h3']):  # headings contains the date, which we parse
+            for article in milestone_soup.select('article.devsite-article'):
+                for heading in article.select('h2, h3'):  # headings contains the date, which we parse
                     version_str = heading.get('data-text')
                     version_match = VERSION_PATTERN.match(version_str)
                     if not version_match:

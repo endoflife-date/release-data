@@ -13,7 +13,7 @@ def fetch_prereleases(url: str, text_to_match: str) -> list[str]:
     See https://github.com/endoflife-date/release-data/issues/511."""
     prereleases_html = http.fetch_html(url)
     prereleases_paragraph = next(
-        (p for p in prereleases_html.find_all("p")
+        (p for p in prereleases_html.select("p")
          if text_to_match in p.get_text()),
         None,
     )
@@ -23,7 +23,7 @@ def fetch_prereleases(url: str, text_to_match: str) -> list[str]:
         raise ValueError(message)
 
     prereleases = []
-    for prerelease in prereleases_paragraph.find_next("ul").find_all("li"):
+    for prerelease in prereleases_paragraph.find_next("ul").select("li"):
         prereleases.append(prerelease.get_text().strip())
 
     return prereleases
@@ -36,9 +36,9 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         prerelease_prefixes = fetch_prereleases(prereleases_url, prereleases_text)
 
         html = http.fetch_html(config.url)
-        for table in html.find_all("table"):
-            for row in table.find_all("tr")[1:]:
-                cells = row.find_all("td")
+        for table in html.select("table"):
+            for row in table.select("tr")[1:]:
+                cells = row.select("td")
                 if len(cells) < 4:
                     continue
 

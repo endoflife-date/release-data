@@ -9,8 +9,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 
-        ul = html.find("h2").find_next("ul")
-        for li in ul.find_all("li"):
+        ul = html.select_one("h2").find_next("ul")
+        for li in ul.select("li"):
             text = li.get_text(strip=True)
             if not (match := config.first_match(text)):
                 logging.info(f"Skipping {text}, does not match any regex")

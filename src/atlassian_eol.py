@@ -14,7 +14,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html_js(config.url, wait_until='networkidle')
 
-        heading = html.find(id=config.data.get('selector'))
+        heading = html.select_one(f"#{config.data.get('selector')}")
         if not heading:
             message = f"{config} found no section with id '{config.data.get('selector')}'"
             raise ValueError(message)
@@ -24,7 +24,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             message = f"{config} found no version list under '{config.data.get('selector')}'"
             raise ValueError(message)
 
-        for li in version_list.find_all('li'):
+        for li in version_list.select('li'):
             if not (match := config.first_match(li.get_text(strip=True))):
                 logging.warning(f"Skipping '{li.get_text(strip=True)}', no match found")
                 continue

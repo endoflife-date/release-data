@@ -12,7 +12,7 @@ def extract_data(url: str, key_to_search_for: str) -> dict | None:
     html = http.fetch_html(url)
 
     # find all script tags with no src attribute and containing a CDATA section.
-    all_scripts = [str(t.getText) for t in html.find_all("script", src=False)]
+    all_scripts = [str(t.getText) for t in html.select("script:not([src])")]
     candidate_scripts = [s for s in all_scripts if key_to_search_for in s]
     if len(candidate_scripts) != 1:
         msg = f"Expected exactly one script containing {key_to_search_for}, found {len(candidate_scripts)}"

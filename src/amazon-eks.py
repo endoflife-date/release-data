@@ -11,8 +11,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 
-        for tr in html.select("#main-col-body")[0].findAll("tr"):
-            cells = tr.findAll("td")
+        for tr in html.select_one("#main-col-body").select("tr"):
+            cells = tr.select("td")
             if not cells:
                 continue
 

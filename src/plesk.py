@@ -11,7 +11,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 
-        for release in html.find_all("div", class_="changelog-entry--obsidian"):
+        for release in html.select("div.changelog-entry--obsidian"):
             version = release.h2.text.strip()
             if not version.startswith('Plesk Obsidian 18'):
                 continue

@@ -10,8 +10,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 
-        for i, table in enumerate(html.find_all("table")):
-            headers = [th.get_text().strip().lower() for th in table.find("thead").find_all("tr")[0].find_all("th")]
+        for i, table in enumerate(html.select("table")):
+            headers = [th.get_text().strip().lower() for th in table.select_one("thead tr").select("th")]
             if "identifier" not in headers or "deprecation date" not in headers or "block function update" not in headers:
                 logging.info(f"table with header '{headers}' does not contain all the expected headers")
                 continue
@@ -21,8 +21,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             deprecation_date_index = headers.index("deprecation date")
             block_function_update_index = headers.index("block function update")
 
-            for row in table.find("tbody").find_all("tr"):
-                cells = row.find_all("td")
+            for row in table.select("tbody tr"):
+                cells = row.select("td")
                 identifier = cells[identifier_index].get_text().strip()
 
                 deprecation_date_str = cells[deprecation_date_index].get_text().strip()
