@@ -1,8 +1,6 @@
 import re
 from collections import defaultdict
 
-from bs4 import BeautifulSoup
-
 from src.common import dates, http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.releasedata import ProductData
@@ -27,7 +25,7 @@ def get_latest_minor_versions(versions: list[str]) -> list[str]:
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with (ProductData(config.product) as product_data):
-        html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
+        html = http.fetch_html_js(config.url)
 
         all_versions = [option['value'] for option in html.select("select#version-select > option")]
         all_versions = [v for v in all_versions if v != "DataMonitoringAppPreview"]
@@ -36,8 +34,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         # For example, 9.0.5 release notes also contains release notes for 9.0.0 to 9.0.4.
         latest_minor_versions = get_latest_minor_versions(all_versions)
         for url in [f"{config.url}/{v}/ReleaseNotes/MeetSplunk" for v in latest_minor_versions]:
-            response = BeautifulSoup(http.fetch_javascript_url(url, user_agent=http.FIREFOX_USER_AGENT), features="html5lib")
-            for (version_str, date_str) in VERSION_DATE_PATTERN.findall(response.text):
+            html = http.fetch_html_js(url, user_agent=http.FIREFOX_USER_AGENT)
+            for (version_str, date_str) in VERSION_DATE_PATTERN.findall(html.text):
                 version_str = f"{version_str}.0" if len(version_str.split(".")) == 2 else version_str  # convert x.y to x.y.0
                 date = dates.parse_date(date_str)
                 product_data.declare_version(version_str, date)

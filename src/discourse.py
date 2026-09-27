@@ -1,8 +1,6 @@
 import logging
 import re
 
-from bs4 import BeautifulSoup
-
 from src.common import dates, http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.releasedata import ProductData
@@ -11,8 +9,7 @@ from src.common.releasedata import ProductData
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        raw_html = http.fetch_javascript_url(config.url, wait_for="tr.topic-list-item")
-        html = BeautifulSoup(raw_html, features="html5lib")
+        html = http.fetch_html_js(config.url, wait_for="tr.topic-list-item")
 
         for topic in html.select("tr.topic-list-item"):
             title = topic.select_one("span.link-top-line").get_text(strip=True)

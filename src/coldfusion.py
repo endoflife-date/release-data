@@ -1,7 +1,5 @@
 import re
 
-from bs4 import BeautifulSoup
-
 from src.common import dates, http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.releasedata import ProductData
@@ -13,7 +11,7 @@ VERSION_AND_DATE_PATTERN = re.compile(r"Release Date[,|:]? (.*?)\).*?Build Numbe
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        html = BeautifulSoup(http.fetch_javascript_url(config.url), features="html5lib")
+        html = http.fetch_html_js(config.url)
 
         for p in html.find_all("div", class_="text"):
             version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
