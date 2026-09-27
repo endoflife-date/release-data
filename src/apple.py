@@ -39,8 +39,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
                 message = f"no versions table found in {response.url}"
                 raise ValueError(message)
 
-            for row in versions_table.find_all("tr")[1:]:
-                cells = row.find_all("td")
+            for row in versions_table.select("tr")[1:]:
+                cells = row.select("td")
                 version_text = cells[0].get_text(separator=" ").strip()
                 date_text = cells[2].get_text(separator=" ").strip()
 

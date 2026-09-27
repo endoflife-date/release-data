@@ -13,8 +13,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(config.url)
 
-        for li in html.select_one("#DownloadVirtualBoxOldBuilds + ul").find_all("li"):
-            li_text = li.find("a").text.strip()
+        for li in html.select_one("#DownloadVirtualBoxOldBuilds + ul").select("li"):
+            li_text = li.select_one("a").text.strip()
 
             if not (release_match := config.first_match(li_text)):
                 logging.info(f"Skipping '{li_text}': does not match expected pattern")
@@ -23,7 +23,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
             release_name = release_match.group("value")
             release = product_data.get_release(release_name)
 
-            eol_text = li.find("em").text.lower().strip()
+            eol_text = li.select_one("em").text.lower().strip()
             eol_match = EOL_REGEX.match(eol_text)
             if not eol_match:
                 logging.info(f"Ignoring '{eol_text}': does not match {EOL_REGEX}")

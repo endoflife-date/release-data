@@ -17,8 +17,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
         version_column = config.data.get("version_column", "Build Number").lower()
         date_column = config.data.get("date_column", "Release Date").lower()
-        for table in html.find_all("table"):
-            headers = [header.get_text().strip().lower() for header in table.find("tr").find_all("td")]
+        for table in html.select("table"):
+            headers = [header.get_text().strip().lower() for header in table.select_one("tr").select("td")]
             if version_column not in headers or date_column not in headers:
                 logging.warning("Skipping table with headers %s as it does not contains '%s' or '%s'",
                                 headers, version_column, date_column)
@@ -26,8 +26,8 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
 
             version_index = headers.index(version_column)
             date_index = headers.index(date_column)
-            for row in table.find_all("tr")[1:]:
-                cells = row.find_all("td")
+            for row in table.select("tr")[1:]:
+                cells = row.select("td")
                 if len(cells) <= max(version_index, date_index):
                     continue
 

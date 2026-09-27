@@ -16,7 +16,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         html = http.fetch_html(config.url)
 
         released_versions = []
-        for h2 in html.find_all('h2'):
+        for h2 in html.select('h2'):
             title = h2.get_text(strip=True)
             match = config.first_match(title)
             if not match:

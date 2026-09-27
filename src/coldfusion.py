@@ -13,7 +13,7 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html_js(config.url)
 
-        for p in html.find_all("div", class_="text"):
+        for p in html.select("div.text"):
             version_and_date_str = p.get_text().strip().replace('\xa0', ' ')
             for (date_str, version_str) in VERSION_AND_DATE_PATTERN.findall(version_and_date_str):
                 date = dates.parse_date(date_str)

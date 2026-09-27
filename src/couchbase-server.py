@@ -12,13 +12,13 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
         html = http.fetch_html(f"{config.url}/current/release-notes/relnotes.html")
 
-        minor_versions = [options["value"] for options in html.find(class_="version_list").find_all("option")]
+        minor_versions = [options["value"] for options in html.select_one(".version_list").select("option")]
         minor_version_urls = [f"{config.url}/{minor}/release-notes/relnotes.html" for minor in minor_versions]
 
         for minor_version in http.fetch_urls(minor_version_urls):
             minor_version_soup = BeautifulSoup(minor_version.text, features="html5lib")
 
-            for title in minor_version_soup.find_all("h2"):
+            for title in minor_version_soup.select("h2"):
                 if not (match := config.first_match(title.get_text().strip())):
                     logging.info(f"Skipping {title}, does not match any regex")
                     continue
