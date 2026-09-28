@@ -1,5 +1,9 @@
 {
   "releases": {
+    "claude-sonnet-5-5": {
+      "name": "claude-sonnet-5-5",
+      "eol": "2027-09-28"
+    },
     "claude-sonnet-5": {
       "name": "claude-sonnet-5",
       "eol": "2027-06-30"

@@ -339,7 +339,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2"
+      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
     },
     "gpt-image-1-mini": {
       "name": "gpt-image-1-mini",
@@ -350,7 +350,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2"
+      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
     },
     "gpt-image-1": {
       "name": "gpt-image-1",
@@ -361,7 +361,7 @@
       ],
       "eoas": "2026-04-22",
       "eol": "2026-10-23",
-      "recommendedReplacement": "gpt-image-2"
+      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
     },
     "gpt-audio-mini": {
       "name": "gpt-audio-mini",
@@ -833,7 +833,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2"
+      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
     },
     "chatgpt-4o-latest": {
       "name": "chatgpt-4o-latest",
