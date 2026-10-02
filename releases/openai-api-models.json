@@ -17,7 +17,10 @@
       "link": "https://developers.openai.com/api/docs/models/tts-1-hd",
       "aliases": [
         "tts-1-hd"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-01-06",
+      "recommendedReplacement": "gpt-realtime-2.1-mini"
     },
     "tts-1": {
       "name": "tts-1",
@@ -25,7 +28,10 @@
       "link": "https://developers.openai.com/api/docs/models/tts-1",
       "aliases": [
         "tts-1"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-01-06",
+      "recommendedReplacement": "gpt-realtime-2.1-mini"
     },
     "text-moderation-stable": {
       "name": "text-moderation-stable",
@@ -491,7 +497,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-5.4-nano",
       "aliases": [
         "gpt-5.4-nano-2026-03-17"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-04-01",
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-5.4-mini": {
       "name": "gpt-5.4-mini",
@@ -515,7 +524,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-5.3-codex",
       "aliases": [
         "gpt-5.3-codex"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-04-01",
+      "recommendedReplacement": "gpt-6-sol"
     },
     "gpt-5.3-chat-latest": {
       "name": "gpt-5.3-chat-latest",
@@ -616,7 +628,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-5.1",
       "aliases": [
         "gpt-5.1-2025-11-13"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-04-01",
+      "recommendedReplacement": "gpt-6-sol"
     },
     "gpt-5-pro": {
       "name": "gpt-5-pro",
@@ -713,7 +728,10 @@
       "aliases": [
         "gpt-4o-mini-tts-2025-03-20",
         "gpt-4o-mini-tts-2025-12-15"
-      ]
+      ],
+      "eoas": "2026-10-01",
+      "eol": "2027-01-06",
+      "recommendedReplacement": "gpt-realtime-2.1-mini"
     },
     "gpt-4o-mini-transcribe": {
       "name": "gpt-4o-mini-transcribe",
