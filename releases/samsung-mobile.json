@@ -1699,7 +1699,7 @@
     },
     "galaxy-a23-5g": {
       "name": "galaxy-a23-5g",
-      "eol": false,
+      "eol": "2026-10-06",
       "releaseLabel": "Galaxy A23 5G"
     },
     "galaxy-a23": {
@@ -1740,6 +1740,11 @@
     "galaxy-a2-core": {
       "name": "galaxy-a2-core",
       "eol": "2021-10-01"
+    },
+    "galaxy-a18": {
+      "name": "galaxy-a18",
+      "releaseLabel": "Galaxy A18",
+      "eol": false
     },
     "galaxy-a17-5g": {
       "name": "galaxy-a17-5g",
@@ -1823,6 +1828,16 @@
       "name": "galaxy-a10",
       "eol": true
     },
+    "galaxy-a08": {
+      "name": "galaxy-a08",
+      "releaseLabel": "Galaxy A08",
+      "eol": false
+    },
+    "galaxy-a07s": {
+      "name": "galaxy-a07s",
+      "releaseLabel": "Galaxy A07s",
+      "eol": false
+    },
     "galaxy-a07-5g": {
       "name": "galaxy-a07-5g",
       "releaseLabel": "Galaxy A07 5G",
@@ -1855,7 +1870,7 @@
     },
     "galaxy-a04s": {
       "name": "galaxy-a04s",
-      "eol": false,
+      "eol": "2026-10-06",
       "releaseLabel": "Galaxy A04s"
     },
     "galaxy-a04e": {
