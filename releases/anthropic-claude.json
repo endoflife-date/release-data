@@ -21,7 +21,7 @@
     "claude-sonnet-4-20250514": {
       "name": "claude-sonnet-4-20250514",
       "eol": "2026-06-15",
-      "recommendedReplacement": "claude-sonnet-4-6",
+      "recommendedReplacement": "claude-sonnet-5-5",
       "eoas": "2026-04-14"
     },
     "claude-opus-5-5": {
@@ -102,7 +102,7 @@
     "claude-3-sonnet-20240229": {
       "name": "claude-3-sonnet-20240229",
       "eol": "2025-07-21",
-      "recommendedReplacement": "claude-sonnet-4-6"
+      "recommendedReplacement": "claude-sonnet-5-5"
     },
     "claude-3-opus-20240229": {
       "name": "claude-3-opus-20240229",
@@ -118,18 +118,18 @@
     "claude-3-7-sonnet-20250219": {
       "name": "claude-3-7-sonnet-20250219",
       "eol": "2026-02-19",
-      "recommendedReplacement": "claude-sonnet-4-6",
+      "recommendedReplacement": "claude-sonnet-5-5",
       "eoas": "2025-10-28"
     },
     "claude-3-5-sonnet-20241022": {
       "name": "claude-3-5-sonnet-20241022",
       "eol": "2025-10-28",
-      "recommendedReplacement": "claude-sonnet-4-6"
+      "recommendedReplacement": "claude-sonnet-5-5"
     },
     "claude-3-5-sonnet-20240620": {
       "name": "claude-3-5-sonnet-20240620",
       "eol": "2025-10-28",
-      "recommendedReplacement": "claude-sonnet-4-6"
+      "recommendedReplacement": "claude-sonnet-5-5"
     },
     "claude-3-5-haiku-20241022": {
       "name": "claude-3-5-haiku-20241022",
