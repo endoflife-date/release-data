@@ -232,49 +232,12 @@
       "name": "4",
       "eol": "2007-01-31"
     },
-    "3.5": {
-      "name": "3.5",
-      "releaseLabel": "releng/3.5",
-      "releaseDate": "2000-06-30"
-    },
-    "3.4": {
-      "name": "3.4",
-      "releaseLabel": "releng/3.4",
-      "releaseDate": "1999-12-31"
-    },
-    "3.3": {
-      "name": "3.3",
-      "releaseLabel": "releng/3.3",
-      "releaseDate": "1999-09-30"
-    },
-    "3.2": {
-      "name": "3.2",
-      "releaseLabel": "releng/3.2",
-      "releaseDate": "1999-05-31"
-    },
-    "3.1": {
-      "name": "3.1",
-      "releaseLabel": "releng/3.1",
-      "releaseDate": "1999-02-28"
-    },
     "3.0": {
       "name": "3.0",
-      "releaseLabel": "releng/3.0",
       "releaseDate": "1998-10-16"
-    },
-    "2.2": {
-      "name": "2.2",
-      "releaseLabel": "releng/2.2",
-      "releaseDate": "1997-03-31"
-    },
-    "2.1": {
-      "name": "2.1",
-      "releaseLabel": "releng/2.1",
-      "releaseDate": "1995-11-30"
     },
     "2.0": {
       "name": "2.0",
-      "releaseLabel": "releng/2.0",
       "releaseDate": "1994-11-22"
     },
     "15.1": {
@@ -462,16 +425,6 @@
     "10": {
       "name": "10",
       "eol": "2018-10-31"
-    },
-    "1.1": {
-      "name": "1.1",
-      "releaseLabel": "releng/1.1",
-      "releaseDate": "1994-05-31"
-    },
-    "1.0": {
-      "name": "1.0",
-      "releaseLabel": "releng/1.0",
-      "releaseDate": "1993-11-30"
     }
   },
   "versions": {}
