@@ -4,6 +4,7 @@ html5lib==1.1 # used in conjunction with beautifulsoup4
 jsonpath-ng==1.8.0 # used by json_releases.py
 lxml==6.1.3 # used by BeautifulSoup to parse XML
 mwparserfromhell==0.7.2 # used in unrealircd.py
+openpyxl==3.1.5 # used by spreadsheet_releases.py
 packaging==26.3 # used in update-product-data.py
 playwright==1.63.0 # used by a few scripts to parse html
 pre-commit==4.6.2 # used to check code before commit
