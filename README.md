@@ -17,7 +17,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to the s
 
 ## Currently Updated
 
-As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automatically tracked releases:
+As of 2026-10-11, 420 of the 483 products tracked by endoflife.date have automatically tracked releases:
 
 | Product | Permalink | Auto | Method(s) |
 |---------|-----------|------|-----------|
@@ -40,7 +40,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Amazon MQ for ActiveMQ | [`/amazon-mq-activemq`](https://endoflife.date/amazon-mq-activemq) | ❌ |  |
 | Amazon MQ for RabbitMQ | [`/amazon-mq-rabbitmq`](https://endoflife.date/amazon-mq-rabbitmq) | ✔️ | release_table |
 | Amazon MSK | [`/amazon-msk`](https://endoflife.date/amazon-msk) | ✔️ | release_table |
-| Amazon Neptune | [`/amazon-neptune`](https://endoflife.date/amazon-neptune) | ✔️ | amazon-neptune, release_table |
+| Amazon Neptune | [`/amazon-neptune`](https://endoflife.date/amazon-neptune) | ✔️ | json_versions, release_table |
 | Amazon OpenSearch | [`/amazon-opensearch`](https://endoflife.date/amazon-opensearch) | ❌ |  |
 | Amazon RDS for MariaDB | [`/amazon-rds-mariadb`](https://endoflife.date/amazon-rds-mariadb) | ✔️ | release_table, version_table |
 | Amazon RDS for MySQL | [`/amazon-rds-mysql`](https://endoflife.date/amazon-rds-mysql) | ✔️ | release_table, version_table |
@@ -89,7 +89,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Azure DevOps Server | [`/azure-devops-server`](https://endoflife.date/azure-devops-server) | ❌ |  |
 | Azure Kubernetes Service | [`/azure-kubernetes-service`](https://endoflife.date/azure-kubernetes-service) | ✔️ | declare, release_table |
 | Backdrop | [`/backdrop`](https://endoflife.date/backdrop) | ✔️ | github_releases |
-| Bamboo | [`/bamboo`](https://endoflife.date/bamboo) | ✔️ | atlassian_eol, json_versions |
+| Bamboo | [`/bamboo`](https://endoflife.date/bamboo) | ✔️ | json_versions, xml_releases |
 | Bazel | [`/bazel`](https://endoflife.date/bazel) | ✔️ | git, release_table |
 | Elastic Beats | [`/beats`](https://endoflife.date/beats) | ✔️ | github_releases |
 | Behat | [`/behat`](https://endoflife.date/behat) | ✔️ | git, release_table |
@@ -97,7 +97,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | BIG-IP | [`/big-ip`](https://endoflife.date/big-ip) | ✔️ | release_table, version_table |
 | BigBlueButton | [`/bigbluebutton`](https://endoflife.date/bigbluebutton) | ✔️ | github_releases |
 | BIND 9 | [`/bind-9`](https://endoflife.date/bind-9) | ✔️ | git |
-| Bitbucket | [`/bitbucket`](https://endoflife.date/bitbucket) | ✔️ | atlassian_eol, json_versions |
+| Bitbucket | [`/bitbucket`](https://endoflife.date/bitbucket) | ✔️ | json_versions, xml_releases |
 | Bitcoin Core | [`/bitcoin-core`](https://endoflife.date/bitcoin-core) | ✔️ | github_releases, release_table |
 | Blender | [`/blender`](https://endoflife.date/blender) | ✔️ | git |
 | Bootstrap | [`/bootstrap`](https://endoflife.date/bootstrap) | ✔️ | git |
@@ -136,7 +136,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Commvault | [`/commvault`](https://endoflife.date/commvault) | ✔️ | release_table |
 | Composer | [`/composer`](https://endoflife.date/composer) | ✔️ | git |
 | Concrete CMS | [`/concrete-cms`](https://endoflife.date/concrete-cms) | ✔️ | git |
-| Confluence | [`/confluence`](https://endoflife.date/confluence) | ✔️ | json_versions |
+| Confluence | [`/confluence`](https://endoflife.date/confluence) | ✔️ | json_versions, xml_releases |
 | Hashicorp Consul | [`/consul`](https://endoflife.date/consul) | ✔️ | git |
 | containerd | [`/containerd`](https://endoflife.date/containerd) | ✔️ | git, release_table |
 | Contao | [`/contao`](https://endoflife.date/contao) | ✔️ | git |
@@ -188,7 +188,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Forgejo | [`/forgejo`](https://endoflife.date/forgejo) | ✔️ | git, release_table |
 | FortiOS | [`/fortios`](https://endoflife.date/fortios) | ❌ |  |
 | FoundationDB | [`/foundationdb`](https://endoflife.date/foundationdb) | ✔️ | github_releases |
-| FreeBSD | [`/freebsd`](https://endoflife.date/freebsd) | ✔️ | declare, freebsd-releases, release_table |
+| FreeBSD | [`/freebsd`](https://endoflife.date/freebsd) | ✔️ | declare, release_table, xml_releases |
 | Freedesktop SDK | [`/freedesktop-sdk`](https://endoflife.date/freedesktop-sdk) | ✔️ | git |
 | Gatekeeper | [`/gatekeeper`](https://endoflife.date/gatekeeper) | ✔️ | git |
 | Gerrit | [`/gerrit`](https://endoflife.date/gerrit) | ✔️ | git |
@@ -245,8 +245,8 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Jenkins | [`/jenkins`](https://endoflife.date/jenkins) | ✔️ | git |
 | JFrog Xray | [`/jfrog-xray`](https://endoflife.date/jfrog-xray) | ✔️ | version_table |
 | JHipster | [`/jhipster`](https://endoflife.date/jhipster) | ✔️ | npm |
-| Jira Service Management | [`/jira-service-management`](https://endoflife.date/jira-service-management) | ✔️ | atlassian_eol, json_versions |
-| Jira Software | [`/jira-software`](https://endoflife.date/jira-software) | ✔️ | atlassian_eol, json_versions |
+| Jira Service Management | [`/jira-service-management`](https://endoflife.date/jira-service-management) | ✔️ | json_versions, xml_releases |
+| Jira Software | [`/jira-software`](https://endoflife.date/jira-software) | ✔️ | json_versions, xml_releases |
 | Joomla! | [`/joomla`](https://endoflife.date/joomla) | ✔️ | github_releases |
 | jQuery | [`/jquery`](https://endoflife.date/jquery) | ✔️ | git |
 | jQuery UI | [`/jquery-ui`](https://endoflife.date/jquery-ui) | ✔️ | git |
@@ -301,7 +301,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | MongoDB Server | [`/mongodb`](https://endoflife.date/mongodb) | ✔️ | git, release_table |
 | Moodle | [`/moodle`](https://endoflife.date/moodle) | ✔️ | git, release_table |
 | Motorola Mobility | [`/motorola-mobility`](https://endoflife.date/motorola-mobility) | ✔️ | motorola-security |
-| Microsoft Exchange | [`/msexchange`](https://endoflife.date/msexchange) | ❌ |  |
+| Microsoft Exchange | [`/msexchange`](https://endoflife.date/msexchange) | ✔️ | spreadsheet_releases |
 | Microsoft SQL Server | [`/mssqlserver`](https://endoflife.date/mssqlserver) | ❌ |  |
 | Mule Runtime | [`/mulesoft-runtime`](https://endoflife.date/mulesoft-runtime) | ✔️ | release_table |
 | MX Linux | [`/mxlinux`](https://endoflife.date/mxlinux) | ✔️ | distrowatch |
@@ -429,7 +429,7 @@ As of 2026-10-10, 419 of the 483 products tracked by endoflife.date have automat
 | Stormshield Management Center | [`/sns-smc`](https://endoflife.date/sns-smc) | ✔️ | declare, release_table |
 | Apache Solr | [`/solr`](https://endoflife.date/solr) | ✔️ | git |
 | SonarQube Community Build | [`/sonarqube-community`](https://endoflife.date/sonarqube-community) | ✔️ | github_releases |
-| SonarQube Server | [`/sonarqube-server`](https://endoflife.date/sonarqube-server) | ✔️ | discourse |
+| SonarQube Server | [`/sonarqube-server`](https://endoflife.date/sonarqube-server) | ✔️ | xml_versions |
 | Sony Xperia | [`/sony-xperia`](https://endoflife.date/sony-xperia) | ✔️ | release_table |
 | Sourcegraph | [`/sourcegraph`](https://endoflife.date/sourcegraph) | ✔️ | git |
 | Splunk | [`/splunk`](https://endoflife.date/splunk) | ✔️ | splunk |
