@@ -751,7 +751,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
       "aliases": [
         "gpt-4o-mini-2024-07-18"
-      ]
+      ],
+      "eoas": "2026-10-14",
+      "eol": "2027-01-14",
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-4o": {
       "name": "gpt-4o",
@@ -762,9 +765,9 @@
         "gpt-4o-2024-08-06",
         "gpt-4o-2024-05-13"
       ],
-      "eoas": "2026-04-22",
-      "eol": "2026-10-23",
-      "recommendedReplacement": "gpt-5.6-sol"
+      "eoas": "2026-10-14",
+      "eol": "2027-01-14",
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-4.1-nano": {
       "name": "gpt-4.1-nano",
@@ -783,7 +786,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
       "aliases": [
         "gpt-4.1-mini-2025-04-14"
-      ]
+      ],
+      "eoas": "2026-10-14",
+      "eol": "2027-01-14",
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-4.1": {
       "name": "gpt-4.1",
@@ -791,7 +797,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-4.1",
       "aliases": [
         "gpt-4.1-2025-04-14"
-      ]
+      ],
+      "eoas": "2026-10-14",
+      "eol": "2027-01-14",
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-4-turbo": {
       "name": "gpt-4-turbo",
