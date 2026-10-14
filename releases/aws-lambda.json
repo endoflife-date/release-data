@@ -133,7 +133,7 @@
     "nodejs22.x": {
       "name": "nodejs22.x",
       "eoas": "2027-04-30",
-      "eol": "2027-07-01"
+      "eol": "2027-08-31"
     },
     "nodejs20.x": {
       "name": "nodejs20.x",
