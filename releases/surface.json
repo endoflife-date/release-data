@@ -162,6 +162,12 @@
       "releaseDate": "2013-02-09",
       "eol": "2017-04-11"
     },
+    "laptop-ultra": {
+      "name": "laptop-ultra",
+      "releaseLabel": "Surface Laptop Ultra",
+      "releaseDate": "2026-10-16",
+      "eol": "2032-10-16"
+    },
     "laptop-studio-2": {
       "name": "laptop-studio-2",
       "releaseLabel": "Surface Laptop Studio 2",
