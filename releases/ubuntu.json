@@ -55,6 +55,11 @@
       "codename": "Warty Warthog",
       "releaseDate": "2004-10-26"
     },
+    "26.10": {
+      "name": "26.10",
+      "codename": "Stonking Stingray",
+      "releaseDate": "2026-10-15"
+    },
     "26.04": {
       "name": "26.04",
       "codename": "Resolute Raccoon",
@@ -222,6 +227,10 @@
     }
   },
   "versions": {
+    "26.10": {
+      "name": "26.10",
+      "date": "2026-10-15"
+    },
     "24.04.5": {
       "name": "24.04.5",
       "date": "2026-09-10"
