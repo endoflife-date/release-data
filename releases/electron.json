@@ -35,24 +35,26 @@
       "chromeVersion": "M73",
       "nodeVersion": "12"
     },
+    "46": {
+      "name": "46",
+      "chromeVersion": "M160",
+      "nodeVersion": "24"
+    },
     "45": {
       "name": "45",
       "releaseDate": "2026-10-20",
-      "eol": "2027-04-27",
       "chromeVersion": "M156",
       "nodeVersion": "24"
     },
     "44": {
       "name": "44",
-      "releaseDate": "2026-08-25",
-      "eol": "2027-03-02",
+      "releaseDate": "2026-08-24",
       "chromeVersion": "M152",
       "nodeVersion": "24"
     },
     "43": {
       "name": "43",
-      "releaseDate": "2026-06-30",
-      "eol": "2027-01-05",
+      "releaseDate": "2026-06-29",
       "chromeVersion": "M150",
       "nodeVersion": "24"
     },
