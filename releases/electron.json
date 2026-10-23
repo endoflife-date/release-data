@@ -35,6 +35,11 @@
       "chromeVersion": "M73",
       "nodeVersion": "12"
     },
+    "47": {
+      "name": "47",
+      "chromeVersion": "M164",
+      "nodeVersion": "24"
+    },
     "46": {
       "name": "46",
       "chromeVersion": "M160",
