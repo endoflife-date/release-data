@@ -1,37 +1,23 @@
-import urllib.parse
-
-from bs4 import BeautifulSoup
-
 from src.common import dates, http
 from src.common.endoflife import AutoConfig, ProductFrontmatter
 from src.common.releasedata import ProductData
 
-"""Fetch Firefox versions with their dates from https://www.mozilla.org/.
+"""Fetch Firefox version dates from whattrainisitnow.com's desktop and ESR APIs.
 
-This script is cumulative: previously found versions are kept, and eventually updated if needed. It only considers the
-first MAX_VERSIONS_LIMIT versions on Firefox release page because:
-- it is too long to fetch them all (at least a minute usually),
-- this generates too many requests to the mozilla.org servers,
-- and anyway oldest versions are never updated.
+Versions with a major number below 100 are skipped. Existing versions are retained, and their dates are refreshed
+when the API reports a different date."""
 
-Note that it was assumed that:
-- the script is ran regularly enough to keep the versions up to date (once a day or week looks enough),
-- the versions are listed in descending order on the page,
-- new versions are always added inside in the last MAX_VERSIONS_LIMIT versions.
-
-The script will need to be updated if someday those conditions are not met."""
-
-MAX_VERSIONS_LIMIT = 100
+FIREFOX_RELEASES_APIS = ["https://whattrainisitnow.com/api/esr/releases/", "https://whattrainisitnow.com/api/firefox/releases/"]
+# Avoid adding the large historical version range while retaining existing data for older versions.
+MIN_FIREFOX_MAJOR_VERSION = 100
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
     with ProductData(config.product) as product_data:
-        releases_page = http.fetch_url(config.url)
-        releases_soup = BeautifulSoup(releases_page.text, features="html5lib")
-        releases_list = releases_soup.select("ol.c-release-list")
+        for api_url in FIREFOX_RELEASES_APIS:
+            releases = http.fetch_json(api_url)
+            for version, date_str in releases.items():
+                major_version = int(version.split(".", maxsplit=1)[0])
+                if major_version < MIN_FIREFOX_MAJOR_VERSION:
+                    continue
 
-        release_notes_urls = [urllib.parse.urljoin(releases_page.url, p.get("href")) for p in releases_list[0].select("a")]
-        for release_notes in http.fetch_urls(release_notes_urls[:MAX_VERSIONS_LIMIT]):
-            version = release_notes.url.split("/")[-3]
-            release_notes_soup = BeautifulSoup(release_notes.text, features="html5lib")
-            date_str = release_notes_soup.select_one(".c-release-date").get_text()  # note: only works for versions > 25
-            product_data.declare_version(version, dates.parse_date(date_str))
+                product_data.declare_version(version, dates.parse_date(date_str))
