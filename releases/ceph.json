@@ -6,6 +6,12 @@
       "releaseDate": "2015-11-01",
       "eol": "2016-04-01"
     },
+    "21": {
+      "name": "21",
+      "codename": "Umbrella",
+      "releaseDate": "2026-10-28",
+      "eol": "2028-10-28"
+    },
     "20": {
       "name": "20",
       "codename": "Tentacle",
