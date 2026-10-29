@@ -101,7 +101,7 @@ jobs:
           gh pr comment "$PR_NUMBER" --body-file /tmp/summary.md --edit-last --create-if-none
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
+        uses: stefanzweifel/git-auto-commit-action@d0b01107b5db882071f96de5dd4b54961ea93f4c # v7.2.1
         if: steps.update_data.outputs.commit_message != '' && github.ref == 'refs/heads/main' && github.repository == 'endoflife-date/release-data'
         with:
           commit_message: ${{ steps.update_data.outputs.commit_message }}
