@@ -16,10 +16,6 @@
       "name": "windows-11-vs2026-arm64",
       "releaseLabel": "Windows 11 Arm64 with Visual Studio 2026"
     },
-    "windows-11-arm64": {
-      "name": "windows-11-arm64",
-      "releaseLabel": "Windows 11 Arm64"
-    },
     "ubuntu-slim": {
       "name": "ubuntu-slim",
       "releaseLabel": "Ubuntu Slim"
@@ -63,10 +59,6 @@
     "macos-15": {
       "name": "macos-15",
       "releaseLabel": "macOS 15"
-    },
-    "macos-14-arm64": {
-      "name": "macos-14-arm64",
-      "releaseLabel": "macOS 14 Arm64"
     },
     "macos-14": {
       "name": "macos-14",

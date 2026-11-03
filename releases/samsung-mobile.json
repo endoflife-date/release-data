@@ -966,7 +966,7 @@
     },
     "galaxy-m04": {
       "name": "galaxy-m04",
-      "eol": "2026-11-03",
+      "eol": false,
       "releaseLabel": "Galaxy M04"
     },
     "galaxy-m02s": {
@@ -1890,7 +1890,7 @@
     },
     "galaxy-a04e": {
       "name": "galaxy-a04e",
-      "eol": "2026-11-03",
+      "eol": false,
       "releaseLabel": "Galaxy A04e"
     },
     "galaxy-a04": {
