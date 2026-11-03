@@ -95,6 +95,16 @@
       "name": "galaxy-tab-s2-8.0",
       "eol": true
     },
+    "galaxy-tab-s12-ultra": {
+      "name": "galaxy-tab-s12-ultra",
+      "releaseLabel": "Galaxy Tab S12 Ultra",
+      "eol": false
+    },
+    "galaxy-tab-s12+": {
+      "name": "galaxy-tab-s12+",
+      "releaseLabel": "Galaxy Tab S12+",
+      "eol": false
+    },
     "galaxy-tab-s11-ultra": {
       "name": "galaxy-tab-s11-ultra",
       "releaseLabel": "Galaxy Tab S11 Ultra",
