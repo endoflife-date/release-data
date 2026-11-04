@@ -1,5 +1,17 @@
 {
   "releases": {
+    "r620-windows": {
+      "name": "r620-windows",
+      "latest": "621.14",
+      "latestReleaseDate": "2026-11-04",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-620-70-06/index.html"
+    },
+    "r620-linux": {
+      "name": "r620-linux",
+      "latest": "620.70.06",
+      "latestReleaseDate": "2026-11-04",
+      "link": "https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-620-70-06/index.html"
+    },
     "r615-linux": {
       "name": "r615-linux",
       "latest": "615.71.10",
