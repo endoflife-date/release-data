@@ -361,7 +361,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
+      "recommendedReplacement": "gpt-image-2.6-sunburst or gpt-image-2.6-flare"
     },
     "gpt-image-1-mini": {
       "name": "gpt-image-1-mini",
@@ -372,7 +372,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
+      "recommendedReplacement": "gpt-image-2.6-sunburst or gpt-image-2.6-flare"
     },
     "gpt-image-1": {
       "name": "gpt-image-1",
@@ -446,6 +446,14 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-6-luna",
       "aliases": [
         "gpt-6-luna"
+      ]
+    },
+    "gpt-6-cyber": {
+      "name": "gpt-6-cyber",
+      "releaseLabel": "GPT-6-Cyber",
+      "link": "https://developers.openai.com/api/docs/models/gpt-6-cyber",
+      "aliases": [
+        "gpt-6-cyber"
       ]
     },
     "gpt-6-astra": {
@@ -890,7 +898,7 @@
       ],
       "eoas": "2026-06-02",
       "eol": "2026-12-01",
-      "recommendedReplacement": "gpt-image-2.5-sunburst or gpt-image-2.5-flare"
+      "recommendedReplacement": "gpt-image-2.6-sunburst or gpt-image-2.6-flare"
     },
     "chatgpt-4o-latest": {
       "name": "chatgpt-4o-latest",
