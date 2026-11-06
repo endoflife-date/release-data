@@ -12,6 +12,12 @@
       "releaseDate": "2024-08-01",
       "eol": "2029-08-31"
     },
+    "motorola-signature-27": {
+      "name": "motorola-signature-27",
+      "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12941",
+      "releaseDate": "2026-11-01",
+      "eol": "2033-11-30"
+    },
     "motorola-signature": {
       "name": "motorola-signature",
       "link": "https://en-us.support.motorola.com/app/software-security-update/g_id/7112/productid/12430",
