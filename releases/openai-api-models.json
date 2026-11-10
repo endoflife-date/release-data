@@ -303,7 +303,7 @@
     },
     "gpt-live-1": {
       "name": "gpt-live-1",
-      "releaseLabel": "GPT-Live 1",
+      "releaseLabel": "GPT-Live-1",
       "link": "https://developers.openai.com/api/docs/models/gpt-live-1",
       "aliases": [
         "gpt-live-1",
