@@ -350,7 +350,10 @@
       "link": "https://developers.openai.com/api/docs/models/gpt-image-2",
       "aliases": [
         "gpt-image-2-2026-04-21"
-      ]
+      ],
+      "eoas": "2026-11-10",
+      "eol": "2027-02-10",
+      "recommendedReplacement": "gpt-image-2.6-sunburst or gpt-image-2.6-flare"
     },
     "gpt-image-1.5": {
       "name": "gpt-image-1.5",
