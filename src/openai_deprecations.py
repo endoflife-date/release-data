@@ -24,16 +24,15 @@ def parse_models(cell: Tag) -> list[str]:
     return [model for model in models if model and not re.search(r"[\s:]", model)]
 
 
-def parse_deprecation_date(table: Tag) -> datetime:
+def parse_deprecation_date(table: Tag) -> datetime | None:
+    """Return the notice date from a legacy date heading, if present."""
     title = table.find_previous(["h1", "h2", "h3", "h4", "h5", "h6"])
     if title is None:
-        message = "deprecation table has no title"
-        raise ValueError(message)
+        return None
 
     match = re.match(r"\d{4}-\d{2}-\d{2}", title.get_text(" ", strip=True))
     if match is None:
-        message = f"deprecation title has no leading date: {title.get_text(' ', strip=True)}"
-        raise ValueError(message)
+        return None
 
     return dates.parse_date(match.group())
 
@@ -87,7 +86,7 @@ def set_deprecation(product_data: ProductData, model: str, eoas: datetime, eol: 
         release.set_field("recommendedReplacement", replacement)
 
 
-def get_column_indices(table: Tag) -> tuple[int, int, int] | None:
+def get_column_indices(table: Tag) -> tuple[int, int, int, int | None] | None:
     headers = [header.get_text(" ", strip=True).lower() for header in table.select("thead th")]
     if not headers:
         logging.debug("Skipping deprecation table without headers")
@@ -103,7 +102,31 @@ def get_column_indices(table: Tag) -> tuple[int, int, int] | None:
         logging.debug("Skipping deprecation table with unsupported headers: %s", headers)
         return None
 
-    return date_index, model_index, replacement_index
+    notice_index = next((i for i, header in enumerate(headers) if "notice" in header), None)
+    return date_index, model_index, replacement_index, notice_index
+
+
+def parse_row_dates(cells: list[Tag], date_index: int, notice_index: int | None,
+                    legacy_eoas: datetime | None, row: Tag) -> tuple[datetime, datetime] | None:
+    try:
+        eol = dates.parse_date(cells[date_index].get_text(" ", strip=True).replace("‑", "-"))
+    except ValueError:
+        logging.warning("Skipping deprecation row with invalid EOL date: %s", row.get_text(" ", strip=True))
+        return None
+
+    eoas = legacy_eoas
+    if notice_index is not None:
+        try:
+            eoas = dates.parse_date(cells[notice_index].get_text(" ", strip=True))
+        except ValueError:
+            logging.warning("Skipping deprecation row with invalid notice date: %s", row.get_text(" ", strip=True))
+            return None
+
+    if eoas is None:
+        logging.warning("Skipping deprecation row without a notice date: %s", row.get_text(" ", strip=True))
+        return None
+
+    return eoas, eol
 
 
 def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
@@ -111,31 +134,28 @@ def update(_product: ProductFrontmatter, config: AutoConfig) -> None:
         soup = http.fetch_html(config.url)
 
         for table in soup.select("table"):
-            try:
-                eoas = parse_deprecation_date(table)
-            except ValueError as error:
-                logging.debug("Skipping deprecation table without a valid title date: %s", error)
-                continue
-
             indices = get_column_indices(table)
             if indices is None:
                 continue
-            date_index, model_index, replacement_index = indices
+            date_index, model_index, replacement_index, notice_index = indices
+            legacy_eoas = parse_deprecation_date(table) if notice_index is None else None
+            last_column = max(index for index in indices if index is not None)
 
             for row in table.select("tbody tr"):
                 cells = row.select("td, th")
-                if max(date_index, model_index, replacement_index) >= len(cells):
+                if last_column >= len(cells):
                     logging.warning("Skipping deprecation row with insufficient cells: %s", row.get_text(" ", strip=True))
                     continue
 
-                try:
-                    eol = dates.parse_date(cells[date_index].get_text(" ", strip=True).replace("‑", "-"))
-                except ValueError:
-                    logging.warning("Skipping deprecation row with invalid EOL date: %s", row.get_text(" ", strip=True))
+                row_dates = parse_row_dates(cells, date_index, notice_index, legacy_eoas, row)
+                if row_dates is None:
                     continue
+                eoas, eol = row_dates
 
                 models = parse_models(cells[model_index])
                 replacement = cells[replacement_index].get_text(" ", strip=True).removesuffix("*")
+                if replacement == "No one-to-one replacement":
+                    replacement = "—"
                 for model in models:
                     if model.startswith("/") or "preview" in model.lower():
                         model_type = "API endpoint" if model.startswith("/") else "preview model"
