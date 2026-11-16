@@ -130,7 +130,7 @@
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-sol ( reasoning.mode: pro )"
+      "recommendedReplacement": "gpt-6.1-sol ( reasoning.mode: pro ) in the Responses API"
     },
     "o3-mini": {
       "name": "o3-mini",
@@ -163,7 +163,7 @@
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-sol"
+      "recommendedReplacement": "gpt-6.1-sol"
     },
     "o1-pro": {
       "name": "o1-pro",
@@ -224,7 +224,7 @@
     },
     "gpt-realtime-mini": {
       "name": "gpt-realtime-mini",
-      "releaseLabel": "GPT-Realtime Mini",
+      "releaseLabel": "GPT-Realtime mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-realtime-mini",
       "aliases": [
         "gpt-realtime-mini-2025-10-06",
@@ -236,7 +236,7 @@
     },
     "gpt-realtime-2.1-mini": {
       "name": "gpt-realtime-2.1-mini",
-      "releaseLabel": "GPT-Realtime-2.1 Mini",
+      "releaseLabel": "GPT-Realtime-2.1 mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini",
       "aliases": [
         "gpt-realtime-2.1-mini"
@@ -357,7 +357,7 @@
     },
     "gpt-image-1.5": {
       "name": "gpt-image-1.5",
-      "releaseLabel": "GPT-Image-1.5",
+      "releaseLabel": "GPT Image 1.5",
       "link": "https://developers.openai.com/api/docs/models/gpt-image-1.5",
       "aliases": [
         "gpt-image-1.5-2025-12-16"
@@ -368,7 +368,7 @@
     },
     "gpt-image-1-mini": {
       "name": "gpt-image-1-mini",
-      "releaseLabel": "GPT-Image-1 Mini",
+      "releaseLabel": "GPT Image 1 mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-image-1-mini",
       "aliases": [
         "gpt-image-1-mini"
@@ -379,7 +379,7 @@
     },
     "gpt-image-1": {
       "name": "gpt-image-1",
-      "releaseLabel": "GPT-Image-1",
+      "releaseLabel": "GPT Image 1",
       "link": "https://developers.openai.com/api/docs/models/gpt-image-1",
       "aliases": [
         "gpt-image-1"
@@ -390,7 +390,7 @@
     },
     "gpt-audio-mini": {
       "name": "gpt-audio-mini",
-      "releaseLabel": "GPT-Audio Mini",
+      "releaseLabel": "GPT-Audio mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-audio-mini",
       "aliases": [
         "gpt-audio-mini-2025-10-06",
@@ -453,7 +453,7 @@
     },
     "gpt-6-cyber": {
       "name": "gpt-6-cyber",
-      "releaseLabel": "GPT-6-Cyber",
+      "releaseLabel": "GPT-6 Cyber",
       "link": "https://developers.openai.com/api/docs/models/gpt-6-cyber",
       "aliases": [
         "gpt-6-cyber"
@@ -536,7 +536,7 @@
     },
     "gpt-5.4-mini": {
       "name": "gpt-5.4-mini",
-      "releaseLabel": "GPT-5.4 Mini",
+      "releaseLabel": "GPT-5.4 mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
       "aliases": [
         "gpt-5.4-mini-2026-03-17"
@@ -612,7 +612,7 @@
     },
     "gpt-5.1-codex-mini": {
       "name": "gpt-5.1-codex-mini",
-      "releaseLabel": "GPT-5.1-Codex Mini",
+      "releaseLabel": "GPT-5.1-Codex-Mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-5.1-codex-mini",
       "aliases": [
         "gpt-5.1-codex-mini"
@@ -667,14 +667,14 @@
     },
     "gpt-5-pro": {
       "name": "gpt-5-pro",
-      "releaseLabel": "GPT-5 Pro",
+      "releaseLabel": "GPT-5 pro",
       "link": "https://developers.openai.com/api/docs/models/gpt-5-pro",
       "aliases": [
         "gpt-5-pro-2025-10-06"
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-sol ( reasoning.mode: pro )"
+      "recommendedReplacement": "gpt-6.1-sol ( reasoning.mode: pro ) in the Responses API"
     },
     "gpt-5-nano": {
       "name": "gpt-5-nano",
@@ -685,18 +685,18 @@
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-luna"
+      "recommendedReplacement": "gpt-6-luna"
     },
     "gpt-5-mini": {
       "name": "gpt-5-mini",
-      "releaseLabel": "GPT-5 Mini",
+      "releaseLabel": "GPT-5 mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-5-mini",
       "aliases": [
         "gpt-5-mini-2025-08-07"
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-terra"
+      "recommendedReplacement": "gpt-6.1-terra"
     },
     "gpt-5-codex": {
       "name": "gpt-5-codex",
@@ -729,7 +729,7 @@
       ],
       "eoas": "2026-06-11",
       "eol": "2026-12-11",
-      "recommendedReplacement": "gpt-5.6-sol"
+      "recommendedReplacement": "gpt-6.1-sol"
     },
     "gpt-4o-transcribe-diarize": {
       "name": "gpt-4o-transcribe-diarize",
@@ -755,7 +755,7 @@
     },
     "gpt-4o-mini-tts": {
       "name": "gpt-4o-mini-tts",
-      "releaseLabel": "GPT-4o Mini TTS",
+      "releaseLabel": "GPT-4o mini TTS",
       "link": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts",
       "aliases": [
         "gpt-4o-mini-tts-2025-03-20",
@@ -773,13 +773,13 @@
         "gpt-4o-mini-transcribe-2025-03-20",
         "gpt-4o-mini-transcribe-2025-12-15"
       ],
-      "eoas": "2026-08-26",
-      "eol": "2027-02-26",
-      "recommendedReplacement": "gpt-live-transcribe or gpt-transcribe"
+      "eoas": "2026-07-20",
+      "eol": "2027-01-20",
+      "recommendedReplacement": "gpt-4o-mini-transcribe-2025-12-15"
     },
     "gpt-4o-mini": {
       "name": "gpt-4o-mini",
-      "releaseLabel": "GPT-4o Mini",
+      "releaseLabel": "GPT-4o mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
       "aliases": [
         "gpt-4o-mini-2024-07-18"
@@ -814,7 +814,7 @@
     },
     "gpt-4.1-mini": {
       "name": "gpt-4.1-mini",
-      "releaseLabel": "GPT-4.1 Mini",
+      "releaseLabel": "GPT-4.1 mini",
       "link": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
       "aliases": [
         "gpt-4.1-mini-2025-04-14"
