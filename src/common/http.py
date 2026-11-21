@@ -40,12 +40,13 @@ _CACHE_SESSION.mount('https://', _ADAPTER)
 _FUTURES_SESSION = FuturesSession(session=_CACHE_SESSION, max_workers=MAX_WORKERS)
 
 def fetch_urls(urls: list[str], data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-               timeout: int = 30, _remaining_retries: int = MAX_RETRIES) -> list[Response]:
+               timeout: int = 30, extra_headers: dict[str, str] = None,
+               _remaining_retries: int = MAX_RETRIES) -> list[Response]:
     logging.info(f"Fetching {urls}")
 
     try:
         session = _FUTURES_SESSION
-        headers = {'User-Agent': user_agent}
+        headers = {'User-Agent': user_agent, **(extra_headers or {})}
         start = time.perf_counter()
         futures = [session.get(url, headers=headers, data=data, timeout=timeout, stream=None) for url in urls]
         results = [future.result() for future in as_completed(futures)]
@@ -62,12 +63,12 @@ def fetch_urls(urls: list[str], data: any = None, user_agent: str = ENDOFLIFE_BO
         # We could wait a bit before retrying, but it's not clear if it would help.
         logging.warning(
             f"Got ChunkedEncodingError while fetching {urls} ({e}), retrying (remaining retries = {next_remaining_retries}).")
-        return fetch_urls(urls, data, user_agent, timeout, next_remaining_retries)
+        return fetch_urls(urls, data, user_agent, timeout, extra_headers, next_remaining_retries)
 
 
 def fetch_url(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              timeout: int = 30) -> Response:
-    return fetch_urls([url], data, user_agent, timeout)[0]
+              timeout: int = 30, extra_headers: dict[str, str] = None) -> Response:
+    return fetch_urls([url], data, user_agent, timeout, extra_headers)[0]
 
 def fetch_html(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
                timeout: int = 30, features: str = "html5lib") -> BeautifulSoup:
@@ -75,8 +76,8 @@ def fetch_html(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_
     return BeautifulSoup(response.text, features=features)
 
 def fetch_json(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
-              timeout: int = 30) -> dict:
-    response = fetch_url(url, data, user_agent, timeout)
+              timeout: int = 30, extra_headers: dict[str, str] = None) -> dict:
+    response = fetch_url(url, data, user_agent, timeout, extra_headers)
     return response.json()
 
 def fetch_yaml(url: str, data: any = None, user_agent: str = ENDOFLIFE_BOT_USER_AGENT,
