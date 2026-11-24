@@ -46,7 +46,9 @@
     },
     "claude-opus-4-5-20251101": {
       "name": "claude-opus-4-5-20251101",
-      "eol": "2026-11-24"
+      "eol": "2027-01-22",
+      "recommendedReplacement": "claude-opus-5-5",
+      "eoas": "2026-11-23"
     },
     "claude-opus-4-20250514": {
       "name": "claude-opus-4-20250514",
