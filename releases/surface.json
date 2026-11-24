@@ -18,6 +18,12 @@
       "releaseDate": "2016-12-15",
       "eol": "2021-11-13"
     },
+    "rtx-spark-dev-box": {
+      "name": "rtx-spark-dev-box",
+      "releaseLabel": "Surface RTX Spark Dev Box",
+      "releaseDate": "2026-11-24",
+      "eol": "2032-11-24"
+    },
     "rt": {
       "name": "rt",
       "releaseLabel": "Surface RT",
