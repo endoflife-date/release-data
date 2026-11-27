@@ -59,10 +59,6 @@
     "macos-15": {
       "name": "macos-15",
       "releaseLabel": "macOS 15"
-    },
-    "macos-14": {
-      "name": "macos-14",
-      "releaseLabel": "macOS 14"
     }
   },
   "versions": {}
